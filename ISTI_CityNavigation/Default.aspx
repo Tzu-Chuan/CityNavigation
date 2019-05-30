@@ -114,4 +114,4 @@
 <script type="text/javascript" src="<%=ResolveUrl("~/js/NickCommon.js") %>"></script><!-- 系統共用 JS -->
 <script type="text/javascript" src="<%=ResolveUrl("~/js/autoHeight.js") %>"></script><!-- 高度不足頁面的絕對置底footer -->
 </body>
-</html>
+</html> 
