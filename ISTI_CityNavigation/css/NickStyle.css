@@ -1,8 +1,0 @@
-﻿
-a.asc:after {content: attr(data-content) '▲';}
-a.desc:after {content: attr(data-content) '▼';}
-
-/* Table Mouseover */
-.tabcss tbody tr td {background-color: transparent;}
-.tabcss tbody tr:nth-child(even) {background-color: #dceff9;}
-.tabcss tbody tr:hover {background-color: #FEFBC2;}
