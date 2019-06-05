@@ -4,7 +4,7 @@
         $(document).ready(function () {
             //分頁設定
             Page.Option.SortMethod = "+";
-            Page.Option.SortName = "M_City";
+            Page.Option.SortName = "M_Name";
             getData(0);
 
             getddl("02", "#mCity");
@@ -55,7 +55,7 @@
                                 $("#mAcc").val($(this).children("M_Account").text().trim());
                                 $("#mPwd").val($(this).children("M_Pwd").text().trim());
                                 $("#mName").val($(this).children("M_Name").text().trim());
-                                $("#mCity").val($(this).children("M_City").text().trim());
+                                $("#mEmail").val($(this).children("M_Email").text().trim());
                                 $("#mComp").val($(this).children("M_Competence").text().trim());
                             });
                             doShowDialog("編輯會員");
@@ -78,10 +78,11 @@
                     url: "mHandler/addMember.aspx",
                     data: {
                         id: $("#tmpid").val(),
+                        M_Name: $("#mName").val(),
+                        M_Department: $("#mDepartment").val(),
                         M_Account: $("#mAcc").val(),
                         M_Pwd: $("#mPwd").val(),
-                        M_Name: $("#mName").val(),
-                        M_City: $("#mCity").val(),
+                        M_Email: $("#mEmail").val(),
                         M_Competence: $("#mComp").val()
                     },
                     error: function (xhr) {
@@ -154,7 +155,6 @@
                                 tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("itemNo").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("M_Name").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Competence").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $.datepicker.formatDate('yy/mm/dd', new Date($(this).children("M_CreateDate").text().trim())) + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">';
@@ -226,8 +226,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <input type="hidden" id="tmpid" class="dialogInput" />
-    <input type="hidden" id="sortMethod" value="asc" />
-    <input type="hidden" id="sortName" value="N_City" />
     <div class="twocol margin10TB">
         <div class="right"><input id="newbtn" type="button" value="新增" class="genbtn" /></div><!-- right -->
     </div><!-- twocol -->
@@ -238,7 +236,6 @@
                 <tr>
                     <th nowrap="nowrap" style="width:40px;">項次</th>
                     <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="M_Name">姓名</a></th>
-                    <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="M_City">縣市</a></th>
                     <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="M_Competence">身份</a></th>
                     <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="M_CreateDate">建立日期</th>
                     <th nowrap="nowrap" style="width:150px;">動作</th>
@@ -254,14 +251,24 @@
                 <tr>
                     <th>姓名</th>
                     <td><input id="mName"  type="text" class="inputex width100 dialogInput" /></td>
-                    <th>縣市</th>
-                    <td><select id="mCity" class="inputex width100 dialogInput"></select></td>
+                    <th>所屬單位</th>
+                    <td>
+                        <select id="mDepartment" class="inputex width100 dialogInput">
+                            <option value="" selected="selected">請選擇</option>
+                            <option value="ISTI">ISTI</option>
+                            <option value="IDB">IDB</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <th>帳號</th>
                     <td><input id="mAcc"  type="text" class="inputex width100 dialogInput" /></td>
                     <th>密碼</th>
                     <td><input id="mPwd"  type="password" class="inputex width100 dialogInput" /></td>
+                </tr>
+                <tr>
+                    <th>E-Mail</th>
+                    <td colspan="3" align="left"><input id="mEmail"  type="text" class="inputex width100 dialogInput" /></td>
                 </tr>
                 <tr>
                     <th>權限</th>

@@ -321,7 +321,7 @@ public class AccountInfo
             //LogInfo.phone = dr.Rows[0]["M_Phone"].ToString();
             //LogInfo.email = dr.Rows[0]["M_Email"].ToString();
             //LogInfo.addr = dr.Rows[0]["M_Addr"].ToString();
-            LogInfo.city = dr.Rows[0]["M_City"].ToString();
+            LogInfo.city = dr.Rows[0]["M_Email"].ToString();
             LogInfo.competence = dr.Rows[0]["M_Competence"].ToString();
         }
     }
