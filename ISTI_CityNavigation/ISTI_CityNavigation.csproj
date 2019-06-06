@@ -191,6 +191,7 @@
     <Content Include="Manage\MemberMag.aspx" />
     <Content Include="Manage\mHandler\GetMemberInfo.aspx" />
     <Content Include="Manage\mHandler\GetMemberList.aspx" />
+    <Content Include="Manage\mHandler\ImportIDBFile.aspx" />
     <Content Include="Manage\mHandler\ImportPopulation.aspx" />
     <Content Include="Manage\PageImport.aspx" />
     <Content Include="Web.config">
@@ -240,6 +241,13 @@
     <Compile Include="Manage\mHandler\GetMemberList.aspx.designer.cs">
       <DependentUpon>GetMemberList.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\mHandler\ImportIDBFile.aspx.cs">
+      <DependentUpon>ImportIDBFile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportIDBFile.aspx.designer.cs">
+      <DependentUpon>ImportIDBFile.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\mHandler\ImportPopulation.aspx.cs">
       <DependentUpon>ImportPopulation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -254,6 +262,7 @@
     <Compile Include="Manage\PageImport.aspx.designer.cs">
       <DependentUpon>PageImport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MyClass\CitySubMoney_DB.cs" />
     <Compile Include="MyClass\LogInfo.cs" />
     <Compile Include="MyClass\Common.cs" />
     <Compile Include="MyClass\Member_DB.cs" />

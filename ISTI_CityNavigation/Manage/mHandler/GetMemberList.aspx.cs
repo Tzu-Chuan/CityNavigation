@@ -16,7 +16,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
         {
             ///-----------------------------------------------------
             ///功    能: 查詢會員列表
-            ///說明:
+            ///說    明:
             /// * Request["group"]: CodeTable Group 代碼
             /// * Request["item"]: CodeTable Item 代碼
             ///-----------------------------------------------------

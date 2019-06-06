@@ -16,7 +16,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
         {
             ///-----------------------------------------------------
             ///功    能: 查詢會員資訊
-            ///說明:
+            ///說    明:
             /// * Request["id"]: 會員ID
             ///-----------------------------------------------------
             XmlDocument xDoc = new XmlDocument();

@@ -16,7 +16,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
         {
             ///-----------------------------------------------------
             ///功    能: 新增&更新會員資料
-            ///說明:
+            ///說    明:
             /// * Request["id"]: 成員ID
             /// * Request["M_Account"]: 帳號
             /// * Request["M_Pwd"]: 密碼
