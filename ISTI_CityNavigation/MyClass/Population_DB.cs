@@ -12,6 +12,7 @@ public class Population_DB
 {
     #region 私用
     string P_ID = string.Empty;
+    string P_CityNo = string.Empty;
     string P_CityName = string.Empty;
     string P_AreaYear = string.Empty;
     string P_Area = string.Empty;
@@ -36,6 +37,10 @@ public class Population_DB
     public string _P_ID
     {
         set { P_ID = value; }
+    }
+    public string _P_CityNo
+    {
+        set { P_CityNo = value; }
     }
     public string _P_CityName
     {

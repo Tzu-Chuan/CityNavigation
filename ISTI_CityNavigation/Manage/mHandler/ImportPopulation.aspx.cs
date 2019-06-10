@@ -33,6 +33,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
             //建立DataTable Bulk Copy用
             DataTable dt = new DataTable();
+            dt.Columns.Add("P_CityNo", typeof(string));
             dt.Columns.Add("P_CityName", typeof(string));
             dt.Columns.Add("P_AreaYear", typeof(string));
             dt.Columns.Add("P_Area", typeof(string));
@@ -93,12 +94,24 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     //取得當前最大版次 (+1變成現在版次)
                     strMaxVersion =PL_DB.getMaxVersin() + 1;
 
+                    //取得代碼檔
+                    CodeTable_DB code_db = new CodeTable_DB();
+                    DataTable dtCode = code_db.getCommonCode("02");
+
+                    string cityNo = string.Empty;
+
                     //資料從第四筆開始 最後一筆是合計不進資料庫
                     for (int j = 3; j < sheet.PhysicalNumberOfRows - 1; j++)
                     {
                         if (sheet.GetRow(j).GetCell(0).ToString().Trim() != "" && sheet.GetRow(j).GetCell(0).ToString().Trim() != "全台平均")
                         {
                             DataRow row = dt.NewRow();
+                            cityNo = Common.GetCityCodeItem(dtCode, sheet.GetRow(j).GetCell(0).ToString().Trim());//縣市代碼
+                            if (cityNo == "")
+                            {
+                                throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
+                            }
+                            row["P_CityNo"] = cityNo;//縣市代碼
                             row["P_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                             row["P_AreaYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//土地面積-年
                             row["P_Area"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//土地面積
@@ -195,6 +208,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     sqlBC.DestinationTableName = "Population";
 
                     /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
+                    sqlBC.ColumnMappings.Add("P_CityNo", "P_CityNo");
                     sqlBC.ColumnMappings.Add("P_CityName", "P_CityName");
                     sqlBC.ColumnMappings.Add("P_AreaYear", "P_AreaYear");
                     sqlBC.ColumnMappings.Add("P_Area", "P_Area");
