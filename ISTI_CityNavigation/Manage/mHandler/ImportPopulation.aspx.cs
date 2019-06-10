@@ -158,7 +158,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
 
         //insert 前判斷是不是同年份有資料了
-        static void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran, string chkYear)
+        private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran, string chkYear)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(@"
@@ -180,7 +180,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
 
         //常住人口 BulkCopy
-        void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
+        private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
         {
             try
             {
@@ -214,27 +214,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     sqlBC.ColumnMappings.Add("P_CreateName", "P_CreateName");
                     sqlBC.ColumnMappings.Add("P_Status", "P_Status");
                     sqlBC.ColumnMappings.Add("P_Version", "P_Version");
-
-
-                    //P_CityName
-                    //P_AreaYear
-                    //P_Area
-                    //P_TotalYear
-                    //P_PeopleTotal
-                    //P_PeopleTotalPercentYear
-                    //P_PeopleTotalPercent
-                    //P_Year
-                    //P_Child
-                    //P_ChildPercent
-                    //P_Teenager
-                    //P_TeenagerPercent
-                    //P_OldMen
-                    //P_OldMenPercent
-                    //P_CreateDate
-                    //P_CreateID
-                    //P_CreateName
-                    //P_Status
-                    //P_Version
 
                     /// 開始寫入資料
                     sqlBC.WriteToServer(srcData);
