@@ -263,6 +263,51 @@ public class Common
         return Htmlstring;
     }
     #endregion
+    
+    #region 檢查縣市中文名稱 回傳代碼
+    public static string GetCityCodeItem(DataTable dt,string cityname)
+    {
+        string chkCity = string.Empty;
+        if (!string.IsNullOrEmpty(cityname))
+        {
+            switch (cityname) {
+                case "台北市":
+                case "臺北市":
+                    chkCity = "臺北市";
+                    break;
+                case "台中市":
+                case "臺中市":
+                    chkCity = "臺中市";
+                    break;
+                case "台南市":
+                case "臺南市":
+                    chkCity = "臺南市";
+                    break;
+                case "台東縣":
+                case "臺東縣":
+                    chkCity = "臺東縣";
+                    break;
+                default:
+                    chkCity = cityname;
+                    break;
+            }
+
+            DataRow[] rows = dt.Select("C_Item_cn = '" + chkCity + "'");
+            if (rows.Length > 0)
+            {
+                return rows[0]["C_Item"].ToString().Trim();
+            }
+            else {
+                return "";
+            }
+            
+        }
+        else
+        {
+            return "";
+        }
+    }
+    #endregion
 
 }
 
