@@ -10,6 +10,6 @@
 namespace ISTI_CityNavigation.Manage {
     
     
-    public partial class PageImport {
+    public partial class isti_import {
     }
 }

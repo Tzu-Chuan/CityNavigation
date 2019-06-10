@@ -117,7 +117,7 @@ public class Population_DB
 
 
     //取得當前最大版次
-    public string getMaxVersin()
+    public int getMaxVersin()
     {
         SqlCommand oCmd = new SqlCommand();
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
@@ -135,9 +135,10 @@ public class Population_DB
         
         oda.Fill(dt);
 
-        string strMaxNum = "0";
-        if (dt.Rows[0]["strMax"].ToString().Trim()!="") {
-            strMaxNum = dt.Rows[0]["strMax"].ToString().Trim();
+        int strMaxNum = 0;
+        if (dt.Rows[0]["strMax"].ToString().Trim() != "")
+        {
+            strMaxNum = Convert.ToInt32(dt.Rows[0]["strMax"].ToString().Trim());
         }
 
         return strMaxNum;

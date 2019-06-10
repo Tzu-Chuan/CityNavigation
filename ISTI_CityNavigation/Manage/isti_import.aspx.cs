@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace ISTI_CityNavigation.Manage
 {
-    public partial class PageImport : System.Web.UI.Page
+    public partial class isti_import : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

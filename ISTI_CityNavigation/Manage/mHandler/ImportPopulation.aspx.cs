@@ -18,7 +18,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
         Population_DB PL_DB = new Population_DB();
         //建立共用參數
         string strErrorMsg = "";
-        string strMaxVersion = "";
+        int strMaxVersion = 0;
         string chkYear = "";
         DateTime dtNow = DateTime.Now;
         protected void Page_Load(object sender, EventArgs e)
@@ -51,7 +51,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             dt.Columns.Add("P_CreateID", typeof(string));
             dt.Columns.Add("P_CreateName", typeof(string));
             dt.Columns.Add("P_Status", typeof(string));
-            dt.Columns.Add("P_Version", typeof(string));
+            dt.Columns.Add("P_Version", typeof(int));
 
             try
             {
@@ -90,8 +90,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                         throw new Exception("請檢查是否為土地人口的匯入檔案");
                     }
 
-                    //取得當前最大版次
-                    strMaxVersion = (Convert.ToInt32(PL_DB.getMaxVersin()) + 1).ToString();
+                    //取得當前最大版次 (+1變成現在版次)
+                    strMaxVersion =PL_DB.getMaxVersin() + 1;
 
                     //資料從第四筆開始 最後一筆是合計不進資料庫
                     for (int j = 3; j < sheet.PhysicalNumberOfRows - 1; j++)
@@ -151,7 +151,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             {
                 oCmd.Connection.Close();
                 oConn.Close();
-                Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg + "');</script>");
+                Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'","") + "');</script>");
             }
 
         }

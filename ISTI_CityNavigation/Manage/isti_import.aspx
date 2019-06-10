@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Manage/BackEnd.Master" AutoEventWireup="true" CodeBehind="PageImport.aspx.cs" Inherits="ISTI_CityNavigation.Manage.PageImport" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Manage/BackEnd.Master" AutoEventWireup="true" CodeBehind="isti_import.aspx.cs" Inherits="ISTI_CityNavigation.Manage.isti_import" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
