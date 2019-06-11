@@ -111,7 +111,9 @@
                     <div class="">
                         <ul>
                             <li><a href="#">退出管理</a></li>
-                            <li><a href="#">會員管理</a></li>
+                            <li><a href="<%=ResolveUrl("~/Manage/MemberMag.aspx") %>">會員管理</a></li>
+                            <li><a href="<%=ResolveUrl("~/Manage/ISTI_Import.aspx") %>">ISTI資料管理</a></li>
+                            <li><a href="<%=ResolveUrl("~/Manage/IDB_Import.aspx") %>">IDB資料管理</a></li>
                         </ul>
                     </div>
                 </div><!-- DeskSidebarMmenu -->

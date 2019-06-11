@@ -186,7 +186,7 @@
     <Content Include="js\tableHeadFixer.js" />
     <Content Include="js\tw-all.js" />
     <Content Include="Manage\IDB_Import.aspx" />
-    <Content Include="Manage\Isti_Import.aspx" />
+    <Content Include="Manage\ISTI_Import.aspx" />
     <Content Include="Manage\mHandler\addMember.aspx" />
     <Content Include="Manage\mHandler\DeleteMember.aspx" />
     <Content Include="Manage\mHandler\GetDDL.aspx" />
@@ -222,12 +222,12 @@
     <Compile Include="Manage\IDB_Import.aspx.designer.cs">
       <DependentUpon>IDB_Import.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Manage\Isti_Import.aspx.cs">
-      <DependentUpon>Isti_Import.aspx</DependentUpon>
+    <Compile Include="Manage\ISTI_Import.aspx.cs">
+      <DependentUpon>ISTI_Import.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Manage\Isti_Import.aspx.designer.cs">
-      <DependentUpon>Isti_Import.aspx</DependentUpon>
+    <Compile Include="Manage\ISTI_Import.aspx.designer.cs">
+      <DependentUpon>ISTI_Import.aspx</DependentUpon>
     </Compile>
     <Compile Include="Manage\mHandler\addMember.aspx.cs">
       <DependentUpon>addMember.aspx</DependentUpon>
