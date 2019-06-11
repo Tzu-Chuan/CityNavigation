@@ -185,6 +185,8 @@
     <Content Include="js\supposition.js" />
     <Content Include="js\tableHeadFixer.js" />
     <Content Include="js\tw-all.js" />
+    <Content Include="Manage\IDB_Import.aspx" />
+    <Content Include="Manage\Isti_Import.aspx" />
     <Content Include="Manage\mHandler\addMember.aspx" />
     <Content Include="Manage\mHandler\DeleteMember.aspx" />
     <Content Include="Manage\mHandler\GetDDL.aspx" />
@@ -193,7 +195,7 @@
     <Content Include="Manage\mHandler\GetMemberList.aspx" />
     <Content Include="Manage\mHandler\ImportIDBFile.aspx" />
     <Content Include="Manage\mHandler\ImportPopulation.aspx" />
-    <Content Include="Manage\PageImport.aspx" />
+    <Content Include="Manage\mHandler\ImportTravel.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -212,6 +214,20 @@
     </Compile>
     <Compile Include="handler\UserLogin.aspx.designer.cs">
       <DependentUpon>UserLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\IDB_Import.aspx.cs">
+      <DependentUpon>IDB_Import.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\IDB_Import.aspx.designer.cs">
+      <DependentUpon>IDB_Import.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\Isti_Import.aspx.cs">
+      <DependentUpon>Isti_Import.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\Isti_Import.aspx.designer.cs">
+      <DependentUpon>Isti_Import.aspx</DependentUpon>
     </Compile>
     <Compile Include="Manage\mHandler\addMember.aspx.cs">
       <DependentUpon>addMember.aspx</DependentUpon>
@@ -255,13 +271,14 @@
     <Compile Include="Manage\mHandler\ImportPopulation.aspx.designer.cs">
       <DependentUpon>ImportPopulation.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Manage\PageImport.aspx.cs">
-      <DependentUpon>PageImport.aspx</DependentUpon>
+    <Compile Include="Manage\mHandler\ImportTravel.aspx.cs">
+      <DependentUpon>ImportTravel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Manage\PageImport.aspx.designer.cs">
-      <DependentUpon>PageImport.aspx</DependentUpon>
+    <Compile Include="Manage\mHandler\ImportTravel.aspx.designer.cs">
+      <DependentUpon>ImportTravel.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MyClass\BudgetExecution_DB.cs" />
     <Compile Include="MyClass\CitySubMoney_DB.cs" />
     <Compile Include="MyClass\LogInfo.cs" />
     <Compile Include="MyClass\Common.cs" />
@@ -298,6 +315,7 @@
       <DependentUpon>MemberMag.aspx</DependentUpon>
     </Compile>
     <Compile Include="MyClass\Population_DB.cs" />
+    <Compile Include="MyClass\Travel_DB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
