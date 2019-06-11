@@ -24,7 +24,7 @@
                             strpost = "mHandler/ImportPopulation.aspx";
                             break;
                         case "02"://觀光
-                            strpost = "";
+                            strpost = "mHandler/ImportTravel.aspx";
                             break;       
                         case "03"://交通     
                             strpost = "";
