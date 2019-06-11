@@ -123,7 +123,7 @@ public class Member_DB
     }
     #endregion
 
-    public DataSet getMemberList(string pStart, string pEnd, string sortStr)
+    public DataSet getMemberList(string pStart, string pEnd, string sortStr,string strComp)
     {
         SqlCommand oCmd = new SqlCommand();
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
@@ -136,9 +136,10 @@ left join CodeTable as Comp on Comp.C_Group='03' and Comp.C_Item=M_Competence
 where M_Status='A' ");
 
         if (KeyWord != "")
-        {
-            sb.Append(@"and ((upper(M_Name) LIKE '%' + upper(@KeyWord) + '%') ");
-        }
+            sb.Append(@"and ((upper(M_Name) LIKE '%' + upper(@KeyWord) + '%') or (upper(M_Email) LIKE '%' + upper(@KeyWord) + '%')) ");
+
+        if (strComp != "")
+            sb.Append(@"and M_Competence=@strComp ");
 
         sb.Append(@"
 --總筆數
@@ -156,6 +157,7 @@ drop table #tmpAll  ");
         SqlDataAdapter oda = new SqlDataAdapter(oCmd);
         DataSet ds = new DataSet();
 
+        oCmd.Parameters.AddWithValue("@strComp", strComp);
         oCmd.Parameters.AddWithValue("@KeyWord", KeyWord);
         oCmd.Parameters.AddWithValue("@pStart", pStart);
         oCmd.Parameters.AddWithValue("@pEnd", pEnd);
@@ -287,5 +289,48 @@ where M_Status='A' and M_ID=@M_ID ");
         oCmd.Parameters.AddWithValue("@M_ID", M_ID);
         oda.Fill(ds);
         return ds;
+    }
+
+    /// <summary>
+    /// 檢查帳號是否存在
+    /// </summary>
+    public int CheckAccount()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"select count(*) as num from Member where M_Status='A' and M_Account=@M_Account ");
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable ds = new DataTable();
+        oCmd.Parameters.AddWithValue("@M_Account", M_Account);
+        oda.Fill(ds);
+
+        return Int32.Parse(ds.Rows[0]["num"].ToString());
+    }
+
+
+    /// <summary>
+    /// 檢查E-mail是否存在
+    /// </summary>
+    public int CheckEmail()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"select count(*) as num from Member where M_Status='A' and M_Email=@M_Email ");
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable ds = new DataTable();
+        oCmd.Parameters.AddWithValue("@M_Email", M_Email);
+        oda.Fill(ds);
+
+        return Int32.Parse(ds.Rows[0]["num"].ToString());
     }
 }

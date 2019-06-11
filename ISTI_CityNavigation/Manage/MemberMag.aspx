@@ -6,8 +6,8 @@
             Page.Option.SortMethod = "+";
             Page.Option.SortName = "M_Name";
             getData(0);
-
-            getddl("02", "#mCity");
+            
+            getddl("03", "#SearchComp");
             getddl("03", "#mComp");
 
             /// 表頭排序
@@ -53,9 +53,12 @@
                             $(data).find("data_item").each(function (i) {
                                 $("#tmpid").val($(this).children("M_ID").text().trim());
                                 $("#mAcc").val($(this).children("M_Account").text().trim());
+                                $("#tmpacc").val($(this).children("M_Account").text().trim());
                                 $("#mPwd").val($(this).children("M_Pwd").text().trim());
+                                $("#tmppw").val($(this).children("M_Pwd").text().trim());
                                 $("#mName").val($(this).children("M_Name").text().trim());
                                 $("#mEmail").val($(this).children("M_Email").text().trim());
+                                $("#tmpmail").val($(this).children("M_Email").text().trim());
                                 $("#mComp").val($(this).children("M_Competence").text().trim());
                             });
                             doShowDialog("編輯會員");
@@ -72,6 +75,11 @@
 
             /// 儲存
             $(document).on("click", "#savebtn", function () {
+                if (Verification() != "") {
+                    alert(Verification());
+                    return;
+                }
+
                 $.ajax({
                     type: "POST",
                     async: false, //在沒有返回值之前,不會執行下一步動作
@@ -79,10 +87,12 @@
                     data: {
                         id: $("#tmpid").val(),
                         M_Name: $("#mName").val(),
-                        M_Department: $("#mDepartment").val(),
                         M_Account: $("#mAcc").val(),
+                        oldacc: $("#tmpacc").val(),
                         M_Pwd: $("#mPwd").val(),
+                        oldpw: $("#tmppw").val(),
                         M_Email: $("#mEmail").val(),
+                        oldmail: $("#tmpmail").val(),
                         M_Competence: $("#mComp").val()
                     },
                     error: function (xhr) {
@@ -101,7 +111,7 @@
                 });
             });
 
-            /// 儲存
+            /// 刪除
             $(document).on("click", "input[name='delbtn']", function () {
                 if (confirm('確定刪除?')) {
                     $.ajax({
@@ -134,6 +144,7 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "mHandler/GetMemberList.aspx",
                 data: {
+                    SearchComp: $("#SearchComp").val(),
                     SearchStr: $("#SearchStr").val(),
                     PageNo: p,
                     PageSize: Page.Option.PageSize,
@@ -155,8 +166,9 @@
                                 tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("itemNo").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("M_Name").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Competence").text().trim() + '</td>';
+                                tabstr += '<td align="left" nowrap="nowrap">' + $(this).children("M_Email").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $.datepicker.formatDate('yy/mm/dd', new Date($(this).children("M_CreateDate").text().trim())) + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Competence").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">';
                                 tabstr += '<input class="genbtn" type="button" name="modbtn" value="修改" aid="' + $(this).children("M_ID").text().trim() + '">&nbsp;';
                                 tabstr += '<input class="genbtn" type="button" name="delbtn" value="刪除" aid="' + $(this).children("M_ID").text().trim() + '">';
@@ -222,12 +234,40 @@
                 }
             });
         }
+
+        function Verification() {
+            var msg = "";
+            if ($("#mName").val() == "")
+                msg += "請輸入【姓名】\n";
+            if ($("#mAcc").val() == "")
+                msg += "請輸入【帳號】\n";
+            if ($("#mPwd").val() == "")
+                msg += "請輸入【密碼】\n";
+            if ($("#mEmail").val() == "")
+                msg += "請輸入【E-Mail】\n";
+            if ($("#mEmail").val().trim() != "") {
+                var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
+                if (!pattern.test($("#mEmail").val()))
+                    msg += "請輸入正確Email\n";
+            }
+            if ($("#mComp").val() == "")
+                msg += "請選擇【所屬單位/權限】\n";
+            return msg;
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <input type="hidden" id="tmpid" class="dialogInput" />
+    <input type="hidden" id="tmppw" class="dialogInput" />
+    <input type="hidden" id="tmpacc" class="dialogInput" />
+    <input type="hidden" id="tmpmail" class="dialogInput" />
+    <div class="margin10T">
+        所屬單位/權限：<select id="SearchComp"class="inputex"></select>&nbsp;&nbsp;
+        關鍵字：<input id="SearchStr" type="test" class="inputex width30" />&nbsp;&nbsp;
+        <input id="SearchBtn" type="button" value="查詢" class="genbtn" onclick="getData(0)" />
+    </div>
     <div class="twocol margin10TB">
-        <div class="right"><input id="newbtn" type="button" value="新增" class="genbtn" /></div><!-- right -->
+        <div class="right"><input id="newbtn" type="button" value="新增" class="genbtn" /></div>
     </div><!-- twocol -->
 
     <div class="stripeMe margin10T font-normal">
@@ -236,8 +276,9 @@
                 <tr>
                     <th nowrap="nowrap" style="width:40px;">項次</th>
                     <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="M_Name">姓名</a></th>
-                    <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="M_Competence">身份</a></th>
+                    <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="M_Email">E-Mail</a></th>
                     <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="M_CreateDate">建立日期</th>
+                    <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="M_Competence">所屬單位/權限</a></th>
                     <th nowrap="nowrap" style="width:150px;">動作</th>
                 </tr>
             </thead>
@@ -250,15 +291,7 @@
             <table style="border:none; width:100%;" cellspacing="0" cellpadding="0">
                 <tr>
                     <th>姓名</th>
-                    <td><input id="mName"  type="text" class="inputex width100 dialogInput" /></td>
-                    <th>所屬單位</th>
-                    <td>
-                        <select id="mDepartment" class="inputex width100 dialogInput">
-                            <option value="" selected="selected">請選擇</option>
-                            <option value="ISTI">ISTI</option>
-                            <option value="IDB">IDB</option>
-                        </select>
-                    </td>
+                    <td colspan="3"><input id="mName"  type="text" class="inputex width100 dialogInput" /></td>
                 </tr>
                 <tr>
                     <th>帳號</th>
@@ -271,7 +304,7 @@
                     <td colspan="3" align="left"><input id="mEmail"  type="text" class="inputex width100 dialogInput" /></td>
                 </tr>
                 <tr>
-                    <th>權限</th>
+                    <th>所屬單位/權限</th>
                     <td colspan="3" align="left"><select id="mComp" class="inputex dialogInput"></select></td>
                 </tr>
             </table>
