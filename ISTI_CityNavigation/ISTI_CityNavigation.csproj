@@ -315,6 +315,7 @@
       <DependentUpon>MemberMag.aspx</DependentUpon>
     </Compile>
     <Compile Include="MyClass\Population_DB.cs" />
+    <Compile Include="MyClass\ServiceSubMoney_DB.cs" />
     <Compile Include="MyClass\Travel_DB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

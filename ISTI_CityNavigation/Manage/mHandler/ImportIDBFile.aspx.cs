@@ -17,6 +17,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
     {
         CitySubMoney_DB csm_db = new CitySubMoney_DB();
         BudgetExecution_DB be_db = new BudgetExecution_DB();
+        ServiceSubMoney_DB ssm_db = new ServiceSubMoney_DB();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -41,6 +42,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 DoCitySubMoney(workbook, oConn, myTrans);
                 DoBudgetExecution(workbook, oConn, myTrans);
+                DoServiceSubMoney(workbook, oConn, myTrans);
 
                 myTrans.Commit();
                 oCmd.Connection.Close();
@@ -55,46 +57,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
 
         #region 執行各Sheet匯入
-        private void DoCitySubMoney(IWorkbook workbook, SqlConnection oConn, SqlTransaction myTrans)
-        {
-            /// get sheet 1
-            ISheet sheet = workbook.GetSheetAt(1);
-            /// 抓最大版次+1
-            int maxV = csm_db.getMaxVersion() + 1;
-            DataTable dt = CreateCitySubMoney();
-            /// 資料從第3筆開始 最後一筆合計不進資料庫
-            for (int i = 2; i < sheet.PhysicalNumberOfRows - 2; i++)
-            {
-                DataRow row = dt.NewRow();
-                row["C_City"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
-                row["C_PlanCount_NotAll"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
-                row["C_SubMoney_NotAll"] = sheet.GetRow(i).GetCell(2).ToString().Trim();
-                row["C_PlanMoney_NotAll"] = sheet.GetRow(i).GetCell(3).ToString().Trim();
-                row["C_AssignSubMoney"] = sheet.GetRow(i).GetCell(4).ToString().Trim();
-                row["C_AssignTotalMoney"] = sheet.GetRow(i).GetCell(5).ToString().Trim();
-                row["C_CitySubMoneyRatio_NotAll"] = sheet.GetRow(i).GetCell(6).ToString().Trim().Replace("%", "");
-                row["C_CityTotalMoneyRatio_NotAll"] = sheet.GetRow(i).GetCell(7).ToString().Trim().Replace("%", "");
-                row["C_PlanCount"] = sheet.GetRow(i).GetCell(8).ToString().Trim();
-                row["C_SubMoney"] = sheet.GetRow(i).GetCell(9).ToString().Trim();
-                row["C_PlanMoney"] = sheet.GetRow(i).GetCell(10).ToString().Trim();
-                row["C_CitySubMoneyRatio"] = sheet.GetRow(i).GetCell(11).ToString().Trim().Replace("%", "");
-                row["C_CityTotalMoneyRatio"] = sheet.GetRow(i).GetCell(12).ToString().Trim().Replace("%", "");
-                row["C_CreateId"] = LogInfo.mGuid;
-                row["C_CreateName"] = LogInfo.name;
-                row["C_Version"] = maxV;
-                row["C_Status"] = "A";
-                dt.Rows.Add(row);
-            }
-            if (dt.Rows.Count > 0)
-            {
-                csm_db.BeforeBulkCopy(oConn, myTrans); // update old data set status='D'
-                csm_db.DoBulkCopy(dt, myTrans);
-            }
-        }
 
+        #region 預計經費執行情形
         private void DoBudgetExecution(IWorkbook workbook, SqlConnection oConn, SqlTransaction myTrans)
         {
-            /// get sheet 1
             ISheet sheet = workbook.GetSheetAt(0);
             /// 抓最大版次+1
             int maxV = be_db.getMaxVersion() + 1;
@@ -124,7 +90,80 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
         #endregion
 
+        #region 補助經費縣市分析
+        private void DoCitySubMoney(IWorkbook workbook, SqlConnection oConn, SqlTransaction myTrans)
+        {
+            ISheet sheet = workbook.GetSheetAt(1);
+            /// 抓最大版次+1
+            int maxV = csm_db.getMaxVersion() + 1;
+            DataTable dt = CreateCitySubMoney();
+            /// 資料從第3筆開始 最後一筆合計不進資料庫
+            for (int i = 2; i < sheet.PhysicalNumberOfRows - 1; i++)
+            {
+                DataRow row = dt.NewRow();
+                row["C_City"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
+                row["C_PlanCount_NotAll"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
+                row["C_SubMoney_NotAll"] = sheet.GetRow(i).GetCell(2).ToString().Trim();
+                row["C_PlanMoney_NotAll"] = sheet.GetRow(i).GetCell(3).ToString().Trim();
+                row["C_AssignSubMoney"] = sheet.GetRow(i).GetCell(4).ToString().Trim();
+                row["C_AssignTotalMoney"] = sheet.GetRow(i).GetCell(5).ToString().Trim();
+                row["C_CitySubMoneyRatio_NotAll"] = sheet.GetRow(i).GetCell(6).ToString().Trim();
+                row["C_CityTotalMoneyRatio_NotAll"] = sheet.GetRow(i).GetCell(7).ToString().Trim();
+                row["C_PlanCount"] = sheet.GetRow(i).GetCell(8).ToString().Trim();
+                row["C_SubMoney"] = sheet.GetRow(i).GetCell(9).ToString().Trim();
+                row["C_PlanMoney"] = sheet.GetRow(i).GetCell(10).ToString().Trim();
+                row["C_CitySubMoneyRatio"] = sheet.GetRow(i).GetCell(11).ToString().Trim();
+                row["C_CityTotalMoneyRatio"] = sheet.GetRow(i).GetCell(12).ToString().Trim();
+                row["C_CreateId"] = LogInfo.mGuid;
+                row["C_CreateName"] = LogInfo.name;
+                row["C_Version"] = maxV;
+                row["C_Status"] = "A";
+                dt.Rows.Add(row);
+            }
+            if (dt.Rows.Count > 0)
+            {
+                csm_db.BeforeBulkCopy(oConn, myTrans); // update old data set status='D'
+                csm_db.DoBulkCopy(dt, myTrans);
+            }
+        }
+        #endregion
+
+        #region 補助經費服務主軸分析
+        private void DoServiceSubMoney(IWorkbook workbook, SqlConnection oConn, SqlTransaction myTrans)
+        {
+            ISheet sheet = workbook.GetSheetAt(2);
+            /// 抓最大版次+1
+            int maxV = ssm_db.getMaxVersion() + 1;
+            DataTable dt = CreateServiceSubMoney();
+            /// 資料從第3筆開始 最後一筆合計不進資料庫
+            for (int i = 2; i < sheet.PhysicalNumberOfRows; i++)
+            {
+                DataRow row = dt.NewRow();
+                row["S_Type"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
+                row["S_PlanCount"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
+                row["S_Subsidy"] = sheet.GetRow(i).GetCell(2).ToString().Trim();
+                row["S_TotalMoney"] = sheet.GetRow(i).GetCell(3).ToString().Trim();
+                row["S_SubsidyRatio"] = sheet.GetRow(i).GetCell(4).ToString().Trim();
+                row["S_TotalMoneyRatio"] = sheet.GetRow(i).GetCell(5).ToString().Trim();
+                row["S_CreateId"] = LogInfo.mGuid;
+                row["S_CreateName"] = LogInfo.name;
+                row["S_Version"] = maxV;
+                row["S_Status"] = "A";
+                dt.Rows.Add(row);
+            }
+            if (dt.Rows.Count > 0)
+            {
+                ssm_db.BeforeBulkCopy(oConn, myTrans); // update old data set status='D'
+                ssm_db.DoBulkCopy(dt, myTrans);
+            }
+        }
+        #endregion
+
+        #endregion
+
         #region 建立DataTable
+
+        #region CitySubMoney
         private DataTable CreateCitySubMoney()
         {
             DataTable dt = new DataTable();
@@ -147,7 +186,9 @@ namespace ISTI_CityNavigation.Manage.mHandler
             dt.Columns.Add("C_Status", typeof(string));
             return dt;
         }
+        #endregion
 
+        #region BudgetExecution
         private DataTable CreateBudgetExecution()
         {
             DataTable dt = new DataTable();
@@ -165,6 +206,27 @@ namespace ISTI_CityNavigation.Manage.mHandler
             dt.Columns.Add("B_Status", typeof(string));
             return dt;
         }
+        #endregion
+
+        #region ServiceSubMoney
+        private DataTable CreateServiceSubMoney()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("S_ID", typeof(string));
+            dt.Columns.Add("S_Type", typeof(string));
+            dt.Columns.Add("S_PlanCount", typeof(string));
+            dt.Columns.Add("S_Subsidy", typeof(string));
+            dt.Columns.Add("S_TotalMoney", typeof(string));
+            dt.Columns.Add("S_SubsidyRatio", typeof(string));
+            dt.Columns.Add("S_TotalMoneyRatio", typeof(string));
+            dt.Columns.Add("S_CreateId", typeof(string));
+            dt.Columns.Add("S_CreateName", typeof(string));
+            dt.Columns.Add("S_Version", typeof(Int32));
+            dt.Columns.Add("S_Status", typeof(string));
+            return dt;
+        }
+        #endregion
+
         #endregion
     }
 }
