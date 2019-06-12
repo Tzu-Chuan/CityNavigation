@@ -4,6 +4,7 @@
         //上傳按鈕
         $(document).ready(function () {
             $("#upbtn").click(function () {
+            $("#ErrMsg").html("");
                 try {
                     if ($("#file0").val() == "") {
                         alert("請選擇要匯入的檔案");
@@ -40,13 +41,14 @@
         });
 
         function feedbackFun(msg) {
-            alert(msg);
+            $("#ErrMsg").html(msg);
         }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div style="margin-top:10px;">
+    <div class="margin10T">
         <input id="file0" name="file0" type="file" class="inputex" />
         <input id="upbtn" type="button" class="genbtn" value="上傳" />
     </div>
+    <div id="ErrMsg" class="margin10T" style="color:red;"></div>
 </asp:Content>

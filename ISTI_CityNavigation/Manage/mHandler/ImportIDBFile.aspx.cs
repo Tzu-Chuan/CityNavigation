@@ -18,6 +18,9 @@ namespace ISTI_CityNavigation.Manage.mHandler
         CitySubMoney_DB csm_db = new CitySubMoney_DB();
         BudgetExecution_DB be_db = new BudgetExecution_DB();
         ServiceSubMoney_DB ssm_db = new ServiceSubMoney_DB();
+        CategorySubMoney_DB cgsm_db = new CategorySubMoney_DB();
+        CitySummaryTable_DB cst_db = new CitySummaryTable_DB();
+        string err = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -40,9 +43,16 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 IWorkbook workbook = new XSSFWorkbook(aFile.InputStream);
 
+                /// 預計經費執行情形
                 DoCitySubMoney(workbook, oConn, myTrans);
+                /// 補助經費縣市分析
                 DoBudgetExecution(workbook, oConn, myTrans);
+                /// 補助經費服務主軸分析
                 DoServiceSubMoney(workbook, oConn, myTrans);
+                /// 補助經費計畫類別分析
+                DoCategorySubMoney(workbook, oConn, myTrans);
+                /// 縣市總表
+                DoCitySummaryTable(workbook, oConn, myTrans);
 
                 myTrans.Commit();
                 oCmd.Connection.Close();
@@ -52,7 +62,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             catch (Exception ex)
             {
                 myTrans.Rollback();
-                Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + ex.Message.Replace("'", "") + "');</script>");
+                Response.Write("<script type='text/JavaScript'>parent.feedbackFun('第" + err + "筆" + ex.Message.Replace("'", "") + "');</script>");
             }
         }
 
@@ -159,6 +169,122 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
         #endregion
 
+        #region 補助經費計畫類別分析
+        private void DoCategorySubMoney(IWorkbook workbook, SqlConnection oConn, SqlTransaction myTrans)
+        {
+            ISheet sheet = workbook.GetSheetAt(3);
+            /// 抓最大版次+1
+            int maxV = cgsm_db.getMaxVersion() + 1;
+            DataTable dt = CreateCategorySubMoney();
+            /// 資料從第3筆開始 最後一筆合計不進資料庫
+            for (int i = 2; i < sheet.PhysicalNumberOfRows; i++)
+            {
+                DataRow row = dt.NewRow();
+                row["C_Type"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
+                row["C_PlanCount"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
+                row["C_Subsidy"] = sheet.GetRow(i).GetCell(2).ToString().Trim();
+                row["C_TotalMoney"] = sheet.GetRow(i).GetCell(3).ToString().Trim();
+                row["C_SubsidyRatio"] = sheet.GetRow(i).GetCell(4).ToString().Trim();
+                row["C_TotalMoneyRatio"] = sheet.GetRow(i).GetCell(5).ToString().Trim();
+                row["C_CreateId"] = LogInfo.mGuid;
+                row["C_CreateName"] = LogInfo.name;
+                row["C_Version"] = maxV;
+                row["C_Status"] = "A";
+                dt.Rows.Add(row);
+            }
+            if (dt.Rows.Count > 0)
+            {
+                cgsm_db.BeforeBulkCopy(oConn, myTrans); // update old data set status='D'
+                cgsm_db.DoBulkCopy(dt, myTrans);
+            }
+        }
+        #endregion
+
+        #region 縣市總表
+        private void DoCitySummaryTable(IWorkbook workbook, SqlConnection oConn, SqlTransaction myTrans)
+        {
+            ISheet sheet = workbook.GetSheetAt(4);
+            /// 抓最大版次+1
+            int maxV = cst_db.getMaxVersion() + 1;
+            DataTable dt = CreateCitySummaryTable();
+            /// 資料從第3筆開始 最後一筆合計不進資料庫
+            for (int i = 2; i < sheet.PhysicalNumberOfRows; i++)
+            {
+                err = i.ToString();
+                DataRow row = dt.NewRow();
+                row["CS_PlanSchedule"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
+                row["CS_No"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
+                row["CS_PlanType"] = sheet.GetRow(i).GetCell(2).ToString().Trim();
+                row["CS_PlanTypeDetail"] = sheet.GetRow(i).GetCell(3).ToString().Trim();
+                row["CS_CaseNo"] = sheet.GetRow(i).GetCell(4).ToString().Trim();
+                row["CS_HostCompany"] = sheet.GetRow(i).GetCell(5).ToString().Trim();
+                row["CS_JointCompany"] = sheet.GetRow(i).GetCell(6).ToString().Trim();
+                row["CS_PlanName"] = sheet.GetRow(i).GetCell(7).ToString().Trim();
+                row["CS_ServiceArea"] = sheet.GetRow(i).GetCell(8).ToString().Trim();
+                row["CS_ServiceType"] = sheet.GetRow(i).GetCell(9).ToString().Trim();
+                row["CS_CityArea"] = sheet.GetRow(i).GetCell(10).ToString().Trim();
+                row["CS_CityAreaDetail"] = sheet.GetRow(i).GetCell(11).ToString().Trim();
+                row["CS_PlanTotalMoney"] = sheet.GetRow(i).GetCell(12).ToString().Trim();
+                row["CS_PlanSubMoney"] = sheet.GetRow(i).GetCell(13).ToString().Trim();
+                row["CS_NewTaipei_Total"] = sheet.GetRow(i).GetCell(14).ToString().Trim();
+                row["CS_Taipei_Total"] = sheet.GetRow(i).GetCell(15).ToString().Trim();
+                row["CS_Taoyuan_Total"] = sheet.GetRow(i).GetCell(16).ToString().Trim();
+                row["CS_Taichung_Total"] = sheet.GetRow(i).GetCell(17).ToString().Trim();
+                row["CS_Tainan_Total"] = sheet.GetRow(i).GetCell(18).ToString().Trim();
+                row["CS_Kaohsiung_Total"] = sheet.GetRow(i).GetCell(19).ToString().Trim();
+                row["CS_Yilan_Total"] = sheet.GetRow(i).GetCell(20).ToString().Trim();
+                row["CS_HsinchuCounty_Total"] = sheet.GetRow(i).GetCell(21).ToString().Trim();
+                row["CS_Miaoli_Total"] = sheet.GetRow(i).GetCell(22).ToString().Trim();
+                row["CS_Changhua_Total"] = sheet.GetRow(i).GetCell(23).ToString().Trim();
+                row["CS_Nantou_Total"] = sheet.GetRow(i).GetCell(24).ToString().Trim();
+                row["CS_Yunlin_Total"] = sheet.GetRow(i).GetCell(25).ToString().Trim();
+                row["CS_ChiayiCounty_Total"] = sheet.GetRow(i).GetCell(26).ToString().Trim();
+                row["CS_Pingtung_Total"] = sheet.GetRow(i).GetCell(27).ToString().Trim();
+                row["CS_Taitung_Total"] = sheet.GetRow(i).GetCell(28).ToString().Trim();
+                row["CS_Hualien_Total"] = sheet.GetRow(i).GetCell(29).ToString().Trim();
+                row["CS_Penghu_Total"] = sheet.GetRow(i).GetCell(30).ToString().Trim();
+                row["CS_Keelung_Total"] = sheet.GetRow(i).GetCell(31).ToString().Trim();
+                row["CS_HsinchuCity_Total"] = sheet.GetRow(i).GetCell(32).ToString().Trim();
+                row["CS_ChiayiCity_Total"] = sheet.GetRow(i).GetCell(33).ToString().Trim();
+                row["CS_Kinmen_Total"] = sheet.GetRow(i).GetCell(34).ToString().Trim();
+                row["CS_Lienchiang_Total"] = sheet.GetRow(i).GetCell(35).ToString().Trim();
+                row["CS_NewTaipei_Sub"] = sheet.GetRow(i).GetCell(36).ToString().Trim();
+                row["CS_Taipei_Sub"] = sheet.GetRow(i).GetCell(37).ToString().Trim();
+                row["CS_Taoyuan_Sub"] = sheet.GetRow(i).GetCell(38).ToString().Trim();
+                row["CS_Taichung_Sub"] = sheet.GetRow(i).GetCell(39).ToString().Trim();
+                row["CS_Tainan_Sub"] = sheet.GetRow(i).GetCell(40).ToString().Trim();
+                row["CS_Kaohsiung_Sub"] = sheet.GetRow(i).GetCell(41).ToString().Trim();
+                row["CS_Yilan_Sub"] = sheet.GetRow(i).GetCell(42).ToString().Trim();
+                row["CS_HsinchuCounty_Sub"] = sheet.GetRow(i).GetCell(43).ToString().Trim();
+                row["CS_Miaoli_Sub"] = sheet.GetRow(i).GetCell(44).ToString().Trim();
+                row["CS_Changhua_Sub"] = sheet.GetRow(i).GetCell(45).ToString().Trim();
+                row["CS_Nantou_Sub"] = sheet.GetRow(i).GetCell(46).ToString().Trim();
+                row["CS_Yunlin_Sub"] = sheet.GetRow(i).GetCell(47).ToString().Trim();
+                row["CS_ChiayiCounty_Sub"] = sheet.GetRow(i).GetCell(48).ToString().Trim();
+                row["CS_Pingtung_Sub"] = sheet.GetRow(i).GetCell(49).ToString().Trim();
+                row["CS_Taitung_Sub"] = sheet.GetRow(i).GetCell(50).ToString().Trim();
+                row["CS_Hualien_Sub"] = sheet.GetRow(i).GetCell(51).ToString().Trim();
+                row["CS_Penghu_Sub"] = sheet.GetRow(i).GetCell(52).ToString().Trim();
+                row["CS_Keelung_Sub"] = sheet.GetRow(i).GetCell(53).ToString().Trim();
+                row["CS_HsinchuCity_Sub"] = sheet.GetRow(i).GetCell(54).ToString().Trim();
+                row["CS_ChiayiCity_Sub"] = sheet.GetRow(i).GetCell(55).ToString().Trim();
+                row["CS_Kinmen_Sub"] = sheet.GetRow(i).GetCell(56).ToString().Trim();
+                row["CS_Lienchiang_Sub"] = sheet.GetRow(i).GetCell(57).ToString().Trim();
+                row["CS_CreateId"] = LogInfo.mGuid;
+                row["CS_CreateName"] = LogInfo.name;
+                row["CS_Version"] = maxV;
+                row["CS_Status"] = "A";
+                dt.Rows.Add(row);
+                err = (i+1).ToString();
+            }
+            if (dt.Rows.Count > 0)
+            {
+                cst_db.BeforeBulkCopy(oConn, myTrans); // update old data set status='D'
+                cst_db.DoBulkCopy(dt, myTrans);
+            }
+        }
+        #endregion
+
         #endregion
 
         #region 建立DataTable
@@ -223,6 +349,95 @@ namespace ISTI_CityNavigation.Manage.mHandler
             dt.Columns.Add("S_CreateName", typeof(string));
             dt.Columns.Add("S_Version", typeof(Int32));
             dt.Columns.Add("S_Status", typeof(string));
+            return dt;
+        }
+        #endregion
+
+        #region CategorySubMoney
+        private DataTable CreateCategorySubMoney()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("C_ID", typeof(string));
+            dt.Columns.Add("C_Type", typeof(string));
+            dt.Columns.Add("C_PlanCount", typeof(string));
+            dt.Columns.Add("C_Subsidy", typeof(string));
+            dt.Columns.Add("C_TotalMoney", typeof(string));
+            dt.Columns.Add("C_SubsidyRatio", typeof(string));
+            dt.Columns.Add("C_TotalMoneyRatio", typeof(string));
+            dt.Columns.Add("C_CreateId", typeof(string));
+            dt.Columns.Add("C_CreateName", typeof(string));
+            dt.Columns.Add("C_Version", typeof(Int32));
+            dt.Columns.Add("C_Status", typeof(string));
+            return dt;
+        }
+        #endregion
+
+        #region CitySummaryTable
+        private DataTable CreateCitySummaryTable()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("CS_PlanSchedule", typeof(string));
+            dt.Columns.Add("CS_No", typeof(string));
+            dt.Columns.Add("CS_PlanType", typeof(string));
+            dt.Columns.Add("CS_PlanTypeDetail", typeof(string));
+            dt.Columns.Add("CS_CaseNo", typeof(string));
+            dt.Columns.Add("CS_HostCompany", typeof(string));
+            dt.Columns.Add("CS_JointCompany", typeof(string));
+            dt.Columns.Add("CS_PlanName", typeof(string));
+            dt.Columns.Add("CS_ServiceArea", typeof(string));
+            dt.Columns.Add("CS_ServiceType", typeof(string));
+            dt.Columns.Add("CS_CityArea", typeof(string));
+            dt.Columns.Add("CS_CityAreaDetail", typeof(string));
+            dt.Columns.Add("CS_PlanTotalMoney", typeof(string));
+            dt.Columns.Add("CS_PlanSubMoney", typeof(string));
+            dt.Columns.Add("CS_NewTaipei_Total", typeof(string));
+            dt.Columns.Add("CS_Taipei_Total", typeof(string));
+            dt.Columns.Add("CS_Taoyuan_Total", typeof(string));
+            dt.Columns.Add("CS_Taichung_Total", typeof(string));
+            dt.Columns.Add("CS_Tainan_Total", typeof(string));
+            dt.Columns.Add("CS_Kaohsiung_Total", typeof(string));
+            dt.Columns.Add("CS_Yilan_Total", typeof(string));
+            dt.Columns.Add("CS_HsinchuCounty_Total", typeof(string));
+            dt.Columns.Add("CS_Miaoli_Total", typeof(string));
+            dt.Columns.Add("CS_Changhua_Total", typeof(string));
+            dt.Columns.Add("CS_Nantou_Total", typeof(string));
+            dt.Columns.Add("CS_Yunlin_Total", typeof(string));
+            dt.Columns.Add("CS_ChiayiCounty_Total", typeof(string));
+            dt.Columns.Add("CS_Pingtung_Total", typeof(string));
+            dt.Columns.Add("CS_Taitung_Total", typeof(string));
+            dt.Columns.Add("CS_Hualien_Total", typeof(string));
+            dt.Columns.Add("CS_Penghu_Total", typeof(string));
+            dt.Columns.Add("CS_Keelung_Total", typeof(string));
+            dt.Columns.Add("CS_HsinchuCity_Total", typeof(string));
+            dt.Columns.Add("CS_ChiayiCity_Total", typeof(string));
+            dt.Columns.Add("CS_Kinmen_Total", typeof(string));
+            dt.Columns.Add("CS_Lienchiang_Total", typeof(string));
+            dt.Columns.Add("CS_NewTaipei_Sub", typeof(string));
+            dt.Columns.Add("CS_Taipei_Sub", typeof(string));
+            dt.Columns.Add("CS_Taoyuan_Sub", typeof(string));
+            dt.Columns.Add("CS_Taichung_Sub", typeof(string));
+            dt.Columns.Add("CS_Tainan_Sub", typeof(string));
+            dt.Columns.Add("CS_Kaohsiung_Sub", typeof(string));
+            dt.Columns.Add("CS_Yilan_Sub", typeof(string));
+            dt.Columns.Add("CS_HsinchuCounty_Sub", typeof(string));
+            dt.Columns.Add("CS_Miaoli_Sub", typeof(string));
+            dt.Columns.Add("CS_Changhua_Sub", typeof(string));
+            dt.Columns.Add("CS_Nantou_Sub", typeof(string));
+            dt.Columns.Add("CS_Yunlin_Sub", typeof(string));
+            dt.Columns.Add("CS_ChiayiCounty_Sub", typeof(string));
+            dt.Columns.Add("CS_Pingtung_Sub", typeof(string));
+            dt.Columns.Add("CS_Taitung_Sub", typeof(string));
+            dt.Columns.Add("CS_Hualien_Sub", typeof(string));
+            dt.Columns.Add("CS_Penghu_Sub", typeof(string));
+            dt.Columns.Add("CS_Keelung_Sub", typeof(string));
+            dt.Columns.Add("CS_HsinchuCity_Sub", typeof(string));
+            dt.Columns.Add("CS_ChiayiCity_Sub", typeof(string));
+            dt.Columns.Add("CS_Kinmen_Sub", typeof(string));
+            dt.Columns.Add("CS_Lienchiang_Sub", typeof(string));
+            dt.Columns.Add("CS_CreateId", typeof(string));
+            dt.Columns.Add("CS_CreateName", typeof(string));
+            dt.Columns.Add("CS_Version", typeof(Int32));
+            dt.Columns.Add("CS_Status", typeof(string));
             return dt;
         }
         #endregion
