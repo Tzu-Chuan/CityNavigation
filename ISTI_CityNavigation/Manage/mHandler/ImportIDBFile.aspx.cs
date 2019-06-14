@@ -20,6 +20,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
         ServiceSubMoney_DB ssm_db = new ServiceSubMoney_DB();
         CategorySubMoney_DB cgsm_db = new CategorySubMoney_DB();
         CitySummaryTable_DB cst_db = new CitySummaryTable_DB();
+        CityPlanTable_DB cpt_db = new CityPlanTable_DB();
+        CodeTable_DB ct_db = new CodeTable_DB();
         string err = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -53,6 +55,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 DoCategorySubMoney(workbook, oConn, myTrans);
                 /// 縣市總表
                 DoCitySummaryTable(workbook, oConn, myTrans);
+                /// 各縣市計畫列表
+                DoCityPlanTable(workbook, oConn, myTrans);
 
                 myTrans.Commit();
                 oCmd.Connection.Close();
@@ -62,7 +66,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             catch (Exception ex)
             {
                 myTrans.Rollback();
-                Response.Write("<script type='text/JavaScript'>parent.feedbackFun('第" + err + "筆" + ex.Message.Replace("'", "") + "');</script>");
+                Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + err + "<br>錯誤訊息：" + ex.Message.Replace("'", "") + "');</script>");
             }
         }
 
@@ -75,9 +79,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 抓最大版次+1
             int maxV = be_db.getMaxVersion() + 1;
             DataTable dt = CreateBudgetExecution();
-            /// 資料從第3筆開始 最後一筆合計不進資料庫
+            /// 資料從第3筆開始
             for (int i = 2; i < 5; i++)
             {
+                err = "Sheet：" + sheet.SheetName.Trim() + " 第 " + i.ToString() + " 筆資料";
                 DataRow row = dt.NewRow();
                 row["B_Commission"] = sheet.GetRow(2).GetCell(i).ToString().Trim();
                 row["B_Subsidy"] = sheet.GetRow(3).GetCell(i).ToString().Trim();
@@ -107,9 +112,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 抓最大版次+1
             int maxV = csm_db.getMaxVersion() + 1;
             DataTable dt = CreateCitySubMoney();
-            /// 資料從第3筆開始 最後一筆合計不進資料庫
+            /// 資料從第3筆開始
             for (int i = 2; i < sheet.PhysicalNumberOfRows - 1; i++)
             {
+                err = "Sheet：" + sheet.SheetName.Trim() + " 第 " + i.ToString() + " 筆資料";
                 DataRow row = dt.NewRow();
                 row["C_City"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
                 row["C_PlanCount_NotAll"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
@@ -145,9 +151,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 抓最大版次+1
             int maxV = ssm_db.getMaxVersion() + 1;
             DataTable dt = CreateServiceSubMoney();
-            /// 資料從第3筆開始 最後一筆合計不進資料庫
+            /// 資料從第3筆開始
             for (int i = 2; i < sheet.PhysicalNumberOfRows; i++)
             {
+                err = "Sheet：" + sheet.SheetName.Trim() + " 第 " + i.ToString() + " 筆資料";
                 DataRow row = dt.NewRow();
                 row["S_Type"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
                 row["S_PlanCount"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
@@ -176,9 +183,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 抓最大版次+1
             int maxV = cgsm_db.getMaxVersion() + 1;
             DataTable dt = CreateCategorySubMoney();
-            /// 資料從第3筆開始 最後一筆合計不進資料庫
+            /// 資料從第3筆開始
             for (int i = 2; i < sheet.PhysicalNumberOfRows; i++)
             {
+                err = "Sheet：" + sheet.SheetName.Trim() + " 第 " + i.ToString() + " 筆資料";
                 DataRow row = dt.NewRow();
                 row["C_Type"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
                 row["C_PlanCount"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
@@ -207,10 +215,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 抓最大版次+1
             int maxV = cst_db.getMaxVersion() + 1;
             DataTable dt = CreateCitySummaryTable();
-            /// 資料從第3筆開始 最後一筆合計不進資料庫
+            /// 資料從第3筆開始
             for (int i = 2; i < sheet.PhysicalNumberOfRows; i++)
             {
-                err = i.ToString();
+                err = "Sheet：" + sheet.SheetName.Trim() + " 第 " + i.ToString() + " 筆資料";
                 DataRow row = dt.NewRow();
                 row["CS_PlanSchedule"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
                 row["CS_No"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
@@ -275,12 +283,67 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 row["CS_Version"] = maxV;
                 row["CS_Status"] = "A";
                 dt.Rows.Add(row);
-                err = (i+1).ToString();
+                if (i == 150)
+                { 
+                    string asa = "a";
+                }
             }
             if (dt.Rows.Count > 0)
             {
                 cst_db.BeforeBulkCopy(oConn, myTrans); // update old data set status='D'
                 cst_db.DoBulkCopy(dt, myTrans);
+            }
+        }
+        #endregion
+
+        #region 各縣市計畫列表
+        private void DoCityPlanTable(IWorkbook workbook, SqlConnection oConn, SqlTransaction myTrans)
+        {
+            /// 查詢縣市代碼
+            DataTable CodeDt = ct_db.getCommonCode("02");
+            /// 建立縣市計畫 DataTable
+            DataTable dt = CreateCityPlanTable();
+            for (int CitySheet = 5; CitySheet < 27; CitySheet++)
+            {
+                ISheet sheet = workbook.GetSheetAt(CitySheet);
+                string CityCode = Common.GetCityCodeItem(CodeDt, sheet.SheetName.Trim());
+                /// 抓最大版次+1
+                int maxV = cpt_db.getMaxVersion(CityCode) + 1;
+                /// 資料從第3筆開始
+                for (int i = 2; i < sheet.PhysicalNumberOfRows; i++)
+                {
+                    err = "Sheet：" + sheet.SheetName.Trim() + " 第 " + i.ToString() + " 筆資料";
+                    DataRow row = dt.NewRow();
+                    row["CP_City"] = sheet.SheetName.Trim();
+                    row["CP_CityCode"] = CityCode;
+                    row["CP_PlanSchedule"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
+                    row["CP_No"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
+                    row["CP_PlanType"] = sheet.GetRow(i).GetCell(2).ToString().Trim();
+                    row["CP_PlanTypeDetail"] = sheet.GetRow(i).GetCell(3).ToString().Trim();
+                    row["CP_CaseNo"] = sheet.GetRow(i).GetCell(4).ToString().Trim();
+                    row["CP_HostCompany"] = sheet.GetRow(i).GetCell(5).ToString().Trim();
+                    row["CP_JointCompany"] = sheet.GetRow(i).GetCell(6).ToString().Trim();
+                    row["CP_PlanName"] = sheet.GetRow(i).GetCell(7).ToString().Trim();
+                    row["CP_ServiceArea"] = sheet.GetRow(i).GetCell(8).ToString().Trim();
+                    row["CP_ServiceType"] = sheet.GetRow(i).GetCell(9).ToString().Trim();
+                    row["CP_CityArea"] = sheet.GetRow(i).GetCell(10).ToString().Trim();
+                    row["CP_CityAreaDetail"] = sheet.GetRow(i).GetCell(11).ToString().Trim();
+                    row["CP_PlanTotalMoney"] = sheet.GetRow(i).GetCell(12).ToString().Trim();
+                    row["CP_PlanSubMoney"] = sheet.GetRow(i).GetCell(13).ToString().Trim();
+                    row["CP_CityTotalMoney"] = sheet.GetRow(i).GetCell(14).ToString().Trim();
+                    row["CP_CitySubMoney"] = sheet.GetRow(i).GetCell(15).ToString().Trim();
+                    row["CP_CreateId"] = LogInfo.mGuid;
+                    row["CP_CreateName"] = LogInfo.name;
+                    row["CP_Version"] = maxV;
+                    row["CP_Status"] = "A";
+                    dt.Rows.Add(row);
+                }
+            }
+           
+            if (dt.Rows.Count > 0)
+            {
+                cpt_db.BeforeBulkCopy(oConn, myTrans); // update old data set status='D'
+                cpt_db.DoBulkCopy(dt, myTrans);
             }
         }
         #endregion
@@ -438,6 +501,36 @@ namespace ISTI_CityNavigation.Manage.mHandler
             dt.Columns.Add("CS_CreateName", typeof(string));
             dt.Columns.Add("CS_Version", typeof(Int32));
             dt.Columns.Add("CS_Status", typeof(string));
+            return dt;
+        }
+        #endregion
+
+        #region CitySummaryTable
+        private DataTable CreateCityPlanTable()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("CP_City", typeof(string));
+            dt.Columns.Add("CP_CityCode", typeof(string));
+            dt.Columns.Add("CP_PlanSchedule", typeof(string));
+            dt.Columns.Add("CP_No", typeof(string));
+            dt.Columns.Add("CP_PlanType", typeof(string));
+            dt.Columns.Add("CP_PlanTypeDetail", typeof(string));
+            dt.Columns.Add("CP_CaseNo", typeof(string));
+            dt.Columns.Add("CP_HostCompany", typeof(string));
+            dt.Columns.Add("CP_JointCompany", typeof(string));
+            dt.Columns.Add("CP_PlanName", typeof(string));
+            dt.Columns.Add("CP_ServiceArea", typeof(string));
+            dt.Columns.Add("CP_ServiceType", typeof(string));
+            dt.Columns.Add("CP_CityArea", typeof(string));
+            dt.Columns.Add("CP_CityAreaDetail", typeof(string));
+            dt.Columns.Add("CP_PlanTotalMoney", typeof(string));
+            dt.Columns.Add("CP_PlanSubMoney", typeof(string));
+            dt.Columns.Add("CP_CityTotalMoney", typeof(string));
+            dt.Columns.Add("CP_CitySubMoney", typeof(string));
+            dt.Columns.Add("CP_CreateId", typeof(string));
+            dt.Columns.Add("CP_CreateName", typeof(string));
+            dt.Columns.Add("CP_Version", typeof(Int32));
+            dt.Columns.Add("CP_Status", typeof(string));
             return dt;
         }
         #endregion

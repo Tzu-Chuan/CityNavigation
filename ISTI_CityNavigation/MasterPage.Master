@@ -1,0 +1,635 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs" Inherits="ISTI_CityNavigation.MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="關鍵字內容" />
+    <meta name="description" content="描述" /><!--告訴搜尋引擎這篇網頁的內容或摘要。--> 
+    <meta name="generator" content="Notepad" /><!--告訴搜尋引擎這篇網頁是用什麼軟體製作的。--> 
+    <meta name="author" content="工研院 資科處" /><!--告訴搜尋引擎這篇網頁是由誰製作的。-->
+    <meta name="copyright" content="本網頁著作權所有" /><!--告訴搜尋引擎這篇網頁是...... --> 
+    <meta name="revisit-after" content="3 days" /><!--告訴搜尋引擎3天之後再來一次這篇網頁，也許要重新登錄。-->
+    <link href="<%=ResolveUrl("~/css/jquery-ui.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%=ResolveUrl("~/css/bootstrap.css") %>" rel="stylesheet"/><!-- normalize & bootstrap's grid system -->
+    <link href="<%=ResolveUrl("~/css/font-awesome.min.css") %>" rel="stylesheet"><!-- css icon -->
+    <link href="<%=ResolveUrl("~/css/fontello.css") %>" rel="stylesheet"><!-- css icon:http://fontello.com/  -->
+    <link href="<%=ResolveUrl("~/css/superfish.css") %>" rel="stylesheet" type="text/css" /><!-- 下拉選單 -->
+    <link href="<%=ResolveUrl("~/css/jquery.mmenu.css") %>" rel="stylesheet" type="text/css" /><!-- mmenu css:行動裝置選單 -->
+    <link href="<%=ResolveUrl("~/css/jquery.powertip.css") %>" rel="stylesheet" type="text/css" /><!-- powertip:tooltips -->
+    <link href="<%=ResolveUrl("~/css/jquery.datetimepicker.css") %>" rel="stylesheet" type="text/css" /><!-- datepicker -->
+    <link href="<%=ResolveUrl("~/css/magnific-popup.css") %>" rel="stylesheet" type="text/css" /><!-- popup dialog -->
+    <link href="<%=ResolveUrl("~/css/scrollbar.css") %>" rel="stylesheet" type="text/css" /><!-- scrollbar美化 -->
+    <link href="<%=ResolveUrl("~/css/OchiLayout.css") %>" rel="stylesheet" type="text/css" /><!-- ochsion layout base -->
+    <link href="<%=ResolveUrl("~/css/OchiColor.css") %>" rel="stylesheet" type="text/css" /><!-- ochsion layout color -->
+    <link href="<%=ResolveUrl("~/css/OchiRWD.css") %>" rel="stylesheet" type="text/css" /><!-- ochsion layout RWD -->
+    <link href="<%=ResolveUrl("~/css/style.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%=ResolveUrl("~/css/NickStyle.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%=ResolveUrl("~/css/loading.css") %>" rel="stylesheet" type="text/css" />
+    <!-- IE 瀏覽器版本低於 9 處理 -->
+    <!--[if lte IE 9]>
+    <link href="css/cssie9.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery-3.3.1.min.js") %>"></script>
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery-ui.1.12.1.js") %>"></script>
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.breakpoint-min.js") %>"></script><!-- 斷點設定 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/superfish.min.js") %>"></script><!-- 下拉選單 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/supposition.js") %>"></script><!-- 下拉選單:修正最後項在視窗大小不夠時的BUG -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.mmenu.min.js") %>"></script><!-- mmenu js:行動裝置選單 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.touchSwipe.min.js") %>"></script><!-- 增加JS觸控操作 for mmenu -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.powertip.min.js") %>"></script><!-- powertip:tooltips -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.datetimepicker.js") %>"></script><!-- datepicker -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.easytabs.min.js") %>"></script><!-- easytabs tab -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.magnific-popup.min.js") %>"></script><!-- popup dialog -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/animatescroll.min.js") %>"></script><!-- 動態滾動 -->
+    <!-- 動畫套件 -->                        
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery-timing.min.js") %>"></script><!-- 組織動畫用JS.wait() -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/TweenMax.min.js") %>"></script><!-- GSAP -->
+    <!-- 滾動偵測 -->                       
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.scrollmagic.min.js") %>"></script><!-- scrollmagic配合捲軸動畫 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.scrollmagic.debug.js") %>"></script><!-- scrollmagic配合捲軸動畫:顯示起啟位置參考線(上線前移除) -->
+    <!-- 網站套件 -->                        
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.matchHeight-min.js") %>"></script><!-- equal height解決bootstrap grid layout內容不等高時排版問題 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.scrollbar.min.js") %>"></script><!-- scrollbar美化 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/highcharts.js") %>"></script><!-- highchart -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/tableHeadFixer.js") %>"></script><!-- 固定標頭表格 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/PageList.js") %>"></script>
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/loading.js") %>"></script>
+    <title></title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //寬版螢幕調整
+            $(".container").css("max-width", "1440px");
+
+            $(document).on("click", "#signout_btn", function () {
+                location.href = "../Handler/SignOut.aspx";
+            });
+        }); // end js
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body>
+     <div>
+        <form>
+            <!-- Preloader -->
+            <div id="preloader">
+                <div id="status">
+                    <div id="CSS3loading">
+                        <!-- css3 loading -->
+                        <div class="sk-three-bounce">
+                            <div class="sk-child sk-bounce1"></div>
+                            <div class="sk-child sk-bounce2"></div>
+                            <div class="sk-child sk-bounce3"></div>
+                        </div>
+                        <!-- css3 loading -->
+                        <span id="loadingword">資料讀取中，請稍待...</span>
+                    </div>
+                    <!-- CSS3loading -->
+                </div>
+                <!-- status -->
+            </div>
+            <!-- preloader -->
+
+            <div class="WrapperBody" id="WrapperBody">
+                <div class="WrapperHeader">
+                    <div class="container">
+                        <div class="loginfo font-normal">
+                            登入者：<%= UserName %>
+                            <!-- RWD 外部連結 start -->
+                            <div class="HeaderOtherLinkWrapper">
+                                <span id="HeaderOtherLink">
+                                    <ul>
+                                        <li><a href="<%=ResolveUrl("~/Manage/MemberMag.aspx") %>">後臺管理</a></li>
+                                        <li><a id="signout_btn" href="javascript:void(0);">登出</a></li>
+                                    </ul>
+                                </span>
+                            </div>
+                            <!-- HeaderOtherLinkWrapper -->
+                            <span class="HeaderOtherLinkOpen"><a href="#HeaderOtherLinkS" class="open-popup-link">外部連結</a></span>
+                            <div id="HeaderOtherLinkS" class="magpopup magSizeM mfp-hide">
+                                <div class="magpopupTitle textcenter">外部連結</div>
+                                <span id="HeaderOtherLinkCopy"></span>
+                            </div>
+                            <!--magpopup -->
+
+                            <!-- RWD 外部連結 end -->
+                        </div><!-- loginfo -->
+
+                        <div class="logo">
+                            <img src="<%=ResolveUrl("~/images/logo.png") %>">
+                        </div>
+                    </div>
+                    <!-- container -->
+
+                    <div class="MainMenu">
+                        <!-- 置中版面控制:滿版可移除container或改成container-fluid -->
+                        <div class="container">
+                            <!-- 側邊選單開關容器 -->
+                            <div id="opensidemenu"></div>
+                            <!-- 桌機主選單 -->
+                            <div class="superfishmenu">
+                                <ul>
+                                    <li><a href="index.html">首頁</a></li>
+                                    <li><a href="wisdom.html">智慧城鄉計畫提案</a></li>
+                                    <li><a href="#">全國資料</a>
+                                        <ul>
+                                            <li><a href="#">人口</a></li>
+                                            <li><a href="#">土地</a></li>
+                                            <li><a href="#">財政</a></li>
+                                            <li><a href="#">基盤</a></li>
+                                            <li><a href="#">產業</a></li>
+                                            <li><a href="#">智慧城鄉計畫提案</a></li>
+                                            <li><a href="#">農業</a></li>
+                                            <li><a href="#">觀光</a></li>
+                                            <li><a href="#">健康</a></li>
+                                            <li><a href="#">零售</a></li>
+                                            <li><a href="#">教育</a></li>
+                                            <li><a href="#">交通</a></li>
+                                            <li><a href="#">基盤</a></li>
+                                            <li><a href="#">能源</a></li>
+                                            <li><a href="#">安全</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">北部縣市</a>
+                                        <ul>
+                                            <li><a href="#">臺北市</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">新北市</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">基隆市</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="main-Taoyuan.html">桃園市</a>
+                                                <ul>
+                                                    <li><a href="main-Taoyuan-people.html">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="main-Taoyuan-aicity.html">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">新竹縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">新竹市</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">苗栗縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                    <li><a href="#">中部縣市</a>
+                                        <ul>
+                                            <li><a href="#">臺中市</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">彰化縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">南投縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">南部縣市</a>
+                                        <ul>
+                                            <li><a href="#">雲林縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">嘉義縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">嘉義市</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">臺南市</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">高雄市</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">屏東縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                    <li><a href="#">東部縣市</a>
+                                        <ul>
+                                            <li><a href="#">宜蘭縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+
+
+
+                                            <li><a href="#">花蓮縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">臺東縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                    <li><a href="#">離島縣市</a>
+                                        <ul>
+                                            <li><a href="#">金門縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">連江縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">澎湖縣</a>
+                                                <ul>
+                                                    <li><a href="#">人口</a></li>
+                                                    <li><a href="#">土地</a></li>
+                                                    <li><a href="#">財政</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">產業</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">農業</a></li>
+                                                    <li><a href="#">觀光</a></li>
+                                                    <li><a href="#">健康</a></li>
+                                                    <li><a href="#">零售</a></li>
+                                                    <li><a href="#">教育</a></li>
+                                                    <li><a href="#">交通</a></li>
+                                                    <li><a href="#">基盤</a></li>
+                                                    <li><a href="#">能源</a></li>
+                                                    <li><a href="#">安全</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div><!-- superfishmenu -->
+
+                        </div><!-- container -->
+                    </div><!-- MainMenu -->
+                </div><!-- WrapperHeader -->
+
+
+                <div class="container margin15T" id="ContentWrapper">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+                </div><!-- ContentWrapper -->
+
+                <div class="container-fluid">
+                    <div class="backTop"><a href="#" class="backTotop">TOP</a></div>
+                </div>
+            </div><!-- WrapperBody -->
+
+            <div class="WrapperFooter">
+                <div class="footerblock container font-normal">
+                    版權所有©2019｜ 建議瀏覽解析度1024x768以上<br />
+                    業務窗口：黃金貝(分機：00000)｜意見反應｜系統使用說明書
+                </div><!--{* footerblock *}-->
+            </div><!-- WrapperFooter -->
+
+            <!-- 側邊選單內容:動態複製主選單內容 -->
+            <div id="sidebar-wrapper"></div><!-- sidebar-wrapper -->
+
+            <a href="#twmap" class="twbtn open-popup-link">開啟全台地圖</a>
+        </form>
+    </div>
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/GenCommon.js") %>"></script><!-- UIcolor JS -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/PageCommon.js") %>"></script><!-- 系統共用 JS -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/NickCommon.js") %>"></script><!-- 系統共用 JS -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/autoHeight.js") %>"></script><!-- 高度不足頁面的絕對置底footer -->
+</body>
+</html>

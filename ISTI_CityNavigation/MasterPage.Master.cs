@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace ISTI_CityNavigation.Manage
+namespace ISTI_CityNavigation
 {
-    public partial class BackEnd : System.Web.UI.MasterPage
+    public partial class MasterPage : System.Web.UI.MasterPage
     {
         public string UserName;
         protected void Page_Load(object sender, EventArgs e)

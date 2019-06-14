@@ -163,37 +163,37 @@ padding:2px 15px;*padding:5px;_padding:5px;
 .inputex:focus{border:1px solid #202020;}
 /* 表單樣式 */
 .gentable table{}
-/*.gentable th{border-bottom:1px solid #bababa;}
-.gentable td{border-bottom:1px dotted #bababa;}*/
+.gentable th{border-bottom:1px dotted #bababa;}
+.gentable td{border-bottom:1px dotted #bababa;}
 .gentable td.titlebg{background:#f1f9f9;}
 .titlebackicon{padding-right:10px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='20' %3E%3Ccircle cx='5' cy='6' r='1' fill='rgb(119, 155, 160)' /%3E%3Ccircle cx='5' cy='14' r='1' fill='rgb(119, 155, 160)' /%3E%3C/svg%3E") no-repeat right;}
 
 /* 雙色表格 */
-.stripeMe table{border:1px solid #9aced1;}
-.stripeMe table tr td{border:1px solid #c1e1e8; background-color:#fbfeff;}
-.stripeMe th{color:#204851; border:1px solid #77adba; background:#a6e3ee;}
-.stripeMe th a{color:#1e9798; text-decoration:none;border-bottom: 1px solid transparent;transition: all ease-in-out 0.2s;}
-.stripeMe th a:hover{color:#045051; border-color:#045051;}
-.stripeMe tr.alt td{background-color:#e7f5f7;}
-.stripeMe tr td:first-child{border-left-color:#9aced1;}
-.stripeMe tr th:first-child{border-left-color:#9aced1;}
-.stripeMe tr td:last-child{border-right-color:#9aced1;}
-.stripeMe tr th:last-child{border-right-color:#9aced1;}
-.stripeMe tr:last-child td{border-bottom-color:#9aced1;}
+.stripeMe table{border:1px solid #f2dcae;}
+.stripeMe table tr td{border:1px solid #e8dcac; background-color:#fffefb;}
+.stripeMe th{color:#513e20; border:1px solid #ca8738; background:#f7c95b;}
+.stripeMe th a{color:#cb7e0f; text-decoration:none;border-bottom: 1px solid transparent;transition: all ease-in-out 0.2s;}
+.stripeMe th a:hover{color:#e75903; border-color:#e75903;}
+.stripeMe tr.alt td{background-color:#f7eec9;}
+.stripeMe tr td:first-child{border-left-color:#f2dcae;}
+.stripeMe tr th:first-child{border-left-color:#f2dcae;}
+.stripeMe tr td:last-child{border-right-color:#f2dcae;}
+.stripeMe tr th:last-child{border-right-color:#f2dcae;}
+.stripeMe tr:last-child td{border-bottom-color:#f2dcae;}
 .stripeMe tr.spe td{background-color:#FEFBC2;}
 
 /* 雙色表格CSS雙色 */
-.stripeMeCS table{border:1px solid #9aced1;}
-.stripeMeCS table tr td{border:1px solid #c1e1e8; background-color:#fbfeff;}
-.stripeMeCS th{color:#204851; border:1px solid #77adba; background:#a6e3ee;}
-.stripeMeCS th a{color:#1e9798; text-decoration:none;border-bottom: 1px solid transparent;transition: all ease-in-out 0.2s;}
-.stripeMeCS th a:hover{color:#045051; border-color:#045051;}
-.stripeMeCS tr:nth-child(even) td{background-color:#e7f5f7;}
-.stripeMeCS tr td:first-child{border-left-color:#9aced1;}
-.stripeMeCS tr th:first-child{border-left-color:#9aced1;}
-.stripeMeCS tr td:last-child{border-right-color:#9aced1;}
-.stripeMeCS tr th:last-child{border-right-color:#9aced1;}
-.stripeMeCS tr:last-child td{border-bottom-color:#9aced1;}
+.stripeMeCS table{border:1px solid #f2dcae;}
+.stripeMeCS table tr td{border:1px solid #e8dcac; background-color:#fffefb;}
+.stripeMeCS th{color:#513e20; border:1px solid #ca8738; background:#f7c95b;}
+.stripeMeCS th a{color:#cb7e0f; text-decoration:none;border-bottom: 1px solid transparent;transition: all ease-in-out 0.2s;}
+.stripeMeCS th a:hover{color:#e75903; border-color:#e75903;}
+.stripeMeCS tr:nth-child(even) td{background-color:#f7eec9;}
+.stripeMeCS tr td:first-child{border-left-color:#f2dcae;}
+.stripeMeCS tr th:first-child{border-left-color:#f2dcae;}
+.stripeMeCS tr td:last-child{border-right-color:#f2dcae;}
+.stripeMeCS tr th:last-child{border-right-color:#f2dcae;}
+.stripeMeCS tr:last-child td{border-bottom-color:#f2dcae;}
 .stripeMeCS tr.spe td{background-color:#FEFBC2;}
 
 /* input group */

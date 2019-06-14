@@ -192,7 +192,7 @@
                 title: t_str,
                 autoOpen: false,
                 width: 600,
-                height: 230,
+                height: 250,
                 closeOnEscape: true,
                 position: { my: "center", at: "center", of: window },
                 modal: true,

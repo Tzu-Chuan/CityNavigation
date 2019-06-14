@@ -1,10 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Manage/BackEnd.Master" AutoEventWireup="true" CodeBehind="IDB_Import.aspx.cs" Inherits="ISTI_CityNavigation.Manage.IDB_Import" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
-        //上傳按鈕
         $(document).ready(function () {
-            $("#upbtn").click(function () {
-            $("#ErrMsg").html("");
+            //上傳
+            $(document).on("click", "#upbtn", function () {
+                $("#ErrMsg").html("");
                 try {
                     if ($("#file0").val() == "") {
                         alert("請選擇要匯入的檔案");
@@ -33,20 +33,25 @@
                     form.setAttribute("encoding", "multipart/form-data");
                     form.setAttribute("target", "postiframe");
                     form.submit();
+                    $("#WrapperMainContent").loading({
+                        message: "資料上傳中，請稍後"
+                    });
                 }
                 catch (ex) {
                     alert(ex.message);
+                     $("#WrapperMainContent").loading('stop');
                 }
             });
         });
 
         function feedbackFun(msg) {
             $("#ErrMsg").html(msg);
+            $("#WrapperMainContent").loading('stop');
         }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="margin10T">
+    <div id="test" class="margin10T">
         <input id="file0" name="file0" type="file" class="inputex" />
         <input id="upbtn" type="button" class="genbtn" value="上傳" />
     </div>

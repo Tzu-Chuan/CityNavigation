@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+@charset "utf-8";
 /* 基本樣式:版型使用尺寸、規格V1601 */
 
 /*  ===== 網站元件樣式 ===== */
@@ -55,7 +55,6 @@ label.inlineitem,div.inlineitem{display:inline-block; margin-right:5px;}
 
 /* 表單樣式 */
 .gentable table{border-collapse:collapse;}
-.gentable tr {border-bottom: 1px dotted #bababa;}
 .gentable th{ padding:5px;}
 .gentable td{padding:5px; border-collapse:collapse; }
 .gentable td.titlebg{background:#f1f6f9;}
@@ -143,9 +142,6 @@ input[type=checkbox].with-font:checked ~ label:before {
 .twocol:after{display:block; clear:both; content:"."; visibility:hidden; height:0;}
 .twocol .right{float:right;}
 .twocol .left{float:left;}
-.twocolV2{overflow: auto; overflow: hidden;}
-.twocolV2 .right{float:right;}
-.twocolV2 .left{float:left;}
 /* 文字對齊 */
 .textcenter{text-align:center;}
 .textleft{text-align:left;}

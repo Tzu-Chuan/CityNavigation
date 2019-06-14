@@ -2,7 +2,7 @@
 /* RWD處理:外部連結 */
 .HeaderOtherLinkWrapper{display:inline-block;}
 #HeaderOtherLink ul{margin:0 0 0 -30px; display:inline-block; vertical-align:middle;}
-#HeaderOtherLink li{list-style:none; text-align:left; float:left; padding-right:6px; color:#fff;}
+#HeaderOtherLink li{list-style:none; text-align:left; float:left; padding-right:6px; color:#999;}
 #HeaderOtherLink li:after{content:"｜";}
 #HeaderOtherLink li:last-child{ margin-right:0; padding-right:0;}
 #HeaderOtherLink li:last-child:after{content:"";}
@@ -39,7 +39,7 @@
 /* 標題垂直置上 */
 .OchiFixTable .OchiTitleUp{background-position:right 4px;vertical-align:top;}
 .OchiTrasTable .OchiTitleUp{background-position:right 4px;vertical-align:top;}
-@media (max-width: 960px) {
+@media (max-width: 767px) {
 /* RWD處理:外部連結 */	
 .HeaderOtherLinkWrapper{display:none;}
 .HeaderOtherLinkOpen{display:inline;}
