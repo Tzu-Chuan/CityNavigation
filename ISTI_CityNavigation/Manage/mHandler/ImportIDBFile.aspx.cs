@@ -82,7 +82,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 資料從第3筆開始
             for (int i = 2; i < 5; i++)
             {
-                err = "Sheet：" + sheet.SheetName.Trim() + " 第 " + i.ToString() + " 筆資料";
+                err = "Sheet Name：" + sheet.SheetName.Trim() + "<br>";
+                err += "行數：第 " + (i + 1).ToString() + " 筆";
                 DataRow row = dt.NewRow();
                 row["B_Commission"] = sheet.GetRow(2).GetCell(i).ToString().Trim();
                 row["B_Subsidy"] = sheet.GetRow(3).GetCell(i).ToString().Trim();
@@ -115,7 +116,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 資料從第3筆開始
             for (int i = 2; i < sheet.PhysicalNumberOfRows - 1; i++)
             {
-                err = "Sheet：" + sheet.SheetName.Trim() + " 第 " + i.ToString() + " 筆資料";
+                err = "Sheet Name：" + sheet.SheetName.Trim() + "<br>";
+                err += "行數：第 " + (i + 1).ToString() + " 筆";
                 DataRow row = dt.NewRow();
                 row["C_City"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
                 row["C_PlanCount_NotAll"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
@@ -154,7 +156,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 資料從第3筆開始
             for (int i = 2; i < sheet.PhysicalNumberOfRows; i++)
             {
-                err = "Sheet：" + sheet.SheetName.Trim() + " 第 " + i.ToString() + " 筆資料";
+                err = "Sheet Name：" + sheet.SheetName.Trim() + "<br>";
+                err += "行數：第 " + (i + 1).ToString() + " 筆";
                 DataRow row = dt.NewRow();
                 row["S_Type"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
                 row["S_PlanCount"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
@@ -186,7 +189,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 資料從第3筆開始
             for (int i = 2; i < sheet.PhysicalNumberOfRows; i++)
             {
-                err = "Sheet：" + sheet.SheetName.Trim() + " 第 " + i.ToString() + " 筆資料";
+                err = "Sheet Name：" + sheet.SheetName.Trim() + "<br>";
+                err += "行數：第 " + (i + 1).ToString() + " 筆";
                 DataRow row = dt.NewRow();
                 row["C_Type"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
                 row["C_PlanCount"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
@@ -218,7 +222,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 資料從第3筆開始
             for (int i = 2; i < sheet.PhysicalNumberOfRows; i++)
             {
-                err = "Sheet：" + sheet.SheetName.Trim() + " 第 " + i.ToString() + " 筆資料";
+                err = "Sheet Name：" + sheet.SheetName.Trim() + "<br>";
+                err += "行數：第 " + (i + 1).ToString() + " 筆";
                 DataRow row = dt.NewRow();
                 row["CS_PlanSchedule"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
                 row["CS_No"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
@@ -283,10 +288,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 row["CS_Version"] = maxV;
                 row["CS_Status"] = "A";
                 dt.Rows.Add(row);
-                if (i == 150)
-                { 
-                    string asa = "a";
-                }
             }
             if (dt.Rows.Count > 0)
             {
@@ -312,7 +313,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 /// 資料從第3筆開始
                 for (int i = 2; i < sheet.PhysicalNumberOfRows; i++)
                 {
-                    err = "Sheet：" + sheet.SheetName.Trim() + " 第 " + i.ToString() + " 筆資料";
+                    err = "Sheet Name：" + sheet.SheetName.Trim() + "<br>";
+                    err += "行數：第 " + (i + 1).ToString() + " 筆";
                     DataRow row = dt.NewRow();
                     row["CP_City"] = sheet.SheetName.Trim();
                     row["CP_CityCode"] = CityCode;
