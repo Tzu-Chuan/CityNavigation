@@ -142,12 +142,11 @@
     <Content Include="css\jquery-ui.css" />
     <Content Include="css\jquery.datetimepicker.css" />
     <Content Include="css\jquery.mmenu.css" />
-    <Content Include="css\jquery.mmenu.positioning.css" />
     <Content Include="css\jquery.powertip.css" />
+    <Content Include="css\loading.css" />
     <Content Include="css\magnific-popup.css" />
     <Content Include="css\NickStyle.css" />
     <Content Include="css\OchiColor.css" />
-    <Content Include="css\OchiColorblue.css" />
     <Content Include="css\OchiLayout.css" />
     <Content Include="css\OchiRWD.css" />
     <Content Include="css\scrollbar.css" />
@@ -159,32 +158,34 @@
     <Content Include="handler\SignOut.aspx" />
     <Content Include="handler\UserLogin.aspx" />
     <Content Include="images\dpp.jpg" />
+    <Content Include="images\headerbg.jpg" />
     <Content Include="images\logo.png" />
+    <Content Include="js\animatescroll.min.js" />
     <Content Include="js\autoHeight.js" />
-    <Content Include="js\exporting.js" />
     <Content Include="js\GenCommon.js" />
     <Content Include="js\highcharts.js" />
-    <Content Include="js\highmaps.js" />
     <Content Include="js\jquery-3.3.1.min.js" />
+    <Content Include="js\jquery-timing.min.js" />
     <Content Include="js\jquery-ui.1.12.1.js" />
     <Content Include="js\jquery.breakpoint-min.js" />
     <Content Include="js\jquery.datetimepicker.js" />
     <Content Include="js\jquery.easytabs.min.js" />
     <Content Include="js\jquery.magnific-popup.min.js" />
     <Content Include="js\jquery.matchHeight-min.js" />
-    <Content Include="js\jquery.mmenu.js" />
+    <Content Include="js\jquery.mmenu.min.js" />
     <Content Include="js\jquery.powertip.min.js" />
     <Content Include="js\jquery.scrollbar.min.js" />
     <Content Include="js\jquery.scrollmagic.debug.js" />
     <Content Include="js\jquery.scrollmagic.min.js" />
     <Content Include="js\jquery.touchSwipe.min.js" />
+    <Content Include="js\loading.js" />
     <Content Include="js\NickCommon.js" />
     <Content Include="js\PageCommon.js" />
     <Content Include="js\PageList.js" />
     <Content Include="js\superfish.min.js" />
     <Content Include="js\supposition.js" />
     <Content Include="js\tableHeadFixer.js" />
-    <Content Include="js\tw-all.js" />
+    <Content Include="js\TweenMax.min.js" />
     <Content Include="Manage\IDB_Import.aspx" />
     <Content Include="Manage\ISTI_Import.aspx" />
     <Content Include="Manage\mHandler\addMember.aspx" />
@@ -278,8 +279,18 @@
     <Compile Include="Manage\mHandler\ImportTravel.aspx.designer.cs">
       <DependentUpon>ImportTravel.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MasterPage.Master.cs">
+      <DependentUpon>MasterPage.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterPage.Master.designer.cs">
+      <DependentUpon>MasterPage.Master</DependentUpon>
+    </Compile>
     <Compile Include="MyClass\BudgetExecution_DB.cs" />
+    <Compile Include="MyClass\CategorySubMoney_DB.cs" />
+    <Compile Include="MyClass\CityPlanTable_DB.cs" />
     <Compile Include="MyClass\CitySubMoney_DB.cs" />
+    <Compile Include="MyClass\CitySummaryTable_DB.cs" />
     <Compile Include="MyClass\LogInfo.cs" />
     <Compile Include="MyClass\Common.cs" />
     <Compile Include="MyClass\Member_DB.cs" />
@@ -341,6 +352,7 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="MasterPage.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
