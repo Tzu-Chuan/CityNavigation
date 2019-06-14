@@ -13,9 +13,9 @@ using System.Configuration;
 
 namespace ISTI_CityNavigation.Manage.mHandler
 {
-    public partial class ImportTravel : System.Web.UI.Page
+    public partial class ImportEnergy : System.Web.UI.Page
     {
-        Travel_DB TL_DB = new Travel_DB();
+        Energy_DB EN_DB = new Energy_DB();
         //建立共用參數
         string strErrorMsg = "";
         int strMaxVersion = 0;
@@ -33,24 +33,21 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
             //建立DataTable Bulk Copy用
             DataTable dt = new DataTable();
-            dt.Columns.Add("T_CityNo", typeof(string));
-            dt.Columns.Add("T_CityName", typeof(string));
-            dt.Columns.Add("T_HotelUseYear", typeof(string));
-            dt.Columns.Add("T_HotelUseRate", typeof(string));
-            dt.Columns.Add("T_PointYear", typeof(string));
-            dt.Columns.Add("T_PointYearDesc", typeof(string));
-            dt.Columns.Add("T_PointPeople", typeof(string));
-            dt.Columns.Add("T_HotelsYear", typeof(string));
-            dt.Columns.Add("T_Hotels", typeof(string));
-            dt.Columns.Add("T_HotelRoomsYear", typeof(string));
-            dt.Columns.Add("T_HotelRooms", typeof(string));
-            dt.Columns.Add("T_HotelAvgPriceYear", typeof(string));
-            dt.Columns.Add("T_HotelAvgPrice", typeof(string));
-            dt.Columns.Add("T_CreateDate", typeof(DateTime));
-            dt.Columns.Add("T_CreateID", typeof(string));
-            dt.Columns.Add("T_CreateName", typeof(string));
-            dt.Columns.Add("T_Status", typeof(string));
-            dt.Columns.Add("T_Version", typeof(int));
+            dt.Columns.Add("Ene_CityNo", typeof(string));
+            dt.Columns.Add("Ene_CityName", typeof(string));
+            dt.Columns.Add("Ene_DeviceCapacityNumYear", typeof(string));
+            dt.Columns.Add("Ene_DeviceCapacityNum", typeof(string));
+            dt.Columns.Add("Ene_TPCBuyElectricityYear", typeof(string));
+            dt.Columns.Add("Ene_TPCBuyElectricity", typeof(string));
+            dt.Columns.Add("Ene_ElectricityUsedYear", typeof(string));
+            dt.Columns.Add("Ene_ElectricityUsed", typeof(string));
+            dt.Columns.Add("Ene_ReEnergyOfElectricityRateYear", typeof(string));
+            dt.Columns.Add("Ene_ReEnergyOfElectricityRate", typeof(string));
+            dt.Columns.Add("Ene_CreateDate", typeof(DateTime));
+            dt.Columns.Add("Ene_CreateID", typeof(string));
+            dt.Columns.Add("Ene_CreateName", typeof(string));
+            dt.Columns.Add("Ene_Status", typeof(string));
+            dt.Columns.Add("Ene_Version", typeof(int));
 
             try
             {
@@ -76,21 +73,21 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                     ISheet sheet = workbook.GetSheetAt(0);//當前sheet
 
-                    //簡易判斷這份Excel是不是觀光的Excel
+                    //簡易判斷這份Excel是不是能源的Excel
                     int cellsCount = sheet.GetRow(0).Cells.Count;
                     //1.判斷表頭欄位數
-                    if (cellsCount != 6)
+                    if (cellsCount != 5)
                     {
-                        throw new Exception("請檢查是否為觀光的匯入檔案");
+                        throw new Exception("請檢查是否為能源的匯入檔案");
                     }
                     //2.檢查欄位名稱
-                    if (sheet.GetRow(0).GetCell(1).ToString().Trim() != "觀光旅館住用率" || sheet.GetRow(0).GetCell(2).ToString().Trim() != "觀光遊憩據點(縣市)人次統計")
+                    if (sheet.GetRow(0).GetCell(1).ToString().Trim() != "再生能源裝置容量數" || sheet.GetRow(0).GetCell(2).ToString().Trim() != "台電購入再生能源電量")
                     {
-                        throw new Exception("請檢查是否為觀光的匯入檔案");
+                        throw new Exception("請檢查是否為能源的匯入檔案");
                     }
 
                     //取得當前最大版次 (+1變成現在版次)
-                    strMaxVersion = TL_DB.getMaxVersin() + 1;
+                    strMaxVersion = EN_DB.getMaxVersin() + 1;
 
                     //取得代碼檔
                     CodeTable_DB code_db = new CodeTable_DB();
@@ -109,30 +106,28 @@ namespace ISTI_CityNavigation.Manage.mHandler
                             {
                                 throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                             }
-                            row["T_CityNo"] = cityNo;//縣市代碼
-                            row["T_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
-                            row["T_HotelUseYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//觀光旅館住用率-資料年度(民國年)
-                            row["T_HotelUseRate"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//觀光旅館住用率
-                            row["T_PointYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年(統計至107年11月)", "");//觀光遊憩據點(縣市)人次統計-資料年度(民國年)  ex: 107年(統計至107年11月)  存 107
-                            row["T_PointYearDesc"] = sheet.GetRow(1).GetCell(2).ToString().Trim();//觀光遊憩據點(縣市)人次統計-資料年度(民國年)  ex: 107年(統計至107年11月)  存 107年(統計至107年11月)
-                            row["T_PointPeople"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//觀光遊憩據點(縣市)人次統計-人次
-                            row["T_HotelsYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//觀光旅館家數-資料年度(民國年)
-                            row["T_Hotels"] = sheet.GetRow(j).GetCell(3).ToString().Trim();//觀光旅館家數-家
-                            row["T_HotelRoomsYear"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//觀光旅館房間數-資料年度(民國年)
-                            row["T_HotelRooms"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//觀光旅館房間數-間
-                            row["T_HotelAvgPriceYear"] = sheet.GetRow(1).GetCell(5).ToString().Trim().Replace("年", "");//觀光旅館平均房價-資料年度(民國年)
-                            row["T_HotelAvgPrice"] = sheet.GetRow(j).GetCell(5).ToString().Trim();//觀光旅館平均房價-元
-                            row["T_CreateDate"] = dtNow;
-                            row["T_CreateID"] = LogInfo.mGuid;//上傳者GUID
-                            row["T_CreateName"] = LogInfo.name;//上傳者姓名
-                            row["T_Status"] = "A";
-                            row["T_Version"] = strMaxVersion;
+                            row["Ene_CityNo"] = cityNo;//縣市代碼
+                            row["Ene_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
+                            row["Ene_DeviceCapacityNumYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//再生能源裝置容量數-資料年度(民國年)
+                            row["Ene_DeviceCapacityNum"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//再生能源裝置容量數-千瓦
+                            row["Ene_TPCBuyElectricityYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");//台電購入再生能源電量-資料年度(民國年)
+                            row["Ene_TPCBuyElectricity"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//台電購入再生能源電量-度
+                            row["Ene_ElectricityUsedYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//用電量-資料年度(民國年)
+                            row["Ene_ElectricityUsed"] = sheet.GetRow(j).GetCell(3).ToString().Trim();//用電量-度
+                            row["Ene_ReEnergyOfElectricityRateYear"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//再生能源電量佔用電量比例-資料年度(民國年)
+                            //row["Ene_ReEnergyOfElectricityRate"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//再生能源電量佔用電量比例-%
+                            row["Ene_CreateDate"] = dtNow;
+                            row["Ene_CreateID"] = LogInfo.mGuid;//上傳者GUID
+                            row["Ene_CreateName"] = LogInfo.name;//上傳者姓名
+                            row["Ene_Status"] = "A";
+                            row["Ene_Version"] = strMaxVersion;
 
                             if (chkYear == "")
                                 chkYear = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");
 
                             dt.Rows.Add(row);
                         }
+
                     }
 
                     if (dt.Rows.Count > 0)
@@ -161,7 +156,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 oConn.Close();
                 Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
             }
-
         }
         //insert 前判斷是不是同年份有資料了
         private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran, string chkYear)
@@ -169,11 +163,11 @@ namespace ISTI_CityNavigation.Manage.mHandler
             StringBuilder sb = new StringBuilder();
             sb.Append(@"
                 declare @chkRowCount int = 0;
-                select @chkRowCount = count(*) from Travel where T_HotelUseYear=@chkYear and T_Status='A'
+                select @chkRowCount = count(*) from Energy where Ene_DeviceCapacityNumYear=@chkYear and Ene_Status='A'
 
                 if @chkRowCount>0
                     begin
-                        update Travel set T_Status='D' where T_HotelUseYear=@chkYear and T_Status='A'
+                        update Energy set Ene_Status='D' where Ene_DeviceCapacityNumYear=@chkYear and Ene_Status='A'
                     end
             ");
             SqlCommand oCmd = oConn.CreateCommand();
@@ -185,7 +179,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             oCmd.ExecuteNonQuery();
         }
 
-        //觀光 BulkCopy
+        //能源 BulkCopy
         private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
         {
             try
@@ -198,27 +192,24 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
                     //sqlBC.NotifyAfter = 10000;
                     ///設定要寫入的資料庫
-                    sqlBC.DestinationTableName = "Travel";
+                    sqlBC.DestinationTableName = "Energy";
 
                     /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-                    sqlBC.ColumnMappings.Add("T_CityNo", "T_CityNo");
-                    sqlBC.ColumnMappings.Add("T_CityName", "T_CityName");
-                    sqlBC.ColumnMappings.Add("T_HotelUseYear", "T_HotelUseYear");
-                    sqlBC.ColumnMappings.Add("T_HotelUseRate", "T_HotelUseRate");
-                    sqlBC.ColumnMappings.Add("T_PointYear", "T_PointYear");
-                    sqlBC.ColumnMappings.Add("T_PointYearDesc", "T_PointYearDesc");
-                    sqlBC.ColumnMappings.Add("T_PointPeople", "T_PointPeople");
-                    sqlBC.ColumnMappings.Add("T_HotelsYear", "T_HotelsYear");
-                    sqlBC.ColumnMappings.Add("T_Hotels", "T_Hotels");
-                    sqlBC.ColumnMappings.Add("T_HotelRoomsYear", "T_HotelRoomsYear");
-                    sqlBC.ColumnMappings.Add("T_HotelRooms", "T_HotelRooms");
-                    sqlBC.ColumnMappings.Add("T_HotelAvgPriceYear", "T_HotelAvgPriceYear");
-                    sqlBC.ColumnMappings.Add("T_HotelAvgPrice", "T_HotelAvgPrice");
-                    sqlBC.ColumnMappings.Add("T_CreateDate", "T_CreateDate");
-                    sqlBC.ColumnMappings.Add("T_CreateID", "T_CreateID");
-                    sqlBC.ColumnMappings.Add("T_CreateName", "T_CreateName");
-                    sqlBC.ColumnMappings.Add("T_Status", "T_Status");
-                    sqlBC.ColumnMappings.Add("T_Version", "T_Version");
+                    sqlBC.ColumnMappings.Add("Ene_CityNo", "Ene_CityNo");
+                    sqlBC.ColumnMappings.Add("Ene_CityName", "Ene_CityName");
+                    sqlBC.ColumnMappings.Add("Ene_DeviceCapacityNumYear", "Ene_DeviceCapacityNumYear");
+                    sqlBC.ColumnMappings.Add("Ene_DeviceCapacityNum", "Ene_DeviceCapacityNum");
+                    sqlBC.ColumnMappings.Add("Ene_TPCBuyElectricityYear", "Ene_TPCBuyElectricityYear");
+                    sqlBC.ColumnMappings.Add("Ene_TPCBuyElectricity", "Ene_TPCBuyElectricity");
+                    sqlBC.ColumnMappings.Add("Ene_ElectricityUsedYear", "Ene_ElectricityUsedYear");
+                    sqlBC.ColumnMappings.Add("Ene_ElectricityUsed", "Ene_ElectricityUsed");
+                    sqlBC.ColumnMappings.Add("Ene_ReEnergyOfElectricityRateYear", "Ene_ReEnergyOfElectricityRateYear");
+                    sqlBC.ColumnMappings.Add("Ene_ReEnergyOfElectricityRate", "Ene_ReEnergyOfElectricityRate");
+                    sqlBC.ColumnMappings.Add("Ene_CreateDate", "Ene_CreateDate");
+                    sqlBC.ColumnMappings.Add("Ene_CreateID", "Ene_CreateID");
+                    sqlBC.ColumnMappings.Add("Ene_CreateName", "Ene_CreateName");
+                    sqlBC.ColumnMappings.Add("Ene_Status", "Ene_Status");
+                    sqlBC.ColumnMappings.Add("Ene_Version", "Ene_Version");
 
                     /// 開始寫入資料
                     sqlBC.WriteToServer(srcData);
@@ -226,7 +217,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             }
             catch (Exception ex)
             {
-                strErrorMsg += "觀光匯入 error：" + ex.Message.ToString() + "\n";
+                strErrorMsg += "能源匯入 error：" + ex.Message.ToString() + "\n";
             }
 
         }

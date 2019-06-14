@@ -13,9 +13,9 @@ using System.Configuration;
 
 namespace ISTI_CityNavigation.Manage.mHandler
 {
-    public partial class ImportTravel : System.Web.UI.Page
+    public partial class ImportMayor : System.Web.UI.Page
     {
-        Travel_DB TL_DB = new Travel_DB();
+        Mayor_DB MR_DB = new Mayor_DB();
         //建立共用參數
         string strErrorMsg = "";
         int strMaxVersion = 0;
@@ -33,24 +33,21 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
             //建立DataTable Bulk Copy用
             DataTable dt = new DataTable();
-            dt.Columns.Add("T_CityNo", typeof(string));
-            dt.Columns.Add("T_CityName", typeof(string));
-            dt.Columns.Add("T_HotelUseYear", typeof(string));
-            dt.Columns.Add("T_HotelUseRate", typeof(string));
-            dt.Columns.Add("T_PointYear", typeof(string));
-            dt.Columns.Add("T_PointYearDesc", typeof(string));
-            dt.Columns.Add("T_PointPeople", typeof(string));
-            dt.Columns.Add("T_HotelsYear", typeof(string));
-            dt.Columns.Add("T_Hotels", typeof(string));
-            dt.Columns.Add("T_HotelRoomsYear", typeof(string));
-            dt.Columns.Add("T_HotelRooms", typeof(string));
-            dt.Columns.Add("T_HotelAvgPriceYear", typeof(string));
-            dt.Columns.Add("T_HotelAvgPrice", typeof(string));
-            dt.Columns.Add("T_CreateDate", typeof(DateTime));
-            dt.Columns.Add("T_CreateID", typeof(string));
-            dt.Columns.Add("T_CreateName", typeof(string));
-            dt.Columns.Add("T_Status", typeof(string));
-            dt.Columns.Add("T_Version", typeof(int));
+            dt.Columns.Add("MR_CityNo", typeof(string));
+            dt.Columns.Add("MR_CityName", typeof(string));
+            dt.Columns.Add("MR_MayorYear", typeof(string));
+            dt.Columns.Add("MR_Mayor", typeof(string));
+            dt.Columns.Add("MR_ViceMayorYear", typeof(string));
+            dt.Columns.Add("MR_ViceMayor", typeof(string));
+            dt.Columns.Add("MR_PoliticalPartyYear", typeof(string));
+            dt.Columns.Add("MR_PoliticalParty", typeof(string));
+            dt.Columns.Add("MR_AdAreaYear", typeof(string));
+            dt.Columns.Add("MR_AdArea", typeof(string));
+            dt.Columns.Add("MR_CreateDate", typeof(DateTime));
+            dt.Columns.Add("MR_CreateID", typeof(string));
+            dt.Columns.Add("MR_CreateName", typeof(string));
+            dt.Columns.Add("MR_Status", typeof(string));
+            dt.Columns.Add("MR_Version", typeof(int));
 
             try
             {
@@ -76,21 +73,21 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                     ISheet sheet = workbook.GetSheetAt(0);//當前sheet
 
-                    //簡易判斷這份Excel是不是觀光的Excel
+                    //簡易判斷這份Excel是不是市長/副市長的Excel
                     int cellsCount = sheet.GetRow(0).Cells.Count;
                     //1.判斷表頭欄位數
-                    if (cellsCount != 6)
+                    if (cellsCount != 5)
                     {
-                        throw new Exception("請檢查是否為觀光的匯入檔案");
+                        throw new Exception("請檢查是否為市長副市長的匯入檔案");
                     }
                     //2.檢查欄位名稱
-                    if (sheet.GetRow(0).GetCell(1).ToString().Trim() != "觀光旅館住用率" || sheet.GetRow(0).GetCell(2).ToString().Trim() != "觀光遊憩據點(縣市)人次統計")
+                    if (sheet.GetRow(0).GetCell(1).ToString().Trim() != "直轄市/縣市長" || sheet.GetRow(0).GetCell(2).ToString().Trim() != "副縣/市長")
                     {
-                        throw new Exception("請檢查是否為觀光的匯入檔案");
+                        throw new Exception("請檢查是否為市長副市長的匯入檔案");
                     }
 
                     //取得當前最大版次 (+1變成現在版次)
-                    strMaxVersion = TL_DB.getMaxVersin() + 1;
+                    strMaxVersion = MR_DB.getMaxVersin() + 1;
 
                     //取得代碼檔
                     CodeTable_DB code_db = new CodeTable_DB();
@@ -101,7 +98,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     //資料從第四筆開始 最後一筆是合計不進資料庫
                     for (int j = 3; j < sheet.PhysicalNumberOfRows - 1; j++)
                     {
-                        if (sheet.GetRow(j).GetCell(0).ToString().Trim() != "" && sheet.GetRow(j).GetCell(0).ToString().Trim() != "全台平均")
+                        if (sheet.GetRow(j).GetCell(0).ToString().Trim() != "")
                         {
                             DataRow row = dt.NewRow();
                             cityNo = Common.GetCityCodeItem(dtCode, sheet.GetRow(j).GetCell(0).ToString().Trim());//縣市代碼
@@ -109,30 +106,28 @@ namespace ISTI_CityNavigation.Manage.mHandler
                             {
                                 throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                             }
-                            row["T_CityNo"] = cityNo;//縣市代碼
-                            row["T_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
-                            row["T_HotelUseYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//觀光旅館住用率-資料年度(民國年)
-                            row["T_HotelUseRate"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//觀光旅館住用率
-                            row["T_PointYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年(統計至107年11月)", "");//觀光遊憩據點(縣市)人次統計-資料年度(民國年)  ex: 107年(統計至107年11月)  存 107
-                            row["T_PointYearDesc"] = sheet.GetRow(1).GetCell(2).ToString().Trim();//觀光遊憩據點(縣市)人次統計-資料年度(民國年)  ex: 107年(統計至107年11月)  存 107年(統計至107年11月)
-                            row["T_PointPeople"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//觀光遊憩據點(縣市)人次統計-人次
-                            row["T_HotelsYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//觀光旅館家數-資料年度(民國年)
-                            row["T_Hotels"] = sheet.GetRow(j).GetCell(3).ToString().Trim();//觀光旅館家數-家
-                            row["T_HotelRoomsYear"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//觀光旅館房間數-資料年度(民國年)
-                            row["T_HotelRooms"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//觀光旅館房間數-間
-                            row["T_HotelAvgPriceYear"] = sheet.GetRow(1).GetCell(5).ToString().Trim().Replace("年", "");//觀光旅館平均房價-資料年度(民國年)
-                            row["T_HotelAvgPrice"] = sheet.GetRow(j).GetCell(5).ToString().Trim();//觀光旅館平均房價-元
-                            row["T_CreateDate"] = dtNow;
-                            row["T_CreateID"] = LogInfo.mGuid;//上傳者GUID
-                            row["T_CreateName"] = LogInfo.name;//上傳者姓名
-                            row["T_Status"] = "A";
-                            row["T_Version"] = strMaxVersion;
+                            row["MR_CityNo"] = cityNo;//縣市代碼
+                            row["MR_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
+                            row["MR_MayorYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//直轄市/縣市長-資料年度(民國年)
+                            row["MR_Mayor"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//直轄市/縣市長
+                            row["MR_ViceMayorYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");//副縣/市長-資料年度(民國年)
+                            row["MR_ViceMayor"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//副縣/市長
+                            row["MR_PoliticalPartyYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//推薦政黨-資料年度(民國年)
+                            row["MR_PoliticalParty"] = sheet.GetRow(j).GetCell(3).ToString().Trim();//推薦政黨
+                            row["MR_AdAreaYear"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//行政區數-資料年度(民國年)
+                            row["MR_AdArea"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//行政區數
+                            row["MR_CreateDate"] = dtNow;
+                            row["MR_CreateID"] = LogInfo.mGuid;//上傳者GUID
+                            row["MR_CreateName"] = LogInfo.name;//上傳者姓名
+                            row["MR_Status"] = "A";
+                            row["MR_Version"] = strMaxVersion;
 
                             if (chkYear == "")
                                 chkYear = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");
 
                             dt.Rows.Add(row);
                         }
+
                     }
 
                     if (dt.Rows.Count > 0)
@@ -161,19 +156,19 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 oConn.Close();
                 Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
             }
-
         }
+
         //insert 前判斷是不是同年份有資料了
         private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran, string chkYear)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(@"
                 declare @chkRowCount int = 0;
-                select @chkRowCount = count(*) from Travel where T_HotelUseYear=@chkYear and T_Status='A'
+                select @chkRowCount = count(*) from Mayor where MR_MayorYear=@chkYear and MR_Status='A'
 
                 if @chkRowCount>0
                     begin
-                        update Travel set T_Status='D' where T_HotelUseYear=@chkYear and T_Status='A'
+                        update Mayor set MR_Status='D' where MR_MayorYear=@chkYear and MR_Status='A'
                     end
             ");
             SqlCommand oCmd = oConn.CreateCommand();
@@ -185,7 +180,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             oCmd.ExecuteNonQuery();
         }
 
-        //觀光 BulkCopy
+        //市長/副市長 BulkCopy
         private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
         {
             try
@@ -198,27 +193,24 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
                     //sqlBC.NotifyAfter = 10000;
                     ///設定要寫入的資料庫
-                    sqlBC.DestinationTableName = "Travel";
+                    sqlBC.DestinationTableName = "Mayor";
 
                     /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-                    sqlBC.ColumnMappings.Add("T_CityNo", "T_CityNo");
-                    sqlBC.ColumnMappings.Add("T_CityName", "T_CityName");
-                    sqlBC.ColumnMappings.Add("T_HotelUseYear", "T_HotelUseYear");
-                    sqlBC.ColumnMappings.Add("T_HotelUseRate", "T_HotelUseRate");
-                    sqlBC.ColumnMappings.Add("T_PointYear", "T_PointYear");
-                    sqlBC.ColumnMappings.Add("T_PointYearDesc", "T_PointYearDesc");
-                    sqlBC.ColumnMappings.Add("T_PointPeople", "T_PointPeople");
-                    sqlBC.ColumnMappings.Add("T_HotelsYear", "T_HotelsYear");
-                    sqlBC.ColumnMappings.Add("T_Hotels", "T_Hotels");
-                    sqlBC.ColumnMappings.Add("T_HotelRoomsYear", "T_HotelRoomsYear");
-                    sqlBC.ColumnMappings.Add("T_HotelRooms", "T_HotelRooms");
-                    sqlBC.ColumnMappings.Add("T_HotelAvgPriceYear", "T_HotelAvgPriceYear");
-                    sqlBC.ColumnMappings.Add("T_HotelAvgPrice", "T_HotelAvgPrice");
-                    sqlBC.ColumnMappings.Add("T_CreateDate", "T_CreateDate");
-                    sqlBC.ColumnMappings.Add("T_CreateID", "T_CreateID");
-                    sqlBC.ColumnMappings.Add("T_CreateName", "T_CreateName");
-                    sqlBC.ColumnMappings.Add("T_Status", "T_Status");
-                    sqlBC.ColumnMappings.Add("T_Version", "T_Version");
+                    sqlBC.ColumnMappings.Add("MR_CityNo", "MR_CityNo");
+                    sqlBC.ColumnMappings.Add("MR_CityName", "MR_CityName");
+                    sqlBC.ColumnMappings.Add("MR_MayorYear", "MR_MayorYear");
+                    sqlBC.ColumnMappings.Add("MR_Mayor", "MR_Mayor");
+                    sqlBC.ColumnMappings.Add("MR_ViceMayorYear", "MR_ViceMayorYear");
+                    sqlBC.ColumnMappings.Add("MR_ViceMayor", "MR_ViceMayor");
+                    sqlBC.ColumnMappings.Add("MR_PoliticalPartyYear", "MR_PoliticalPartyYear");
+                    sqlBC.ColumnMappings.Add("MR_PoliticalParty", "MR_PoliticalParty");
+                    sqlBC.ColumnMappings.Add("MR_AdAreaYear", "MR_AdAreaYear");
+                    sqlBC.ColumnMappings.Add("MR_AdArea", "MR_AdArea");
+                    sqlBC.ColumnMappings.Add("MR_CreateDate", "MR_CreateDate");
+                    sqlBC.ColumnMappings.Add("MR_CreateID", "MR_CreateID");
+                    sqlBC.ColumnMappings.Add("MR_CreateName", "MR_CreateName");
+                    sqlBC.ColumnMappings.Add("MR_Status", "MR_Status");
+                    sqlBC.ColumnMappings.Add("MR_Version", "MR_Version");
 
                     /// 開始寫入資料
                     sqlBC.WriteToServer(srcData);
@@ -226,7 +218,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             }
             catch (Exception ex)
             {
-                strErrorMsg += "觀光匯入 error：" + ex.Message.ToString() + "\n";
+                strErrorMsg += "市長副市長匯入 error：" + ex.Message.ToString() + "\n";
             }
 
         }

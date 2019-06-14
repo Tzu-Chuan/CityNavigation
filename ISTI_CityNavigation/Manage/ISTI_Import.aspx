@@ -27,31 +27,31 @@
                             strpost = "mHandler/ImportTravel.aspx";
                             break;       
                         case "03"://交通     
-                            strpost = "";
+                            strpost = "mHandler/ImportTraffic.aspx";
                             break;
                         case "04"://農業
-                            strpost = "";
+                            strpost = "mHandler/ImportFarming.aspx";
                             break;
                         case "05"://市長副市長
-                            strpost = "";
+                            strpost = "mHandler/ImportMayor.aspx";
                             break;
                         case "06"://產業
-                            strpost = "";
+                            strpost = "mHandler/ImportIndustry.aspx";
                             break;       
                         case "07"://零售     
-                            strpost = "";
+                            strpost = "mHandler/ImportRetail.aspx";
                             break;       
                         case "08"://安全     
-                            strpost = "";
+                            strpost = "mHandler/ImportSafety.aspx";
                             break;
                         case "09"://能源
-                            strpost = "";
+                            strpost = "mHandler/ImportEnergy.aspx";
                             break;
                         case "10"://健康
-                            strpost = "";
+                            strpost = "mHandler/ImportHealth.aspx";
                             break;
                         case "11"://教育
-                            strpost = "";
+                            strpost = "mHandler/ImportEducation.aspx";
                             break;
 
                     }
