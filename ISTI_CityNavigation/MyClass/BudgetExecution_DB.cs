@@ -92,7 +92,7 @@ public class BudgetExecution_DB
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
        
-        sb.Append(@"Select * from BudgetExecution where B_Status='A' ");
+        sb.Append(@"SELECT B_Year,B_Commission,B_Subsidy,B_Sub01,B_Sub02,B_Sub03,B_RemainBudget,B_Rate FROM BudgetExecution where B_Status='A' ");
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;
