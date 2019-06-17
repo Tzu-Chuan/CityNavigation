@@ -52,7 +52,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="test" class="margin10T">
-        <input id="file0" name="file0" type="file" class="inputex" />
+        資料上傳：<input id="file0" name="file0" type="file" class="inputex" />
         <input id="upbtn" type="button" class="genbtn" value="上傳" />
     </div>
     <div id="ErrMsg" class="margin10T" style="color:red;"></div>

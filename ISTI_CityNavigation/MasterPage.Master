@@ -58,7 +58,7 @@
     <script type="text/javascript" src="<%=ResolveUrl("~/js/tableHeadFixer.js") %>"></script><!-- 固定標頭表格 -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/PageList.js") %>"></script>
     <script type="text/javascript" src="<%=ResolveUrl("~/js/loading.js") %>"></script>
-    <title></title>
+    <title>經濟部智慧城鄉生活應用導航資料庫</title>
     <script type="text/javascript">
         $(document).ready(function () {
             //寬版螢幕調整
@@ -133,13 +133,16 @@
                             <div class="superfishmenu">
                                 <ul>
                                     <li><a href="index.html">首頁</a></li>
-                                    <li><a href="wisdom.html">智慧城鄉計畫提案</a></li>
+                                    <li><a href="wisdom.html">智慧城鄉計畫提案</a>
+                                        <ul>
+                                            <li><a href="#">經費總表</a></li>
+                                            <li><a href="#">計畫查詢</a></li>
+                                        </ul>
+                                    </li>
                                     <li><a href="#">全國資料</a>
                                         <ul>
                                             <li><a href="#">人口</a></li>
                                             <li><a href="#">土地</a></li>
-                                            <li><a href="#">財政</a></li>
-                                            <li><a href="#">基盤</a></li>
                                             <li><a href="#">產業</a></li>
                                             <li><a href="#">智慧城鄉計畫提案</a></li>
                                             <li><a href="#">農業</a></li>
@@ -150,7 +153,7 @@
                                             <li><a href="#">交通</a></li>
                                             <li><a href="#">基盤</a></li>
                                             <li><a href="#">能源</a></li>
-                                            <li><a href="#">安全</a></li>
+                                            <li><a href="#">智慧安全、治理</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="#">北部縣市</a>
@@ -159,8 +162,6 @@
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -171,15 +172,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">新北市</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -190,15 +189,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">基隆市</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -209,17 +206,15 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="main-Taoyuan.html">桃園市</a>
                                                 <ul>
-                                                    <li><a href="main-Taoyuan-people.html">人口</a></li>
+                                                    <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
-                                                    <li><a href="main-Taoyuan-aicity.html">智慧城鄉計畫提案</a></li>
+                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
                                                     <li><a href="#">觀光</a></li>
                                                     <li><a href="#">健康</a></li>
@@ -228,15 +223,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">新竹縣</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -247,15 +240,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">新竹市</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -266,15 +257,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">苗栗縣</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -285,11 +274,10 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
-
                                     </li>
                                     <li><a href="#">中部縣市</a>
                                         <ul>
@@ -297,8 +285,6 @@
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -309,15 +295,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">彰化縣</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -328,15 +312,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">南投縣</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -347,7 +329,7 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -358,8 +340,6 @@
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -370,15 +350,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">嘉義縣</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -389,15 +367,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">嘉義市</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -408,15 +384,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">臺南市</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -427,15 +401,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">高雄市</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -446,15 +418,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">屏東縣</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -465,11 +435,10 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
-
                                     </li>
                                     <li><a href="#">東部縣市</a>
                                         <ul>
@@ -477,8 +446,6 @@
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -489,18 +456,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-
-
-
                                             <li><a href="#">花蓮縣</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -511,15 +473,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">臺東縣</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -530,11 +490,10 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
-
                                     </li>
                                     <li><a href="#">離島縣市</a>
                                         <ul>
@@ -542,8 +501,6 @@
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -554,15 +511,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">連江縣</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -573,15 +528,13 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="#">澎湖縣</a>
                                                 <ul>
                                                     <li><a href="#">人口</a></li>
                                                     <li><a href="#">土地</a></li>
-                                                    <li><a href="#">財政</a></li>
-                                                    <li><a href="#">基盤</a></li>
                                                     <li><a href="#">產業</a></li>
                                                     <li><a href="#">智慧城鄉計畫提案</a></li>
                                                     <li><a href="#">農業</a></li>
@@ -592,7 +545,7 @@
                                                     <li><a href="#">交通</a></li>
                                                     <li><a href="#">基盤</a></li>
                                                     <li><a href="#">能源</a></li>
-                                                    <li><a href="#">安全</a></li>
+                                                    <li><a href="#">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                         </ul>

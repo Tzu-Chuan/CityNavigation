@@ -16,6 +16,7 @@ public class BudgetExecution_DB
     }
     #region 私用
     string B_ID = string.Empty;
+    string B_Year = string.Empty;
     string B_Commission = string.Empty;
     string B_Subsidy = string.Empty;
     string B_Sub01 = string.Empty;
@@ -34,6 +35,10 @@ public class BudgetExecution_DB
     public string _B_ID
     {
         set { B_ID = value; }
+    }
+    public string _B_Year
+    {
+        set { B_Year = value; }
     }
     public string _B_Commission
     {
@@ -81,6 +86,24 @@ public class BudgetExecution_DB
     }
     #endregion
 
+    public DataTable getBudgetExecution()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+       
+        sb.Append(@"Select * from BudgetExecution where B_Status='A' ");
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable ds = new DataTable();
+        
+        //oCmd.Parameters.AddWithValue("@KeyWord", KeyWord);
+
+        oda.Fill(ds);
+        return ds;
+    }
 
     public int getMaxVersion()
     {
@@ -125,6 +148,7 @@ public class BudgetExecution_DB
             sqlBC.DestinationTableName = "BudgetExecution";
 
             /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
+            sqlBC.ColumnMappings.Add("B_Year", "B_Year");
             sqlBC.ColumnMappings.Add("B_Commission", "B_Commission");
             sqlBC.ColumnMappings.Add("B_Subsidy", "B_Subsidy");
             sqlBC.ColumnMappings.Add("B_Sub01", "B_Sub01");

@@ -85,6 +85,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 err = "Sheet Name：" + sheet.SheetName.Trim() + "<br>";
                 err += "行數：第 " + (i + 1).ToString() + " 筆";
                 DataRow row = dt.NewRow();
+                row["B_Year"] = sheet.GetRow(1).GetCell(i).ToString().Trim().Replace("年度", "");
                 row["B_Commission"] = sheet.GetRow(2).GetCell(i).ToString().Trim();
                 row["B_Subsidy"] = sheet.GetRow(3).GetCell(i).ToString().Trim();
                 row["B_Sub01"] = sheet.GetRow(5).GetCell(i).ToString().Trim();
@@ -354,36 +355,11 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
         #region 建立DataTable
 
-        #region CitySubMoney
-        private DataTable CreateCitySubMoney()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("C_City", typeof(string));
-            dt.Columns.Add("C_PlanCount_NotAll", typeof(string));
-            dt.Columns.Add("C_SubMoney_NotAll", typeof(string));
-            dt.Columns.Add("C_PlanMoney_NotAll", typeof(string));
-            dt.Columns.Add("C_AssignSubMoney", typeof(string));
-            dt.Columns.Add("C_AssignTotalMoney", typeof(string));
-            dt.Columns.Add("C_CitySubMoneyRatio_NotAll", typeof(string));
-            dt.Columns.Add("C_CityTotalMoneyRatio_NotAll", typeof(string));
-            dt.Columns.Add("C_PlanCount", typeof(string));
-            dt.Columns.Add("C_SubMoney", typeof(string));
-            dt.Columns.Add("C_PlanMoney", typeof(string));
-            dt.Columns.Add("C_CitySubMoneyRatio", typeof(string));
-            dt.Columns.Add("C_CityTotalMoneyRatio", typeof(string));
-            dt.Columns.Add("C_CreateId", typeof(string));
-            dt.Columns.Add("C_CreateName", typeof(string));
-            dt.Columns.Add("C_Version", typeof(Int32));
-            dt.Columns.Add("C_Status", typeof(string));
-            return dt;
-        }
-        #endregion
-
         #region BudgetExecution
         private DataTable CreateBudgetExecution()
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("B_ID", typeof(string));
+            dt.Columns.Add("B_Year", typeof(string));
             dt.Columns.Add("B_Commission", typeof(string));
             dt.Columns.Add("B_Subsidy", typeof(string));
             dt.Columns.Add("B_Sub01", typeof(string));
@@ -533,6 +509,31 @@ namespace ISTI_CityNavigation.Manage.mHandler
             dt.Columns.Add("CP_CreateName", typeof(string));
             dt.Columns.Add("CP_Version", typeof(Int32));
             dt.Columns.Add("CP_Status", typeof(string));
+            return dt;
+        }
+        #endregion
+
+        #region CitySubMoney
+        private DataTable CreateCitySubMoney()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("C_City", typeof(string));
+            dt.Columns.Add("C_PlanCount_NotAll", typeof(string));
+            dt.Columns.Add("C_SubMoney_NotAll", typeof(string));
+            dt.Columns.Add("C_PlanMoney_NotAll", typeof(string));
+            dt.Columns.Add("C_AssignSubMoney", typeof(string));
+            dt.Columns.Add("C_AssignTotalMoney", typeof(string));
+            dt.Columns.Add("C_CitySubMoneyRatio_NotAll", typeof(string));
+            dt.Columns.Add("C_CityTotalMoneyRatio_NotAll", typeof(string));
+            dt.Columns.Add("C_PlanCount", typeof(string));
+            dt.Columns.Add("C_SubMoney", typeof(string));
+            dt.Columns.Add("C_PlanMoney", typeof(string));
+            dt.Columns.Add("C_CitySubMoneyRatio", typeof(string));
+            dt.Columns.Add("C_CityTotalMoneyRatio", typeof(string));
+            dt.Columns.Add("C_CreateId", typeof(string));
+            dt.Columns.Add("C_CreateName", typeof(string));
+            dt.Columns.Add("C_Version", typeof(Int32));
+            dt.Columns.Add("C_Status", typeof(string));
             return dt;
         }
         #endregion
