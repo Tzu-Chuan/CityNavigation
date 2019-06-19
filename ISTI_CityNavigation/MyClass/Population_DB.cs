@@ -148,6 +148,33 @@ public class Population_DB
 
         return strMaxNum;
     }
+
+    //取得人口總數列表資料
+    public DataTable getPopulationList()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+        if (P_CityNo == "All")
+        {
+            sb.Append(@"select * from Population");
+        }
+
+        if(P_CityNo == "02")
+        {
+            sb.Append(@"select * from Population where P_CityNo='02' and P_Status='A'");
+        }
+
+
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable dt = new DataTable();
+
+        oda.Fill(dt);
+        return dt;
+    }
 }
 
     

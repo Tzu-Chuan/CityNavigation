@@ -182,4 +182,26 @@ public class Farming_DB
         return strMaxNum;
     }
 
+    //取得農業列表資料
+    public DataTable getFarmingList()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        if (Fa_CityNo == "02")
+        {
+            sb.Append(@"select * from Farming where Fa_CityNo='02' and Fa_Status='A'");
+        }
+
+
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable dt = new DataTable();
+
+        oda.Fill(dt);
+        return dt;
+    }
 }

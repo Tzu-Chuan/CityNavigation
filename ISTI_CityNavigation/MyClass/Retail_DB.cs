@@ -152,4 +152,27 @@ public class Retail_DB
 
         return strMaxNum;
     }
+    
+    //取得零售列表資料
+    public DataTable getRetailList()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        if (Re_CityNo == "02")
+        {
+            sb.Append(@"select * from Retail where Re_CityNo='02' and Re_Status='A'");
+        }
+
+
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable dt = new DataTable();
+
+        oda.Fill(dt);
+        return dt;
+    }
 }

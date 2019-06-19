@@ -122,4 +122,27 @@ public class Industry_DB
 
         return strMaxNum;
     }
+    
+    //取得產業列表資料
+    public DataTable getIndustryList()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        if (Ind_CityNo == "02")
+        {
+            sb.Append(@"select * from Industry where Ind_CityNo='02' and Ind_Status='A'");
+        }
+
+
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable dt = new DataTable();
+
+        oda.Fill(dt);
+        return dt;
+    }
 }

@@ -28,22 +28,6 @@ public class Energy_DB
     string Ene_Version = string.Empty;
     #endregion
     #region 公用
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public string _Ene_ID
     {
@@ -138,5 +122,28 @@ public class Energy_DB
         }
 
         return strMaxNum;
+    }
+    
+    //取得能源列表資料
+    public DataTable getEnergyList()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        if (Ene_CityNo == "02")
+        {
+            sb.Append(@"select * from Energy where Ene_CityNo='02' and Ene_Status='A'");
+        }
+
+
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable dt = new DataTable();
+
+        oda.Fill(dt);
+        return dt;
     }
 }

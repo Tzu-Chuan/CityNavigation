@@ -176,4 +176,26 @@ public class Traffic_DB
 
         return strMaxNum;
     }
+
+    //取得交通總數列表資料
+    public DataTable getTrafficList()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        if (Tra_CityNo == "02")
+        {
+            sb.Append(@"select * from Traffic where Tra_CityNo='02' and Tra_Status='A'");
+        }
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable dt = new DataTable();
+
+        oda.Fill(dt);
+        return dt;
+    }
+
 }

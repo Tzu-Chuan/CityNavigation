@@ -125,7 +125,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                             row["Re_StreetVendorAvgIncome"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//攤販全年平均收入-千元
                             row["Re_RetailBusinessSalesYear"] = sheet.GetRow(1).GetCell(5).ToString().Trim().Replace("年", "");//零售業營利事業銷售額-資料年度(民國年)
                             row["Re_RetailBusinessSales"] = sheet.GetRow(j).GetCell(5).ToString().Trim();//零售業營利事業銷售額-千元
-                            row["Re_RetailBusinessSalesRateYearDesc"] = sheet.GetRow(6).GetCell(6).ToString().Trim();//零售業營利事業銷售額成長率-年度敘述 EX: 106-107年
+                            row["Re_RetailBusinessSalesRateYearDesc"] = sheet.GetRow(1).GetCell(6).ToString().Trim();//零售業營利事業銷售額成長率-年度敘述 EX: 106-107年
                             row["Re_RetailBusinessSalesRate"] = sheet.GetRow(j).GetCell(6).ToString().Trim();//零售業營利事業銷售額成長率
                             row["Re_RetailBusinessAvgSalesYear"] = sheet.GetRow(1).GetCell(7).ToString().Trim().Replace("年", "");//零售業營利事業平均每家銷售額-資料年度(民國年)
                             row["Re_RetailBusinessAvgSales"] = sheet.GetRow(j).GetCell(7).ToString().Trim();//零售業營利事業平均每家銷售額-千元

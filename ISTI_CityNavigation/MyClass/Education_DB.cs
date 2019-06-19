@@ -275,4 +275,27 @@ public class Education_DB
 
         return strMaxNum;
     }
+    
+    //取得教育列表資料
+    public DataTable getEducationList()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        if (Edu_CityNo == "02")
+        {
+            sb.Append(@"select * from Education where Edu_CityNo='02' and Edu_Status='A'");
+        }
+
+
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable dt = new DataTable();
+
+        oda.Fill(dt);
+        return dt;
+    }
 }

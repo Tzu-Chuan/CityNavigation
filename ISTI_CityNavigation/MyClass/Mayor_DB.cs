@@ -122,4 +122,27 @@ public class Mayor_DB
 
         return strMaxNum;
     }
+    
+    //取得交通總數列表資料
+    public DataTable getMayorList()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        if (MR_CityNo == "02")
+        {
+            sb.Append(@"select * from Mayor where MR_CityNo='02' and MR_Status='A'");
+        }
+
+
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable dt = new DataTable();
+
+        oda.Fill(dt);
+        return dt;
+    }
 }

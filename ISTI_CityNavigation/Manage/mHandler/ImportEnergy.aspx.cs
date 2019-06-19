@@ -115,7 +115,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                             row["Ene_ElectricityUsedYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//用電量-資料年度(民國年)
                             row["Ene_ElectricityUsed"] = sheet.GetRow(j).GetCell(3).ToString().Trim();//用電量-度
                             row["Ene_ReEnergyOfElectricityRateYear"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//再生能源電量佔用電量比例-資料年度(民國年)
-                            //row["Ene_ReEnergyOfElectricityRate"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//再生能源電量佔用電量比例-%
+                            row["Ene_ReEnergyOfElectricityRate"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//再生能源電量佔用電量比例-%
                             row["Ene_CreateDate"] = dtNow;
                             row["Ene_CreateID"] = LogInfo.mGuid;//上傳者GUID
                             row["Ene_CreateName"] = LogInfo.name;//上傳者姓名
