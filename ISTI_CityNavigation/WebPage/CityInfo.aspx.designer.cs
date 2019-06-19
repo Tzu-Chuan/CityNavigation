@@ -10,6 +10,6 @@
 namespace ISTI_CityNavigation.WebPage {
     
     
-    public partial class Main_Taipei {
+    public partial class CityInfo {
     }
 }

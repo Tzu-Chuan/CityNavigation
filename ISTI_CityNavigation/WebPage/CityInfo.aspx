@@ -1,13 +1,17 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Main_Taipei.aspx.cs" Inherits="ISTI_CityNavigation.WebPage.Main_Taipei" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="CityInfo.aspx.cs" Inherits="ISTI_CityNavigation.WebPage.CityInfo" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
+
+        var CityNo = "";
+
         $(document).ready(function () {
+            CityNo = ($.getQueryString("c") == "") ? "02" : $.getQueryString('c');
             getMayorList();
             getPopulationList();
             getLandList();
         })//js end
 
-        var CityNo = "02";
+        
 
         //撈台北市市長/副市長列表
         function getMayorList() {

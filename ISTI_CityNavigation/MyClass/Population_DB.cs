@@ -159,14 +159,11 @@ public class Population_DB
         {
             sb.Append(@"select * from Population");
         }
-
-        if(P_CityNo == "02")
-        {
-            sb.Append(@"select * from Population where P_CityNo='02' and P_Status='A'");
+        else {
+            sb.Append(@"select * from Population where P_CityNo=@P_CityNo and P_Status='A'");
+            oCmd.Parameters.AddWithValue("@P_CityNo", P_CityNo);
         }
-
-
-
+        
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;
         SqlDataAdapter oda = new SqlDataAdapter(oCmd);
