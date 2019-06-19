@@ -184,10 +184,8 @@ public class Traffic_DB
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
 
-        if (Tra_CityNo == "02")
-        {
-            sb.Append(@"select * from Traffic where Tra_CityNo='02' and Tra_Status='A'");
-        }
+        sb.Append(@"select * from Traffic where Tra_CityNo=@Tra_CityNo and Tra_Status='A'");
+        oCmd.Parameters.AddWithValue("@Tra_CityNo", Tra_CityNo);
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;

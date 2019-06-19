@@ -189,12 +189,8 @@ public class Farming_DB
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
 
-        if (Fa_CityNo == "02")
-        {
-            sb.Append(@"select * from Farming where Fa_CityNo='02' and Fa_Status='A'");
-        }
-
-
+        sb.Append(@"select * from Farming where Fa_CityNo=@Fa_CityNo and Fa_Status='A'");
+        oCmd.Parameters.AddWithValue("@Fa_CityNo", Fa_CityNo);
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;

@@ -131,12 +131,8 @@ public class Energy_DB
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
 
-        if (Ene_CityNo == "02")
-        {
-            sb.Append(@"select * from Energy where Ene_CityNo='02' and Ene_Status='A'");
-        }
-
-
+        sb.Append(@"select * from Energy where Ene_CityNo=@Ene_CityNo and Ene_Status='A'");
+        oCmd.Parameters.AddWithValue("@Ene_CityNo", Ene_CityNo);
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;

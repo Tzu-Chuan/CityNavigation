@@ -180,10 +180,8 @@ public class Health_DB
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
 
-        if (Hea_CityNo == "02")
-        {
-            sb.Append(@"select * from Health where Hea_CityNo='02' and Hea_Status='A'");
-        }
+        sb.Append(@"select * from Health where Hea_CityNo=@Hea_CityNo and Hea_Status='A'");
+        oCmd.Parameters.AddWithValue("@Hea_CityNo", Hea_CityNo);
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;
