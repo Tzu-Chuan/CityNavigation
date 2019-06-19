@@ -81,6 +81,25 @@ public class CategorySubMoney_DB
     #endregion
 
 
+    public DataTable getSubSidyCategoryAnalyze()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"SELECT * FROM CategorySubMoney where C_Status='A' ");
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable ds = new DataTable();
+
+        //oCmd.Parameters.AddWithValue("@KeyWord", KeyWord);
+
+        oda.Fill(ds);
+        return ds;
+    }
+
     public int getMaxVersion()
     {
         SqlCommand oCmd = new SqlCommand();

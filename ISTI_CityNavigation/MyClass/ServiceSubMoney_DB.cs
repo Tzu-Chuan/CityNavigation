@@ -80,6 +80,24 @@ public class ServiceSubMoney_DB
     }
     #endregion
 
+    public DataTable getSubsidyServiceAnalyze()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"SELECT * FROM ServiceSubMoney where S_Status='A' ");
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable ds = new DataTable();
+
+        //oCmd.Parameters.AddWithValue("@KeyWord", KeyWord);
+
+        oda.Fill(ds);
+        return ds;
+    }
 
     public int getMaxVersion()
     {

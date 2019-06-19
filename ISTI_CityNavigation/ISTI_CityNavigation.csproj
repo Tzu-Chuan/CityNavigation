@@ -155,6 +155,10 @@
     <Content Include="Default.aspx" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontello.svg" />
+    <Content Include="handler\GetBudgetExecution.aspx" />
+    <Content Include="handler\GetCategorySubMoney.aspx" />
+    <Content Include="handler\GetCitySubMoney.aspx" />
+    <Content Include="handler\GetServiceSubMoney.aspx" />
     <Content Include="handler\SignOut.aspx" />
     <Content Include="handler\UserLogin.aspx" />
     <Content Include="images\dpp.jpg" />
@@ -164,6 +168,7 @@
     <Content Include="js\autoHeight.js" />
     <Content Include="js\GenCommon.js" />
     <Content Include="js\highcharts.js" />
+    <Content Include="js\jquery-1.11.2.min.js" />
     <Content Include="js\jquery-3.3.1.min.js" />
     <Content Include="js\jquery-timing.min.js" />
     <Content Include="js\jquery-ui.1.12.1.js" />
@@ -194,14 +199,56 @@
     <Content Include="Manage\MemberMag.aspx" />
     <Content Include="Manage\mHandler\GetMemberInfo.aspx" />
     <Content Include="Manage\mHandler\GetMemberList.aspx" />
+    <Content Include="Manage\mHandler\ImportEducation.aspx" />
+    <Content Include="Manage\mHandler\ImportEnergy.aspx" />
+    <Content Include="Manage\mHandler\ImportFarming.aspx" />
+    <Content Include="Manage\mHandler\ImportHealth.aspx" />
     <Content Include="Manage\mHandler\ImportIDBFile.aspx" />
+    <Content Include="Manage\mHandler\ImportIndustry.aspx" />
+    <Content Include="Manage\mHandler\ImportMayor.aspx" />
     <Content Include="Manage\mHandler\ImportPopulation.aspx" />
+    <Content Include="Manage\mHandler\ImportRetail.aspx" />
+    <Content Include="Manage\mHandler\ImportSafety.aspx" />
+    <Content Include="Manage\mHandler\ImportTraffic.aspx" />
     <Content Include="Manage\mHandler\ImportTravel.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="WebPage\CityPlanList.aspx" />
+    <Content Include="WebPage\BudgetExecution.aspx" />
+    <Content Include="WebPage\CitySubsidyAnalyze.aspx" />
+    <Content Include="WebPage\SubSidyCategoryAnalyze.aspx" />
+    <Content Include="WebPage\SubsidyServiceAnalyze.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="handler\GetBudgetExecution.aspx.cs">
+      <DependentUpon>GetBudgetExecution.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="handler\GetBudgetExecution.aspx.designer.cs">
+      <DependentUpon>GetBudgetExecution.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="handler\GetCategorySubMoney.aspx.cs">
+      <DependentUpon>GetCategorySubMoney.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="handler\GetCategorySubMoney.aspx.designer.cs">
+      <DependentUpon>GetCategorySubMoney.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="handler\GetCitySubMoney.aspx.cs">
+      <DependentUpon>GetCitySubMoney.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="handler\GetCitySubMoney.aspx.designer.cs">
+      <DependentUpon>GetCitySubMoney.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="handler\GetServiceSubMoney.aspx.cs">
+      <DependentUpon>GetServiceSubMoney.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="handler\GetServiceSubMoney.aspx.designer.cs">
+      <DependentUpon>GetServiceSubMoney.aspx</DependentUpon>
+    </Compile>
     <Compile Include="handler\SignOut.aspx.cs">
       <DependentUpon>SignOut.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -258,6 +305,34 @@
     <Compile Include="Manage\mHandler\GetMemberList.aspx.designer.cs">
       <DependentUpon>GetMemberList.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\mHandler\ImportEducation.aspx.cs">
+      <DependentUpon>ImportEducation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportEducation.aspx.designer.cs">
+      <DependentUpon>ImportEducation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportEnergy.aspx.cs">
+      <DependentUpon>ImportEnergy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportEnergy.aspx.designer.cs">
+      <DependentUpon>ImportEnergy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportFarming.aspx.cs">
+      <DependentUpon>ImportFarming.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportFarming.aspx.designer.cs">
+      <DependentUpon>ImportFarming.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportHealth.aspx.cs">
+      <DependentUpon>ImportHealth.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportHealth.aspx.designer.cs">
+      <DependentUpon>ImportHealth.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\mHandler\ImportIDBFile.aspx.cs">
       <DependentUpon>ImportIDBFile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -265,12 +340,47 @@
     <Compile Include="Manage\mHandler\ImportIDBFile.aspx.designer.cs">
       <DependentUpon>ImportIDBFile.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manage\mHandler\ImportIndustry.aspx.cs">
+      <DependentUpon>ImportIndustry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportIndustry.aspx.designer.cs">
+      <DependentUpon>ImportIndustry.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportMayor.aspx.cs">
+      <DependentUpon>ImportMayor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportMayor.aspx.designer.cs">
+      <DependentUpon>ImportMayor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Manage\mHandler\ImportPopulation.aspx.cs">
       <DependentUpon>ImportPopulation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Manage\mHandler\ImportPopulation.aspx.designer.cs">
       <DependentUpon>ImportPopulation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportRetail.aspx.cs">
+      <DependentUpon>ImportRetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportRetail.aspx.designer.cs">
+      <DependentUpon>ImportRetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportSafety.aspx.cs">
+      <DependentUpon>ImportSafety.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportSafety.aspx.designer.cs">
+      <DependentUpon>ImportSafety.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportTraffic.aspx.cs">
+      <DependentUpon>ImportTraffic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage\mHandler\ImportTraffic.aspx.designer.cs">
+      <DependentUpon>ImportTraffic.aspx</DependentUpon>
     </Compile>
     <Compile Include="Manage\mHandler\ImportTravel.aspx.cs">
       <DependentUpon>ImportTravel.aspx</DependentUpon>
@@ -291,8 +401,14 @@
     <Compile Include="MyClass\CityPlanTable_DB.cs" />
     <Compile Include="MyClass\CitySubMoney_DB.cs" />
     <Compile Include="MyClass\CitySummaryTable_DB.cs" />
+    <Compile Include="MyClass\Education_DB.cs" />
+    <Compile Include="MyClass\Energy_DB.cs" />
+    <Compile Include="MyClass\Farming_DB.cs" />
+    <Compile Include="MyClass\Health_DB.cs" />
+    <Compile Include="MyClass\Industry_DB.cs" />
     <Compile Include="MyClass\LogInfo.cs" />
     <Compile Include="MyClass\Common.cs" />
+    <Compile Include="MyClass\Mayor_DB.cs" />
     <Compile Include="MyClass\Member_DB.cs" />
     <Compile Include="MyClass\ExceptionUtil.cs" />
     <Compile Include="MyClass\CodeTable_DB.cs" />
@@ -326,9 +442,47 @@
       <DependentUpon>MemberMag.aspx</DependentUpon>
     </Compile>
     <Compile Include="MyClass\Population_DB.cs" />
+    <Compile Include="MyClass\Retail_DB.cs" />
+    <Compile Include="MyClass\Safety_DB.cs" />
     <Compile Include="MyClass\ServiceSubMoney_DB.cs" />
+    <Compile Include="MyClass\Traffic_DB.cs" />
     <Compile Include="MyClass\Travel_DB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebPage\CityPlanList.aspx.cs">
+      <DependentUpon>CityPlanList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPage\CityPlanList.aspx.designer.cs">
+      <DependentUpon>CityPlanList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPage\BudgetExecution.aspx.cs">
+      <DependentUpon>BudgetExecution.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPage\BudgetExecution.aspx.designer.cs">
+      <DependentUpon>BudgetExecution.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPage\CitySubsidyAnalyze.aspx.cs">
+      <DependentUpon>CitySubsidyAnalyze.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPage\CitySubsidyAnalyze.aspx.designer.cs">
+      <DependentUpon>CitySubsidyAnalyze.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPage\SubSidyCategoryAnalyze.aspx.cs">
+      <DependentUpon>SubSidyCategoryAnalyze.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPage\SubSidyCategoryAnalyze.aspx.designer.cs">
+      <DependentUpon>SubSidyCategoryAnalyze.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPage\SubsidyServiceAnalyze.aspx.cs">
+      <DependentUpon>SubsidyServiceAnalyze.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPage\SubsidyServiceAnalyze.aspx.designer.cs">
+      <DependentUpon>SubsidyServiceAnalyze.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -354,6 +508,7 @@
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <Content Include="MasterPage.Master" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -361,9 +516,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WebPage\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
