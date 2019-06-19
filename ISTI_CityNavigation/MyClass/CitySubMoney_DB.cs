@@ -116,42 +116,21 @@ public class CitySubMoney_DB
     #endregion
 
 
-    public DataSet getList(string pStart, string pEnd, string sortStr)
+    public DataTable getCitySubsidyAnalyze()
     {
         SqlCommand oCmd = new SqlCommand();
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
 
-        sb.Append(@"
-select Member.*,Comp.C_Item_cn as Competence
-into #tmpAll from Member 
-left join CodeTable as Comp on Comp.C_Group='03' and Comp.C_Item=M_Competence
-where M_Status='A' ");
-
-        if (KeyWord != "")
-        {
-            sb.Append(@"and ((upper(M_Name) LIKE '%' + upper(@KeyWord) + '%') ");
-        }
-
-        sb.Append(@"
---總筆數
-select count(*) as total from #tmpAll
---分頁資料
-select * from (
-select ROW_NUMBER() over (order by " + sortStr + @") itemNo,#tmpAll.*
-from #tmpAll
-)#tmp where itemNo between @pStart and @pEnd
-
-drop table #tmpAll  ");
+        sb.Append(@"SELECT * FROM CitySubMoney where C_Status='A' ");
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;
         SqlDataAdapter oda = new SqlDataAdapter(oCmd);
-        DataSet ds = new DataSet();
+        DataTable ds = new DataTable();
 
-        oCmd.Parameters.AddWithValue("@KeyWord", KeyWord);
-        oCmd.Parameters.AddWithValue("@pStart", pStart);
-        oCmd.Parameters.AddWithValue("@pEnd", pEnd);
+        //oCmd.Parameters.AddWithValue("@KeyWord", KeyWord);
+
         oda.Fill(ds);
         return ds;
     }

@@ -131,7 +131,7 @@
                             <!-- 桌機主選單 -->
                             <div class="superfishmenu">
                                 <ul>
-                                    <li><a href="<%=ResolveUrl("~/WebPage/FundingExecution.aspx") %>">退出管理</a></li>
+                                    <li><a href="<%=ResolveUrl("~/WebPage/BudgetExecution.aspx") %>">退出管理</a></li>
                                     <li><a href="<%=ResolveUrl("~/Manage/MemberMag.aspx") %>">會員管理</a></li>
                                     <li><a href="<%=ResolveUrl("~/Manage/IDB_Import.aspx") %>">IDB 資料管理</a></li>
                                     <li><a href="<%=ResolveUrl("~/Manage/ISTI_Import.aspx") %>">ISTI 資料管理</a></li>
