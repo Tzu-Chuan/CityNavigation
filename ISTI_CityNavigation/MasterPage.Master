@@ -135,7 +135,7 @@
                                     <li><a href="index.html">首頁</a></li>
                                     <li><a href="wisdom.html">智慧城鄉計畫提案</a>
                                         <ul>
-                                            <li><a href="#">經費總表</a></li>
+                                            <li><a href="<%=ResolveUrl("~/Webpage/BudgetExecution.aspx") %>">經費總表</a></li>
                                             <li><a href="#">計畫查詢</a></li>
                                         </ul>
                                     </li>
