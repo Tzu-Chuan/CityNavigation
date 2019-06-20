@@ -181,24 +181,24 @@
                                     </li>
                                     <li><a href="Population_All.aspx">全國資料</a>
                                         <ul>
-                                            <li><a href="#">人口</a></li>
-                                            <li><a href="#">土地</a></li>
-                                            <li><a href="#">產業</a></li>
-                                            <li><a href="#">智慧城鄉計畫提案</a></li>
-                                            <li><a href="#">農業</a></li>
-                                            <li><a href="#">觀光</a></li>
-                                            <li><a href="#">健康</a></li>
-                                            <li><a href="#">零售</a></li>
-                                            <li><a href="#">教育</a></li>
-                                            <li><a href="#">交通</a></li>
-                                            <li><a href="#">基盤</a></li>
-                                            <li><a href="#">能源</a></li>
-                                            <li><a href="#">智慧安全、治理</a></li>
+                                            <li><a href="<%=ResolveUrl("~/Webpage/Population_All.aspx") %>">人口</a></li>
+                                            <li><a href="javascript:void(0);">土地</a></li>
+                                            <li><a href="javascript:void(0);">產業</a></li>
+                                            <li><a href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                            <li><a href="javascript:void(0);">農業</a></li>
+                                            <li><a href="javascript:void(0);">觀光</a></li>
+                                            <li><a href="javascript:void(0);">健康</a></li>
+                                            <li><a href="javascript:void(0);">零售</a></li>
+                                            <li><a href="javascript:void(0);">教育</a></li>
+                                            <li><a href="javascript:void(0);">交通</a></li>
+                                            <li><a href="javascript:void(0);">基盤</a></li>
+                                            <li><a href="javascript:void(0);">能源</a></li>
+                                            <li><a href="javascript:void(0);">智慧安全、治理</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="#">北部縣市</a>
                                         <ul>
-                                            <li><a name="02" href="javascript:void(0);">臺北市</a>
+                                            <li><a href="javascript:void(0);">臺北市</a>
                                                 <ul citycode="02">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
@@ -213,22 +213,7 @@
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a name="03" href="javascript:void(0);">新北市</a>
-                                                <ul citycode="03">
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">農業</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">觀光</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">健康</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">零售</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">教育</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">交通</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">能源</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a class="01" name="City" href="javascript:void(0);">基隆市</a>
+                                            <li><a href="javascript:void(0);">新北市</a>
                                                 <ul citycode="01">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
@@ -243,8 +228,8 @@
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a class="04" name="City" href="javascript:void(0);">桃園市</a>
-                                                <ul citycode="04">
+                                            <li><a href="javascript:void(0);">基隆市</a>
+                                                <ul citycode="18">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
@@ -258,8 +243,8 @@
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a class="06" name="City" href="javascript:void(0);">新竹縣</a>
-                                                <ul citycode="06">
+                                            <li><a href="javascript:void(0);">桃園市</a>
+                                                <ul citycode="03">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
@@ -273,8 +258,8 @@
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a class="05" name="City" href="javascript:void(0);">新竹市</a>
-                                                <ul citycode="05">
+                                            <li><a href="javascript:void(0);">新竹縣</a>
+                                                <ul citycode="08">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
@@ -288,8 +273,23 @@
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a class="07" name="City" href="javascript:void(0);">苗栗縣</a>
-                                                <ul citycode="07">
+                                            <li><a href="javascript:void(0);">新竹市</a>
+                                                <ul citycode="19">
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">農業</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">健康</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">零售</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">教育</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">交通</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">能源</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="javascript:void(0);">苗栗縣</a>
+                                                <ul citycode="09">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
@@ -307,8 +307,8 @@
                                     </li>
                                     <li><a href="#">中部縣市</a>
                                         <ul>
-                                            <li><a class="08" name="City" href="javascript:void(0);">臺中市</a>
-                                                <ul citycode="08">
+                                            <li><a href="javascript:void(0);">臺中市</a>
+                                                <ul citycode="04">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
@@ -322,23 +322,23 @@
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a class="09" name="City" href="javascript:void(0);">彰化縣</a>
-                                                <ul citycode="09">
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">農業</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">觀光</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">健康</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">零售</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">教育</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">交通</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">能源</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a class="10" name="City" href="javascript:void(0);">南投縣</a>
+                                            <li><a href="javascript:void(0);">彰化縣</a>
                                                 <ul citycode="10">
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">農業</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">健康</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">零售</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">教育</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">交通</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">能源</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="javascript:void(0);">南投縣</a>
+                                                <ul citycode="11">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
@@ -355,37 +355,7 @@
                                   </ul>
                                     <li><a href="#">南部縣市</a>
                                         <ul>
-                                            <li><a class="11" name="City" href="javascript:void(0);">雲林縣</a>
-                                                <ul citycode="11">
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">農業</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">觀光</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">健康</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">零售</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">教育</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">交通</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">能源</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a class="13" name="City" href="javascript:void(0);">嘉義縣</a>
-                                                <ul citycode="13">
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">農業</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">觀光</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">健康</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">零售</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">教育</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">交通</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">能源</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a class="12" name="City" href="javascript:void(0);">嘉義市</a>
+                                            <li><a href="javascript:void(0);">雲林縣</a>
                                                 <ul citycode="12">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
@@ -400,38 +370,68 @@
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a class="14" name="City" href="javascript:void(0);">臺南市</a>
+                                            <li><a href="javascript:void(0);">嘉義縣</a>
+                                                <ul citycode="13">
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">農業</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">健康</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">零售</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">教育</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">交通</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">能源</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="javascript:void(0);">嘉義市</a>
+                                                <ul citycode="20">
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">農業</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">健康</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">零售</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">教育</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">交通</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">能源</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="javascript:void(0);">臺南市</a>
+                                                <ul citycode="05">
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">農業</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">健康</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">零售</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">教育</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">交通</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">能源</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="javascript:void(0);">高雄市</a>
+                                                <ul citycode="06">
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">農業</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">健康</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">零售</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">教育</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">交通</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">能源</a></li>
+                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="javascript:void(0);">屏東縣</a>
                                                 <ul citycode="14">
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">農業</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">觀光</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">健康</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">零售</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">教育</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">交通</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">能源</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a class="15" name="City" href="javascript:void(0);">高雄市</a>
-                                                <ul citycode="15">
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">農業</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">觀光</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">健康</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">零售</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">教育</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">交通</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">能源</a></li>
-                                                    <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a class="16" name="City" href="javascript:void(0);">屏東縣</a>
-                                                <ul citycode="16">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
@@ -449,8 +449,8 @@
                                     </li>
                                     <li><a href="#">東部縣市</a>
                                         <ul>
-                                            <li><a class="19" name="City" href="javascript:void(0);">宜蘭縣</a>
-                                                <ul citycode="19">
+                                            <li><a href="javascript:void(0);">宜蘭縣</a>
+                                                <ul citycode="07">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
@@ -464,8 +464,8 @@
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a class="18" name="City" href="javascript:void(0);">花蓮縣</a>
-                                                <ul citycode="18">
+                                            <li><a href="javascript:void(0);">花蓮縣</a>
+                                                <ul citycode="16">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
@@ -479,8 +479,8 @@
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a class="17" name="City" href="javascript:void(0);">臺東縣</a>
-                                                <ul citycode="17">
+                                            <li><a href="javascript:void(0);">臺東縣</a>
+                                                <ul citycode="15">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
@@ -498,7 +498,7 @@
                                     </li>
                                     <li><a href="#">離島縣市</a>
                                         <ul>
-                                            <li><a class="21" name="City" href="javascript:void(0);">金門縣</a>
+                                            <li><a href="javascript:void(0);">金門縣</a>
                                                 <ul citycode="21">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
@@ -513,7 +513,7 @@
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a class="22" name="City" href="javascript:void(0);">連江縣</a>
+                                            <li><a href="javascript:void(0);">連江縣</a>
                                                 <ul citycode="22">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
@@ -528,8 +528,8 @@
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a class="20" name="City" href="javascript:void(0);">澎湖縣</a>
-                                                <ul citycode="20">
+                                            <li><a href="javascript:void(0);">澎湖縣</a>
+                                                <ul citycode="17">
                                                     <li><a name="ItemBtn" href="javascript:void(0);">人口土地</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">產業</a></li>
                                                     <li><a name="ItemBtn" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
