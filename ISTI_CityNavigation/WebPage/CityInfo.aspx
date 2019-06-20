@@ -67,8 +67,8 @@
                 case "Education"://教育
                     location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
                     break;
-                case ""://
-                    location.href="";
+                case "SmartCity"://智慧城鄉
+                    location.href = "SmartCity.aspx?city=" + cityno;
                     break;
 
             }
@@ -1169,7 +1169,7 @@
                    </div><!-- col 產業 -->
 
                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 margin20B">
-                       <a class="areabtn" id="AICity">
+                       <a class="areabtn" id="SmartCity">
                            <i class="fa fa-building-o font-size7"></i><br>智慧城鄉
                        </a><!-- -->
                    </div><!-- col 智慧城鄉 -->

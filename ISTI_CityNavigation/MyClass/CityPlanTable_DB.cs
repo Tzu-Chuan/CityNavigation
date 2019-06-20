@@ -69,6 +69,31 @@ public class CityPlanTable_DB
     public string _CP_Status { set { CP_Status = value; } }
     #endregion
 
+
+    public DataTable GetServiceTypeCount(string City)
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"Select CP_ServiceType,COUNT(CP_ServiceType) as TypeCount from CityPlanTable where CP_Status='A' ");
+
+        if (City != "")
+            sb.Append(@"and CP_CityCode=@City ");
+
+        sb.Append(@"group by CP_ServiceType ");
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable ds = new DataTable();
+
+        oCmd.Parameters.AddWithValue("@City", City);
+
+        oda.Fill(ds);
+        return ds;
+    }
+
     public int getMaxVersion(string city)
     {
         SqlCommand oCmd = new SqlCommand();
