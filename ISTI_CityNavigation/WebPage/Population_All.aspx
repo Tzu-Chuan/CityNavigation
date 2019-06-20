@@ -134,7 +134,7 @@
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetPopulationList.aspx",
+                url: "../handler/GetPopulationList.aspx",
                 data: {
                     CityNo:CityNo
                 },
