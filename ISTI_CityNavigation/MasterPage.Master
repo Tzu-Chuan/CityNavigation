@@ -58,6 +58,7 @@
     <script type="text/javascript" src="<%=ResolveUrl("~/js/tableHeadFixer.js") %>"></script><!-- 固定標頭表格 -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/PageList.js") %>"></script>
     <script type="text/javascript" src="<%=ResolveUrl("~/js/loading.js") %>"></script>
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/downfile.js") %>"></script>
     <title>經濟部智慧城鄉生活應用導航資料庫</title>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -67,6 +68,77 @@
             $(document).on("click", "#signout_btn", function () {
                 location.href = "../Handler/SignOut.aspx";
             });
+
+            //人口土地link
+            $(document).on("mousedown", "a[name='Population']", function () {
+                var cityno = $(this).attr("class");
+                var aid = $(this).attr("name");
+                onmousedown=location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
+            })
+
+            //觀光link
+            $(document).on("mousedown", "a[name='Travel']", function () {
+                var cityno = $(this).attr("class");
+                var aid = $(this).attr("name");
+                onmousedown=location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
+            })
+
+            //交通link
+            $(document).on("mousedown", "a[name='Traffic']", function () {
+                var cityno = $(this).attr("class");
+                var aid = $(this).attr("name");
+                onmousedown=location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
+            })
+
+            //農業link
+            $(document).on("mousedown", "a[name='Farming']", function () {
+                var cityno = $(this).attr("class");
+                var aid = $(this).attr("name");
+                onmousedown=location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
+            })
+
+            //產業link
+            $(document).on("mousedown", "a[name='Industry']", function () {
+                var cityno = $(this).attr("class");
+                var aid = $(this).attr("name");
+                onmousedown=location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
+            })
+
+            //零售link
+            $(document).on("mousedown", "a[name='Retail']", function () {
+                var cityno = $(this).attr("class");
+                var aid = $(this).attr("name");
+                onmousedown=location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
+            })
+
+            //智慧安全、治理link
+            $(document).on("mousedown", "a[name='Safety']", function () {
+                var cityno = $(this).attr("class");
+                var aid = $(this).attr("name");
+                onmousedown=location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
+            })
+
+            //能源link
+            $(document).on("mousedown", "a[name='Energy']", function () {
+                var cityno = $(this).attr("class");
+                var aid = $(this).attr("name");
+                onmousedown=location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
+            })
+
+            //健康link
+            $(document).on("mousedown", "a[name='Health']", function () {
+                var cityno = $(this).attr("class");
+                var aid = $(this).attr("name");
+                onmousedown=location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
+            })
+
+            //教育link
+            $(document).on("mousedown", "a[name='Education']", function () {
+                var cityno = $(this).attr("class");
+                var aid = $(this).attr("name");
+                onmousedown=location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
+            })
+
         }); // end js
     </script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
@@ -139,7 +211,7 @@
                                             <li><a href="<%=ResolveUrl("~/Webpage/CityPlanList.aspx") %>">計畫查詢</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="#">全國資料</a>
+                                    <li><a href="Population_All.aspx">全國資料</a>
                                         <ul>
                                             <li><a href="#">人口</a></li>
                                             <li><a href="#">土地</a></li>
@@ -158,394 +230,358 @@
                                     </li>
                                     <li><a href="#">北部縣市</a>
                                         <ul>
-                                            <li><a href="#">臺北市</a>
+                                            <li><a class="02" name="City" href="javascript:void(0);">臺北市</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="02" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="02" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="02" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="02" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="02" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="02" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="02" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="02" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="02" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="02" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="02" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">新北市</a>
+                                            <li><a class="03" name="City" href="javascript:void(0);">新北市</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="03" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="03" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="03" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="03" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="03" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="03" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="03" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="03" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="03" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="03" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="03" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">基隆市</a>
+                                            <li><a class="01" name="City" href="javascript:void(0);">基隆市</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="01" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="01" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="01" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="01" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="01" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="01" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="01" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="01" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="01" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="01" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="01" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="main-Taoyuan.html">桃園市</a>
+                                            <li><a class="04" name="City" href="javascript:void(0);">桃園市</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="04" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="04" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="04" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="04" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="04" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="04" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="04" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="04" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="04" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="04" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="04" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">新竹縣</a>
+                                            <li><a class="06" name="City" href="javascript:void(0);">新竹縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="06" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="06" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="06" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="06" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="06" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="06" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="06" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="06" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="06" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="06" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="06" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">新竹市</a>
+                                            <li><a class="05" name="City" href="javascript:void(0);">新竹市</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="05" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="05" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="05" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="05" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="05" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="05" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="05" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="05" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="05" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="05" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="05" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">苗栗縣</a>
+                                            <li><a class="07" name="City" href="javascript:void(0);">苗栗縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="07" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="07" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="07" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="07" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="07" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="07" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="07" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="07" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="07" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="07" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="07" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </li>
                                     <li><a href="#">中部縣市</a>
                                         <ul>
-                                            <li><a href="#">臺中市</a>
+                                            <li><a class="08" name="City" href="javascript:void(0);">臺中市</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="08" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="08" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="08" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="08" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="08" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="08" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="08" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="08" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="08" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="08" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="08" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">彰化縣</a>
+                                            <li><a class="09" name="City" href="javascript:void(0);">彰化縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="09" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="09" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="09" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="09" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="09" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="09" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="09" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="09" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="09" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="09" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="09" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">南投縣</a>
+                                            <li><a class="10" name="City" href="javascript:void(0);">南投縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
-                                                </ul>
-                                            </li>
+                                                    <li><a class="10" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="10" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="10" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="10" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="10" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="10" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="10" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="10" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="10" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="10" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="10" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                         </ul>
                                     </li>
+                                  </ul>
                                     <li><a href="#">南部縣市</a>
                                         <ul>
-                                            <li><a href="#">雲林縣</a>
+                                            <li><a class="11" name="City" href="javascript:void(0);">雲林縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="11" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="11" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="11" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="11" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="11" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="11" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="11" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="11" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="11" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="11" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="11" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">嘉義縣</a>
+                                            <li><a class="13" name="City" href="javascript:void(0);">嘉義縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="13" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="13" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="13" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="13" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="13" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="13" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="13" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="13" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="13" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="13" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="13" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">嘉義市</a>
+                                            <li><a class="12" name="City" href="javascript:void(0);">嘉義市</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="12" name="Population" href="javascript:void(0);">人口土地</a></li>
+                                                    <li><a class="12" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="12" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="12" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="12" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="12" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="12" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="12" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="12" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="12" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="12" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">臺南市</a>
+                                            <li><a class="14" name="City" href="javascript:void(0);">臺南市</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="14" name="Population" href="javascript:void(0);">人口</a></li>
+                                                    <li><a class="14" name="Land" href="javascript:void(0);">土地</a></li>
+                                                    <li><a class="14" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="14" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="14" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="14" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="14" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="14" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="14" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="14" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="14" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="14" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">高雄市</a>
+                                            <li><a class="15" name="City" href="javascript:void(0);">高雄市</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="15" name="Population" href="javascript:void(0);">人口</a></li>
+                                                    <li><a class="15" name="Land" href="javascript:void(0);">土地</a></li>
+                                                    <li><a class="15" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="15" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="15" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="15" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="15" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="15" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="15" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="15" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="15" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="15" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">屏東縣</a>
+                                            <li><a class="16" name="City" href="javascript:void(0);">屏東縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="16" name="Population" href="javascript:void(0);">人口</a></li>
+                                                    <li><a class="16" name="Land" href="javascript:void(0);">土地</a></li>
+                                                    <li><a class="16" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="16" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="16" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="16" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="16" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="16" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="16" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="16" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="16" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="16" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </li>
                                     <li><a href="#">東部縣市</a>
                                         <ul>
-                                            <li><a href="#">宜蘭縣</a>
+                                            <li><a class="19" name="City" href="javascript:void(0);">宜蘭縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="19" name="Population" href="javascript:void(0);">人口</a></li>
+                                                    <li><a class="19" name="Land" href="javascript:void(0);">土地</a></li>
+                                                    <li><a class="19" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="19" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="19" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="19" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="19" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="19" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="19" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="19" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="19" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="19" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">花蓮縣</a>
+                                            <li><a class="18" name="City" href="javascript:void(0);">花蓮縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="18" name="Population" href="javascript:void(0);">人口</a></li>
+                                                    <li><a class="18" name="Land" href="javascript:void(0);">土地</a></li>
+                                                    <li><a class="18" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="18" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="18" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="18" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="18" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="18" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="18" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="18" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="18" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="18" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">臺東縣</a>
+                                            <li><a class="17" name="City" href="javascript:void(0);">臺東縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="17" name="Population" href="javascript:void(0);">人口</a></li>
+                                                    <li><a class="17" name="Land" href="javascript:void(0);">土地</a></li>
+                                                    <li><a class="17" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="17" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="17" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="17" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="17" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="17" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="17" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="17" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="17" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="17" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </li>
                                     <li><a href="#">離島縣市</a>
                                         <ul>
-                                            <li><a href="#">金門縣</a>
+                                            <li><a class="21" name="City" href="javascript:void(0);">金門縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="21" name="Population" href="javascript:void(0);">人口</a></li>
+                                                    <li><a class="21" name="Land" href="javascript:void(0);">土地</a></li>
+                                                    <li><a class="21" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="21" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="21" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="21" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="21" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="21" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="21" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="21" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="21" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="21" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">連江縣</a>
+                                            <li><a class="22" name="City" href="javascript:void(0);">連江縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="22" name="Population" href="javascript:void(0);">人口</a></li>
+                                                    <li><a class="22" name="Land" href="javascript:void(0);">土地</a></li>
+                                                    <li><a class="22" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="22" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="22" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="22" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="22" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="22" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="22" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="22" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="22" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="22" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">澎湖縣</a>
+                                            <li><a class="20" name="City" href="javascript:void(0);">澎湖縣</a>
                                                 <ul>
-                                                    <li><a href="#">人口</a></li>
-                                                    <li><a href="#">土地</a></li>
-                                                    <li><a href="#">產業</a></li>
-                                                    <li><a href="#">智慧城鄉計畫提案</a></li>
-                                                    <li><a href="#">農業</a></li>
-                                                    <li><a href="#">觀光</a></li>
-                                                    <li><a href="#">健康</a></li>
-                                                    <li><a href="#">零售</a></li>
-                                                    <li><a href="#">教育</a></li>
-                                                    <li><a href="#">交通</a></li>
-                                                    <li><a href="#">基盤</a></li>
-                                                    <li><a href="#">能源</a></li>
-                                                    <li><a href="#">智慧安全、治理</a></li>
+                                                    <li><a class="20" name="Population" href="javascript:void(0);">人口</a></li>
+                                                    <li><a class="20" name="Land" href="javascript:void(0);">土地</a></li>
+                                                    <li><a class="20" name="Industry" href="javascript:void(0);">產業</a></li>
+                                                    <li><a class="20" name="Population" href="javascript:void(0);">智慧城鄉計畫提案</a></li>
+                                                    <li><a class="20" name="Farming" href="javascript:void(0);">農業</a></li>
+                                                    <li><a class="20" name="Travel" href="javascript:void(0);">觀光</a></li>
+                                                    <li><a class="20" name="Health" href="javascript:void(0);">健康</a></li>
+                                                    <li><a class="20" name="Retail" href="javascript:void(0);">零售</a></li>
+                                                    <li><a class="20" name="Education" href="javascript:void(0);">教育</a></li>
+                                                    <li><a class="20" name="Traffic" href="javascript:void(0);">交通</a></li>
+                                                    <li><a class="20" name="Energy" href="javascript:void(0);">能源</a></li>
+                                                    <li><a class="20" name="Safety" href="javascript:void(0);">智慧安全、治理</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
