@@ -5,7 +5,15 @@
     $(document).ready(function () {
 
         //取得get參數
-        CityNo = ($.getQueryString("city") == "") ? "02" : $.getQueryString('city');
+        CityNo = $.getQueryString("city");
+        if (CityNo == "") {
+            //如果沒有帶參數，直接重新刷新頁面，預設帶02台北市
+            location.href = "CityInfo.aspx?city=02";
+            return;
+        }
+            
+        
+
         //撈市長/副市長、行政區數 資料 
         getMayorList();
         //撈土地面積、人口 資料
