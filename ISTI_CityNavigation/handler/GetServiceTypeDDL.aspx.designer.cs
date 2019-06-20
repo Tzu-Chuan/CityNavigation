@@ -7,9 +7,9 @@
 // </自動產生的>
 //------------------------------------------------------------------------------
 
-namespace ISTI_CityNavigation.WebPage {
+namespace ISTI_CityNavigation.handler {
     
     
-    public partial class CityPlanList {
+    public partial class GetServiceTypeDDL {
     }
 }

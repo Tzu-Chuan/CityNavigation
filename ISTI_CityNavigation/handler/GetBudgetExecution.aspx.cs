@@ -24,8 +24,8 @@ namespace ISTI_CityNavigation.handler
                 string xmlstr = string.Empty;
 
                 DataTable dt = be_db.getBudgetExecution();
-
-                xmlstr = GenXml(dt);
+                if (dt.Rows.Count > 0)
+                    xmlstr = GenXml(dt);
                 //xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
                 xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
                 xDoc.LoadXml(xmlstr);

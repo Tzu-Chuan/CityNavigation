@@ -148,6 +148,50 @@ public class CitySummaryTable_DB
     public string _CS_Status { set { CS_Status = value; } }
     #endregion
 
+    public DataTable GetList()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"Select * from CitySummaryTable where CS_Status='A' ");
+
+        if(KeyWord!="")
+            sb.Append(@"and ((upper(CS_PlanName) LIKE '%' + upper(@KeyWord) + '%') or (upper(CS_HostCompany) LIKE '%' + upper(@KeyWord) + '%')) ");
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable ds = new DataTable();
+
+        oCmd.Parameters.AddWithValue("@KeyWord", KeyWord);
+
+        oda.Fill(ds);
+        return ds;
+    }
+
+    public DataTable getPlanType_ddl()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"Select CS_ServiceType from CitySummaryTable 
+where CS_ServiceType<>'' and CS_ServiceType is not null and CS_Status='A'
+group by CS_ServiceType
+order by CS_ServiceType ");
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable ds = new DataTable();
+
+        //oCmd.Parameters.AddWithValue("@KeyWord", KeyWord);
+
+        oda.Fill(ds);
+        return ds;
+    }
+
     public int getMaxVersion()
     {
         SqlCommand oCmd = new SqlCommand();
