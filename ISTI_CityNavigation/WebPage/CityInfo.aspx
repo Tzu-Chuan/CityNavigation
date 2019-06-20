@@ -27,40 +27,40 @@
             var cityno = ($.getQueryString("city") == "") ? "02" : $.getQueryString('city');
             switch (aid) {
                 case "Population"://人口
-                    window.open("getPopulationList.aspx?city=" + cityno + "&listame=" + aid + "");
+                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
                     break;
                 case "Land"://土地
-                    window.open("getLandList.aspx?city=" + cityno + "&listame=" + aid + "");
+                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
                     break;
                 case "Travel"://觀光
-                    window.open("getTravelList.aspx?city=" + cityno + "&listame=" + aid + "");
+                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
                     break;
                 case "Traffic"://交通
-                    window.open("getTrafficList.aspx?city=" + cityno + "&listame=" + aid + "");
+                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
                     break;
                 case "Farming"://農業
-                    window.open("getFarmingList.aspx?city=" + cityno + "&listame=" + aid + "");
+                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
                     break;
                 case "Industry"://產業
-                    window.open("getIndustryList.aspx?city=" + cityno + "&listame=" + aid + "");
+                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
                     break;
                 case "Retail"://零售
-                    window.open("getRetailList.aspx?city=" + cityno + "&listame=" + aid + "");
+                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
                     break;
                 case "Safety"://智慧安全、治理
-                    window.open("getSafetyList.aspx?city=" + cityno + "&listame=" + aid + "");
+                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
                     break;
                 case "Energy"://能源
-                    window.open("getEnergyList.aspx?city=" + cityno + "&listame=" + aid + "");
+                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
                     break;
                 case "Health"://健康
-                    window.open("getHealthList.aspx?city=" + cityno + "&listame=" + aid + "");
+                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
                     break;
                 case "Education"://教育
-                    window.open("getEducationList.aspx?city=" + cityno + "&listame=" + aid + "");
+                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
                     break;
                 case ""://
-                    window.open("");
+                    location.href="";
                     break;
 
             }
@@ -76,7 +76,7 @@
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetMayorList.aspx",
+                url: "../handler/GetMayorList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -108,7 +108,7 @@
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetPopulationList.aspx",
+                url: "../handler/GetPopulationList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -196,7 +196,7 @@
 	c0.827-1.39-0.551-4.695-0.551-5.38c0-0.683,1.653-2.622,2.205-3.438c0.551-0.839,1.653-2.072,1.929-2.624s1.377-1.786,1.784-2.888
 	c0.42-1.104-0.683-2.348-1.367-4.276c-0.692-1.93,1.512-4.277,1.512-5.512s1.796-1.377,2.897-1.785
 	c1.103-0.42,3.307-0.971,3.307-0.971l3.021,0.551L435.313,287.525z" class="areabox itemhintfollow" title="臺東縣" cno="15" id="15" />
-<path style=";" d="M462.901,154.003c0.981,0,6.811,0,8.136,0c-0.386,1.521-0.773,2.898-1.114,3.99
+<path style="" d="M462.901,154.003c0.981,0,6.811,0,8.136,0c-0.386,1.521-0.773,2.898-1.114,3.99
 	c-1.653,5.235-0.826,6.062-3.857,9.368s-6.889,3.583-8.817,8.267c-1.93,4.684,0.552,7.715-1.378,10.195
 	c-1.929,2.48-3.857,6.889-3.857,9.369c0,2.48,2.204,4.96,2.755,6.063s1.654,1.929-0.275,3.582c-1.929,1.654-4.408,3.858-4.408,5.511
 	s1.653,3.031,1.102,4.133c-0.551,1.102-2.205,8.542-4.96,14.329c-2.755,5.787-0.551,9.093-2.479,13.502
@@ -1143,7 +1143,7 @@
 
                <div class="row margin5T">
                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 margin20B">
-                       <a class="areabtn" href="main-Taoyuan-people.html" id="Population">
+                       <a class="areabtn" id="Population">
                            <i class="fa fa-map font-size7"></i><br>人口
                        </a><!-- -->
                    </div><!-- col 人口 -->
