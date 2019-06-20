@@ -1,151 +1,257 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="TableList_Taipei.aspx.cs" Inherits="ISTI_CityNavigation.WebPage.TableList_Taipei" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="CityInfoTable.aspx.cs" Inherits="ISTI_CityNavigation.WebPage.CityInfoTable" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
+
+        var CityNo = "";
+        //var CityNo = $.getParamValue("city");
+        var oSpanClass = "Population_Class";
+        var CityClass = "";
+
         $(document).ready(function () {
+            getCityName();
             getPopulationList();
 
-            //動態產生人口table
-            $(document).on("click", "#Population", function () {
-                $("#Wrapper").empty();
-                var x = 0;//限制table增加數量
-                var wrapper = $("#Wrapper");
-                if (x == 0) {
-                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Population_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
-                    getPopulationList();
-                    x++;
-                }
+            //人口table
+            $(document).on("click","#Population", function () {
+                PopulationTable();
             })
 
-            //動態產生土地table
+            //土地table
             $(document).on("click", "#Land", function () {
-                $("#Wrapper").empty();
-                var x = 0;//限制table增加數量
-                var wrapper = $("#Wrapper");
-                if (x == 0) {
-                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Land_list"><thead><tr><th>項目</th><th>資料年度</th><th>土地面積</th></tr></thead><tbody></tbody></table>');
-                    getLandList();
-                    x++;
-                }
+                LandTable();
             })
 
             //動態產生觀光table
             $(document).on("click", "#Travel", function () {
-                $("#Wrapper").empty();
-                var x = 0;//限制table增加數量
-                var wrapper = $("#Wrapper");
-                if (x == 0) {
-                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Travel_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
-                    getTravelList();
-                    x++;
-                }
+                TraveldTable();
             })
 
             //動態產生交通table
             $(document).on("click", "#Traffic", function () {
-                $("#Wrapper").empty();
-                var x = 0;//限制table增加數量
-                var wrapper = $("#Wrapper");
-                if (x == 0) {
-                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Traffic_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
-                    getTrafficList();
-                    x++;
-                }
+                TrafficTable();
             })
 
             //動態產生農業table
             $(document).on("click", "#Farming", function () {
-                $("#Wrapper").empty();
-                var x = 0;//限制table增加數量
-                var wrapper = $("#Wrapper");
-                if (x == 0) {
-                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Farming_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
-                    getFarmingList();
-                    x++;
-                }
+                FarmingTable();
             })
 
             //動態產生產業table
             $(document).on("click", "#Industry", function () {
-                $("#Wrapper").empty();
-                var x = 0;//限制table增加數量
-                var wrapper = $("#Wrapper");
-                if (x == 0) {
-                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Industry_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
-                    getIndustryList();
-                    x++;
-                }
+                IndustryTable();
             })
 
             //動態產生零售table
             $(document).on("click", "#Retail", function () {
-                $("#Wrapper").empty();
-                var x = 0;//限制table增加數量
-                var wrapper = $("#Wrapper");
-                if (x == 0) {
-                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Retail_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
-                    getRetailList();
-                    x++;
-                }
+                RetailTable();
             })
 
             //動態產生智慧安全、治理table
             $(document).on("click", "#Safety", function () {
-                $("#Wrapper").empty();
-                var x = 0;//限制table增加數量
-                var wrapper = $("#Wrapper");
-                if (x == 0) {
-                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Safety_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
-                    getSafetyList();
-                    x++;
-                }
+                SafetyTable();
             })
 
             //動態產生能源table
             $(document).on("click", "#Energy", function () {
-                $("#Wrapper").empty();
-                var x = 0;//限制table增加數量
-                var wrapper = $("#Wrapper");
-                if (x == 0) {
-                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Energy_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
-                    getEnergyList();
-                    x++;
-                }
+                EnergyTable();
             })
 
             //動態產生健康table
             $(document).on("click", "#Health", function () {
-                $("#Wrapper").empty();
-                var x = 0;//限制table增加數量
-                var wrapper = $("#Wrapper");
-                if (x == 0) {
-                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Health_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
-                    getHealthList();
-                    x++;
-                }
+                HealthTable();
             })
 
             //動態產生教育table
             $(document).on("click", "#Education", function () {
-                $("#Wrapper").empty();
-                var x = 0;//限制table增加數量
-                var wrapper = $("#Wrapper");
-                if (x == 0) {
-                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Education_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
-                    getEducationList();
-                    x++;
-                }
+                EducationTable();
             })
         })// js end
 
-        var CityNo = "02";
+        function TaiwanMap(id) {
+            var CityName = id.id;
+            if (CityName == "Keelung") {
+                CityNo = "01";
+                getCityName();
+                PopulationTable();
+            }
 
-        //撈台北市人口列表
+            if (CityName == "Taipei") {
+                CityNo = "02";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "NewTaipei") {
+                CityNo = "03";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Taoyuan") {
+                CityNo = "04";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Hsinchu City") {
+                CityNo = "05";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Hsinchu County") {
+                CityNo = "06";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Miaoli") {
+                CityNo = "07";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Taichung") {
+                CityNo = "08";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Zhanghua") {
+                CityNo = "09";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Nantou") {
+                CityNo = "10";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Yunlin County") {
+                CityNo = "11";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Jiayi City") {
+                CityNo = "12";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Jiayi County") {
+                CityNo = "13";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Tainan") {
+                CityNo = "14";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Kaohsiung") {
+                CityNo = "15";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Pingdong") {
+                CityNo = "16";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Taidong") {
+                CityNo = "17";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Hualian") {
+                CityNo = "18";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Yilan") {
+                CityNo = "19";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Penghu") {
+                CityNo = "20";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Kinmen") {
+                CityNo = "21";
+                getCityName();
+                PopulationTable();
+            }
+
+            if (CityName == "Lianjiang") {
+                CityNo = "22";
+                getCityName();
+                PopulationTable();
+            }
+        }
+
+        //撈城市名稱
+        function getCityName() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetCityName.aspx",
+                data: {
+                    CityNo: CityNo
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                $("#CityName").html($(this).children("C_Item_cn").text().trim());
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+        //人口table
+        function PopulationTable() {
+            $("#Wrapper").empty();
+            document.getElementById(oSpanClass).className = "SlimTabBtnV2";
+            document.getElementById("Population_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
+            oSpanClass = "Population_Class";
+
+            var x = 0;//限制table增加數量
+            var wrapper = $("#Wrapper");
+            if (x == 0) {
+                $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Population_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
+                getPopulationList();
+                x++;
+            }
+        }
+
+        //撈人口列表
         function getPopulationList() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetPopulationList.aspx",
+                url: "../handler/GetPopulationList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -220,12 +326,28 @@
             });
         }
 
-        //撈台北市土地列表
+        //土地table
+        function LandTable() {
+            $("#Wrapper").empty();
+            document.getElementById(oSpanClass).className = "SlimTabBtnV2";
+            document.getElementById("Land_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
+            oSpanClass = "Land_Class";
+
+            var x = 0;//限制table增加數量
+            var wrapper = $("#Wrapper");
+            if (x == 0) {
+                $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Land_list"><thead><tr><th>項目</th><th>資料年度</th><th>土地面積</th></tr></thead><tbody></tbody></table>');
+                getLandList();
+                x++;
+            }
+        }
+
+        //撈土地列表
         function getLandList() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetPopulationList.aspx",
+                url: "../handler/GetPopulationList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -256,12 +378,28 @@
             });
         }
 
-        //撈台北市觀光列表
+        //觀光table
+        function TraveldTable() {
+            $("#Wrapper").empty();
+            document.getElementById(oSpanClass).className = "SlimTabBtnV2";
+            document.getElementById("Travel_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
+            oSpanClass = "Travel_Class";
+
+            var x = 0;//限制table增加數量
+            var wrapper = $("#Wrapper");
+            if (x == 0) {
+                $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Travel_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
+                getTravelList();
+                x++;
+            }
+        }
+
+        //撈觀光列表
         function getTravelList() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetTravelList.aspx",
+                url: "../handler/GetTravelList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -321,12 +459,28 @@
             });
         }
 
-        //撈台北市交通列表
+        //交通table
+        function TrafficTable() {
+            $("#Wrapper").empty();
+                document.getElementById(oSpanClass).className = "SlimTabBtnV2";
+                document.getElementById("Traffic_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
+                oSpanClass = "Traffic_Class";
+
+                var x = 0;//限制table增加數量
+                var wrapper = $("#Wrapper");
+                if (x == 0) {
+                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Traffic_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
+                    getTrafficList();
+                    x++;
+                }
+        }
+
+        //撈交通列表
         function getTrafficList() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetTrafficList.aspx",
+                url: "../handler/GetTrafficList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -415,12 +569,28 @@
             });
         }
 
-        //撈台北市交通列表
+        //農業table
+        function FarmingTable() {
+            $("#Wrapper").empty();
+                document.getElementById(oSpanClass).className = "SlimTabBtnV2";
+                document.getElementById("Farming_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
+                oSpanClass = "Farming_Class";
+
+                var x = 0;//限制table增加數量
+                var wrapper = $("#Wrapper");
+                if (x == 0) {
+                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Farming_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
+                    getFarmingList();
+                    x++;
+                }
+        }
+
+        //撈農業列表
         function getFarmingList() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetFarmingList.aspx",
+                url: "../handler/GetFarmingList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -515,12 +685,28 @@
             });
         }
 
+        //產業table
+        function IndustryTable() {
+            $("#Wrapper").empty();
+                document.getElementById(oSpanClass).className = "SlimTabBtnV2";
+                document.getElementById("Industry_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
+                oSpanClass = "Industry_Class";
+
+                var x = 0;//限制table增加數量
+                var wrapper = $("#Wrapper");
+                if (x == 0) {
+                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Industry_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
+                    getIndustryList();
+                    x++;
+                }
+        }
+
         //撈產業列表
         function getIndustryList() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetIndustryList.aspx",
+                url: "../handler/GetIndustryList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -574,12 +760,28 @@
             });
         }
 
+        //零售table
+        function RetailTable() {
+            $("#Wrapper").empty();
+                document.getElementById(oSpanClass).className = "SlimTabBtnV2";
+                document.getElementById("Retail_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
+                oSpanClass = "Retail_Class";
+
+                var x = 0;//限制table增加數量
+                var wrapper = $("#Wrapper");
+                if (x == 0) {
+                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Retail_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
+                    getRetailList();
+                    x++;
+                }
+        }
+
         //撈零售列表
         function getRetailList() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetRetailList.aspx",
+                url: "../handler/GetRetailList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -653,12 +855,28 @@
             });
         }
 
+        //撈智慧安全、治理Table
+        function SafetyTable() {
+            $("#Wrapper").empty();
+                document.getElementById(oSpanClass).className = "SlimTabBtnV2";
+                document.getElementById("Safety_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
+                oSpanClass = "Safety_Class";
+
+                var x = 0;//限制table增加數量
+                var wrapper = $("#Wrapper");
+                if (x == 0) {
+                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Safety_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
+                    getSafetyList();
+                    x++;
+                }
+        }
+
         //撈智慧安全、治理列表
         function getSafetyList() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetSafetyList.aspx",
+                url: "../handler/GetSafetyList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -753,12 +971,28 @@
             });
         }
 
+        //能源table
+        function EnergyTable() {
+            $("#Wrapper").empty();
+                document.getElementById(oSpanClass).className = "SlimTabBtnV2";
+                document.getElementById("Energy_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
+                oSpanClass = "Energy_Class";
+
+                var x = 0;//限制table增加數量
+                var wrapper = $("#Wrapper");
+                if (x == 0) {
+                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Energy_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
+                    getEnergyList();
+                    x++;
+                }
+        }
+
         //撈能源列表
         function getEnergyList() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetEnergyList.aspx",
+                url: "../handler/GetEnergyList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -812,12 +1046,28 @@
             });
         }
 
+        //健康table
+        function HealthTable() {
+            $("#Wrapper").empty();
+                document.getElementById(oSpanClass).className = "SlimTabBtnV2";
+                document.getElementById("Health_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
+                oSpanClass = "Health_Class";
+
+                var x = 0;//限制table增加數量
+                var wrapper = $("#Wrapper");
+                if (x == 0) {
+                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Health_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
+                    getHealthList();
+                    x++;
+                }
+        }
+
         //撈健康列表
         function getHealthList() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetHealthList.aspx",
+                url: "../handler/GetHealthList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -906,12 +1156,28 @@
             });
         }
 
+        //教育table
+        function EducationTable() {
+            $("#Wrapper").empty();
+                document.getElementById(oSpanClass).className = "SlimTabBtnV2";
+                document.getElementById("Education_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
+                oSpanClass = "Education_Class";
+
+                var x = 0;//限制table增加數量
+                var wrapper = $("#Wrapper");
+                if (x == 0) {
+                    $(wrapper).append('<table border="0" cellspacing="0" cellpadding="0" width="100%" id="Education_list"><thead><tr><th>項目</th><th>資料年度</th><th>統計數據</th></tr></thead><tbody></tbody></table>');
+                    getEducationList();
+                    x++;
+                }
+        }
+
         //撈教育列表
         function getEducationList() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "wHandler/GetEducationList.aspx",
+                url: "../handler/GetEducationList.aspx",
                 data: {
                     CityNo: CityNo
                 },
@@ -1077,7 +1343,7 @@
         <div class="container margin15T" id="ContentWrapper">
 
             <div class="twocol titleLineA">
-                <div class="left"><span class="font-size4">台北市人口</span></div>
+                <div class="left"><span class="font-size4" id="CityName"></span></div>
                 <!-- left -->
                 <div class="right"><%--首頁 / 桃園市 / 桃園市人口--%></div>
                 <!-- right -->
@@ -1085,17 +1351,17 @@
             <!-- twocol -->
             <div class="tabmenublockV2wrapper margin10T">
                 <div class="tabmenublockV2">
-                    <span class="SlimTabBtnV2 SlimTabBtnV2Current"><a id="Population" href="javascript:void(0)" target="_self">人口</a></span>
-                    <span class="SlimTabBtnV2"><a id="Land" href="javascript:void(0)" target="_self">土地</a></span>
-                    <span class="SlimTabBtnV2"><a id="Industry" href="javascript:void(0)" target="_self">產業</a></span>
-                    <span class="SlimTabBtnV2"><a id="Farming" href="javascript:void(0)" target="_self">農業</a></span>
-                    <span class="SlimTabBtnV2"><a id="Travel" href="javascript:void(0)" target="_self">觀光</a></span>
-                    <span class="SlimTabBtnV2"><a id="Health" href="javascript:void(0)" target="_self">健康</a></span>
-                    <span class="SlimTabBtnV2"><a id="Retail" href="javascript:void(0)" target="_self">零售</a></span>
-                    <span class="SlimTabBtnV2"><a id="Education" href="javascript:void(0)" target="_self">教育</a></span>
-                    <span class="SlimTabBtnV2"><a id="Traffic" href="javascript:void(0)" target="_self">交通</a></span>
-                    <span class="SlimTabBtnV2"><a id="Energy" href="javascript:void(0)" target="_self">能源</a></span>
-                    <span class="SlimTabBtnV2"><a id="Safety" href="javascript:void(0)" target="_self">智慧安全、治理</a></span>
+                    <span class="SlimTabBtnV2 SlimTabBtnV2Current" id="Population_Class"><a id="Population" href="javascript:void(0)" target="_self">人口</a></span>
+                    <span class="SlimTabBtnV2" id="Land_Class"><a id="Land" href="javascript:void(0)" target="_self">土地</a></span>
+                    <span class="SlimTabBtnV2" id="Industry_Class"><a id="Industry" href="javascript:void(0)" target="_self">產業</a></span>
+                    <span class="SlimTabBtnV2" id="Farming_Class"><a id="Farming" href="javascript:void(0)" target="_self">農業</a></span>
+                    <span class="SlimTabBtnV2" id="Travel_Class"><a id="Travel" href="javascript:void(0)" target="_self">觀光</a></span>
+                    <span class="SlimTabBtnV2" id="Health_Class"><a id="Health" href="javascript:void(0)" target="_self">健康</a></span>
+                    <span class="SlimTabBtnV2" id="Retail_Class"><a id="Retail" href="javascript:void(0)" target="_self">零售</a></span>
+                    <span class="SlimTabBtnV2" id="Education_Class"><a id="Education" href="javascript:void(0)" target="_self">教育</a></span>
+                    <span class="SlimTabBtnV2" id="Traffic_Class"><a id="Traffic" href="javascript:void(0)" target="_self">交通</a></span>
+                    <span class="SlimTabBtnV2" id="Energy_Class"><a id="Energy" href="javascript:void(0)" target="_self">能源</a></span>
+                    <span class="SlimTabBtnV2" id="Safety_Class"><a id="Safety" href="javascript:void(0)" target="_self">智慧安全、治理</a></span>
                 </div>
                 <!-- tabmenublock -->
             </div>
@@ -1117,11 +1383,11 @@
     </div>
     <a href="#twmap" class="twbtn open-popup-link">開啟全台地圖</a>
     <div id="twmap" class="magpopup magSizeS mfp-hide">
-    <div class="magpopupTitle">台灣地圖</div>
-    <div class="padding10ALL">
+        <div class="magpopupTitle">台灣地圖</div>
+        <div class="padding10ALL">
 
-        <!-- taiwan map start -->
-        <div class="obj-wrapperT1">
+            <!-- taiwan map start -->
+            <div class="obj-wrapperT1">
             <div class="SVGcontent">
                 <svg version="1.0" id="taiwanmap" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="100%" height="100%" viewBox="0 0 540 530" style="enable-background:new 0 0 540 530;" xml:space="preserve">
@@ -1158,7 +1424,7 @@
 	c0.693-1.388,1.245-2.072,2.205-4.96c0.958-2.899,0.692-2.623,1.244-3.307c0.551-0.694,2.338-4.145,3.164-5.511
 	c0.827-1.39-0.551-4.695-0.551-5.38c0-0.683,1.653-2.622,2.205-3.438c0.551-0.839,1.653-2.072,1.929-2.624s1.377-1.786,1.784-2.888
 	c0.42-1.104-0.683-2.348-1.367-4.276c-0.692-1.93,1.512-4.277,1.512-5.512s1.796-1.377,2.897-1.785
-	c1.103-0.42,3.307-0.971,3.307-0.971l3.021,0.551L435.313,287.525z" class="areabox itemhintfollow" title="臺東縣"/>
+	c1.103-0.42,3.307-0.971,3.307-0.971l3.021,0.551L435.313,287.525z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Taidong" title="臺東縣"/>
 <path style=";" d="M462.901,154.003c0.981,0,6.811,0,8.136,0c-0.386,1.521-0.773,2.898-1.114,3.99
 	c-1.653,5.235-0.826,6.062-3.857,9.368s-6.889,3.583-8.817,8.267c-1.93,4.684,0.552,7.715-1.378,10.195
 	c-1.929,2.48-3.857,6.889-3.857,9.369c0,2.48,2.204,4.96,2.755,6.063s1.654,1.929-0.275,3.582c-1.929,1.654-4.408,3.858-4.408,5.511
@@ -1195,7 +1461,7 @@
 	c1.236,0.132,3.44,0.132,3.991,0.551c0.551,0.408,0.551,0.408,2.888,1.785c2.349,1.378,3.041,0.684,4.553,1.378
 	c1.51,0.694,2.205,1.653,3.714,1.377c1.521-0.275,0.971,0.132,2.755-0.827c1.797-0.959,1.654-0.408,2.625-2.205
 	c0.968-1.796,2.621-3.714,2.621-3.714s0.816-0.838,3.021,0.551c2.204,1.367,3.45,1.367,4.276,2.336
-	C460.555,153.452,461.799,154.003,462.901,154.003z" class="areabox itemhintfollow" title="花蓮縣"/>
+	C460.555,153.452,461.799,154.003,462.901,154.003z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Hualian" title="花蓮縣"/>
 <path style="" d="M341.14,399.07c0,0.032,0.1,0.375,0.232,1.962c0.287,3.175-1.367,3.175-2.339,4.961
 	c-0.968,1.784-2.621,3.725-3.437,5.643c-0.839,1.939-1.39,3.042-1.39,4.145s-1.787,1.785-0.815,3.163
 	c0.958,1.378,2.061,1.929,1.366,4c-0.684,2.062,0.419,3.715,0.839,4.409c0.406,0.685,1.784,5.776,2.06,6.47
@@ -1221,7 +1487,7 @@
 	c0.826-0.96,1.235-3.308,1.652-2.889c0.42,0.418,3.583,1.653,3.583,1.653l0.606-0.011c-0.045,1.256-0.462,2.766-0.462,2.766
 	s2.335,2.756,2.61,3.176c0.275,0.407,1.653,1.102,1.653,1.102l2.613,3.307c0,0,0,2.612,0,3.57c0,0.971-0.408,5.38-0.959,5.798
 	c-0.551,0.408-2.205,0.684-3.449,1.235c-1.235,0.551-1.235,2.072-3.164,2.204c-1.93,0.133-2.347,0.97-3.449,1.102
-	c-1.102,0.133-2.613-0.551-3.164,0.133C341.26,399.291,341.15,399.06,341.14,399.07z" class="areabox itemhintfollow" title="屏東縣"/>
+	c-1.102,0.133-2.613-0.551-3.164,0.133C341.26,399.291,341.15,399.06,341.14,399.07z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Pingdong" title="屏東縣"/>
 <path style="" d="M376.002,306.099l-0.728,0.418l-2.204,1.378c0,0-0.969,0.419-2.898,1.235
 	c-1.929,0.837-1.653,0.97-3.308,1.796c-1.652,0.827-3.712,3.031-4.265,3.857c-0.551,0.828-2.073,1.797-2.49,2.205
 	c-0.409,0.407-1.787,1.653-2.063,2.061c-0.275,0.419-0.275,1.39-0.826,2.348c-0.551,0.96-0.683,3.032-0.683,3.45
@@ -1255,7 +1521,7 @@
 	c0.331-0.033,0.748-0.065,1.323-0.087c3.174-0.144,1.103,0.264,4.551,0.958c3.451,0.694,2.9,0.96,4.002,1.511
 	c1.104,0.551,0.265,0.551,2.337,1.388c0,0,0.97,3.715,1.103,4.122c0.132,0.42-0.419,0.695-0.552,2.348
 	c-0.134,1.654-1.929,1.246-1.929,1.246s-1.929,2.612-1.929,3.02c0,0.42,0.275,1.654,0.275,1.654s1.378,0.418,4.685,1.796
-	c3.308,1.379,0.683,0.552,1.93,1.654c1.243,1.102,0,0,0.826,1.653C375.716,305.48,375.871,305.834,376.002,306.099z" class="areabox itemhintfollow" title="高雄市"/>
+	c3.308,1.379,0.683,0.552,1.93,1.654c1.243,1.102,0,0,0.826,1.653C375.716,305.48,375.871,305.834,376.002,306.099z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Kaohsiung" title="高雄市"/>
 <path style="" d="M319.327,320.295c-0.265,1.796,0.694,2.612,0.419,3.715c-0.277,1.102,0.275,1.102-1.104,2.898
 	c-1.378,1.797-1.103,1.93-2.335,3.307c-1.247,1.378-0.972,1.51-2.899,3.715c-1.93,2.204-2.898,1.939-3.714,4.276
 	c-0.838,2.336-0.286,2.204-1.798,4.133c-1.51,1.93-3.03,4.134-5.235,5.512c-2.204,1.377-4.541,3.163-6.48,4.96
@@ -1273,7 +1539,7 @@
 	c1.654-0.409,2.347,0.419,3.593,0.694c1.233,0.275,1.233,0.275,2.47,0.958c1.244,0.695,3.173,5.247,4.96,6.758
 	c1.796,1.509,0.551,1.509,0.837,1.928c0.266,0.42,0.408,1.378-0.551,4.408c-0.971,3.032-0.695,1.654-0.42,2.757
 	c0.275,1.102-0.275,1.786-0.275,3.306c0,1.521,0.551,3.858,1.93,5.645c1.377,1.797,2.755,0.418,4.684,0
-	c1.929-0.408,4.003-2.205,4.003-2.205L319.327,320.295z" class="areabox itemhintfollow" title="台南市"/>
+	c1.929-0.408,4.003-2.205,4.003-2.205L319.327,320.295z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Tainan" title="台南市"/>
 <path style="" d="M354.466,283.371c3.15,0.572,2.811,0.385,4.309,0.23c-0.494,0.485-2.787,2.623-4.861,3.351
 	c-2.335,0.828-2.335,2.072-3.723,2.623c-1.367,0.553-4.409,2.889-4.675,3.308c-0.286,0.407-1.797,1.511-2.49,3.163
 	c-0.685,1.653-0.551,1.378-1.919,3.164c-1.388,1.796,0.133,2.204-2.755,3.041c-2.899,0.816-2.49,0.266-3.858,1.235
@@ -1296,7 +1562,7 @@
 	c1.918-0.551,3.989-1.102,4.96-1.367c0.958-0.286,2.06-0.286,1.918-1.938c-0.134-1.654,0.837-3.99,0.837-3.99
 	c1.653,1.102,4.409,0.275,5.512,0.275c1.102,0,2.469,1.245,3.989,1.797c1.521,0.551,1.102,2.469,1.102,2.469
 	s0.552,6.613,0.972,10.063c0.406,3.45,0.551,1.797,1.508,3.715c0.961,1.939,2.901,1.797,3.308,1.797
-	C349.087,282.269,350.607,282.676,354.466,283.371z" class="areabox itemhintfollow" title="嘉義縣"/>
+	C349.087,282.269,350.607,282.676,354.466,283.371z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Jiayi County" title="嘉義縣"/>
 <path style="" d="M331.452,266.144c0.142,1.652-0.96,1.652-1.918,1.938c-0.971,0.266-3.042,0.816-4.96,1.367
 	c-1.939,0.551-2.349-0.265-4.277-1.918c-1.93-1.653-1.654-1.244-2.757-1.102c-1.102,0.133-1.102,0.684-2.622,1.652
 	c-1.51,0.96-4.542-1.102-7.572-2.491c-3.032-1.366-4.685-2.061-6.204-2.887c-1.512-0.826-1.919-0.275-4.123-1.786
@@ -1311,7 +1577,7 @@
 	c-0.065,0.187-0.132,0.408-0.208,0.65c-0.419,1.366,1.102,2.205,1.652,4.123c0.552,1.939-1.785,3.592-1.785,3.592l-1.939,3.021
 	c0,0,0.286,0.551,2.623,2.623c2.338,2.072-1.785,3.174-1.93,3.725c-0.142,0.552,0.695,2.613,1.379,5.093
 	c0.684,2.48,5.093,1.654,5.093,1.654s3.448-0.971,4.145-1.521c0.682-0.551,1.652,0.418,3.306,1.521
-	C332.289,262.153,331.318,264.49,331.452,266.144z" class="areabox itemhintfollow" title="雲林縣"/>
+	C332.289,262.153,331.318,264.49,331.452,266.144z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Yunlin" title="雲林縣"/>
 <path style="" d="M320.848,231.291c0.684,0.683,1.378,1.928,0.971,3.174c-0.42,1.234-0.838,0.958-1.102,1.51
 	c-0.233,0.452-0.453,0.805-0.763,1.697c-0.627,0.33-0.661,1.719-1.587,0.65c-0.958-1.103-2.898-3.175-3.713-3.726
 	c-0.838-0.551,0.131-2.072-2.625-1.929c-2.755,0.143-7.296-0.827-9.368-1.245c-2.07-0.408-4.133-1.103-5.787-1.103
@@ -1322,7 +1588,7 @@
 	l1.938,2.48l3.021,4.96c0,0,1.795,2.062,3.041,3.45c1.233,1.367,1.784,2.469,2.612,3.307c0.826,0.816,0.408,1.102,0,2.469
 	c-0.344,1.179,0,0.75,1.377,1.952c0.244,0.209,0.52,0.474,0.827,0.804c2.062,2.205,0,2.348,0.551,4.96
 	c0.551,2.624,2.479,4.409,3.858,5.655c1.377,1.245,0.695,1.377-0.143,3.307c-0.816,1.928-0.816,1.653-1.367,4
-	c-0.552,2.336-0.552,2.756-0.838,3.307c-0.265,0.551-0.685,2.469,0.552,5.368C319.469,231.709,320.166,230.607,320.848,231.291z" class="areabox itemhintfollow" title="彰化縣"/>
+	c-0.552,2.336-0.552,2.756-0.838,3.307c-0.265,0.551-0.685,2.469,0.552,5.368C319.469,231.709,320.166,230.607,320.848,231.291z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Zhanghua" title="彰化縣"/>
 <path style="" d="M319.954,237.673c0.31-0.893,0.529-1.246,0.763-1.697c0.264-0.552,0.682-0.276,1.102-1.51
 	c0.407-1.246-0.287-2.491-0.971-3.174c-0.682-0.684-1.379,0.418-2.622-2.48c-1.236-2.898-0.816-4.816-0.552-5.368
 	c0.286-0.551,0.286-0.97,0.838-3.307c0.551-2.348,0.551-2.072,1.367-4c0.838-1.929,1.52-2.062,0.143-3.307
@@ -1356,7 +1622,7 @@
 	c-1.521-0.552-2.888-1.797-3.989-1.797c-1.103,0-3.858,0.826-5.512-0.275c-1.653-1.103-2.624-2.072-3.306-1.521
 	c-0.696,0.551-4.145,1.521-4.145,1.521s-4.409,0.826-5.093-1.654c-0.684-2.479-1.521-4.541-1.379-5.093
 	c0.145-0.551,4.268-1.653,1.93-3.725c-2.337-2.072-2.623-2.623-2.623-2.623l1.939-3.021c0,0,2.337-1.653,1.785-3.592
-	c-0.551-1.918-2.071-2.756-1.652-4.123C319.822,238.081,319.889,237.86,319.954,237.673z" class="areabox itemhintfollow" title="南投縣"/>
+	c-0.551-1.918-2.071-2.756-1.652-4.123C319.822,238.081,319.889,237.86,319.954,237.673z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Nantou" title="南投縣"/>
 <path style="" d="M409.379,139.63c0.551,0.155,1.067,0.484,1.432,1.146c1.246,2.204,0,5.092,2.491,6.063
 	c2.469,0.959,2.755,2.204,4.959,2.061c2.205-0.143,4.818-1.929,5.776-1.377c0.739,0.418,1.951,0.275,2.922,0.794l-0.022,0.033
 	c0,0,0.551,5.368-0.275,6.613c-0.826,1.245-1.653,2.898-2.204,3.582s-1.653,1.377-2.479,2.336c-0.827,0.97-1.512,0.97-1.93,2.205
@@ -1381,7 +1647,7 @@
 	c2.612,1.521,1.104,1.653,2.754,2.756c1.654,1.102,2.063-1.235,4.409-3.021c2.339-1.797,3.021-0.143,3.44-0.286
 	c0.418-0.132,0.97-1.654,2.756-3.164c1.784-1.511,2.623-1.246,4.827-2.48c2.204-1.234,4.122-3.174,4.409-3.582
 	c0.264-0.408,1.51-2.205,3.02-2.755c1.522-0.551,1.103,0.826,3.451,1.103c2.347,0.275,0.275-1.378,1.244-3.45
-	c0.419-0.905,0.972-2.392,1.466-3.77l0.738,0.055l5.512-0.143C406.688,139.939,408.111,139.267,409.379,139.63z" class="areabox itemhintfollow" title="台中市"/>
+	c0.419-0.905,0.972-2.392,1.466-3.77l0.738,0.055l5.512-0.143C406.688,139.939,408.111,139.267,409.379,139.63z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Taichung" title="台中市"/>
 <path style="" d="M358.433,98.629c0.795,0.374,1.49,0.792,1.818,1.222c0.961,1.246,2.901,4.817,3.032,6.757
 	c0.134,1.918-1.929,2.612,0.551,3.164c2.479,0.551,3.44-0.551,4.828,0.551c1.367,1.102,4.673,2.348,4.816,3.031
 	c0.143,0.684,1.93,2.479,2.481,3.174c0.551,0.684,1.377-0.287,0.968,1.918c-0.417,2.205,0.685,0.837-0.417,2.205
@@ -1400,7 +1666,7 @@
 	c1.015-1.455,2.051-2.964,2.799-4.067c2.028-2.943,3.681-2.943,3.858-5.698c0.187-2.756,1.102-5.324,2.943-8.079
 	c1.84-2.756,3.492-8.267,4.045-8.454c0.551-0.188,3.306-3.67,4.772-4.596c1.466-0.915,7.528-5.511,8.63-6.239
 	c1.103-0.738,5.886-4.596,6.25-5.886c0.099-0.375,0.409-1.235,0.772-2.26c0.749,0.1,3.194,0.464,3.77,0.927
-	C355.049,97.316,356.924,97.912,358.433,98.629z" class="areabox itemhintfollow" title="苗栗縣"/>
+	C355.049,97.316,356.924,97.912,358.433,98.629z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Miaoli" title="苗栗縣"/>
 <path style="" d="M421.327,116.858l-0.167-1.057c1.059-0.166,1.962-0.332,2.471-0.375
 	c1.509-0.144,4.408,0.551,5.102-1.246c0.684-1.797-0.286-4.552,0.265-6.338c0.311-1.003,0.916-2.436,1.423-3.593
 	c0.353-0.088,3.24-0.86,4.926-1.5c1.787-0.694,4.673-2.623,4.673-2.623s2.626-2.48,4.554-3.583c1.929-1.102,1.378-1.377,1.103-3.164
@@ -1420,12 +1686,12 @@
 	c-2.204,0.143-2.49-1.102-4.959-2.061c-2.491-0.97-1.245-3.858-2.491-6.063c-0.364-0.662-0.881-0.991-1.432-1.146
 	c0.1-0.606,0.286-1.654,0.474-2.304c0.275-0.959,0.958-1.796,2.06-3.164c1.103-1.389,2.491-2.623,3.858-4.277
 	c1.389-1.653,1.798-1.653,2.899-2.479c1.103-0.827,0.827-1.796,1.509-2.898c0.695-1.102-0.131-2.47,0.287-3.858
-	C420.776,119.625,421.16,117.741,421.327,116.858z" class="areabox itemhintfollow" title="宜蘭縣"/>
+	C420.776,119.625,421.16,117.741,421.327,116.858z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Yilan" title="宜蘭縣"/>
 <path style="" d="M367.009,84.695c0.132,2.072,1.367,3.175,0.959,4.409c-0.407,1.235-0.143,1.929-1.245,2.624
 	c-1.102,0.684-1.787,0.551-2.889,1.102c-1.102,0.551-0.682,0.408-2.479,1.918c-1.796,1.521-1.93,2.491-2.347,3.042
 	c-0.166,0.221-0.389,0.541-0.575,0.839c-1.509-0.717-3.384-1.313-3.834-1.676c-0.575-0.463-3.021-0.827-3.77-0.927
 	c0.891-2.445,2.17-5.819,2.17-5.819s2.756-6.801,4.222-9.369c0.233-0.396,0.54-0.959,0.915-1.621l0.463,0.1
-	c0,0,3.307,0.286,4.409,1.796C364.109,82.624,366.864,82.624,367.009,84.695z" class="areabox itemhintfollow" title="新竹市"/>
+	c0,0,3.307,0.286,4.409,1.796C364.109,82.624,366.864,82.624,367.009,84.695z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Hsinchu City" title="新竹市"/>
 <path style="" d="M499.408,52.18c1.378,1.929-3.583,3.031-6.063,4.685c-1.654-0.408-2.48,1.653-7.298,1.928
 	c-4.827,0.276-6.755,0.551-6.899,0.97c-0.132,0.408-0.132,3.306-0.552,4.817c-0.406,1.51,1.522,2.48-1.102,4
 	c-2.611,1.51-4.96,1.654-6.193,2.888c-1.236,1.234-2.073,3.174-3.032,4.133c-0.96,0.959-0.826,0.694-2.479,1.51
@@ -1452,18 +1718,18 @@
 	c-4.553-2.348-8.542,1.929-10.328,3.715c-1.795,1.796-2.49,3.307-2.623,4c-0.133,0.695,3.858,4.96,4.961,7.021
 	c1.102,2.072-0.827,5.511-0.133,8.553c0.684,3.02,0.408,2.061,2.889,4.123c2.479,2.071,3.438,3.307,4.826,4.552
 	c1.367,1.246,4.817,0.826,7.299-0.276c2.479-1.102,0.417-2.755,0.826-4.276c0.406-1.511,1.102-1.786,2.755-3.021
-	C454.492,53.559,455.318,52.731,455.87,51.905z" class="areabox itemhintfollow" title="新北市"/>
+	C454.492,53.559,455.318,52.731,455.87,51.905z" class="areabox itemhintfollow" id="NewTaipei" onclick="TaiwanMap(this)" title="新北市"/>
 <path style="" d="M471.853,36.75l-1.379,0.97c0,0-1.51,2.469-1.245,4.266c0.286,1.796,0.97,2.348,0.419,3.45
 	c-0.551,1.103-2.889,1.653-6.338,1.653c-3.45,0-2.063-1.389-3.45-2.491c-1.367-1.102-3.162-1.51-4.961-2.205
 	c-1.784-0.684-1.232-2.336-1.508-3.571c-0.276-1.246-1.247-3.45-1.247-3.45s0-1.245,2.349-3.583
-	c2.347-2.336,3.163-1.377,4.409-2.072l0.053-0.054C461.325,31.899,467.609,36.253,471.853,36.75z" class="areabox itemhintfollow" title="基隆市"/>
+	c2.347-2.336,3.163-1.377,4.409-2.072l0.053-0.054C461.325,31.899,467.609,36.253,471.853,36.75z" class="areabox itemhintfollow" id="Keelung" onclick="TaiwanMap(this)" title="基隆市"/>
 <path style="" d="M454.348,49.425c0.42,0.97,2.074,1.653,1.522,2.48s-1.378,1.654-3.031,2.898
 	c-1.653,1.235-2.349,1.51-2.755,3.021c-0.409,1.521,1.653,3.174-0.826,4.276c-2.481,1.102-5.932,1.521-7.299,0.276
 	c-1.389-1.245-2.347-2.48-4.826-4.552c-2.48-2.062-2.205-1.103-2.889-4.123c-0.694-3.042,1.234-6.481,0.133-8.553
 	c-1.103-2.061-5.094-6.327-4.961-7.021c0.133-0.694,0.828-2.204,2.623-4c1.786-1.786,5.775-6.063,10.328-3.715
 	c0,0,3.858,0.694,4,2.061c0.134,1.389-0.417,4.96,0.686,6.756c1.102,1.797,2.887,4.134,3.438,4.552c0.552,0.408,2.073,0,2.624,1.653
-	C453.666,47.088,453.941,48.455,454.348,49.425z" class="areabox itemhintfollow" title="台北市"/>
-<a xlink:href="main-Taoyuan.html"><path style="" d="M430.42,104.25c-0.507,1.157-1.112,2.589-1.423,3.593c-0.551,1.786,0.419,4.541-0.265,6.338
+	C453.666,47.088,453.941,48.455,454.348,49.425z" class="areabox itemhintfollow" id="Taipei" onclick="TaiwanMap(this)" title="台北市"/>
+<path style="" d="M430.42,104.25c-0.507,1.157-1.112,2.589-1.423,3.593c-0.551,1.786,0.419,4.541-0.265,6.338
 	c-0.693,1.796-3.593,1.102-5.102,1.246c-0.509,0.044-1.412,0.209-2.471,0.375c-2.071,0.34-4.694,0.671-5.796,0.032
 	c-1.654-0.959-4.685-3.582-5.236-4.133c-0.551-0.551-1.93-1.786-3.439-5.378c-1.521-3.572-2.347-4.96-2.622-8.399
 	c-0.276-3.439,3.306-3.99-0.134-6.481c-3.449-2.469-5.247-4.122-5.653-4.409c-0.409-0.265-8.411-4.674-9.513-6.063
@@ -1478,7 +1744,7 @@
 	s-0.816,1.377,0.838,1.102c1.653-0.275,3.571-1.653,4.122-1.521c0.551,0.143,2.349,0.286,3.727,1.389
 	c1.378,1.102,1.653,0.959,2.48,2.061c0.826,1.102,2.755,1.928,2.755,2.612c0,0.694,1.102,0,0.142,1.521
 	c-0.968,1.521-1.244,2.48-1.244,3.031c0,0.551-0.144,0.959,0,2.48c0.143,1.521-0.96,2.48,0.693,3.857
-	c1.654,1.377,3.439,3.174,3.715,3.725c0.277,0.551,1.654,1.786,1.51,2.337C431.147,102.575,430.816,103.335,430.42,104.25z" class="areabox itemhintfollow" title="桃園市"/></a>
+	c1.654,1.377,3.439,3.174,3.715,3.725c0.277,0.551,1.654,1.786,1.51,2.337C431.147,102.575,430.816,103.335,430.42,104.25z" class="areabox itemhintfollow" id="Taoyuan" onclick="TaiwanMap(this)" title="桃園市"/></a>
 <path style="" d="M421.16,115.801l0.167,1.057c-0.167,0.883-0.551,2.766-0.861,3.792
 	c-0.418,1.388,0.408,2.756-0.287,3.858c-0.682,1.102-0.406,2.072-1.509,2.898c-1.102,0.827-1.511,0.827-2.899,2.479
 	c-1.367,1.654-2.756,2.888-3.858,4.277c-1.102,1.367-1.784,2.204-2.06,3.164c-0.188,0.65-0.374,1.698-0.474,2.304
@@ -1496,10 +1762,10 @@
 	s1.521,1.654,2.757,3.593c1.232,1.918,1.377,1.368,3.03,2.613s3.858,1.929,5.102,2.348c1.236,0.408,2.89,0.684,3.021,1.102
 	c0.145,0.408,2.756,3.858,3.858,5.225c1.102,1.389,9.104,5.797,9.513,6.063c0.406,0.287,2.204,1.939,5.653,4.409
 	c3.439,2.491-0.143,3.042,0.134,6.481c0.275,3.439,1.102,4.828,2.622,8.399c1.51,3.593,2.889,4.827,3.439,5.378
-	c0.552,0.551,3.582,3.174,5.236,4.133C416.466,116.473,419.089,116.142,421.16,115.801z" class="areabox itemhintfollow" title="新竹縣"/>
+	c0.552,0.551,3.582,3.174,5.236,4.133C416.466,116.473,419.089,116.142,421.16,115.801z" class="areabox itemhintfollow" id="Hsinchu County" onclick="TaiwanMap(this)" title="新竹縣"/>
 	<path style="" d="M303.482,281.854c0,0.971-1.223,4.387-2.678,4.387c-1.465,0-3.173,0-3.173,0
 		s-2.922,1.697-4.389,2.193c-1.455,0.485-1.938-2.932-3.891-4.145c-1.951-1.224-2.447-2.193-2.688-2.932
-		c-0.244-0.727,0.496-5.114,0.496-5.114c3.162-0.485,6.579-0.727,9.499,0.485C299.581,277.951,303.482,280.873,303.482,281.854z" class="areabox itemhintfollow" title="嘉義市"/>
+		c-0.244-0.727,0.496-5.114,0.496-5.114c3.162-0.485,6.579-0.727,9.499,0.485C299.581,277.951,303.482,280.873,303.482,281.854z" class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Jiayi City" title="嘉義市"/>
 
                     <g>
 	<path style="fill:none;stroke:#FFFFFF;" d="M250.327,304.247c0.133,0.1,0.826,0.495,1.818-1.312
@@ -1727,7 +1993,7 @@
 		c0,0,0,2.612,0,3.57c0,0.971-0.408,5.38-0.959,5.798c-0.551,0.408-2.205,0.684-3.449,1.235c-1.235,0.551-1.235,2.072-3.164,2.204
 		c-1.93,0.133-2.347,0.97-3.449,1.102c-1.102,0.133-2.613-0.551-3.164,0.133c-0.255,0.331-0.364,0.1-0.375,0.11v-0.011"/>
 </g>
-<g class="areabox itemhintfollow" title="澎湖縣">
+<g class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Penghu" title="澎湖縣">
 	<path style="" d="M108.027,347.07l-2.062-0.273c0,0-2.888,0.548-3.163,1.168c-0.275,0.62,2.268,2.614,2.268,2.819
 		c0,0.206-0.824,2.406-1.375,2.544c-0.55,0.139-1.788,1.651-1.788,1.651s-1.032,0.755-1.032,1.101c0,0.342,0.826,1.373,0.826,1.373
 		l2.751,0.345c0,0,1.786-1.512,2.062-1.649c0.275-0.138,3.85-1.033,3.85-1.033l0.688,0.413c0,0,0,0.346-0.62,0.964
@@ -1797,7 +2063,7 @@
 		c-0.687,0.207-2.612,0.139-2.612,0.139l-1.788-0.963l-0.344-1.926v-1.032l1.031-0.274c0,0,1.375-1.649,1.169-1.72
 		c-0.207-0.066-1.031-0.824-1.306-0.755C87.4,318.055,85.75,318.191,85.75,318.191z"/>
 </g>
-<g class="areabox itemhintfollow" title="金門縣">
+<g class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Kinmen" title="金門縣">
 	<path style="" d="M49.321,238.353c1.4,1.517,2.511,0.661,3.304,1.585c0.793,0.925,1.322,2.909,2.247,2.644
 		c2.379,0.066,2.869-2.841,7.468-2.841c-0.264,1.85-0.132,1.917,0.33,1.917c0.463,0,0.728-0.396,1.388-0.528
 		c0.661-0.133,2.313-0.992,2.048-1.52c-0.264-0.53-0.594-1.719,0.132-2.05c0.727-0.33,3.503-2.313,4.825-1.189
@@ -1868,7 +2134,7 @@
 		c-0.529-0.308-0.485-1.058-1.278-1.321c-0.793-0.264-1.454-0.221-2.247-0.221s-1.63-0.396-1.938-0.396
 		C80.559,243.772,79.722,243.552,80.03,244.389z"/>
 </g>
-<g class="areabox itemhintfollow" title="連江縣">
+<g class="areabox itemhintfollow" onclick="TaiwanMap(this)" id="Lianjiang" title="連江縣">
 	<path style="" d="M59.271,138.063c-0.198,0.593-0.713,2.587-0.178,3.39c0.536,0.803,0.536,1.785,0.268,2.053
 		c-0.268,0.267-0.446,1.07-0.179,1.07c0.268,0,1.785,0.446,2.052,1.159c0.268,0.714,0.357,1.695,0.893,1.427
 		c0.535-0.268,1.427-1.338,1.427-1.338s0.535,0.803,0.892,0.269c0.358-0.535,0.803-1.249,0.803-1.249s1.874-0.893,3.211-1.785
@@ -1991,13 +2257,15 @@
 </svg>
     </div><!-- SVGcontent -->
 </div><!-- obj-wrapperT1 -->
-        <!-- taiwan map end -->
+            <!-- taiwan map end -->
 
-        <div class="twocol">
-            <div class="right"><a href="#" class="genbtn closemagnificPopup">關閉</a></div>
-        </div><!-- twocol -->
-    </div><!-- padding10ALL -->
+            <div class="twocol">
+                <div class="right"><a href="#" class="genbtn closemagnificPopup">關閉</a></div>
+            </div>
+            <!-- twocol -->
+        </div>
+        <!-- padding10ALL -->
 
-</div><!--magpopup -->
-
+    </div>
+    <!--magpopup -->
 </asp:Content>

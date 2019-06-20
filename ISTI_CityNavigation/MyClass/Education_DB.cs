@@ -283,12 +283,8 @@ public class Education_DB
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
 
-        if (Edu_CityNo == "02")
-        {
-            sb.Append(@"select * from Education where Edu_CityNo='02' and Edu_Status='A'");
-        }
-
-
+        sb.Append(@"select * from Education where Edu_CityNo=@Edu_CityNo and Edu_Status='A'");
+        oCmd.Parameters.AddWithValue("@Edu_CityNo", Edu_CityNo);
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;

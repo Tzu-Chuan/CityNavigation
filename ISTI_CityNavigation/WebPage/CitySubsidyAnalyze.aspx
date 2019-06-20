@@ -72,7 +72,8 @@
 
         // 千分位
         function FormatNumber(n) {
-            n += "";
+            n = Number(n); // 去小數點為0
+            n += ""; // 轉字串
             var arr = n.split(".");
             var re = /(\d{1,3})(?=(\d{3})+$)/g;
             return arr[0].replace(re, "$1,") + (arr.length == 2 ? "." + arr[1] : "");
@@ -81,34 +82,34 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="tabmenublockV2wrapper margin10T">
-           <div class="tabmenublockV2 font-size3">
-               <span class="SlimTabBtnV2"><a href="BudgetExecution.aspx" target="_self">智慧城鄉生活應用發展計畫_107-109年預計經費執行情形(本局18億)</a></span>
-               <span class="SlimTabBtnV2 SlimTabBtnV2Current"><a>補助經費縣市分析</a></span>
-               <span class="SlimTabBtnV2"><a href="#" target="_self">補助經費服務主軸分析</a></span>
-               <span class="SlimTabBtnV2"><a href="#" target="_self">補助經費計畫類別分析</a></span>
-           </div><!-- tabmenublock -->
-       </div><!-- tabmenublockV2wrapper -->
+        <div class="tabmenublockV2 font-size3">
+            <span class="SlimTabBtnV2"><a href="BudgetExecution.aspx" target="_self">智慧城鄉生活應用發展計畫_107-109年預計經費執行情形(本局18億)</a></span>
+            <span class="SlimTabBtnV2 SlimTabBtnV2Current"><a>補助經費縣市分析</a></span>
+            <span class="SlimTabBtnV2"><a href="SubsidyServiceAnalyze.aspx" target="_self">補助經費服務主軸分析</a></span>
+            <span class="SlimTabBtnV2"><a href="SubsidyCategoryAnalyze.aspx" target="_self">補助經費計畫類別分析</a></span>
+        </div><!-- tabmenublock -->
+    </div><!-- tabmenublockV2wrapper -->
 
-       <div class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal margin20T margin10B">
-           <table id="tablist" border="0" cellspacing="0" cellpadding="0" width="100%">
-               <thead>
-                   <tr>
-                       <th nowrap>縣市別</th>
-                       <th nowrap>不含全區<br>計畫數</th>
-                       <th nowrap>不含全區<br>補助款合計<br>(千元)</th>
-                       <th nowrap>不含全區<br>計畫總經費合計<br>(千元)</th>
-                       <th nowrap>17案全區<br>分配補助款<br>(千元)</th>
-                       <th nowrap>17案全區<br>分配總經費<br>(千元)</th>
-                       <th nowrap>不含全區<br>縣市補助經費<br>佔總補助經費比例</th>
-                       <th nowrap>不含全區<br>縣市總經費<br>佔總經費比例</th>
-                       <th nowrap>含全區<br>計畫件數</th>
-                       <th nowrap>補助款合計<br>(千元)</th>
-                       <th nowrap>計畫總經費合計<br>(千元)</th>
-                       <th nowrap>縣市補助經費<br>佔總補助經費比例</th>
-                       <th nowrap>縣市總經費<br>佔總經費比例</th>
-                   </tr>
-               </thead>
-               <tbody></tbody>
-           </table>
-       </div>
+    <div class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal margin20T margin10B">
+        <table id="tablist" border="0" cellspacing="0" cellpadding="0" width="100%">
+            <thead>
+                <tr>
+                    <th nowrap>縣市別</th>
+                    <th nowrap>不含全區<br>計畫數</th>
+                    <th nowrap>不含全區<br>補助款合計<br>(千元)</th>
+                    <th nowrap>不含全區<br>計畫總經費合計<br>(千元)</th>
+                    <th nowrap>17案全區<br>分配補助款<br>(千元)</th>
+                    <th nowrap>17案全區<br>分配總經費<br>(千元)</th>
+                    <th nowrap>不含全區<br>縣市補助經費<br>佔總補助經費比例</th>
+                    <th nowrap>不含全區<br>縣市總經費<br>佔總經費比例</th>
+                    <th nowrap>含全區<br>計畫件數</th>
+                    <th nowrap>補助款合計<br>(千元)</th>
+                    <th nowrap>計畫總經費合計<br>(千元)</th>
+                    <th nowrap>縣市補助經費<br>佔總補助經費比例</th>
+                    <th nowrap>縣市總經費<br>佔總經費比例</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </asp:Content>

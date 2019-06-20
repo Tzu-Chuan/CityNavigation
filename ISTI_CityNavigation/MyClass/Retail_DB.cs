@@ -160,12 +160,8 @@ public class Retail_DB
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
 
-        if (Re_CityNo == "02")
-        {
-            sb.Append(@"select * from Retail where Re_CityNo='02' and Re_Status='A'");
-        }
-
-
+        sb.Append(@"select * from Retail where Re_CityNo=@Re_CityNo and Re_Status='A'");
+        oCmd.Parameters.AddWithValue("@Re_CityNo", Re_CityNo);
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;

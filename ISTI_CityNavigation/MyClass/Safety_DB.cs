@@ -190,10 +190,8 @@ public class Safety_DB
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
 
-        if (Sf_CityNo == "02")
-        {
-            sb.Append(@"select * from Safety where Sf_CityNo='02' and Sf_Status='A'");
-        }
+        sb.Append(@"select * from Safety where Sf_CityNo=@Sf_CityNo and Sf_Status='A'");
+        oCmd.Parameters.AddWithValue("@Sf_CityNo", Sf_CityNo);
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;
