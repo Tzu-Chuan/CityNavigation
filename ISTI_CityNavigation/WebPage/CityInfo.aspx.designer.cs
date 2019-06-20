@@ -10,6 +10,6 @@
 namespace ISTI_CityNavigation.WebPage {
     
     
-    public partial class CityInfo {
+    public partial class CityInfo1 {
     }
 }
