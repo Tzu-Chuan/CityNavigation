@@ -25,12 +25,14 @@ namespace ISTI_CityNavigation.handler
 
                 string acc = (string.IsNullOrEmpty(Request["acc"])) ? "" : Request["acc"].ToString().Trim();
                 string pw = (string.IsNullOrEmpty(Request["pwd"])) ? "" : Request["pwd"].ToString().Trim();
+                //acc = "nick";
+                //pw = "123123";
 
                 AccountInfo accInfo = new Account().ExecLogon(acc, Common.sha1en(pw));
                 string xmlstr = string.Empty;
                 if (accInfo != null)
                 {
-                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root><Response>登入成功</Response><Redirect>Manage/MemberMag.aspx</Redirect></root>";
+                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root><Response>登入成功</Response><Redirect>WebPage/CityInfo.aspx</Redirect></root>";
                     xDoc.LoadXml(xmlstr);
                 }
                 else
