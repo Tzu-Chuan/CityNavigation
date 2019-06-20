@@ -17,7 +17,7 @@
                         return;
                     }
                     var iframe = $('<iframe name="postiframe" id="postiframe" style="display: none" />');
-                    //var year = $('<input type="hidden" name="year" id="year" value="' + $.getParamValue('year') + '" />');
+                    //var year = $('<input type="hidden" name="year" id="year" value="" />');
                     var form = $("form")[0];
 
                     //如果沒有重新導頁需要刪除上次資訊

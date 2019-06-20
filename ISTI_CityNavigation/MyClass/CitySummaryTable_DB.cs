@@ -148,23 +148,50 @@ public class CitySummaryTable_DB
     public string _CS_Status { set { CS_Status = value; } }
     #endregion
 
-    public DataTable GetList()
+    public DataTable GetList(string City)
     {
         SqlCommand oCmd = new SqlCommand();
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
 
-        sb.Append(@"Select * from CitySummaryTable where CS_Status='A' ");
+        if (City != "")
+        {
+            sb.Append(@"Select * from CityPlanTable where CP_Status='A' ");
 
-        if(KeyWord!="")
-            sb.Append(@"and ((upper(CS_PlanName) LIKE '%' + upper(@KeyWord) + '%') or (upper(CS_HostCompany) LIKE '%' + upper(@KeyWord) + '%')) ");
+            if (City != "")
+                sb.Append(@"and CP_CityCode=@City ");
 
+            if (CS_HostCompany != "")
+                sb.Append(@"and CP_HostCompany LIKE '%' + @HostCompany + '%' ");
+
+            if (CS_PlanName != "")
+                sb.Append(@"and CP_PlanName LIKE '%' + @PlanName + '%' ");
+
+            if (CS_ServiceType != "")
+                sb.Append(@"and CP_ServiceType=@ServiceType ");
+        }
+        else
+        {
+            sb.Append(@"Select * from CitySummaryTable where CS_Status='A' ");
+
+            if (CS_HostCompany != "")
+                sb.Append(@"and CS_HostCompany LIKE '%' + @HostCompany + '%' ");
+
+            if (CS_PlanName != "")
+                sb.Append(@"and CS_PlanName LIKE '%' + @PlanName + '%' ");
+
+            if (CS_ServiceType != "")
+                sb.Append(@"and CS_ServiceType=@ServiceType ");
+        }
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;
         SqlDataAdapter oda = new SqlDataAdapter(oCmd);
         DataTable ds = new DataTable();
-
-        oCmd.Parameters.AddWithValue("@KeyWord", KeyWord);
+        
+        oCmd.Parameters.AddWithValue("@City", City);
+        oCmd.Parameters.AddWithValue("@HostCompany", CS_HostCompany);
+        oCmd.Parameters.AddWithValue("@PlanName", CS_PlanName);
+        oCmd.Parameters.AddWithValue("@ServiceType", CS_ServiceType);
 
         oda.Fill(ds);
         return ds;

@@ -28,11 +28,15 @@ namespace ISTI_CityNavigation.handler
             {
                 string City = (string.IsNullOrEmpty(Request["City"])) ? "" : Request["City"].ToString().Trim();
                 string ServiceType = (string.IsNullOrEmpty(Request["ServiceType"])) ? "" : Request["ServiceType"].ToString().Trim();
+                string PlanName = (string.IsNullOrEmpty(Request["PlanName"])) ? "" : Request["PlanName"].ToString().Trim();
+                string CompanyName = (string.IsNullOrEmpty(Request["CompanyName"])) ? "" : Request["CompanyName"].ToString().Trim();
 
                 string xmlstr = string.Empty;
 
-                cst_db._KeyWord = "";
-                DataTable dt = cst_db.GetList();
+                cst_db._CS_HostCompany = CompanyName;
+                cst_db._CS_PlanName = PlanName;
+                cst_db._CS_ServiceType = ServiceType;
+                DataTable dt = cst_db.GetList(City);
 
                 xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
                 xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";

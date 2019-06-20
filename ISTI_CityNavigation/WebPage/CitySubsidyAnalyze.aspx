@@ -81,6 +81,11 @@
 </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="twocol titleLineA">
+        <div class="left"><span class="font-size4">經費總表</span></div><!-- left -->
+        <div class="right">首頁 / 智慧城鄉計畫提案 / 經費總表</div><!-- right -->
+    </div><!-- twocol -->
+
     <div class="tabmenublockV2wrapper margin10T">
         <div class="tabmenublockV2 font-size3">
             <span class="SlimTabBtnV2"><a href="BudgetExecution.aspx" target="_self">智慧城鄉生活應用發展計畫_107-109年預計經費執行情形(本局18億)</a></span>

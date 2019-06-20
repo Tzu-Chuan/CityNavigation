@@ -58,7 +58,7 @@
     <script type="text/javascript" src="<%=ResolveUrl("~/js/tableHeadFixer.js") %>"></script><!-- 固定標頭表格 -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/PageList.js") %>"></script>
     <script type="text/javascript" src="<%=ResolveUrl("~/js/loading.js") %>"></script>
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/downfile.js") %>"></script>
+    <%--<script type="text/javascript" src="<%=ResolveUrl("~/js/downfile.js") %>"></script>--%>
     <title>經濟部智慧城鄉生活應用導航資料庫</title>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -204,8 +204,8 @@
                             <!-- 桌機主選單 -->
                             <div class="superfishmenu">
                                 <ul>
-                                    <li><a href="index.html">首頁</a></li>
-                                    <li><a href="wisdom.html">智慧城鄉計畫提案</a>
+                                    <li><a href="<%=ResolveUrl("~/Webpage/CityInfo.aspx") %>">首頁</a></li>
+                                    <li><a href="javascript:void(0);">智慧城鄉計畫提案</a>
                                         <ul>
                                             <li><a href="<%=ResolveUrl("~/Webpage/BudgetExecution.aspx") %>">經費總表</a></li>
                                             <li><a href="<%=ResolveUrl("~/Webpage/CityPlanList.aspx") %>">計畫查詢</a></li>
