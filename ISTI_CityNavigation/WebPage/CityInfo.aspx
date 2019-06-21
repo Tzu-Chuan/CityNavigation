@@ -1152,15 +1152,9 @@
                <div class="row margin5T">
                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 margin20B">
                        <a class="areabtn" id="Population">
-                           <i class="fa fa-map font-size7"></i><br>人口
+                           <i class="fa fa-map font-size7"></i><br>人口土地
                        </a><!-- -->
                    </div><!-- col 人口 -->
-
-                   <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 margin20B">
-                       <a class="areabtn" id="Land">
-                           <i class="fa fa-map font-size7"></i><br>土地
-                       </a><!-- -->
-                   </div><!-- col 土地 -->
 
                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 margin20B">
                        <a class="areabtn" id="Industry">
