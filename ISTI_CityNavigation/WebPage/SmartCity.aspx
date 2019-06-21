@@ -2,6 +2,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
+            if ($.getQueryString("city") == "")
+                location.href = "CityInfo.aspx";
+            else {
+                if (Number($.getQueryString("city")) == 0 || Number($.getQueryString("city")) > 22)
+                    location.href = "CityInfo.aspx";
+                else if (!$.isNumeric($.getQueryString("city")))
+                    location.href = "CityInfo.aspx";
+            }
+
             getData();
             getServiceTypePei();
         });
