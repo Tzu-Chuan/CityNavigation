@@ -58,7 +58,6 @@
     <script type="text/javascript" src="<%=ResolveUrl("~/js/tableHeadFixer.js") %>"></script><!-- 固定標頭表格 -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/PageList.js") %>"></script>
     <script type="text/javascript" src="<%=ResolveUrl("~/js/loading.js") %>"></script>
-    <%--<script type="text/javascript" src="<%=ResolveUrl("~/js/downfile.js") %>"></script>--%>
     <title>經濟部智慧城鄉生活應用導航資料庫</title>
     <script type="text/javascript">
         $(document).ready(function () {
