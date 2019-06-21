@@ -219,11 +219,6 @@
 
 
         </div>
-        <!-- ContentWrapper -->
-
-        <div class="container-fluid">
-            <div class="backTop"><a href="#" class="backTotop">TOP</a></div>
-        </div>
     </div>
     <!-- WrapperBody -->
 </asp:Content>
