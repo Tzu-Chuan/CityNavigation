@@ -1,18 +1,24 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="CityInfo.aspx.cs" Inherits="ISTI_CityNavigation.WebPage.CityInfo1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
-    var CityNo = "";
     $(document).ready(function () {
 
         //取得get參數
-        CityNo = $.getQueryString("city");
-        if (CityNo == "") {
-            //如果沒有帶參數，直接重新刷新頁面，預設帶02台北市
+        //如果沒有帶參數，直接重新刷新頁面，預設帶02台北市
+        if ($.getQueryString("city") == "") {
             location.href = "CityInfo.aspx?city=02";
             return;
         }
-            
-        
+        else {
+            if (Number($.getQueryString("city")) == 0 || Number($.getQueryString("city")) > 22) {
+                location.href = "CityInfo.aspx?city=02";
+                return;
+            }
+            else if (!$.isNumeric($.getQueryString("city"))) {
+                location.href = "CityInfo.aspx?city=02";
+                return;
+            }
+        }
 
         //撈市長/副市長、行政區數 資料 
         getMayorList();
@@ -20,7 +26,7 @@
         getPopulationList();
 
         //進頁面把帶過來的縣市代碼將對應區塊標上顏色
-        $("#" + CityNo + "").attr("class", "areaboxactive");//不能用addClass會沒效果
+        $("#" + $.getQueryString("city") + "").attr("class", "areaboxactive");//不能用addClass會沒效果
         //$(".areabox[cno='" + CityNo + "']").attr("class", "areaboxactive");
 
         //台灣地圖點擊刷新縣市資料
@@ -86,7 +92,7 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetMayorList.aspx",
                 data: {
-                    CityNo: CityNo
+                    CityNo: $.getQueryString("city")
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -118,7 +124,7 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetPopulationList.aspx",
                 data: {
-                    CityNo: CityNo
+                    CityNo: $.getQueryString("city")
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
