@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
+            DoLinkFunc();
             getData();
         });
 
@@ -68,10 +69,7 @@
 
     <div class="tabmenublockV2wrapper margin10T">
         <div class="tabmenublockV2 font-size3">
-            <span class="SlimTabBtnV2"><a href="BudgetExecution.aspx" target="_self">智慧城鄉生活應用發展計畫_107-109年預計經費執行情形(本局18億)</a></span>
-            <span class="SlimTabBtnV2"><a href="CitySubsidyAnalyze.aspx" target="_self">補助經費縣市分析</a></span>
-            <span class="SlimTabBtnV2"><a href="SubsidyServiceAnalyze.aspx" target="_self">補助經費服務主軸分析</a></span>
-            <span class="SlimTabBtnV2 SlimTabBtnV2Current"><a>補助經費計畫類別分析</a></span>
+               <!--#include file="MoneyLink.html"-->
         </div><!-- tabmenublock -->
     </div><!-- tabmenublockV2wrapper -->
 

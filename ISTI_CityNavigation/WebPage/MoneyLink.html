@@ -1,0 +1,14 @@
+﻿<span id="budgetexecution" class="SlimTabBtnV2"><a href="BudgetExecution.aspx" target="_self">智慧城鄉生活應用發展計畫_107-109年預計經費執行情形(本局18億)</a></span>
+<span id="citysubsidyanalyze" class="SlimTabBtnV2"><a href="CitySubsidyAnalyze.aspx" target="_self">補助經費縣市分析</a></span>
+<span id="subsidyserviceanalyze" class="SlimTabBtnV2"><a href="SubsidyServiceAnalyze.aspx" target="_self">補助經費服務主軸分析</a></span>
+<span id="subsidycategoryanalyze" class="SlimTabBtnV2"><a href="SubsidyCategoryAnalyze.aspx" target="_self">補助經費計畫類別分析</a></span>
+
+<script type="text/javascript"> 
+    function DoLinkFunc() {
+        var PathName = location.pathname.toLowerCase();
+        PathName = PathName.replace("/webpage/", "");
+        PathName = PathName.replace(".aspx", "");
+        $("#" + PathName).addClass("SlimTabBtnV2Current");
+    }
+</script>
+       
