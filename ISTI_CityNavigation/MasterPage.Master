@@ -76,37 +76,37 @@
                 var city = $(this).parent().parent().attr("citycode");
                 switch ($(this).text()) {
                     case "人口土地":
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listame=Population";
+                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Population";
                         break;                                                                                  
                     case "產業":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listame=Industry";
+                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Industry";
                         break;                                                                                  
                     case "智慧城鄉計畫提案":                                                      
                         location.href = "SmartCity.aspx?city=" + city;
                         break;                                                                                  
                     case "農業":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listame=Farming";
+                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Farming";
                         break;                                                                                  
                     case "觀光":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listame=Travel";
+                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Travel";
                         break;                                                                                  
                     case "健康":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listame=Health";
+                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Health";
                         break;                                                                                  
                     case "零售":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listame=Retail";
+                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Retail";
                         break;                                                                                  
                     case "教育":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listame=Education";
+                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Education";
                         break;                                                                                  
                     case "交通":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listame=Traffic";
+                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Traffic";
                         break;                                                                                  
                     case "能源":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listame=Energy";
+                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Energy";
                         break;
                     case "智慧安全、治理":
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listame=Safety";
+                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Safety";
                         break;
                 }
             });

@@ -1,88 +1,54 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="CityInfo.aspx.cs" Inherits="ISTI_CityNavigation.WebPage.CityInfo1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        //取得get參數
-        //如果沒有帶參數，直接重新刷新頁面，預設帶02台北市
-        if ($.getQueryString("city") == "") {
-            location.href = "CityInfo.aspx?city=02";
-            return;
-        }
-        else {
-            if (Number($.getQueryString("city")) == 0 || Number($.getQueryString("city")) > 22) {
+            //取得get參數
+            //如果沒有帶參數，直接重新刷新頁面，預設帶02台北市
+            if ($.getQueryString("city") == "") {
                 location.href = "CityInfo.aspx?city=02";
                 return;
             }
-            else if (!$.isNumeric($.getQueryString("city"))) {
-                location.href = "CityInfo.aspx?city=02";
-                return;
-            }
-        }
-
-        //撈市長/副市長、行政區數 資料 
-        getMayorList();
-        //撈土地面積、人口 資料
-        getPopulationList();
-
-        //進頁面把帶過來的縣市代碼將對應區塊標上顏色
-        $("#" + $.getQueryString("city") + "").attr("class", "areaboxactive");//不能用addClass會沒效果
-        //$(".areabox[cno='" + CityNo + "']").attr("class", "areaboxactive");
-
-        //台灣地圖點擊刷新縣市資料
-        $(document).on("click", ".BoxBgB .areabox", function () {
-            location.href = "CityInfo.aspx?city=" + $(this).attr("cno");
-            //alert($(this).attr("cno"));
-        });
-
-        //進階資料12顆按鈕
-        $(document).on("click", ".areabtn", function () {
-            var aid = $(this).attr("id");
-            var cityno = ($.getQueryString("city") == "") ? "02" : $.getQueryString('city');
-            switch (aid) {
-                case "Population"://人口
-                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
-                    break;
-                case "Land"://土地
-                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
-                    break;
-                case "Travel"://觀光
-                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
-                    break;
-                case "Traffic"://交通
-                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
-                    break;
-                case "Farming"://農業
-                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
-                    break;
-                case "Industry"://產業
-                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
-                    break;
-                case "Retail"://零售
-                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
-                    break;
-                case "Safety"://智慧安全、治理
-                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
-                    break;
-                case "Energy"://能源
-                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
-                    break;
-                case "Health"://健康
-                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
-                    break;
-                case "Education"://教育
-                    location.href="CityInfoTable.aspx?city=" + cityno + "&listame=" + aid + "";
-                    break;
-                case "SmartCity"://智慧城鄉
-                    location.href = "SmartCity.aspx?city=" + cityno;
-                    break;
-
+            else {
+                if (Number($.getQueryString("city")) == 0 || Number($.getQueryString("city")) > 22) {
+                    location.href = "CityInfo.aspx?city=02";
+                    return;
+                }
+                else if (!$.isNumeric($.getQueryString("city"))) {
+                    location.href = "CityInfo.aspx?city=02";
+                    return;
+                }
             }
 
-            //location.href = "CityInfo.aspx?c=" + $(this).attr("cno");
-            //alert($(this).attr("cno"));
-        });
+            //撈市長/副市長、行政區數 資料 
+            getMayorList();
+            //撈土地面積、人口 資料
+            getPopulationList();
 
+            //進頁面把帶過來的縣市代碼將對應區塊標上顏色
+            $("#" + $.getQueryString("city") + "").attr("class", "areaboxactive");//不能用addClass會沒效果
+            //$(".areabox[cno='" + CityNo + "']").attr("class", "areaboxactive");
+
+            //台灣地圖點擊刷新縣市資料
+            $(document).on("click", ".BoxBgB .areabox", function () {
+                location.href = "CityInfo.aspx?city=" + $(this).attr("cno");
+                //alert($(this).attr("cno"));
+            });
+
+            //進階資料12顆按鈕
+            $(document).on("click", ".areabtn", function () {
+                var aid = $(this).attr("id");
+                var cityno = ($.getQueryString("city") == "") ? "02" : $.getQueryString('city');
+                switch (aid) {
+                    default:
+                        location.href = "CityInfoTable.aspx?city=" + cityno + "&listname=" + aid;
+                        break;
+                    case "SmartCity"://智慧城鄉
+                        location.href = "SmartCity.aspx?city=" + cityno;
+                        break;
+
+                }
+            });
         });
 
         //撈市市長/副市長列表

@@ -21,11 +21,17 @@ namespace ISTI_CityNavigation.WebPage.wHandler
             try
             {
                 string P_CityNo = (Request["CityNo"] != null) ? Request["CityNo"].ToString().Trim() : "";
-                string sortName = (Request["sortName"] != null) ? Request["sortName"].ToString().Trim() : "";
-                string sortMethod = (Request["sortMethod"] != null) ? Request["sortMethod"].ToString().Trim() : "";
+                string SortName = (Request["SortName"] != null) ? Request["SortName"].ToString().Trim() : "";
+                string SortMethod = (Request["SortMethod"] != null) ? Request["SortMethod"].ToString().Trim() : "-";
+                SortMethod = (SortMethod == "+") ? "asc" : "desc";
+
+                DataTable dt = new DataTable();
 
                 n_db._P_CityNo = P_CityNo;
-                DataTable dt = n_db.getPopulationList(sortName, sortMethod);
+                if (P_CityNo != "All")
+                    dt = n_db.getPopulationList();
+                else
+                    dt = n_db.getPopulation_All(SortName, SortMethod);
                 string xmlstr = string.Empty;
                 xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
                 xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";

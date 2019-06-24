@@ -2,7 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
-
         $(document).ready(function () {
             //取得get參數
             if ($.getQueryString("city") == "") {
@@ -20,91 +19,46 @@
                 }
             }
 
-            var ListClass = $.getQueryString("listame");
-            var CityNo = $.getQueryString("city");
-            switch (ListClass) {
+            // 設定Tab CSS
+            $("#" + $.getQueryString("listname")).addClass("SlimTabBtnV2Current");
+            
+            switch ($.getQueryString("listname")) {
                 case "Population"://人口土地
-                    document.getElementById("Population_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getPopulationList();
                     break;
                 case "Travel"://觀光
-                    document.getElementById("Travel_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getTravelList();
                     break;
                 case "Traffic"://交通
-                    document.getElementById("Traffic_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getTrafficList();
                     break;
                 case "Farming"://農業
-                    document.getElementById("Farming_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getFarmingList();
                     break;
                 case "Industry"://產業
-                    document.getElementById("Industry_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getIndustryList();
                     break;
                 case "Retail"://零售
-                    document.getElementById("Retail_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getRetailList();
                     break;
                 case "Safety"://智慧安全、治理
-                    document.getElementById("Safety_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getSafetyList();
                     break;
                 case "Energy"://能源
-                    document.getElementById("Energy_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getEnergyList();
                     break;
                 case "Health"://健康
-                    document.getElementById("Health_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getHealthList();
                     break;
                 case "Education"://教育
-                    document.getElementById("Education_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getEducationList();
                     break;
                 default:
                     location.href = "CityInfo.aspx";
             }
-
-
-            $(document).on("click", "a[name='ItemTag']", function () {
-                var aid = $(this).attr("id");
-                switch (aid) {
-                    case "Population"://人口土地
-                        location.href = "CityInfoTable.aspx?city=" + CityNo + "&listame=" + aid + "";
-                        break;
-                    case "Travel"://觀光
-                        location.href = "CityInfoTable.aspx?city=" + CityNo + "&listame=" + aid + "";
-                        break;
-                    case "Traffic"://交通
-                        location.href = "CityInfoTable.aspx?city=" + CityNo + "&listame=" + aid + "";
-                        break;
-                    case "Farming"://農業
-                        location.href = "CityInfoTable.aspx?city=" + CityNo + "&listame=" + aid + "";
-                        break;
-                    case "Industry"://產業
-                        location.href = "CityInfoTable.aspx?city=" + CityNo + "&listame=" + aid + "";
-                        break;
-                    case "Retail"://零售
-                        location.href = "CityInfoTable.aspx?city=" + CityNo + "&listame=" + aid + "";
-                        break;
-                    case "Safety"://智慧安全、治理
-                        location.href = "CityInfoTable.aspx?city=" + CityNo + "&listame=" + aid + "";
-                        break;
-                    case "Energy"://能源
-                        location.href = "CityInfoTable.aspx?city=" + CityNo + "&listame=" + aid + "";
-                        break;
-                    case "Health"://健康
-                        location.href = "CityInfoTable.aspx?city=" + CityNo + "&listame=" + aid + "";
-                        break;
-                    case "Education"://教育
-                        location.href = "CityInfoTable.aspx?city=" + CityNo + "&listame=" + aid + "";
-                        break;
-                    case "Mayor"://教育
-                        location.href = "CityInfoTable.aspx?city=" + CityNo + "&listame=" + aid + "";
-                        break;
-                }
+            
+            $(document).on("click", "a[name='linkbtn']", function () {
+                location.href = "CityInfoTable.aspx?city=" + $.getQueryString("city") + "&listname=" + $(this).attr("category");
             });
         })// js end
         
@@ -139,55 +93,55 @@
 
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx">年底戶籍總人口數</a></td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_TotalYear").text().trim() + '年' + '</a></td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_PeopleTotal").text().trim()).toFixed(0)) + '人' + '</td>';
                                 tabstr += '</td></tr>';
 
-                                tabstr1 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr1 += '<tr>';
                                 tabstr1 += '<td align="left" nowrap="nowrap">年底戶籍總人口數成長率</td>';
                                 tabstr1 += '<td align="center" nowrap="nowrap">' + $(this).children("P_PeopleTotalPercentYear").text().trim() + '年' + '</a></td>';
                                 tabstr1 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_PeopleTotalPercent").text().trim()).toFixed(2)) + '%' + '</td>';
                                 tabstr1 += '</td></tr>';
 
-                                tabstr2 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr2 += '<tr>';
                                 tabstr2 += '<td align="left" nowrap="nowrap">0-14歲幼年人口數</td>';
                                 tabstr2 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
                                 tabstr2 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_Child").text().trim()).toFixed(0)) + '人' + '</td>';
                                 tabstr2 += '</td></tr>';
 
-                                tabstr3 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr3 += '<tr>';
                                 tabstr3 += '<td align="left" nowrap="nowrap">0-14歲幼年人口比例</td>';
                                 tabstr3 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
                                 tabstr3 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_ChildPercent").text().trim()).toFixed(2)) + '%' + '</td>';
                                 tabstr3 += '</td></tr>';
 
-                                tabstr4 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr4 += '<tr>';
                                 tabstr4 += '<td align="left" nowrap="nowrap">15-64歲青壯年人口數</td>';
                                 tabstr4 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
                                 tabstr4 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_Teenager").text().trim()).toFixed(0)) + '人' + '</td>';
                                 tabstr4 += '</td></tr>';
 
-                                tabstr5 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr5 += '<tr>';
                                 tabstr5 += '<td align="left" nowrap="nowrap">15-64歲青壯年人口比例</td>';
                                 tabstr5 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
                                 tabstr5 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_TeenagerPercent").text().trim()).toFixed(2)) + '%' + '</td>';
                                 tabstr5 += '</td></tr>';
 
-                                tabstr6 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr6 += '<tr>';
                                 tabstr6 += '<td align="left" nowrap="nowrap">65歲以上老年人口數</td>';
                                 tabstr6 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
                                 tabstr6 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_OldMen").text().trim()).toFixed(0)) + '人' + '</td>';
                                 tabstr6 += '</td></tr>';
 
-                                tabstr7 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr7 += '<tr>';
                                 tabstr7 += '<td align="left" nowrap="nowrap">65歲以上歲老年人口比例</td>';
                                 tabstr7 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
                                 tabstr7 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_OldMenPercent").text().trim()).toFixed(2)) + '%' + '</td>';
                                 tabstr7 += '</td></tr>';
 
-                                tabstr8 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr8 += '<tr>';
                                 tabstr8 += '<td align="left" nowrap="nowrap">土地面積</td>';
                                 tabstr8 += '<td align="center" nowrap="nowrap">' + $(this).children("P_AreaYear").text().trim() + '年' + '</td>';
                                 tabstr8 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_Area").text().trim()).toFixed(2)) + 'km<sup>2</sup>' + '</td>';
@@ -525,43 +479,37 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#Table_list tbody").empty();
                         var tabstr = '';
-                        var tabstr1 = '';
-                        var tabstr2 = '';
-                        var tabstr3 = '';
-
                         if ($(data).find("data_item").length > 0) {
-                            $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr += '<td align="left" nowrap="nowrap">形成群聚之產業(依工研院產科國際所群聚資料)</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_BusinessYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="center">' + $(this).children("Ind_Business").text().trim() + '</td>';
-                                tabstr += '</td></tr>';
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">形成群聚之產業(依工研院產科國際所群聚資料)</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Ind_BusinessYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="center">' + $("Ind_Business", data).text().trim() + '</td>';
+                            tabstr += '</td></tr>';
 
-                                tabstr1 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr1 += '<td align="left" nowrap="nowrap">營運中工廠家數</td>';
-                                tabstr1 += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_FactoryYear").text().trim() + '年' + '</td>';
-                                tabstr1 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Ind_Factory").text().trim()).toFixed(0)) + '家' + '</td>';
-                                tabstr1 += '</td></tr>';
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">營運中工廠家數</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Ind_FactoryYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($("Ind_Factory", data).text().trim()).toFixed(0)) + '家' + '</td>';
+                            tabstr += '</td></tr>';
 
-                                tabstr2 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr2 += '<td align="left" nowrap="nowrap">工廠營業收入</td>';
-                                tabstr2 += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_IncomeYear").text().trim() + '年' + '</td>';
-                                tabstr2 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Ind_Income").text().trim()).toFixed(0)) + '千元' + '</td>';
-                                tabstr2 += '</td></tr>';
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">工廠營業收入</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Ind_IncomeYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($("Ind_Income", data).text().trim()).toFixed(0)) + '千元' + '</td>';
+                            tabstr += '</td></tr>';
 
-                                tabstr3 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr3 += '<td align="left" nowrap="nowrap">營利事業銷售額</td>';
-                                tabstr3 += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_SalesYear").text().trim() + '年' + '</td>';
-                                tabstr3 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Ind_Sales").text().trim()).toFixed(0)) + '千元' + '</td>';
-                                tabstr3 += '</td></tr>';
-
-                            });
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">營利事業銷售額</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Ind_SalesYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($("Ind_Sales", data).text().trim()).toFixed(0)) + '千元' + '</td>';
+                            tabstr += '</td></tr>';
                         }
                         else
-                            tabstr += '<tr><td colspan="6">查詢無資料</td></tr>';
-                        $("#Table_list tbody").append(tabstr + tabstr1 + tabstr2 + tabstr3);
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        
+                        $("#Table_list tbody").empty();
+                        $("#Table_list tbody").append(tabstr);
                     }
                 }
             });
@@ -1114,22 +1062,22 @@
             <!-- twocol -->
             <div class="tabmenublockV2wrapper margin10T">
                 <div class="tabmenublockV2">
-                    <span class="SlimTabBtnV2" id="Population_Class"><a name="ItemTag" id="Population" href="javascript:void(0)" target="_self">人口土地</a></span>
-                    <span class="SlimTabBtnV2" id="Industry_Class"><a name="ItemTag" id="Industry" href="javascript:void(0)" target="_self">產業</a></span>
-                    <span class="SlimTabBtnV2" id="Farming_Class"><a name="ItemTag" id="Farming" href="javascript:void(0)" target="_self">農業</a></span>
-                    <span class="SlimTabBtnV2" id="Travel_Class"><a name="ItemTag" id="Travel" href="javascript:void(0)" target="_self">觀光</a></span>
-                    <span class="SlimTabBtnV2" id="Health_Class"><a name="ItemTag" id="Health" href="javascript:void(0)" target="_self">健康</a></span>
-                    <span class="SlimTabBtnV2" id="Retail_Class"><a name="ItemTag" id="Retail" href="javascript:void(0)" target="_self">零售</a></span>
-                    <span class="SlimTabBtnV2" id="Education_Class"><a name="ItemTag" id="Education" href="javascript:void(0)" target="_self">教育</a></span>
-                    <span class="SlimTabBtnV2" id="Traffic_Class"><a name="ItemTag" id="Traffic" href="javascript:void(0)" target="_self">交通</a></span>
-                    <span class="SlimTabBtnV2" id="Energy_Class"><a name="ItemTag" id="Energy" href="javascript:void(0)" target="_self">能源</a></span>
-                    <span class="SlimTabBtnV2" id="Safety_Class"><a name="ItemTag" id="Safety" href="javascript:void(0)" target="_self">智慧安全、治理</a></span>
+                    <span class="SlimTabBtnV2" id="Population"><a name="linkbtn" category="Population" href="javascript:void(0)" target="_self">人口土地</a></span>
+                    <span class="SlimTabBtnV2" id="Industry"><a name="linkbtn" category="Industry" href="javascript:void(0)" target="_self">產業</a></span>
+                    <span class="SlimTabBtnV2" id="Farming"><a name="linkbtn" category="Farming" href="javascript:void(0)" target="_self">農業</a></span>
+                    <span class="SlimTabBtnV2" id="Travel"><a name="linkbtn" category="Travel" href="javascript:void(0)" target="_self">觀光</a></span>
+                    <span class="SlimTabBtnV2" id="Health"><a name="linkbtn" category="Health" href="javascript:void(0)" target="_self">健康</a></span>
+                    <span class="SlimTabBtnV2" id="Retail"><a name="linkbtn" category="Retail" href="javascript:void(0)" target="_self">零售</a></span>
+                    <span class="SlimTabBtnV2" id="Education"><a name="linkbtn" category="Education" href="javascript:void(0)" target="_self">教育</a></span>
+                    <span class="SlimTabBtnV2" id="Traffic"><a name="linkbtn" category="Traffic" href="javascript:void(0)" target="_self">交通</a></span>
+                    <span class="SlimTabBtnV2" id="Energy"><a name="linkbtn" category="Energy" href="javascript:void(0)" target="_self">能源</a></span>
+                    <span class="SlimTabBtnV2" id="Safety"><a name="linkbtn" category="Safety" href="javascript:void(0)" target="_self">智慧安全、治理</a></span>
                 </div>
                 <!-- tabmenublock -->
             </div>
             <!-- tabmenublockV2wrapper -->
 
-            <div class="stripeMe margin10T font-normal" id="Wrapper">
+            <div class="stripeMeCS margin10T font-normal" id="Wrapper">
                 <table border="0" cellspacing="0" cellpadding="0" width="100%" id="Table_list">
                     <thead>
                         <tr>

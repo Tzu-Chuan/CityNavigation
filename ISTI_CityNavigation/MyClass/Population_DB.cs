@@ -150,20 +150,32 @@ public class Population_DB
     }
 
     //取得人口總數列表資料
-    public DataTable getPopulationList(string sortName, string sortMethod)
+    public DataTable getPopulationList()
     {
         SqlCommand oCmd = new SqlCommand();
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
-        if (P_CityNo == "All")
-        {
-            sb.Append(@"select * from Population where P_Status='A' order by convert(int," + sortName + @") " + sortMethod);
-        }
-        else {
-            sb.Append(@"select * from Population where P_CityNo=@P_CityNo and P_Status='A' ");
-            oCmd.Parameters.AddWithValue("@P_CityNo", P_CityNo);
-        }
+
+        sb.Append(@"select * from Population where P_CityNo=@P_CityNo and P_Status='A' ");
         
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable dt = new DataTable();
+        oCmd.Parameters.AddWithValue("@P_CityNo", P_CityNo);
+
+        oda.Fill(dt);
+        return dt;
+    }
+
+    public DataTable getPopulation_All(string sortName, string sortMethod)
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"select * from Population where P_Status='A' order by convert(int," + sortName + @") " + sortMethod);
+
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;
         SqlDataAdapter oda = new SqlDataAdapter(oCmd);

@@ -4,21 +4,29 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            /// 表頭排序設定
+            Page.Option.SortMethod = "+";
+            Page.Option.SortName = "P_CityNo";
+
             getData();
-
-            //寬版螢幕調整
-            $(".container").css("max-width", "1440px");
-
-            //等高區塊
-            $('.euqalheightblock').matchHeight({
-                byRow: true,//若為false,則所有區塊等高
-                property: 'height',//使用min-height會出問題
-                target: null,//設定等高對象:$('.sidebar')
-                remove: false
+            
+            /// 表頭排序
+            $(document).on("click", "a[name='sortbtn']", function () {
+                $("a[name='sortbtn']").removeClass("asc desc")
+                if (Page.Option.SortName != $(this).attr("sortname")) {
+                    Page.Option.SortMethod = "-";
+                }
+                Page.Option.SortName = $(this).attr("sortname");
+                if (Page.Option.SortMethod == "-") {
+                    Page.Option.SortMethod = "+";
+                    $(this).addClass('asc');
+                }
+                else {
+                    Page.Option.SortMethod = "-";
+                    $(this).addClass('desc');
+                }
+                getData();
             });
-
-            //固定標頭
-            $(".hugetable table").tableHeadFixer({ "left": 0 });//左側兩欄固定(需為th)
 
             //圓餅圖
             $('#stackedcolumn1').highcharts({
@@ -28,7 +36,6 @@
                 title: {
                     text: '全國人口比例'
                 },
-
                 series: [{
                     name: '',
                     colorByPoint: true,
@@ -123,14 +130,11 @@
                         },
                     ]
                 }]
-
             });
-
         }); //js end
 
 
         var Population_All_Array = [];
-        var CityNo = "All";
         //撈總人口列表
         function getData() {
             $.ajax({
@@ -138,9 +142,9 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetPopulationList.aspx",
                 data: {
-                    CityNo: CityNo,
-                    sortName: $("#sortName").val(),
-                    sortMethod: $("#sortMethod").val()
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -160,61 +164,28 @@
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_PeopleTotal").text().trim()).toFixed(0)) + '人' + '</td>';
                                 Population_All_Array.push($(this).children("P_PeopleTotal").text().trim().toString());
                                 tabstr += '</td></tr>';
-                            })
+                            });
                         }
                         else
-                            tabstr += '<tr><td colspan="6">查詢無資料</td></tr>';
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
                         $("#tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
                     }
                 }
             })
         }
-
-        //標頭排序
-        $(document).on("click", "a[name='sortbtn']", function () {
-            $("a[name='sortbtn']").removeClass("asc desc") //請除目前的值
-            $("#sortName").val($(this).attr("atp"));//把選取的欄位傳到sortName
-            if ($("#sortMethod").val() == "desc") {
-                $("#sortMethod").val("asc");
-                $(this).addClass('asc');
-            }
-            else {
-                $("#sortMethod").val("desc");
-                $(this).addClass('desc');
-            }
-            getData(0);
-        });
-
-
-
-
     </script>
-    <%--表頭欄位排序符號--%>
-    <style>
-        a.asc:after {
-            content: attr(data-content) '▲';
-        }
-
-        a.desc:after {
-            content: attr(data-content) '▼';
-        }
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <input type="hidden" id="tmpGuid" />
-    <input type="hidden" id="sortMethod" name="sortMethod" value="desc" />
-    <input type="hidden" id="sortName" name="sortName" value="P_CreateDate" />
     <div class="WrapperBody" id="WrapperBody">
         <div class="container margin15T" id="ContentWrapper">
-
             <div class="twocol titleLineA">
-                <div class="left"><span class="font-size4">全國人口</span></div>
-                <!-- left -->
-                <div class="right">首頁 / 全國人口</div>
-                <!-- right -->
-            </div>
-            <!-- twocol -->
-
+                <div class="left"><span class="font-size4">全國人口</span></div><!-- left -->
+                <div class="right">首頁 / 全國人口</div><!-- right -->
+            </div><!-- twocol -->
 
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">
@@ -222,26 +193,19 @@
                         <table border="0" cellspacing="0" cellpadding="0" width="100%" id="tablist">
                             <thead>
                                 <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" atp="P_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_CityNo">縣市</a></th>
                                     <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" atp="P_PeopleTotal">人口數</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_PeopleTotal">人口數</a></th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
                     </div>
-                </div>
-                <!-- col -->
+                </div><!-- col -->
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div id="stackedcolumn1" class="maxWithA"></div>
-                </div>
-                <!-- col -->
-            </div>
-            <!-- row -->
-
-
-
+                </div><!-- col -->
+            </div><!-- row -->
         </div>
-    </div>
-    <!-- WrapperBody -->
+    </div><!-- WrapperBody -->
 </asp:Content>

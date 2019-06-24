@@ -5,10 +5,10 @@
 
 <script type="text/javascript"> 
     $(document).ready(function () {
-        DoLinkFunc();
+        SetTabClass();
     });
 
-    function DoLinkFunc() {
+    function SetTabClass() {
         var PathName = location.pathname.toLowerCase();
         PathName = PathName.replace("/webpage/", "");
         PathName = PathName.replace(".aspx", "");

@@ -24,7 +24,7 @@
                     Page.Option.SortMethod = "-";
                     $(this).addClass('desc');
                 }
-                getData(0);
+                getData();
             });
 
             $(document).on("click", "#SearchBtn", function () {

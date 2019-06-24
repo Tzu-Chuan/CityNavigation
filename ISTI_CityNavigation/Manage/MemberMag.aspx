@@ -163,7 +163,7 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("itemNo").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("M_Name").text().trim() + '</td>';
                                 tabstr += '<td align="left" nowrap="nowrap">' + $(this).children("M_Email").text().trim() + '</td>';
@@ -270,7 +270,7 @@
         <div class="right"><input id="newbtn" type="button" value="新增" class="genbtn" /></div>
     </div><!-- twocol -->
 
-    <div class="stripeMe margin10T font-normal">
+    <div class="stripeMeCS margin10T font-normal">
         <table id="tablist" width="100%" border="1" cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
