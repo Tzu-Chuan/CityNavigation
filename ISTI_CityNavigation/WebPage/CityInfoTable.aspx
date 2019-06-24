@@ -24,52 +24,42 @@
             var CityNo = $.getQueryString("city");
             switch (ListClass) {
                 case "Population"://人口土地
-                    getCityName();
                     document.getElementById("Population_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getPopulationList();
                     break;
                 case "Travel"://觀光
-                    getCityName();
                     document.getElementById("Travel_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getTravelList();
                     break;
                 case "Traffic"://交通
-                    getCityName();
                     document.getElementById("Traffic_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getTrafficList();
                     break;
                 case "Farming"://農業
-                    getCityName();
                     document.getElementById("Farming_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getFarmingList();
                     break;
                 case "Industry"://產業
-                    getCityName();
                     document.getElementById("Industry_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getIndustryList();
                     break;
                 case "Retail"://零售
-                    getCityName();
                     document.getElementById("Retail_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getRetailList();
                     break;
                 case "Safety"://智慧安全、治理
-                    getCityName();
                     document.getElementById("Safety_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getSafetyList();
                     break;
                 case "Energy"://能源
-                    getCityName();
                     document.getElementById("Energy_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getEnergyList();
                     break;
                 case "Health"://健康
-                    getCityName();
                     document.getElementById("Health_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getHealthList();
                     break;
                 case "Education"://教育
-                    getCityName();
                     document.getElementById("Education_Class").className = "SlimTabBtnV2 SlimTabBtnV2Current";
                     getEducationList();
                     break;
@@ -115,36 +105,9 @@
                         location.href = "CityInfoTable.aspx?city=" + CityNo + "&listame=" + aid + "";
                         break;
                 }
-            })
-
-        })// js end
-
-
-        function getCityName() {
-            $.ajax({
-                type: "POST",
-                async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "../handler/GetCityName.aspx",
-                data: {
-                    CityNo: $.getQueryString("city")
-                },
-                error: function (xhr) {
-                    alert(xhr.responseText);
-                },
-                success: function (data) {
-                    if ($(data).find("Error").length > 0) {
-                        alert($(data).find("Error").attr("Message"));
-                    }
-                    else {
-                        if ($(data).find("data_item").length > 0) {
-                            $(data).find("data_item").each(function (i) {
-                                $("#CityName").html($(this).children("C_Item_cn").text().trim());
-                            });
-                        }
-                    }
-                }
             });
-        }
+        })// js end
+        
 
         //撈人口土地列表
         function getPopulationList() {
@@ -1143,7 +1106,7 @@
         <div class="container margin15T" id="ContentWrapper">
 
             <div class="twocol titleLineA">
-                <div class="left"><span class="font-size4" id="CityName"></span></div>
+                <div class="left"><span class="font-size4"><%= CityName %></span></div>
                 <!-- left -->
                 <div class="right"><%--首頁 / 桃園市 / 桃園市人口--%></div>
                 <!-- right -->
