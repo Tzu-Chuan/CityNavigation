@@ -138,7 +138,9 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetPopulationList.aspx",
                 data: {
-                    CityNo: CityNo
+                    CityNo: CityNo,
+                    sortName: $("#sortName").val(),
+                    sortMethod: $("#sortMethod").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -177,10 +179,40 @@
             return arr[0].replace(re, "$1,") + (arr.length == 2 ? "." + arr[1] : "");
         }
 
+        //標頭排序
+        $(document).on("click", "a[name='sortbtn']", function () {
+            $("a[name='sortbtn']").removeClass("asc desc") //請除目前的值
+            $("#sortName").val($(this).attr("atp"));//把選取的欄位傳到sortName
+            if ($("#sortMethod").val() == "desc") {
+                $("#sortMethod").val("asc");
+                $(this).addClass('asc');
+            }
+            else {
+                $("#sortMethod").val("desc");
+                $(this).addClass('desc');
+            }
+            getData(0);
+        });
+
+
+
 
     </script>
+    <%--表頭欄位排序符號--%>
+    <style>
+        a.asc:after {
+            content: attr(data-content) '▲';
+        }
+
+        a.desc:after {
+            content: attr(data-content) '▼';
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <input type="hidden" id="tmpGuid" />
+    <input type="hidden" id="sortMethod" name="sortMethod" value="desc" />
+    <input type="hidden" id="sortName" name="sortName" value="P_CreateDate" />
     <div class="WrapperBody" id="WrapperBody">
         <div class="container margin15T" id="ContentWrapper">
 
@@ -199,9 +231,9 @@
                         <table border="0" cellspacing="0" cellpadding="0" width="100%" id="tablist">
                             <thead>
                                 <tr>
-                                    <th nowrap="nowrap" style="width: 40px;">縣市</th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;">人口數</th>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" atp="P_CityName">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" atp="P_TotalYear">資料時間</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" atp="P_PeopleTotal">人口數</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

@@ -150,14 +150,14 @@ public class Population_DB
     }
 
     //取得人口總數列表資料
-    public DataTable getPopulationList()
+    public DataTable getPopulationList(string sortName, string sortMethod)
     {
         SqlCommand oCmd = new SqlCommand();
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
         if (P_CityNo == "All")
         {
-            sb.Append(@"select * from Population");
+            sb.Append(@"select * from Population order by " + sortName + @" " + sortMethod + @"");
         }
         else {
             sb.Append(@"select * from Population where P_CityNo=@P_CityNo and P_Status='A'");

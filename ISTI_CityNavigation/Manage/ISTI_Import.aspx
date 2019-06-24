@@ -116,11 +116,8 @@
                     選擇檔案
                 </div>
                 <div class="OchiCell width100">
-                    <input type="file" id="importFile" name="importFile" class="inputex" />
+                    <input type="file" id="importFile" name="importFile" class="inputex" />&nbsp;<input type="button" id="btnUpload" class="genbtn" value="上傳" />
                 </div>
-            </div>
-            <div class="OchiRow" style="text-align:right;">
-                <input type="button" id="btnUpload" class="genbtn" value="上傳" />
             </div>
         </div> 
     </div>
