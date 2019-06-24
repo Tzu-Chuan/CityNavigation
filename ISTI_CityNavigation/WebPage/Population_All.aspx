@@ -231,9 +231,9 @@
                         <table border="0" cellspacing="0" cellpadding="0" width="100%" id="tablist">
                             <thead>
                                 <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" atp="P_CityName">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" atp="P_TotalYear">資料時間</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" atp="P_PeopleTotal">人口數</th>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" atp="P_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" atp="P_PeopleTotal">人口數</a></th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
