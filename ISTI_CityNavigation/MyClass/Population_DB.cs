@@ -157,10 +157,10 @@ public class Population_DB
         StringBuilder sb = new StringBuilder();
         if (P_CityNo == "All")
         {
-            sb.Append(@"select * from Population order by " + sortName + @" " + sortMethod + @"");
+            sb.Append(@"select * from Population where P_Status='A' order by convert(int," + sortName + @") " + sortMethod);
         }
         else {
-            sb.Append(@"select * from Population where P_CityNo=@P_CityNo and P_Status='A'");
+            sb.Append(@"select * from Population where P_CityNo=@P_CityNo and P_Status='A' ");
             oCmd.Parameters.AddWithValue("@P_CityNo", P_CityNo);
         }
         
