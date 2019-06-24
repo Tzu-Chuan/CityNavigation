@@ -31,6 +31,16 @@ namespace ISTI_CityNavigation.Manage.mHandler
             XmlDocument xDoc = new XmlDocument();
             try
             {
+                #region 登入判斷
+                if (LogInfo.mGuid == "")
+                {
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("請重新登入");
+                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
+                    xDoc.Save(Response.Output);
+                    return;
+                }
+                #endregion
+
                 string id = (string.IsNullOrEmpty(Request["id"])) ? "" : Request["id"].ToString().Trim();
                 string M_Name = (string.IsNullOrEmpty(Request["M_Name"])) ? "" : Request["M_Name"].ToString().Trim();
                 string M_Account = (string.IsNullOrEmpty(Request["M_Account"])) ? "" : Request["M_Account"].ToString().Trim();

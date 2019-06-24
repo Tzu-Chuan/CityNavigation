@@ -31,6 +31,14 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 
             ///-----------------------------------------------------
 
+            #region 登入判斷
+            if (LogInfo.mGuid == "")
+            {
+                Response.Write("<script type='text/JavaScript'>parent.feedbackFun('請重新登入');</script>");
+                return;
+            }
+            #endregion
+
             /// Transaction
             SqlConnection oConn = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
             oConn.Open();

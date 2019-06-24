@@ -89,37 +89,26 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="row">
-        <div class="OchiFixTable width100 TitleLength05"">
-            <div class="OchiRow">
-                <div class="OchiCell OchiTitle TitleSetWidth">
-                    檔案類別
-                </div>
-                <div class="OchiCell width100">
-                    <select id="selType" name="selClass" class="inputex">
-                        <option value="01">土地人口</option>
-                        <option value="02">觀光</option>
-                        <option value="03">交通</option>
-                        <option value="04">農業</option>
-                        <option value="05">市長副市長</option>
-                        <option value="06">產業</option>
-                        <option value="07">零售</option>
-                        <option value="08">安全</option>
-                        <option value="09">能源</option>
-                        <option value="10">健康</option>
-                        <option value="11">教育</option>
-                    </select>
-                </div>
-            </div>
-            <div class="OchiRow">
-                <div class="OchiCell OchiTitle TitleSetWidth">
-                    選擇檔案
-                </div>
-                <div class="OchiCell width100">
-                    <input type="file" id="importFile" name="importFile" class="inputex" />&nbsp;<input type="button" id="btnUpload" class="genbtn" value="上傳" />
-                </div>
-            </div>
-        </div> 
+    <div>
+        Excel 上傳範例檔下載：<a href="<%=ResolveUrl("~/Sample/ISTI匯入資料範例.zip") %>">ISTI匯入資料範例.zip</a>
     </div>
-    
+    <div style="margin-top:10px;">
+        檔案類別：
+        <select id="selType" name="selClass" class="inputex">
+            <option value="01">土地人口</option>
+            <option value="02">觀光</option>
+            <option value="03">交通</option>
+            <option value="04">農業</option>
+            <option value="05">市長副市長</option>
+            <option value="06">產業</option>
+            <option value="07">零售</option>
+            <option value="08">安全</option>
+            <option value="09">能源</option>
+            <option value="10">健康</option>
+            <option value="11">教育</option>
+        </select>
+    </div>
+    <div style="margin-top:10px;">
+        選擇檔案：<input type="file" id="importFile" name="importFile" class="inputex" />&nbsp;<input type="button" id="btnUpload" class="genbtn" value="上傳" />
+    </div>
 </asp:Content>

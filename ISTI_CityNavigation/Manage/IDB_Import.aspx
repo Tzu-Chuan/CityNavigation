@@ -51,7 +51,8 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div id="test" class="margin10T">
+    <div class="margin10T">
+        <div style="margin-bottom:10px; font-size:12pt;">Excel 上傳範例檔下載：<a href="<%=ResolveUrl("~/Sample/工業局匯入資料範例.xlsx") %>">IDB匯入資料範例.xlsx</a></div>
         選擇檔案：<input id="file0" name="file0" type="file" class="inputex" />
         <input id="upbtn" type="button" class="genbtn" value="上傳" />
     </div>
