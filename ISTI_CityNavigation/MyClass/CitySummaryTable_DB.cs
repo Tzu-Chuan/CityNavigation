@@ -148,7 +148,7 @@ public class CitySummaryTable_DB
     public string _CS_Status { set { CS_Status = value; } }
     #endregion
 
-    public DataTable GetList(string City)
+    public DataTable GetList(string City,string sortStr)
     {
         SqlCommand oCmd = new SqlCommand();
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
@@ -183,6 +183,10 @@ public class CitySummaryTable_DB
             if (CS_ServiceType != "")
                 sb.Append(@"and CS_ServiceType=@ServiceType ");
         }
+
+        if (sortStr != "")
+            sb.Append(@"order by " + sortStr);
+
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;
         SqlDataAdapter oda = new SqlDataAdapter(oCmd);

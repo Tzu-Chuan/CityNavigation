@@ -2,10 +2,33 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
+            /// 表頭排序設定
+            Page.Option.SortMethod = "+";
+            Page.Option.SortName = "";
+
             getddl("02", "#ddlCity")
             ddl_ServiceType();
+            
+            /// 表頭排序
+            $(document).on("click", "a[name='sortbtn']", function () {
+                $("a[name='sortbtn']").removeClass("asc desc")
+                if (Page.Option.SortName != $(this).attr("sortname")) {
+                    Page.Option.SortMethod = "-";
+                }
+                Page.Option.SortName = $(this).attr("sortname");
+                if (Page.Option.SortMethod == "-") {
+                    Page.Option.SortMethod = "+";
+                    $(this).addClass('asc');
+                }
+                else {
+                    Page.Option.SortMethod = "-";
+                    $(this).addClass('desc');
+                }
+                getData(0);
+            });
 
             $(document).on("click", "#SearchBtn", function () {
+                Page.Option.SortName = "";
                 getData();
             });
         });
@@ -19,7 +42,9 @@
                     City: $("#ddlCity").val(),
                     ServiceType: $("#ddlServiceType").val(),
                     PlanName: $("#strPlan").val(),
-                    CompanyName: $("#strCompany").val()
+                    CompanyName: $("#strCompany").val(),
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod
                 },
                 beforeSend: function () {
                     $("#tablist thead").hide();
@@ -264,12 +289,12 @@
                 <tr id="Total" style="display:none;">
                     <th nowrap>計畫進度</th>
                     <th nowrap>序號</th>
-                    <th nowrap>計畫類別</th>
-                    <th nowrap>主導廠商</th>
-                    <th nowrap>聯合提案廠商</th>
-                    <th nowrap>計畫名稱</th>
-                    <th nowrap>應用服務別</th>
-                    <th nowrap>服務實施場域</th>
+                    <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CS_PlanType">計畫類別</a></th>
+                    <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CS_HostCompany">主導廠商</a></th>
+                    <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CS_JointCompany">聯合提案廠商</a></th>
+                    <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CS_PlanName">計畫名稱</a></th>
+                    <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CS_ServiceType">應用服務別</a></th>
+                    <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CS_CityArea">服務實施場域</a></th>
                     <th nowrap>計畫總經費(千元)</th>
                     <th nowrap>計畫補助款(千元)</th>
                     <th nowrap>投入新北市總經費(千元)</th>
@@ -320,12 +345,12 @@
                 <tr id="ByOne" style="display:none;">
                     <th nowrap>計畫進度</th>
                     <th nowrap>序號</th>
-                    <th nowrap>計畫類別</th>
-                    <th nowrap>主導廠商</th>
-                    <th nowrap>聯合提案廠商</th>
-                    <th nowrap>計畫名稱</th>
-                    <th nowrap>應用服務別</th>
-                    <th nowrap>服務實施場域</th>
+                    <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CP_PlanType">計畫類別</a></th>
+                    <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CP_HostCompany">主導廠商</a></th>
+                    <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CP_JointCompany">聯合提案廠商</a></th>
+                    <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CP_PlanName">計畫名稱</a></th>
+                    <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CP_ServiceType">應用服務別</a></th>
+                    <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CP_CityArea">服務實施場域</a></th>
                     <th nowrap>計畫總經費(千元)</th>
                     <th nowrap>計畫補助款(千元)</th>
                 </tr>
