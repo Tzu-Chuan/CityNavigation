@@ -4,6 +4,10 @@
 <span id="subsidycategoryanalyze" class="SlimTabBtnV2"><a href="SubsidyCategoryAnalyze.aspx" target="_self">補助經費計畫類別分析</a></span>
 
 <script type="text/javascript"> 
+    $(document).ready(function () {
+        DoLinkFunc();
+    });
+
     function DoLinkFunc() {
         var PathName = location.pathname.toLowerCase();
         PathName = PathName.replace("/webpage/", "");

@@ -11,10 +11,7 @@ namespace ISTI_CityNavigation.WebPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(LogInfo.competence== "ISTI")
-            {
-                Response.Write("<script>alert('很抱歉，您沒有權限進入此頁面！'); location.href='../Default.aspx';</script>");
-            }
+
         }
     }
 }

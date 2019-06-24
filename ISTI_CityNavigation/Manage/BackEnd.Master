@@ -64,6 +64,18 @@
             //寬版螢幕調整
             $(".container").css("max-width", "1440px");
 
+            switch ($("#CompStr").val()) {
+                case "SA":
+                    $(".sa").show();
+                    break;
+                case "IDB":
+                    $(".idb").show();
+                    break;
+                case "ISTI":
+                    $(".isti").show();
+                    break;
+            }
+
             $(document).on("click", "#signout_btn", function () {
                 location.href = "../Handler/SignOut.aspx";
             });
@@ -132,9 +144,9 @@
                             <div class="superfishmenu">
                                 <ul>
                                     <li><a href="<%=ResolveUrl("~/WebPage/CityInfo.aspx") %>">退出管理</a></li>
-                                    <li><a href="<%=ResolveUrl("~/Manage/MemberMag.aspx") %>">會員管理</a></li>
-                                    <li><a href="<%=ResolveUrl("~/Manage/IDB_Import.aspx") %>">IDB 資料管理</a></li>
-                                    <li><a href="<%=ResolveUrl("~/Manage/ISTI_Import.aspx") %>">ISTI 資料管理</a></li>
+                                    <li class="sa" style="display:none;"><a href="<%=ResolveUrl("~/Manage/MemberMag.aspx") %>">會員管理</a></li>
+                                    <li class="sa idb" style="display:none;"><a href="<%=ResolveUrl("~/Manage/IDB_Import.aspx") %>">IDB 資料管理</a></li>
+                                    <li class="sa isti" style="display:none;"><a href="<%=ResolveUrl("~/Manage/ISTI_Import.aspx") %>">ISTI 資料管理</a></li>
                                 </ul>
                             </div><!-- superfishmenu -->
 
@@ -162,6 +174,7 @@
             <div id="sidebar-wrapper"></div><!-- sidebar-wrapper -->
         </form>
     </div>
+    <input id="CompStr" type="hidden" value="<%= CompStr %>" />
     <script type="text/javascript" src="<%=ResolveUrl("~/js/GenCommon.js") %>"></script><!-- UIcolor JS -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/PageCommon.js") %>"></script><!-- 系統共用 JS -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/NickCommon.js") %>"></script><!-- 系統共用 JS -->

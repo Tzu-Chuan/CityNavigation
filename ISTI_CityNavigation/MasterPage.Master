@@ -64,6 +64,10 @@
             //寬版螢幕調整
             $(".container").css("max-width", "1440px");
 
+            $(document).on("click", "#ManageBtn", function () {
+                location.href = "../Manage/BackEndIndex.aspx";
+            });
+
             $(document).on("click", "#signout_btn", function () {
                 location.href = "../Handler/SignOut.aspx";
             });
@@ -141,7 +145,7 @@
                             <div class="HeaderOtherLinkWrapper">
                                 <span id="HeaderOtherLink">
                                     <ul>
-                                        <li><a href="<%=ResolveUrl("~/Manage/MemberMag.aspx") %>">後臺管理</a></li>
+                                        <li><a id="ManageBtn" href="javascript:void(0);">後臺管理</a></li>
                                         <li><a id="signout_btn" href="javascript:void(0);">登出</a></li>
                                     </ul>
                                 </span>
