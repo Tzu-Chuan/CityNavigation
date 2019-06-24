@@ -1095,7 +1095,7 @@
                                <!-- 單欄示範:文字 -->
                                <div class="OchiRow">
                                    <div class="OchiCell OchiTitle TitleSetWidth">總數</div>
-                                   <div class="OchiCell width100"><span id="P_PeopleTotal"></span>萬人</div>
+                                   <div class="OchiCell width100"><span id="P_PeopleTotal"></span>人</div>
                                </div><!-- OchiRow -->
                            </div><!-- OchiFixTable -->
                        </div><!-- Box -->
