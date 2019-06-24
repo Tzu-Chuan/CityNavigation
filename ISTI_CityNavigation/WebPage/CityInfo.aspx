@@ -138,7 +138,7 @@
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
                                 $("#P_AreaYear").html($(this).children("P_Area").text().trim());
-                                $("#P_PeopleTotal").html($(this).children("P_PeopleTotal").text().trim());
+                                $("#P_PeopleTotal").html(FormatNumber($(this).children("P_PeopleTotal").text().trim()));
                                 $("#span_CityName").html($(this).children("P_CityName").text().trim());
                             });
                         }
@@ -147,6 +147,15 @@
             });
         }
 
+
+        // 千分位
+        function FormatNumber(n) {
+            n = Number(n); // 去小數點為0
+            n += ""; // 轉字串
+            var arr = n.split(".");
+            var re = /(\d{1,3})(?=(\d{3})+$)/g;
+            return arr[0].replace(re, "$1,") + (arr.length == 2 ? "." + arr[1] : "");
+        }
 
     </script>
 </asp:Content>
