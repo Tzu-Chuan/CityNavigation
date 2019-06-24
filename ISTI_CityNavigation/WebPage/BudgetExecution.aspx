@@ -47,9 +47,9 @@
                                         strbody += '<th colspan="2">動支率</th>';
 
                                     if (i != ($(data).find("data_item").length - 1)) {
-                                        strbody += '<td nowrap="nowrap" align="right">' + FormatNumber(Number($(this).children("Str1").text().trim()).toFixed(0)) + '</td>';
-                                        strbody += '<td nowrap="nowrap" align="right">' + FormatNumber(Number($(this).children("Str2").text().trim()).toFixed(0)) + '</td>';
-                                        strbody += '<td nowrap="nowrap" align="right">' + FormatNumber(Number($(this).children("Str3").text().trim()).toFixed(0)) + '</td>';
+                                        strbody += '<td nowrap="nowrap" align="right">' + $.FormatThousandGroup(Number($(this).children("Str1").text().trim()).toFixed(0)) + '</td>';
+                                        strbody += '<td nowrap="nowrap" align="right">' + $.FormatThousandGroup(Number($(this).children("Str2").text().trim()).toFixed(0)) + '</td>';
+                                        strbody += '<td nowrap="nowrap" align="right">' + $.FormatThousandGroup(Number($(this).children("Str3").text().trim()).toFixed(0)) + '</td>';
                                     }
                                     else {
                                         strbody += '<td nowrap="nowrap" align="right">' + (parseFloat($(this).children("Str1").text().trim()) * 100).toFixed(2) + '%</td>';
@@ -70,15 +70,6 @@
                     }
                 }
             });
-        }
-
-        // 千分位
-        function FormatNumber(n) {
-            n = Number(n); // 去小數點為0
-            n += ""; // 轉字串
-            var arr = n.split(".");
-            var re = /(\d{1,3})(?=(\d{3})+$)/g;
-            return arr[0].replace(re, "$1,") + (arr.length == 2 ? "." + arr[1] : "");
         }
 </script>
 </asp:Content>

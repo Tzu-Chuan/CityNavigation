@@ -24,16 +24,16 @@
                                 if (i != $(data).find("data_item").length - 1) {
                                     tabstr += '<tr>';
                                     tabstr += '<th nowrap>' + $(this).children("C_City").text().trim() + '</th>';
-                                    tabstr += '<td nowrap align="center">' + FormatNumber($(this).children("C_PlanCount_NotAll").text().trim()) + '</td>';
-                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("C_SubMoney_NotAll").text().trim()).toFixed(0)) + '</td>';
-                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("C_PlanMoney_NotAll").text().trim()).toFixed(0)) + '</td>';
-                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("C_AssignSubMoney").text().trim()).toFixed(0)) + '</td>';
-                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("C_AssignTotalMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="center">' + $.FormatThousandGroup($(this).children("C_PlanCount_NotAll").text().trim()) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_SubMoney_NotAll").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_PlanMoney_NotAll").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_AssignSubMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_AssignTotalMoney").text().trim()).toFixed(0)) + '</td>';
                                     tabstr += '<td nowrap align="center">' + (parseFloat($(this).children("C_CitySubMoneyRatio_NotAll").text().trim()) * 100).toFixed(1) + '%</td>';
                                     tabstr += '<td nowrap align="center">' + (parseFloat($(this).children("C_CityTotalMoneyRatio_NotAll").text().trim()) * 100).toFixed(1) + '%</td>';
-                                    tabstr += '<td nowrap align="center">' + FormatNumber($(this).children("C_PlanCount").text().trim()) + '</td>';
-                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("C_SubMoney").text().trim()).toFixed(0)) + '</td>';
-                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("C_PlanMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="center">' + $.FormatThousandGroup($(this).children("C_PlanCount").text().trim()) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_SubMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_PlanMoney").text().trim()).toFixed(0)) + '</td>';
                                     tabstr += '<td nowrap align="center">' + (parseFloat($(this).children("C_CitySubMoneyRatio").text().trim()) * 100).toFixed(1) + '%</td>';
                                     tabstr += '<td nowrap align="center">' + (parseFloat($(this).children("C_CityTotalMoneyRatio").text().trim()) * 100).toFixed(1) + '%</td>';
                                     tabstr += '</tr>';
@@ -42,16 +42,16 @@
                                 else {
                                     tabstr += '<tr class="spe">';
                                     tabstr += '<td nowrap align="center">' + $(this).children("C_City").text().trim() + '</td>';
-                                    tabstr += '<td nowrap align="center">' + FormatNumber($(this).children("C_PlanCount_NotAll").text().trim()) + '</td>';
-                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("C_SubMoney_NotAll").text().trim()).toFixed(0)) + '</td>';
-                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("C_PlanMoney_NotAll").text().trim()).toFixed(0)) + '</td>';
-                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("C_AssignSubMoney").text().trim()).toFixed(0)) + '</td>';
-                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("C_AssignTotalMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="center">' + $.FormatThousandGroup($(this).children("C_PlanCount_NotAll").text().trim()) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_SubMoney_NotAll").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_PlanMoney_NotAll").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_AssignSubMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_AssignTotalMoney").text().trim()).toFixed(0)) + '</td>';
                                     tabstr += '<td nowrap align="center">' + (parseFloat($(this).children("C_CitySubMoneyRatio_NotAll").text().trim()) * 100).toFixed(0) + '%</td>';
                                     tabstr += '<td nowrap align="center">' + (parseFloat($(this).children("C_CityTotalMoneyRatio_NotAll").text().trim()) * 100).toFixed(0) + '%</td>';
-                                    tabstr += '<td nowrap align="center">' + FormatNumber($(this).children("C_PlanCount").text().trim()) + '</td>';
-                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("C_SubMoney").text().trim()).toFixed(0)) + '</td>';
-                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("C_PlanMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="center">' + $.FormatThousandGroup($(this).children("C_PlanCount").text().trim()) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_SubMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_PlanMoney").text().trim()).toFixed(0)) + '</td>';
                                     tabstr += '<td nowrap align="center">' + (parseFloat($(this).children("C_CitySubMoneyRatio").text().trim()) * 100).toFixed(0) + '%</td>';
                                     tabstr += '<td nowrap align="center">' + (parseFloat($(this).children("C_CityTotalMoneyRatio").text().trim()) * 100).toFixed(0) + '%</td>';
                                     tabstr += '</tr>';
@@ -68,15 +68,6 @@
                     }
                 }
             });
-        }
-
-        // 千分位
-        function FormatNumber(n) {
-            n = Number(n); // 去小數點為0
-            n += ""; // 轉字串
-            var arr = n.split(".");
-            var re = /(\d{1,3})(?=(\d{3})+$)/g;
-            return arr[0].replace(re, "$1,") + (arr.length == 2 ? "." + arr[1] : "");
         }
 </script>
 </asp:Content>

@@ -30,9 +30,9 @@
                                     tabstr += '<tr class="spe">';
                                     tabstr += '<td nowrap align="center">' + $(this).children("S_Type").text().trim() + '</td>';
                                 }
-                                tabstr += '<td nowrap align="center">' + FormatNumber($(this).children("S_PlanCount").text().trim()) + '</td>';
-                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("S_Subsidy").text().trim()).toFixed(1)) + '</td>';
-                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("S_TotalMoney").text().trim()).toFixed(1)) + '</td>';
+                                tabstr += '<td nowrap align="center">' + $.FormatThousandGroup($(this).children("S_PlanCount").text().trim()) + '</td>';
+                                tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("S_Subsidy").text().trim()).toFixed(1)) + '</td>';
+                                tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("S_TotalMoney").text().trim()).toFixed(1)) + '</td>';
                                 tabstr += '<td nowrap align="right">' + (parseFloat($(this).children("S_SubsidyRatio").text().trim()) * 100).toFixed(1) + '%</td>';
                                 tabstr += '<td nowrap align="right">' + (parseFloat($(this).children("S_TotalMoneyRatio").text().trim()) * 100).toFixed(1) + '%</td>';
                                 tabstr += '</tr>';
@@ -48,15 +48,6 @@
                     }
                 }
             });
-        }
-
-        // 千分位
-        function FormatNumber(n) {
-            n = Number(n); // 去小數點為0
-            n += ""; // 轉字串
-            var arr = n.split(".");
-            var re = /(\d{1,3})(?=(\d{3})+$)/g;
-            return arr[0].replace(re, "$1,") + (arr.length == 2 ? "." + arr[1] : "");
         }
 </script>
 </asp:Content>

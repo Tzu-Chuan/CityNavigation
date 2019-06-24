@@ -157,7 +157,7 @@
                                 tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
                                 tabstr += '<td align="left" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_TotalYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_PeopleTotal").text().trim()).toFixed(0)) + '人' + '</td>';
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_PeopleTotal").text().trim()).toFixed(0)) + '人' + '</td>';
                                 Population_All_Array.push($(this).children("P_PeopleTotal").text().trim().toString());
                                 tabstr += '</td></tr>';
                             })
@@ -168,15 +168,6 @@
                     }
                 }
             })
-        }
-
-        // 千分位
-        function FormatNumber(n) {
-            n = Number(n); // 去小數點為0
-            n += ""; // 轉字串
-            var arr = n.split(".");
-            var re = /(\d{1,3})(?=(\d{3})+$)/g;
-            return arr[0].replace(re, "$1,") + (arr.length == 2 ? "." + arr[1] : "");
         }
 
         //標頭排序
