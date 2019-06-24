@@ -22,6 +22,8 @@ namespace ISTI_CityNavigation.handler
             /// * Request["ServiceType"]: 領域別
             /// * Request["PlanName"]: 計畫名稱
             /// * Request["CompanyName"]: 公司名稱
+            /// * Request["SortName"]: 排序欄位名稱
+            /// * Request["SortMethod"]: 排序方式
             ///-----------------------------------------------------
             XmlDocument xDoc = new XmlDocument();
             try
@@ -30,13 +32,17 @@ namespace ISTI_CityNavigation.handler
                 string ServiceType = (string.IsNullOrEmpty(Request["ServiceType"])) ? "" : Request["ServiceType"].ToString().Trim();
                 string PlanName = (string.IsNullOrEmpty(Request["PlanName"])) ? "" : Request["PlanName"].ToString().Trim();
                 string CompanyName = (string.IsNullOrEmpty(Request["CompanyName"])) ? "" : Request["CompanyName"].ToString().Trim();
+                string SortName = (Request["SortName"] != null) ? Request["SortName"].ToString().Trim() : "";
+                string SortMethod = (Request["SortMethod"] != null) ? Request["SortMethod"].ToString().Trim() : "-";
+                SortMethod = (SortMethod == "+") ? "asc" : "desc";
+                string SortCommand = (SortName != "") ? SortName + " " + SortMethod : "";
 
                 string xmlstr = string.Empty;
 
                 cst_db._CS_HostCompany = CompanyName;
                 cst_db._CS_PlanName = PlanName;
                 cst_db._CS_ServiceType = ServiceType;
-                DataTable dt = cst_db.GetList(City);
+                DataTable dt = cst_db.GetList(City, SortCommand);
 
                 xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
                 xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
