@@ -197,7 +197,7 @@
                                 tabstr3 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
                                 tabstr3 += '<td align="left" nowrap="nowrap">0-14歲幼年人口比例</td>';
                                 tabstr3 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
-                                tabstr3 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_ChildPercent").text().trim()).toFixed(0)) + '人' + '</td>';
+                                tabstr3 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_ChildPercent").text().trim()).toFixed(2)) + '%' + '</td>';
                                 tabstr3 += '</td></tr>';
 
                                 tabstr4 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
@@ -369,7 +369,7 @@
                                 tabstr1 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
                                 tabstr1 += '<td align="left" nowrap="nowrap">自小客車在居家附近每次尋找停車位時間</td>';
                                 tabstr1 += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CarParkTimeYear").text().trim() + '年' + '</td>';
-                                tabstr1 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Tra_CarParkTime").text().trim()).toFixed(0)) + '分鐘' + '</td>';
+                                tabstr1 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Tra_CarParkTime").text().trim()).toFixed(1)) + '分鐘' + '</td>';
                                 tabstr1 += '</td></tr>';
 
                                 tabstr2 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
@@ -530,7 +530,7 @@
                                 tabstr9 += '<td align="left" nowrap="nowrap">平均農業從業人口產值</td>';
                                 tabstr9 += '<td align="center" nowrap="nowrap">' + $(this).children("Fa_FarmEmploymentOutputValueYear").text().trim() + '年' + '</td>';
                                 if (Fa_FarmEmploymentOutputValue_Str != "─") {
-                                    tabstr9 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Fa_FarmEmploymentOutputValue").text().trim()).toFixed(12)) + '千元' + '</td>';
+                                    tabstr9 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Fa_FarmEmploymentOutputValue").text().trim()).toFixed(0)) + '千元' + '</td>';
                                 } else {
                                     tabstr9 += '<td align="right" nowrap="nowrap">' + $(this).children("Fa_FarmEmploymentOutputValue").text().trim() + '</td>';
                                 }
@@ -674,7 +674,7 @@
                                 tabstr3 += '<td align="left" nowrap="nowrap">攤販全年平均收入</td>';
                                 tabstr3 += '<td align="center" nowrap="nowrap">' + $(this).children("Re_StreetVendorAvgIncomeYear").text().trim() + '年' + '</td>';
                                 if (Re_StreetVendorAvgIncome != "─") {
-                                    tabstr3 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Re_StreetVendorAvgIncome").text().trim()).toFixed(11)) + '千元' + '</td>';
+                                    tabstr3 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Re_StreetVendorAvgIncome").text().trim()).toFixed(0)) + '千元' + '</td>';
 
                                 }
                                 else {
@@ -697,7 +697,7 @@
                                 tabstr6 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
                                 tabstr6 += '<td align="left" nowrap="nowrap">零售業營利事業平均每家銷售額</td>';
                                 tabstr6 += '<td align="center" nowrap="nowrap">' + $(this).children("Re_RetailBusinessAvgSalesYear").text().trim() + '年' + '</td>';
-                                tabstr6 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Re_RetailBusinessAvgSales").text().trim()).toFixed(11)) + '千元' + '</td>';
+                                tabstr6 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Re_RetailBusinessAvgSales").text().trim()).toFixed(2)) + '千元' + '</td>';
                                 tabstr6 += '</td></tr>';
 
 
@@ -945,7 +945,7 @@
                                 tabstr7 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
                                 tabstr7 += '<td align="left" nowrap="nowrap">平均每一醫療機構服務人數</td>';
                                 tabstr7 += '<td align="center" nowrap="nowrap">' + $(this).children("Hea_MedicalInstitutionsAvgPersonYear").text().trim() + '年' + '</td>';
-                                tabstr7 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Hea_MedicalInstitutionsAvgPerson").text().trim()).toFixed(2)) + '人/所' + '</td>';
+                                tabstr7 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Hea_MedicalInstitutionsAvgPerson").text().trim()).toFixed(0)) + '人/所' + '</td>';
                                 tabstr7 += '</td></tr>';
 
                                 tabstr8 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
