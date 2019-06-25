@@ -41,12 +41,17 @@ namespace ISTI_CityNavigation.Manage.mHandler
             dt.Columns.Add("P_PeopleTotal", typeof(string));
             dt.Columns.Add("P_PeopleTotalPercentYear", typeof(string));
             dt.Columns.Add("P_PeopleTotalPercent", typeof(string));
-            dt.Columns.Add("P_Year", typeof(string));
+            dt.Columns.Add("P_ChildYear", typeof(string));
             dt.Columns.Add("P_Child", typeof(string));
+            dt.Columns.Add("P_ChildPercentYear", typeof(string));
             dt.Columns.Add("P_ChildPercent", typeof(string));
+            dt.Columns.Add("P_TeenagerYear", typeof(string));
             dt.Columns.Add("P_Teenager", typeof(string));
+            dt.Columns.Add("P_TeenagerPercentYear", typeof(string));
             dt.Columns.Add("P_TeenagerPercent", typeof(string));
+            dt.Columns.Add("P_OldMenYear", typeof(string));
             dt.Columns.Add("P_OldMen", typeof(string));
+            dt.Columns.Add("P_OldMenPercentYear", typeof(string));
             dt.Columns.Add("P_OldMenPercent", typeof(string));
             dt.Columns.Add("P_CreateDate", typeof(DateTime));
             dt.Columns.Add("P_CreateID", typeof(string));
@@ -119,12 +124,17 @@ namespace ISTI_CityNavigation.Manage.mHandler
                             row["P_PeopleTotal"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//年底戶籍總人口數
                             row["P_PeopleTotalPercentYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//年底戶籍總人口數成長率-年
                             row["P_PeopleTotalPercent"] = sheet.GetRow(j).GetCell(3).ToString().Trim();//年底戶籍總人口數成長率
-                            row["P_Year"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//年
+                            row["P_ChildYear"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//0-14歲幼年人口數 年
                             row["P_Child"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//0-14歲幼年人口數
+                            row["P_ChildPercentYear"] = sheet.GetRow(1).GetCell(7).ToString().Trim().Replace("年", "");//0-14歲幼年人比例 年
                             row["P_ChildPercent"] = sheet.GetRow(j).GetCell(7).ToString().Trim();//0-14歲幼年人比例
+                            row["P_TeenagerYear"] = sheet.GetRow(1).GetCell(5).ToString().Trim().Replace("年", "");//15-64歲青壯年人口數 年
                             row["P_Teenager"] = sheet.GetRow(j).GetCell(5).ToString().Trim();//15-64歲青壯年人口數
+                            row["P_TeenagerPercentYear"] = sheet.GetRow(1).GetCell(8).ToString().Trim().Replace("年", "");//15-64歲青壯年人比例 年
                             row["P_TeenagerPercent"] = sheet.GetRow(j).GetCell(8).ToString().Trim();//15-64歲青壯年人比例
+                            row["P_OldMenYear"] = sheet.GetRow(1).GetCell(6).ToString().Trim().Replace("年", "");//65歲以上老年人口數 年
                             row["P_OldMen"] = sheet.GetRow(j).GetCell(6).ToString().Trim();//65歲以上老年人口數
+                            row["P_OldMenPercentYear"] = sheet.GetRow(1).GetCell(9).ToString().Trim().Replace("年", "");//65歲以上老年人比例 年
                             row["P_OldMenPercent"] = sheet.GetRow(j).GetCell(9).ToString().Trim();//65歲以上老年人比例
                             row["P_CreateDate"] = dtNow;
                             row["P_CreateID"] = LogInfo.mGuid;//上傳者GUID
@@ -133,7 +143,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                             row["P_Version"] = strMaxVersion;
 
                             if (chkYear == "")
-                                chkYear = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");
+                                chkYear = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");
 
                             dt.Rows.Add(row);
                         }
@@ -176,11 +186,11 @@ namespace ISTI_CityNavigation.Manage.mHandler
             StringBuilder sb = new StringBuilder();
             sb.Append(@"
                 declare @chkRowCount int = 0;
-                select @chkRowCount = count(*) from Population where P_Year=@chkYear and P_Status='A'
+                select @chkRowCount = count(*) from Population where P_TotalYear=@chkYear and P_Status='A'
 
                 if @chkRowCount>0
                     begin
-                        update Population set P_Status='D' where P_Year=@chkYear and P_Status='A'
+                        update Population set P_Status='D' where P_TotalYear=@chkYear and P_Status='A'
                     end
             ");
             SqlCommand oCmd = oConn.CreateCommand();
@@ -216,12 +226,17 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     sqlBC.ColumnMappings.Add("P_PeopleTotal", "P_PeopleTotal");
                     sqlBC.ColumnMappings.Add("P_PeopleTotalPercentYear", "P_PeopleTotalPercentYear");
                     sqlBC.ColumnMappings.Add("P_PeopleTotalPercent", "P_PeopleTotalPercent");
-                    sqlBC.ColumnMappings.Add("P_Year", "P_Year");
+                    sqlBC.ColumnMappings.Add("P_ChildYear", "P_ChildYear");
                     sqlBC.ColumnMappings.Add("P_Child", "P_Child");
+                    sqlBC.ColumnMappings.Add("P_ChildPercentYear", "P_ChildPercentYear");
                     sqlBC.ColumnMappings.Add("P_ChildPercent", "P_ChildPercent");
+                    sqlBC.ColumnMappings.Add("P_TeenagerYear", "P_TeenagerYear");
                     sqlBC.ColumnMappings.Add("P_Teenager", "P_Teenager");
+                    sqlBC.ColumnMappings.Add("P_TeenagerPercentYear", "P_TeenagerPercentYear");
                     sqlBC.ColumnMappings.Add("P_TeenagerPercent", "P_TeenagerPercent");
+                    sqlBC.ColumnMappings.Add("P_OldMenYear", "P_OldMenYear");
                     sqlBC.ColumnMappings.Add("P_OldMen", "P_OldMen");
+                    sqlBC.ColumnMappings.Add("P_OldMenPercentYear", "P_OldMenPercentYear");
                     sqlBC.ColumnMappings.Add("P_OldMenPercent", "P_OldMenPercent");
                     sqlBC.ColumnMappings.Add("P_CreateDate", "P_CreateDate");
                     sqlBC.ColumnMappings.Add("P_CreateID", "P_CreateID");

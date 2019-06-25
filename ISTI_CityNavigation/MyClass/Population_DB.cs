@@ -20,12 +20,17 @@ public class Population_DB
     string P_PeopleTotal = string.Empty;
     string P_PeopleTotalPercentYear = string.Empty;
     string P_PeopleTotalPercent = string.Empty;
-    string P_Year = string.Empty;
+    string P_ChildYear = string.Empty;
     string P_Child = string.Empty;
+    string P_ChildPercentYear = string.Empty;
     string P_ChildPercent = string.Empty;
+    string P_TeenagerYear = string.Empty;
     string P_Teenager = string.Empty;
+    string P_TeenagerPercentYear = string.Empty;
     string P_TeenagerPercent = string.Empty;
+    string P_OldMenYear = string.Empty;
     string P_OldMen = string.Empty;
+    string P_OldMenPercentYear = string.Empty;
     string P_OldMenPercent = string.Empty;
     string P_CreateDate = string.Empty;
     string P_CreateID = string.Empty;
@@ -70,29 +75,49 @@ public class Population_DB
     {
         set { P_PeopleTotalPercent = value; }
     }
-    public string _P_Year
+    public string _P_ChildYear
     {
-        set { P_Year = value; }
+        set { P_ChildYear = value; }
     }
     public string _P_Child
     {
         set { P_Child = value; }
     }
+    public string _P_ChildPercentYear
+    {
+        set { P_ChildPercentYear = value; }
+    }
     public string _P_ChildPercent
     {
         set { P_ChildPercent = value; }
+    }
+    public string _P_TeenagerYear
+    {
+        set { P_TeenagerYear = value; }
     }
     public string _P_Teenager
     {
         set { P_Teenager = value; }
     }
+    public string _P_TeenagerPercentYear
+    {
+        set { P_TeenagerPercentYear = value; }
+    }
     public string _P_TeenagerPercent
     {
         set { P_TeenagerPercent = value; }
     }
+    public string _P_OldMenYear
+    {
+        set { P_OldMenYear = value; }
+    }
     public string _P_OldMen
     {
         set { P_OldMen = value; }
+    }
+    public string _P_OldMenPercentYear
+    {
+        set { P_OldMenPercentYear = value; }
     }
     public string _P_OldMenPercent
     {

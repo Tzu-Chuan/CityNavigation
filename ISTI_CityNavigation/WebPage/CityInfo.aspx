@@ -103,7 +103,7 @@
 
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                $("#P_AreaYear").html($(this).children("P_Area").text().trim());
+                                $("#P_Area").html($(this).children("P_Area").text().trim());
                                 $("#P_PeopleTotal").html($.FormatThousandGroup($(this).children("P_PeopleTotal").text().trim()));
                                 $("#span_CityName").html($(this).children("P_CityName").text().trim());
                             });
@@ -1081,7 +1081,7 @@
                                <!-- 單欄示範:文字 -->
                                <div class="OchiRow">
                                    <div class="OchiCell OchiTitle TitleSetWidth">面積</div>
-                                   <div class="OchiCell width100"><span id="P_AreaYear"></span>km<sup>2</sup></div>
+                                   <div class="OchiCell width100"><span id="P_Area"></span>km<sup>2</sup></div>
                                </div><!-- OchiRow -->
                            </div><!-- OchiFixTable -->
                        </div><!-- Box -->

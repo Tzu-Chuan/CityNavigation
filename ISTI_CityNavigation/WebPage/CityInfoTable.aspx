@@ -107,37 +107,37 @@
 
                                 tabstr2 += '<tr>';
                                 tabstr2 += '<td align="left" nowrap="nowrap">0-14歲幼年人口數</td>';
-                                tabstr2 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
+                                tabstr2 += '<td align="center" nowrap="nowrap">' + $(this).children("P_ChildYear").text().trim() + '年' + '</td>';
                                 tabstr2 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_Child").text().trim()).toFixed(0)) + '人' + '</td>';
                                 tabstr2 += '</td></tr>';
 
                                 tabstr3 += '<tr>';
                                 tabstr3 += '<td align="left" nowrap="nowrap">0-14歲幼年人口比例</td>';
-                                tabstr3 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
+                                tabstr3 += '<td align="center" nowrap="nowrap">' + $(this).children("P_ChildPercentYear").text().trim() + '年' + '</td>';
                                 tabstr3 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_ChildPercent").text().trim()).toFixed(2)) + '%' + '</td>';
                                 tabstr3 += '</td></tr>';
 
                                 tabstr4 += '<tr>';
                                 tabstr4 += '<td align="left" nowrap="nowrap">15-64歲青壯年人口數</td>';
-                                tabstr4 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
+                                tabstr4 += '<td align="center" nowrap="nowrap">' + $(this).children("P_TeenagerYear").text().trim() + '年' + '</td>';
                                 tabstr4 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_Teenager").text().trim()).toFixed(0)) + '人' + '</td>';
                                 tabstr4 += '</td></tr>';
 
                                 tabstr5 += '<tr>';
                                 tabstr5 += '<td align="left" nowrap="nowrap">15-64歲青壯年人口比例</td>';
-                                tabstr5 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
+                                tabstr5 += '<td align="center" nowrap="nowrap">' + $(this).children("P_TeenagerPercentYear").text().trim() + '年' + '</td>';
                                 tabstr5 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_TeenagerPercent").text().trim()).toFixed(2)) + '%' + '</td>';
                                 tabstr5 += '</td></tr>';
 
                                 tabstr6 += '<tr>';
                                 tabstr6 += '<td align="left" nowrap="nowrap">65歲以上老年人口數</td>';
-                                tabstr6 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
+                                tabstr6 += '<td align="center" nowrap="nowrap">' + $(this).children("P_OldMenYear").text().trim() + '年' + '</td>';
                                 tabstr6 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_OldMen").text().trim()).toFixed(0)) + '人' + '</td>';
                                 tabstr6 += '</td></tr>';
 
                                 tabstr7 += '<tr>';
                                 tabstr7 += '<td align="left" nowrap="nowrap">65歲以上歲老年人口比例</td>';
-                                tabstr7 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
+                                tabstr7 += '<td align="center" nowrap="nowrap">' + $(this).children("P_OldMenPercentYear").text().trim() + '年' + '</td>';
                                 tabstr7 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_OldMenPercent").text().trim()).toFixed(2)) + '%' + '</td>';
                                 tabstr7 += '</td></tr>';
 
