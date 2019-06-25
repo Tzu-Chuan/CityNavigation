@@ -11,18 +11,23 @@ namespace ISTI_CityNavigation.Manage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            switch (LogInfo.competence)
+            if (LogInfo.mGuid != null)
             {
-                case "SA":
-                    Response.Redirect("~/Manage/MemberMag.aspx");
-                    break;
-                case "IDB":
-                    Response.Redirect("~/Manage/IDB_Import.aspx");
-                    break;
-                case "ISTI":
-                    Response.Redirect("~/Manage/ISTI_Import.aspx");
-                    break;
+                switch (LogInfo.competence)
+                {
+                    case "SA":
+                        Response.Redirect("~/Manage/MemberMag.aspx");
+                        break;
+                    case "IDB":
+                        Response.Redirect("~/Manage/IDB_Import.aspx");
+                        break;
+                    case "ISTI":
+                        Response.Redirect("~/Manage/ISTI_Import.aspx");
+                        break;
+                }
             }
+            else
+                Response.Write("<script>alert('請先登入'); location.href='../Default.aspx';</script>");
         }
     }
 }
