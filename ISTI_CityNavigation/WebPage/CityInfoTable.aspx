@@ -80,78 +80,68 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#Table_list tbody").empty()
                         var tabstr = '';
-                        var tabstr1 = '';
-                        var tabstr2 = '';
-                        var tabstr3 = '';
-                        var tabstr4 = '';
-                        var tabstr5 = '';
-                        var tabstr6 = '';
-                        var tabstr7 = '';
-                        var tabstr8 = '';
-
                         if ($(data).find("data_item").length > 0) {
-                            $(data).find("data_item").each(function (i) {
-                                tabstr += '<tr>';
-                                tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx">年底戶籍總人口數</a></td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_TotalYear").text().trim() + '年' + '</a></td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_PeopleTotal").text().trim()).toFixed(0)) + '人' + '</td>';
-                                tabstr += '</td></tr>';
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx">年底戶籍總人口數</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_TotalYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right">' + $.FormatThousandGroup(Number($("P_PeopleTotal", data).text().trim()).toFixed(0)) + '人' + '</td>';
+                            tabstr += '</td></tr>';
+                            tabstr += '<tr>';
+                            
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">年底戶籍總人口數成長率</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_PeopleTotalPercentYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_PeopleTotalPercent", data).text().trim()).toFixed(0)) + '%' + '</td>';
+                            tabstr += '</td></tr>';
+                            
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">0-14歲幼年人口數</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_Year", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_PeopleTotalPercent", data).text().trim()).toFixed(0)) + '人' + '</td>';
+                            tabstr += '</td></tr>';
 
-                                tabstr1 += '<tr>';
-                                tabstr1 += '<td align="left" nowrap="nowrap">年底戶籍總人口數成長率</td>';
-                                tabstr1 += '<td align="center" nowrap="nowrap">' + $(this).children("P_PeopleTotalPercentYear").text().trim() + '年' + '</a></td>';
-                                tabstr1 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_PeopleTotalPercent").text().trim()).toFixed(2)) + '%' + '</td>';
-                                tabstr1 += '</td></tr>';
-
-                                tabstr2 += '<tr>';
-                                tabstr2 += '<td align="left" nowrap="nowrap">0-14歲幼年人口數</td>';
-                                tabstr2 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
-                                tabstr2 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_Child").text().trim()).toFixed(0)) + '人' + '</td>';
-                                tabstr2 += '</td></tr>';
-
-                                tabstr3 += '<tr>';
-                                tabstr3 += '<td align="left" nowrap="nowrap">0-14歲幼年人口比例</td>';
-                                tabstr3 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
-                                tabstr3 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_ChildPercent").text().trim()).toFixed(2)) + '%' + '</td>';
-                                tabstr3 += '</td></tr>';
-
-                                tabstr4 += '<tr>';
-                                tabstr4 += '<td align="left" nowrap="nowrap">15-64歲青壯年人口數</td>';
-                                tabstr4 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
-                                tabstr4 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_Teenager").text().trim()).toFixed(0)) + '人' + '</td>';
-                                tabstr4 += '</td></tr>';
-
-                                tabstr5 += '<tr>';
-                                tabstr5 += '<td align="left" nowrap="nowrap">15-64歲青壯年人口比例</td>';
-                                tabstr5 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
-                                tabstr5 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_TeenagerPercent").text().trim()).toFixed(2)) + '%' + '</td>';
-                                tabstr5 += '</td></tr>';
-
-                                tabstr6 += '<tr>';
-                                tabstr6 += '<td align="left" nowrap="nowrap">65歲以上老年人口數</td>';
-                                tabstr6 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
-                                tabstr6 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_OldMen").text().trim()).toFixed(0)) + '人' + '</td>';
-                                tabstr6 += '</td></tr>';
-
-                                tabstr7 += '<tr>';
-                                tabstr7 += '<td align="left" nowrap="nowrap">65歲以上歲老年人口比例</td>';
-                                tabstr7 += '<td align="center" nowrap="nowrap">' + $(this).children("P_Year").text().trim() + '年' + '</td>';
-                                tabstr7 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_OldMenPercent").text().trim()).toFixed(2)) + '%' + '</td>';
-                                tabstr7 += '</td></tr>';
-
-                                tabstr8 += '<tr>';
-                                tabstr8 += '<td align="left" nowrap="nowrap">土地面積</td>';
-                                tabstr8 += '<td align="center" nowrap="nowrap">' + $(this).children("P_AreaYear").text().trim() + '年' + '</td>';
-                                tabstr8 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("P_Area").text().trim()).toFixed(2)) + 'km<sup>2</sup>' + '</td>';
-                                tabstr8 += '</td></tr>';
-
-                            });
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">0-14歲幼年人口比例</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_Year", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_ChildPercent", data).text().trim()).toFixed(0)) + '%' + '</td>';
+                            tabstr += '</td></tr>';
+                            
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">15-64歲青壯年人口數</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_Year", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_Teenager", data).text().trim()).toFixed(0)) + '人' + '</td>';
+                            tabstr += '</td></tr>';
+                            
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">15-64歲青壯年人口比例</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_Year", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_TeenagerPercent", data).text().trim()).toFixed(2)) + '%' + '</td>';
+                            tabstr += '</td></tr>';
+                            
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">65歲以上老年人口數</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_Year", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_OldMen", data).text().trim()).toFixed(0)) + '人' + '</td>';
+                            tabstr += '</td></tr>';
+                           
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">65歲以上歲老年人口比例</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_Year", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_OldMenPercent", data).text().trim()).toFixed(2)) + '%' + '</td>';
+                            tabstr += '</td></tr>';
+                          
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">土地面積</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_AreaYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_Area", data).text().trim()).toFixed(2)) + 'km<sup>2</sup>' + '</td>';
+                            tabstr += '</td></tr>';
                         }
                         else
-                            tabstr += '<tr><td colspan="6">查詢無資料</td></tr>';
-                        $("#Table_list tbody").append(tabstr + tabstr1 + tabstr2 + tabstr3 + tabstr4 + tabstr5 + tabstr6 + tabstr7 + tabstr8);
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        
+                        $("#Table_list tbody").empty();
+                        $("#Table_list tbody").append(tabstr);
                     }
                 }
             });
@@ -174,74 +164,43 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#Table_list tbody").empty();
                         var tabstr = '';
-                        var tabstr1 = '';
-                        var tabstr2 = '';
-                        var tabstr3 = '';
-                        var tabstr4 = '';
-
                         if ($(data).find("data_item").length > 0) {
-                            $(data).find("data_item").each(function (i) {
-
-                                var T_HotelUseRate = $(this).children("T_HotelUseRate").text().trim();
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr += '<td align="left" nowrap="nowrap">觀光旅館住用率</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_HotelUseYear").text().trim() + '年' + '</td>';
-                                if (T_HotelUseRate != "─") {
-                                    tabstr += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("T_HotelUseRate").text().trim()).toFixed(2)) + '%' + '</td>';
-                                } else {
-                                    tabstr += '<td align="right" nowrap="nowrap">' + $(this).children("T_HotelUseRate").text().trim() + '</td>';
-                                }
-
-                                tabstr += '</td></tr>';
-
-                                tabstr1 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr1 += '<td align="left" nowrap="nowrap">觀光遊憩據點(縣市)人次統計</td>';
-                                tabstr1 += '<td align="center" nowrap="nowrap">' + $(this).children("T_PointYear").text().trim() + '年' + '</td>';
-                                tabstr1 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("T_PointPeople").text().trim()).toFixed(0)) + '人次' + '</td>';
-                                tabstr1 += '</td></tr>';
-
-                                var T_Hotels = $(this).children("T_Hotels").text().trim();
-                                tabstr2 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr2 += '<td align="left" nowrap="nowrap">觀光旅館家數</td>';
-                                tabstr2 += '<td align="center" nowrap="nowrap">' + $(this).children("T_HotelsYear").text().trim() + '年' + '</td>';
-                                if (T_Hotels != "─") {
-                                    tabstr2 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("T_Hotels").text().trim()).toFixed(0)) + '家' + '</td>';
-                                }
-                                else {
-                                    tabstr2 += '<td align="right" nowrap="nowrap">' + $(this).children("T_Hotels").text().trim() + '</td>';
-                                }
-                                tabstr2 += '</td></tr>';
-
-                                var T_HotelRooms = $(this).children("T_HotelRooms").text().trim();
-                                tabstr3 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr3 += '<td align="left" nowrap="nowrap">觀光旅館房間數</td>';
-                                tabstr3 += '<td align="center" nowrap="nowrap">' + $(this).children("T_HotelRoomsYear").text().trim() + '年' + '</td>';
-                                if (T_HotelRooms != "─") {
-                                    tabstr3 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("T_HotelRooms").text().trim()).toFixed(0)) + '間' + '</td>';
-                                }
-                                else {
-                                    tabstr3 += '<td align="right" nowrap="nowrap">' + $(this).children("T_HotelRooms").text().trim() + '</td>';
-                                }
-                                tabstr3 += '</td></tr>';
-
-                                var T_HotelAvgPrice = $(this).children("T_HotelAvgPrice").text().trim();
-                                tabstr4 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr4 += '<td align="left" nowrap="nowrap">觀光旅館平均房價</td>';
-                                tabstr4 += '<td align="center" nowrap="nowrap">' + $(this).children("T_HotelAvgPriceYear").text().trim() + '年' + '</td>';
-                                if (T_HotelAvgPrice != "─") {
-                                    tabstr4 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("T_HotelAvgPrice").text().trim()).toFixed(0)) + '元' + '</td>';
-                                }
-                                else {
-                                    tabstr4 += '<td align="right" nowrap="nowrap">' + $(this).children("T_HotelAvgPrice").text().trim() + '</td>';
-                                }
-                                tabstr4 += '</td></tr>';
-                            });
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">觀光旅館住用率</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("T_HotelUseYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right">' + $.FormatThousandGroup(Number($("T_HotelUseRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
+                            tabstr += '</td></tr>';
+                            //
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">觀光遊憩據點(縣市)人次統計</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("T_PointYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_PointPeople", data).text().trim()).toFixed(0)) + '人次' + '</td>';
+                            tabstr += '</td></tr>';
+                            //
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">觀光旅館家數</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("T_HotelsYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_Hotels", data).text().trim()).toFixed(0)) + '家' + '</td>';
+                            tabstr += '</td></tr>';
+                            //
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">觀光旅館房間數</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("T_HotelRoomsYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_HotelRooms", data).text().trim()).toFixed(0)) + '間' + '</td>';
+                            tabstr += '</td></tr>';
+                            //
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">觀光旅館平均房價</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("T_HotelAvgPriceYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_HotelAvgPrice", data).text().trim()).toFixed(0)) + '元' + '</td>';
+                            tabstr += '</td></tr>';
                         }
                         else
-                            tabstr += '<tr><td colspan="6">查詢無資料</td></tr>';
-                        $("#Table_list tbody").append(tabstr + tabstr1 + tabstr2 + tabstr3 + tabstr4);
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        
+                        $("#Table_list tbody").empty();
+                        $("#Table_list tbody").append(tabstr);
                     }
                 }
             });
@@ -461,6 +420,8 @@
                 }
             });
         }
+
+
 
         //撈產業列表
         function getIndustryList() {
