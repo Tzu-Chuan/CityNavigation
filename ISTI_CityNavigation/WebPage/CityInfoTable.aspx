@@ -97,37 +97,37 @@
                             
                             tabstr += '<tr>';
                             tabstr += '<td align="left" nowrap="nowrap">0-14歲幼年人口數</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_Year", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_ChildYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_PeopleTotalPercent", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
                             tabstr += '<td align="left" nowrap="nowrap">0-14歲幼年人口比例</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_Year", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_ChildPercentYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_ChildPercent", data).text().trim()).toFixed(0)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
                             tabstr += '<td align="left" nowrap="nowrap">15-64歲青壯年人口數</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_Year", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_TeenagerYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_Teenager", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
                             tabstr += '<td align="left" nowrap="nowrap">15-64歲青壯年人口比例</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_Year", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_TeenagerPercentYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_TeenagerPercent", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
                             tabstr += '<td align="left" nowrap="nowrap">65歲以上老年人口數</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_Year", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_OldMenYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_OldMen", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
                             tabstr += '<td align="left" nowrap="nowrap">65歲以上歲老年人口比例</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_Year", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_OldMenPercentYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_OldMenPercent", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                           
@@ -979,82 +979,6 @@
                                 tabstr16 += '</td></tr>';
 
                                 tabstr17 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr17 += '<td align="left" nowrap="nowrap">國中小教學電腦數</td>';
-                                tabstr17 += '<td align="center" nowrap="nowrap">' + $(this).children("Edu_ESJSPCNumYear").text().trim() + '年' + '</td>';
-                                tabstr17 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Edu_ESJSPCNum").text().trim()).toFixed(0)) + '台' + '</td>';
-                                tabstr17 += '</td></tr>';
-
-                                tabstr18 += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr18 += '<td align="left" nowrap="nowrap">國中小平均每人教學電腦數</td>';
-                                tabstr18 += '<td align="center" nowrap="nowrap">' + $(this).children("Edu_ESJSAvgPCNumYear").text().trim() + '年' + '</td>';
-                                tabstr18 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Edu_ESJSAvgPCNum").text().trim()).toFixed(2)) + '台' + '</td>';
-                                tabstr18 += '</td></tr>';
-                            });
-                        }
-                        else
-                            tabstr += '<tr><td colspan="6">查詢無資料</td></tr>';
-                        $("#Table_list tbody").append(tabstr + tabstr1 + tabstr2 + tabstr3 + tabstr4 + tabstr5 + tabstr6 + tabstr7 + tabstr8 + tabstr9 + tabstr10 + tabstr11 + tabstr12 + tabstr13 + tabstr14 + tabstr15 + tabstr16 + tabstr17 + tabstr18);
-                    }
-                }
-            });
-        }
-
-        // 千分位
-        function FormatNumber(n) {
-            n = Number(n); // 去小數點為0
-            n += ""; // 轉字串
-            var arr = n.split(".");
-            var re = /(\d{1,3})(?=(\d{3})+$)/g;
-            return arr[0].replace(re, "$1,") + (arr.length == 2 ? "." + arr[1] : "");
-        }
-
-    </script>
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="WrapperBody" id="WrapperBody">
-        <div class="container margin15T" id="ContentWrapper">
-
-            <div class="twocol titleLineA">
-                <div class="left"><span class="font-size4"><%= CityName %></span></div>
-                <!-- left -->
-                <div class="right"><%--首頁 / 桃園市 / 桃園市人口--%></div>
-                <!-- right -->
-            </div>
-            <!-- twocol -->
-            <div class="tabmenublockV2wrapper margin10T">
-                <div class="tabmenublockV2">
-                    <span class="SlimTabBtnV2" id="Population"><a name="linkbtn" category="Population" href="javascript:void(0)" target="_self">人口土地</a></span>
-                    <span class="SlimTabBtnV2" id="Industry"><a name="linkbtn" category="Industry" href="javascript:void(0)" target="_self">產業</a></span>
-                    <span class="SlimTabBtnV2" id="Farming"><a name="linkbtn" category="Farming" href="javascript:void(0)" target="_self">農業</a></span>
-                    <span class="SlimTabBtnV2" id="Travel"><a name="linkbtn" category="Travel" href="javascript:void(0)" target="_self">觀光</a></span>
-                    <span class="SlimTabBtnV2" id="Health"><a name="linkbtn" category="Health" href="javascript:void(0)" target="_self">健康</a></span>
-                    <span class="SlimTabBtnV2" id="Retail"><a name="linkbtn" category="Retail" href="javascript:void(0)" target="_self">零售</a></span>
-                    <span class="SlimTabBtnV2" id="Education"><a name="linkbtn" category="Education" href="javascript:void(0)" target="_self">教育</a></span>
-                    <span class="SlimTabBtnV2" id="Traffic"><a name="linkbtn" category="Traffic" href="javascript:void(0)" target="_self">交通</a></span>
-                    <span class="SlimTabBtnV2" id="Energy"><a name="linkbtn" category="Energy" href="javascript:void(0)" target="_self">能源</a></span>
-                    <span class="SlimTabBtnV2" id="Safety"><a name="linkbtn" category="Safety" href="javascript:void(0)" target="_self">智慧安全、治理</a></span>
-                </div>
-                <!-- tabmenublock -->
-            </div>
-            <!-- tabmenublockV2wrapper -->
-
-            <div class="stripeMeCS margin10T font-normal" id="Wrapper">
-                <table border="0" cellspacing="0" cellpadding="0" width="100%" id="Table_list">
-                    <thead>
-                        <tr>
-                            <th>項目</th>
-                            <th>資料年度</th>
-                            <th>統計數據</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <!--magpopup -->
-</asp:Content>
-2 == 1) ? '<tr>' : '<tr class="alt">';
                                 tabstr17 += '<td align="left" nowrap="nowrap">國中小教學電腦數</td>';
                                 tabstr17 += '<td align="center" nowrap="nowrap">' + $(this).children("Edu_ESJSPCNumYear").text().trim() + '年' + '</td>';
                                 tabstr17 += '<td align="right" nowrap="nowrap">' + FormatNumber(Number($(this).children("Edu_ESJSPCNum").text().trim()).toFixed(0)) + '台' + '</td>';
