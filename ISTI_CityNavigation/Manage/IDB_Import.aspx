@@ -4,7 +4,7 @@
         $(document).ready(function () {
             //上傳
             $(document).on("click", "#upbtn", function () {
-                $("#ErrMsg").html("");
+                $("#Msg").html("");
                 try {
                     if ($("#file0").val() == "") {
                         alert("請選擇要匯入的檔案");
@@ -33,20 +33,18 @@
                     form.setAttribute("encoding", "multipart/form-data");
                     form.setAttribute("target", "postiframe");
                     form.submit();
-                    $("#WrapperMainContent").loading({
-                        message: "資料上傳中，請稍後"
-                    });
+                    $("#load").show();
                 }
                 catch (ex) {
                     alert(ex.message);
-                     $("#WrapperMainContent").loading('stop');
+                    $("#load").hide();
                 }
             });
         });
 
         function feedbackFun(msg) {
-            $("#ErrMsg").html(msg);
-            $("#WrapperMainContent").loading('stop');
+            $("#Msg").html(msg);
+            $("#load").hide();
         }
     </script>
 </asp:Content>
@@ -56,5 +54,6 @@
         選擇檔案：<input id="file0" name="file0" type="file" class="inputex" />
         <input id="upbtn" type="button" class="genbtn" value="上傳" />
     </div>
-    <div id="ErrMsg" class="margin10T" style="color:red;"></div>
+    <div id="load" class="margin10T" style="display:none;"><img src="<%= ResolveUrl("~/images/loading.gif") %>" width="40" />資料上傳中，請稍後...</div>
+    <div id="Msg" class="margin10T" style="color:red;"></div>
 </asp:Content>

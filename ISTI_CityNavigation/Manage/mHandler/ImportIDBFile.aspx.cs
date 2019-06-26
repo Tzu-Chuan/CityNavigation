@@ -320,7 +320,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 /// 抓最大版次+1
                 int maxV = cpt_db.getMaxVersion(CityCode) + 1;
                 /// 資料從第3筆開始
-                for (int i = 2; i < sheet.PhysicalNumberOfRows; i++)
+                for (int i = 1; i < sheet.PhysicalNumberOfRows; i++)
                 {
                     err = "Sheet Name：" + sheet.SheetName.Trim() + "<br>";
                     err += "行數：第 " + (i + 1).ToString() + " 筆";
