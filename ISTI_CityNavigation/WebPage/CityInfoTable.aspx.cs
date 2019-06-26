@@ -24,39 +24,47 @@ namespace ISTI_CityNavigation.WebPage
                     CityName = CodeDt.Rows[0]["C_Item_Cn"].ToString();
             }
 
-            var listname = Request.QueryString["listname"].ToString().Trim();
-            switch (Request.QueryString["listname"].ToString().Trim()) {
-                case "Population"://人口土地
-                    CityTableClass= "人口土地";
-                break;
-                case "Travel"://觀光
-                    CityTableClass = "觀光";
+            if (!string.IsNullOrEmpty(Request.QueryString["listname"]))
+            {
+                /// 查詢table類別
+                switch (Request.QueryString["listname"].ToString().Trim())
+                {
+                        case "Population"://人口土地
+                            CityTableClass = "人口土地";
                     break;
-                case "Traffic"://交通
-                    CityTableClass = "交通";
+                        case "Travel"://觀光
+                            CityTableClass = "觀光";
                     break;
-                case "Farming"://農業
-                    CityTableClass = "農業";
+                        case "Traffic"://交通
+                            CityTableClass = "交通";
                     break;
-                case "Industry"://產業
-                    CityTableClass = "產業";
+                        case "Farming"://農業
+                            CityTableClass = "農業";
                     break;
-                case "Retail"://零售
-                    CityTableClass = "零售";
+                        case "Industry"://產業
+                            CityTableClass = "產業";
                     break;
-                case "Safety"://智慧安全、治理
-                    CityTableClass = "智慧安全、治理";
+                        case "Retail"://零售
+                            CityTableClass = "零售";
                     break;
-                case "Energy"://能源
-                    CityTableClass = "能源";
+                        case "Safety"://智慧安全、治理
+                            CityTableClass = "智慧安全、治理";
                     break;
-                case "Health"://健康
-                    CityTableClass = "健康";
+                        case "Energy"://能源
+                            CityTableClass = "能源";
                     break;
-                case "Education"://教育
-                    CityTableClass = "教育";
+                        case "Health"://健康
+                            CityTableClass = "健康";
                     break;
+                        case "Education"://教育
+                            CityTableClass = "教育";
+                    break;
+                }
+
             }
+
+           
+            
         }
     }
 }
