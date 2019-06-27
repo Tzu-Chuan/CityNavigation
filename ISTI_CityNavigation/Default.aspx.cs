@@ -12,7 +12,7 @@ namespace ISTI_CityNavigation
         protected void Page_Load(object sender, EventArgs e)
         {
             if (LogInfo.mGuid != "")
-                Response.Redirect("~/Manage/MemberMag.aspx");
+                Response.Redirect("~/WebPage/CityInfo.aspx");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace ISTI_CityNavigation
         public string UserName;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (LogInfo.name != "")
+            if (LogInfo.mGuid != "")
             {
                 UserName = LogInfo.name;
 
