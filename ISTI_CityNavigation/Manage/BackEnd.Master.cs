@@ -49,6 +49,10 @@ namespace ISTI_CityNavigation.Manage
                         break;
                 }
             }
+            else if (LogInfo.competence == "IDBsr")
+            {
+                Response.Write("<script>alert('很抱歉，您沒有權限進入此頁面！'); history.go(-1);</script>");
+            }
         }
     }
 }

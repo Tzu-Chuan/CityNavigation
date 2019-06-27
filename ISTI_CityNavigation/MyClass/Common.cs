@@ -19,7 +19,7 @@ public class Common
 {
 
     #region Get IPv4 Adress
-    public static string GetIP4Address()
+    public static string GetIPv4Address()
     {
         System.Web.HttpContext context = System.Web.HttpContext.Current;
         string sIPAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];

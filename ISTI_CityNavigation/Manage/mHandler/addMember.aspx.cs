@@ -13,12 +13,15 @@ namespace ISTI_CityNavigation.Manage.mHandler
     public partial class addMember : System.Web.UI.Page
     {
         Member_DB m_db = new Member_DB();
+        MemberLog_DB ml_db = new MemberLog_DB();
+        string id, mGuid, M_Name, M_Account, OldAcc, M_Pwd, OldPW, M_Email, OldMail, M_Competence;
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
             ///功    能: 新增&更新會員資料
             ///說    明:
             /// * Request["id"]: 成員ID
+            /// * Request["gid"]: 成員GUID
             /// * Request["M_Name"]: 姓名
             /// * Request["M_Account"]: 帳號
             /// * Request["oldacc"]: 原帳號
@@ -41,15 +44,16 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 }
                 #endregion
 
-                string id = (string.IsNullOrEmpty(Request["id"])) ? "" : Request["id"].ToString().Trim();
-                string M_Name = (string.IsNullOrEmpty(Request["M_Name"])) ? "" : Request["M_Name"].ToString().Trim();
-                string M_Account = (string.IsNullOrEmpty(Request["M_Account"])) ? "" : Request["M_Account"].ToString().Trim();
-                string OldAcc = (string.IsNullOrEmpty(Request["oldacc"])) ? "" : Request["oldacc"].ToString().Trim();
-                string M_Pwd = (string.IsNullOrEmpty(Request["M_Pwd"])) ? "" : Request["M_Pwd"].ToString().Trim();
-                string OldPW = (string.IsNullOrEmpty(Request["oldpw"])) ? "" : Request["oldpw"].ToString().Trim();
-                string M_Email = (string.IsNullOrEmpty(Request["M_Email"])) ? "" : Request["M_Email"].ToString().Trim();
-                string OldMail = (string.IsNullOrEmpty(Request["oldmail"])) ? "" : Request["oldmail"].ToString().Trim();
-                string M_Competence = (string.IsNullOrEmpty(Request["M_Competence"])) ? "" : Request["M_Competence"].ToString().Trim();
+                id = (string.IsNullOrEmpty(Request["id"])) ? "" : Request["id"].ToString().Trim();
+                mGuid = (string.IsNullOrEmpty(Request["gid"])) ? Guid.NewGuid().ToString("N") : Request["gid"].ToString().Trim();
+                M_Name = (string.IsNullOrEmpty(Request["M_Name"])) ? "" : Request["M_Name"].ToString().Trim();
+                M_Account = (string.IsNullOrEmpty(Request["M_Account"])) ? "" : Request["M_Account"].ToString().Trim();
+                OldAcc = (string.IsNullOrEmpty(Request["oldacc"])) ? "" : Request["oldacc"].ToString().Trim();
+                M_Pwd = (string.IsNullOrEmpty(Request["M_Pwd"])) ? "" : Request["M_Pwd"].ToString().Trim();
+                OldPW = (string.IsNullOrEmpty(Request["oldpw"])) ? "" : Request["oldpw"].ToString().Trim();
+                M_Email = (string.IsNullOrEmpty(Request["M_Email"])) ? "" : Request["M_Email"].ToString().Trim();
+                OldMail = (string.IsNullOrEmpty(Request["oldmail"])) ? "" : Request["oldmail"].ToString().Trim();
+                M_Competence = (string.IsNullOrEmpty(Request["M_Competence"])) ? "" : Request["M_Competence"].ToString().Trim();
 
                 string xmlstr = string.Empty;
 
@@ -88,7 +92,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     m_db._M_Pwd = M_Pwd;
 
                 m_db._M_ID = id;
-                m_db._M_Guid = Guid.NewGuid().ToString("N");
+                m_db._M_Guid = mGuid;
                 m_db._M_Account = M_Account;
                 m_db._M_Name = M_Name;
                 m_db._M_Email = M_Email;
@@ -98,9 +102,16 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 m_db._M_ModId = LogInfo.mGuid;
                 m_db._M_ModName = LogInfo.name;
                 if (id == "")
+                {
                     m_db.addMember();
+                    Add_Log();
+                }
                 else
+                {
+                    DataTable OldDt = m_db.getMemberById();
                     m_db.modMember();
+                    Modify_Log(OldDt);
+                }
 
                 xmlstr = "<?xml version='1.0' encoding='utf-8'?><root><Response>儲存成功</Response></root>";
                 xDoc.LoadXml(xmlstr);
@@ -111,6 +122,77 @@ namespace ISTI_CityNavigation.Manage.mHandler
             }
             Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
             xDoc.Save(Response.Output);
+        }
+
+        /// <summary>
+        /// 新增成員 Log
+        /// </summary>
+        private void Add_Log()
+        {
+            ml_db._ML_IP = Common.GetIPv4Address();
+            ml_db._ML_ChangeGuid = mGuid;
+            ml_db._ML_Description = "新增成員【" + M_Name + "】";
+            ml_db._ML_ModId = LogInfo.mGuid;
+            ml_db._ML_ModName = LogInfo.name;
+            ml_db.addLog();
+        }
+
+        /// <summary>
+        /// 修改成員 Log
+        /// </summary>
+        private void Modify_Log(DataTable olddt)
+        {
+            string changeStr = string.Empty;
+            m_db._M_ID = id;
+            DataTable dt = m_db.getMemberById();
+            if (dt.Rows.Count > 0)
+            {
+                if (olddt.Rows[0]["M_Account"].ToString() != dt.Rows[0]["M_Account"].ToString())
+                {
+                    if (changeStr != "") changeStr += "<br>";
+                    changeStr += "帳號【" + olddt.Rows[0]["M_Account"].ToString() + "】修改為【" + dt.Rows[0]["M_Account"].ToString() + "】";
+                }
+                if (olddt.Rows[0]["M_Pwd"].ToString() != dt.Rows[0]["M_Pwd"].ToString())
+                {
+                    if (changeStr != "") changeStr += "<br>";
+                    changeStr += "修改密碼";
+                }
+                if (olddt.Rows[0]["M_Name"].ToString() != dt.Rows[0]["M_Name"].ToString())
+                {
+                    if (changeStr != "") changeStr += "<br>";
+                    changeStr += "姓名【" + olddt.Rows[0]["M_Name"].ToString() + "】修改為【" + dt.Rows[0]["M_Name"].ToString() + "】";
+                }
+                if (olddt.Rows[0]["M_Email"].ToString() != dt.Rows[0]["M_Email"].ToString())
+                {
+                    if (changeStr != "") changeStr += "<br>";
+                    changeStr += "E-mail【" + olddt.Rows[0]["M_Email"].ToString() + "】修改為【" + dt.Rows[0]["M_Email"].ToString() + "】";
+                }
+                if (olddt.Rows[0]["M_Competence"].ToString() != dt.Rows[0]["M_Competence"].ToString())
+                {
+                    if (changeStr != "") changeStr += "<br>";
+                    changeStr += "所屬單位/權限【" + GetCompetence(olddt.Rows[0]["M_Competence"].ToString()) + "】修改為 【" + GetCompetence(dt.Rows[0]["M_Competence"].ToString()) + "】";
+                }
+                string tempStr = @"修改成員：" + M_Name + "；<br>修改項目：<br>" + changeStr;
+
+                ml_db._ML_IP = Common.GetIPv4Address();
+                ml_db._ML_ChangeGuid = mGuid;
+                ml_db._ML_Description = tempStr;
+                ml_db._ML_ModId = LogInfo.mGuid;
+                ml_db._ML_ModName = LogInfo.name;
+                ml_db.addLog();
+
+            }
+        }
+
+        private string GetCompetence(string item)
+        {
+            string rVal = string.Empty;
+            CodeTable_DB c_db = new CodeTable_DB();
+            c_db._C_Item = item;
+            DataTable dt = c_db.getCommonCode("03");
+            if (dt.Rows.Count > 0)
+                rVal = dt.Rows[0]["C_Item_Cn"].ToString();
+            return rVal;
         }
     }
 }

@@ -89,7 +89,12 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div>
+    <div class="twocol titleLineA">
+        <div class="left"><span class="font-size4">ISTI 資料管理</span></div><!-- left -->
+        <div class="right">後臺管理 / ISTI 資料管理</div><!-- right -->
+    </div><!-- twocol -->
+
+    <div class="margin10T">
         Excel 上傳範例檔下載：<a href="<%=ResolveUrl("~/Sample/ISTI匯入資料範例.zip") %>">ISTI匯入資料範例.zip</a>
     </div>
     <div style="margin-top:10px;">

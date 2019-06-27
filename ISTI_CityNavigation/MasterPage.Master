@@ -63,6 +63,9 @@
         $(document).ready(function () {
             //寬版螢幕調整
             $(".container").css("max-width", "1440px");
+            
+            if ($("#compstr").val() == "IDBsr")
+                $("#ManageBtn").hide();
 
             $(document).on("click", "#ManageBtn", function () {
                 location.href = "../Manage/BackEndIndex.aspx";
@@ -1487,6 +1490,7 @@
         </div><!-- padding10ALL -->
 
     </div>
+    <input type="hidden" id="compstr" value="<%= CompStr %>" />
     <script type="text/javascript" src="<%=ResolveUrl("~/js/GenCommon.js") %>"></script><!-- UIcolor JS -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/PageCommon.js") %>"></script><!-- 系統共用 JS -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/NickCommon.js") %>"></script><!-- 系統共用 JS -->

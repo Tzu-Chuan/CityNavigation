@@ -52,6 +52,7 @@
                         else {
                             $(data).find("data_item").each(function (i) {
                                 $("#tmpid").val($(this).children("M_ID").text().trim());
+                                $("#tmpgid").val($(this).children("M_Guid").text().trim());
                                 $("#mAcc").val($(this).children("M_Account").text().trim());
                                 $("#tmpacc").val($(this).children("M_Account").text().trim());
                                 $("#mPwd").val($(this).children("M_Pwd").text().trim());
@@ -86,6 +87,7 @@
                     url: "mHandler/addMember.aspx",
                     data: {
                         id: $("#tmpid").val(),
+                        gid: $("#tmpgid").val(),
                         M_Name: $("#mName").val(),
                         M_Account: $("#mAcc").val(),
                         oldacc: $("#tmpacc").val(),
@@ -258,9 +260,15 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <input type="hidden" id="tmpid" class="dialogInput" />
+    <input type="hidden" id="tmpgid" class="dialogInput" />
     <input type="hidden" id="tmppw" class="dialogInput" />
     <input type="hidden" id="tmpacc" class="dialogInput" />
     <input type="hidden" id="tmpmail" class="dialogInput" />
+    <div class="twocol titleLineA">
+        <div class="left"><span class="font-size4">會員管理</span></div><!-- left -->
+        <div class="right">後臺管理 / 會員管理</div><!-- right -->
+    </div><!-- twocol -->
+
     <div class="margin10T">
         所屬單位/權限：<select id="SearchComp"class="inputex"></select>&nbsp;&nbsp;
         關鍵字：<input id="SearchStr" type="test" class="inputex width30" />&nbsp;&nbsp;
@@ -282,7 +290,7 @@
                     <th nowrap="nowrap" style="width:150px;">動作</th>
                 </tr>
             </thead>
-            <tbody><tr><td colspan="6">查詢無資料</td></tr></tbody>
+            <tbody></tbody>
         </table>
         <div id="pageblock" class="margin20T textcenter"></div>
     </div>

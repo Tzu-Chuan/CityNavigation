@@ -10,12 +10,13 @@ namespace ISTI_CityNavigation
 {
     public partial class MasterPage : System.Web.UI.MasterPage
     {
-        public string UserName;
+        public string UserName,CompStr;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (LogInfo.mGuid != "")
             {
                 UserName = LogInfo.name;
+                CompStr = LogInfo.competence;
 
                 /// ISTI 權限
                 string pathName = Path.GetFileName(Request.PhysicalPath);

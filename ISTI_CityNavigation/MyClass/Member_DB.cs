@@ -280,7 +280,7 @@ where M_ID=@M_ID
 
         sb.Append(@"select Member.*,Comp.C_Item_cn as Competence from Member 
 left join CodeTable as Comp on Comp.C_Group='03' and Comp.C_Item=M_Competence
-where M_Status='A' and M_ID=@M_ID ");
+where M_ID=@M_ID ");
         
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;
