@@ -22,11 +22,8 @@ namespace ISTI_CityNavigation.handler
             XmlDocument xDoc = new XmlDocument();
             try
             {
-
-                string acc = (string.IsNullOrEmpty(Request["acc"])) ? "" : Request["acc"].ToString().Trim();
-                string pw = (string.IsNullOrEmpty(Request["pwd"])) ? "" : Request["pwd"].ToString().Trim();
-                //acc = "nick";
-                //pw = "123123";
+                string acc = (string.IsNullOrEmpty(Request.Form["acc"])) ? "" : Request.Form["acc"].ToString().Trim();
+                string pw = (string.IsNullOrEmpty(Request.Form["pwd"])) ? "" : Request.Form["pwd"].ToString().Trim();
 
                 AccountInfo accInfo = new Account().ExecLogon(acc, Common.sha1en(pw));
                 string xmlstr = string.Empty;
