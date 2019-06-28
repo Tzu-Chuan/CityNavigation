@@ -22,7 +22,7 @@
     <link href="<%=ResolveUrl("~/css/style.css") %>" rel="stylesheet" type="text/css" />
     <link href="<%=ResolveUrl("~/css/NickStyle.css") %>" rel="stylesheet" type="text/css" />
     
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery-1.11.2.min.js") %>"></script>
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery-3.4.1.min.js") %>"></script>
     <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery-ui.1.12.1.js") %>"></script>
     <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.breakpoint-min.js") %>"></script><!-- 斷點設定 -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/superfish.min.js") %>"></script><!-- 下拉選單 -->
