@@ -130,7 +130,7 @@
         
         <div class="WrapperFooter">
             <div class="footerblock container font-normal">
-                版權所有©2018 智慧城鄉計畫辦公室｜ 建議瀏覽解析度1024x768以上
+                版權所有©2019 智慧城鄉計畫辦公室｜ 建議瀏覽解析度1024x768以上
             </div><!--{* footerblock *}-->
         </div><!-- WrapperFooter -->
     </form>

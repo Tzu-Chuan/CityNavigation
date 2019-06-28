@@ -172,15 +172,18 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     if (changeStr != "") changeStr += "<br>";
                     changeStr += "所屬單位/權限【" + GetCompetence(olddt.Rows[0]["M_Competence"].ToString()) + "】修改為 【" + GetCompetence(dt.Rows[0]["M_Competence"].ToString()) + "】";
                 }
-                string tempStr = @"修改成員：" + M_Name + "；<br>修改項目：<br>" + changeStr;
 
-                ml_db._ML_IP = Common.GetIPv4Address();
-                ml_db._ML_ChangeGuid = mGuid;
-                ml_db._ML_Description = tempStr;
-                ml_db._ML_ModId = LogInfo.mGuid;
-                ml_db._ML_ModName = LogInfo.name;
-                ml_db.addLog();
+                if (!string.IsNullOrEmpty(changeStr))
+                {
+                    string tempStr = @"修改成員：" + M_Name + "；<br>修改項目：<br>" + changeStr;
 
+                    ml_db._ML_IP = Common.GetIPv4Address();
+                    ml_db._ML_ChangeGuid = mGuid;
+                    ml_db._ML_Description = tempStr;
+                    ml_db._ML_ModId = LogInfo.mGuid;
+                    ml_db._ML_ModName = LogInfo.name;
+                    ml_db.addLog();
+                }
             }
         }
 
