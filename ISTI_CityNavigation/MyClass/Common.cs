@@ -318,7 +318,7 @@ public class Common
 /// </summary>
 public class Account
 {
-    public AccountInfo ExecLogon(string account,string pw)
+    public AccountInfo ExecLogon(string anb, string word)
     {
         SqlCommand oCmd = new SqlCommand();
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
@@ -330,8 +330,8 @@ public class Account
         oCmd.CommandType = CommandType.Text;
         SqlDataAdapter oda = new SqlDataAdapter(oCmd);
         DataTable dt = new DataTable();
-        oCmd.Parameters.AddWithValue("@M_Account", account);
-        oCmd.Parameters.AddWithValue("@M_Pwd", pw);
+        oCmd.Parameters.AddWithValue("@M_Account", anb);
+        oCmd.Parameters.AddWithValue("@M_Pwd", word);
         oda.Fill(dt);
 
         if (dt.Rows.Count > 0)
