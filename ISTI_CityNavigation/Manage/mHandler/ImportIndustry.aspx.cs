@@ -23,139 +23,149 @@ namespace ISTI_CityNavigation.Manage.mHandler
         DateTime dtNow = DateTime.Now;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //建立共用connection & transaction
-            SqlConnection oConn = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
-            oConn.Open();
-            SqlCommand oCmd = new SqlCommand();
-            oCmd.Connection = oConn;
-            SqlTransaction myTrans = oConn.BeginTransaction();
-            oCmd.Transaction = myTrans;
-
-            //建立DataTable Bulk Copy用
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Ind_CityNo", typeof(string));
-            dt.Columns.Add("Ind_CityName", typeof(string));
-            dt.Columns.Add("Ind_BusinessYear", typeof(string));
-            dt.Columns.Add("Ind_Business", typeof(string));
-            dt.Columns.Add("Ind_FactoryYear", typeof(string));
-            dt.Columns.Add("Ind_Factory", typeof(string));
-            dt.Columns.Add("Ind_IncomeYear", typeof(string));
-            dt.Columns.Add("Ind_Income", typeof(string));
-            dt.Columns.Add("Ind_SalesYear", typeof(string));
-            dt.Columns.Add("Ind_Sales", typeof(string));
-            dt.Columns.Add("Ind_CreateDate", typeof(string));
-            dt.Columns.Add("Ind_CreateID", typeof(string));
-            dt.Columns.Add("Ind_CreateName", typeof(string));
-            dt.Columns.Add("Ind_Status", typeof(string));
-            dt.Columns.Add("Ind_Version", typeof(string));
-
-            try
+            //讀取Token值
+            string token = (string.IsNullOrEmpty(Request.Form["mToken"])) ? "" : Request.Form["mToken"].ToString().Trim();
+            if (VeriftyToken(token))
             {
-                HttpFileCollection uploadFiles = Request.Files;//檔案集合
-                HttpPostedFile aFile = uploadFiles[0];
-                //判斷有沒有檔案
-                if (uploadFiles.Count < 1 || aFile.FileName == "")
+                //建立共用connection & transaction
+                SqlConnection oConn = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
+                oConn.Open();
+                SqlCommand oCmd = new SqlCommand();
+                oCmd.Connection = oConn;
+                SqlTransaction myTrans = oConn.BeginTransaction();
+                oCmd.Transaction = myTrans;
+
+                //建立DataTable Bulk Copy用
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Ind_CityNo", typeof(string));
+                dt.Columns.Add("Ind_CityName", typeof(string));
+                dt.Columns.Add("Ind_BusinessYear", typeof(string));
+                dt.Columns.Add("Ind_Business", typeof(string));
+                dt.Columns.Add("Ind_FactoryYear", typeof(string));
+                dt.Columns.Add("Ind_Factory", typeof(string));
+                dt.Columns.Add("Ind_IncomeYear", typeof(string));
+                dt.Columns.Add("Ind_Income", typeof(string));
+                dt.Columns.Add("Ind_SalesYear", typeof(string));
+                dt.Columns.Add("Ind_Sales", typeof(string));
+                dt.Columns.Add("Ind_CreateDate", typeof(string));
+                dt.Columns.Add("Ind_CreateID", typeof(string));
+                dt.Columns.Add("Ind_CreateName", typeof(string));
+                dt.Columns.Add("Ind_Status", typeof(string));
+                dt.Columns.Add("Ind_Version", typeof(string));
+
+                try
                 {
-                    throw new Exception("請選擇檔案");
-                }
-
-                //有檔案繼續往下做
-                if (uploadFiles.Count > 0)
-                {
-                    string extension = (System.IO.Path.GetExtension(aFile.FileName) == "") ? "" : System.IO.Path.GetExtension(aFile.FileName);
-                    if (extension != ".xls" && extension != ".xlsx")
+                    HttpFileCollection uploadFiles = Request.Files;//檔案集合
+                    HttpPostedFile aFile = uploadFiles[0];
+                    //判斷有沒有檔案
+                    if (uploadFiles.Count < 1 || aFile.FileName == "")
                     {
-                        throw new Exception("請選擇xls或xlsx檔案上傳");
+                        throw new Exception("請選擇檔案");
                     }
 
-                    IWorkbook workbook;// = new HSSFWorkbook();//创建Workbook对象
-                    workbook = new XSSFWorkbook(aFile.InputStream);
-
-                    ISheet sheet = workbook.GetSheetAt(0);//當前sheet
-
-                    //簡易判斷這份Excel是不是產業的Excel
-                    int cellsCount = sheet.GetRow(0).Cells.Count;
-                    //1.判斷表頭欄位數
-                    if (cellsCount != 5)
+                    //有檔案繼續往下做
+                    if (uploadFiles.Count > 0)
                     {
-                        throw new Exception("請檢查是否為產業的匯入檔案");
-                    }
-                    //2.檢查欄位名稱
-                    if (sheet.GetRow(0).GetCell(1).ToString().Trim() != "形成群聚之產業(依工研院產科國際所群聚資料)" || sheet.GetRow(0).GetCell(2).ToString().Trim() != "營運中工廠家數")
-                    {
-                        throw new Exception("請檢查是否為產業的匯入檔案");
-                    }
-
-                    //取得當前最大版次 (+1變成現在版次)
-                    strMaxVersion = IY_DB.getMaxVersin() + 1;
-
-                    //取得代碼檔
-                    CodeTable_DB code_db = new CodeTable_DB();
-                    DataTable dtCode = code_db.getCommonCode("02");
-
-                    string cityNo = string.Empty;
-
-                    //資料從第四筆開始 最後一筆是合計不進資料庫
-                    for (int j = 3; j < sheet.PhysicalNumberOfRows - 1; j++)
-                    {
-                        if (sheet.GetRow(j).GetCell(0).ToString().Trim() != "" && sheet.GetRow(j).GetCell(0).ToString().Trim() != "全台平均")
+                        string extension = (System.IO.Path.GetExtension(aFile.FileName) == "") ? "" : System.IO.Path.GetExtension(aFile.FileName);
+                        if (extension != ".xls" && extension != ".xlsx")
                         {
-                            DataRow row = dt.NewRow();
-                            cityNo = Common.GetCityCodeItem(dtCode, sheet.GetRow(j).GetCell(0).ToString().Trim());//縣市代碼
-                            if (cityNo == "")
+                            throw new Exception("請選擇xls或xlsx檔案上傳");
+                        }
+
+                        IWorkbook workbook;// = new HSSFWorkbook();//创建Workbook对象
+                        workbook = new XSSFWorkbook(aFile.InputStream);
+
+                        ISheet sheet = workbook.GetSheetAt(0);//當前sheet
+
+                        //簡易判斷這份Excel是不是產業的Excel
+                        int cellsCount = sheet.GetRow(0).Cells.Count;
+                        //1.判斷表頭欄位數
+                        if (cellsCount != 5)
+                        {
+                            throw new Exception("請檢查是否為產業的匯入檔案");
+                        }
+                        //2.檢查欄位名稱
+                        if (sheet.GetRow(0).GetCell(1).ToString().Trim() != "形成群聚之產業(依工研院產科國際所群聚資料)" || sheet.GetRow(0).GetCell(2).ToString().Trim() != "營運中工廠家數")
+                        {
+                            throw new Exception("請檢查是否為產業的匯入檔案");
+                        }
+
+                        //取得當前最大版次 (+1變成現在版次)
+                        strMaxVersion = IY_DB.getMaxVersin() + 1;
+
+                        //取得代碼檔
+                        CodeTable_DB code_db = new CodeTable_DB();
+                        DataTable dtCode = code_db.getCommonCode("02");
+
+                        string cityNo = string.Empty;
+
+                        //資料從第四筆開始 最後一筆是合計不進資料庫
+                        for (int j = 3; j < sheet.PhysicalNumberOfRows - 1; j++)
+                        {
+                            if (sheet.GetRow(j).GetCell(0).ToString().Trim() != "" && sheet.GetRow(j).GetCell(0).ToString().Trim() != "全台平均")
                             {
-                                throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
+                                DataRow row = dt.NewRow();
+                                cityNo = Common.GetCityCodeItem(dtCode, sheet.GetRow(j).GetCell(0).ToString().Trim());//縣市代碼
+                                if (cityNo == "")
+                                {
+                                    throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
+                                }
+                                row["Ind_CityNo"] = cityNo;//縣市代碼
+                                row["Ind_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
+                                row["Ind_BusinessYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//形成群聚之產業(依工研院產科國際所群聚資料)-資料年度(民國年)
+                                row["Ind_Business"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//形成群聚之產業(依工研院產科國際所群聚資料)
+                                row["Ind_FactoryYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");//營運中工廠家數-資料年度(民國年)
+                                row["Ind_Factory"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//營運中工廠家數-家
+                                row["Ind_IncomeYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//工廠營業收入-資料年度(民國年)
+                                row["Ind_Income"] = sheet.GetRow(j).GetCell(3).ToString().Trim();//工廠營業收入-千元
+                                row["Ind_SalesYear"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//營利事業銷售額-資料年度(民國年)
+                                row["Ind_Sales"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//營利事業銷售額-千元
+                                row["Ind_CreateDate"] = dtNow;
+                                row["Ind_CreateID"] = LogInfo.mGuid;//建立者GUID
+                                row["Ind_CreateName"] = LogInfo.name;//建立者姓名
+                                row["Ind_Status"] = "A";
+                                row["Ind_Version"] = strMaxVersion;
+
+                                if (chkYear == "")
+                                    chkYear = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");
+
+                                dt.Rows.Add(row);
                             }
-                            row["Ind_CityNo"] = cityNo;//縣市代碼
-                            row["Ind_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
-                            row["Ind_BusinessYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//形成群聚之產業(依工研院產科國際所群聚資料)-資料年度(民國年)
-                            row["Ind_Business"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//形成群聚之產業(依工研院產科國際所群聚資料)
-                            row["Ind_FactoryYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");//營運中工廠家數-資料年度(民國年)
-                            row["Ind_Factory"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//營運中工廠家數-家
-                            row["Ind_IncomeYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//工廠營業收入-資料年度(民國年)
-                            row["Ind_Income"] = sheet.GetRow(j).GetCell(3).ToString().Trim();//工廠營業收入-千元
-                            row["Ind_SalesYear"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//營利事業銷售額-資料年度(民國年)
-                            row["Ind_Sales"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//營利事業銷售額-千元
-                            row["Ind_CreateDate"] = dtNow;
-                            row["Ind_CreateID"] = LogInfo.mGuid;//建立者GUID
-                            row["Ind_CreateName"] = LogInfo.name;//建立者姓名
-                            row["Ind_Status"] = "A";
-                            row["Ind_Version"] = strMaxVersion;
 
-                            if (chkYear == "")
-                                chkYear = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");
-
-                            dt.Rows.Add(row);
                         }
 
-                    }
-
-                    if (dt.Rows.Count > 0)
-                    {
-                        BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
-                        DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
-                        //最後再commit
-                        myTrans.Commit();
-                        if (strErrorMsg == "")
+                        if (dt.Rows.Count > 0)
                         {
-                            strErrorMsg = "上傳成功";
+                            BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
+                            DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
+                                                                 //最後再commit
+                            myTrans.Commit();
+                            if (strErrorMsg == "")
+                            {
+                                strErrorMsg = "上傳成功";
+                            }
+
                         }
-
                     }
-                }
 
+                }
+                catch (Exception ex)
+                {
+                    strErrorMsg += ex.Message;
+                    myTrans.Rollback();
+                }
+                finally
+                {
+                    oCmd.Connection.Close();
+                    oConn.Close();
+                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                strErrorMsg += ex.Message;
-                myTrans.Rollback();
-            }
-            finally
-            {
-                oCmd.Connection.Close();
-                oConn.Close();
+                strErrorMsg = "連線失敗請重新登入";
                 Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
-            }
+            }    
         }
 
         //insert 前判斷是不是同年份有資料了
@@ -221,6 +231,18 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 strErrorMsg += "產業匯入 error：" + ex.Message.ToString() + "\n";
             }
 
+        }
+
+        //判斷Token是否正確
+        private bool VeriftyToken(string clientToken)
+        {
+            if (string.IsNullOrEmpty(clientToken)) return false;
+
+            string serverToken = HttpContext.Current.Session["Token"].ToString();
+            if (clientToken.Equals(serverToken))
+                return true;
+            else
+                return false;
         }
     }
 }

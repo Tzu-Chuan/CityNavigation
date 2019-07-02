@@ -58,12 +58,18 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetMayorList.aspx",
                 data: {
-                    CityNo: $.getQueryString("city")
+                    CityNo: $.getQueryString("city"),
+                    Token: document.getElementById('InfoToken').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
                 },
                 success: function (data) {
+                    if ($(data).find("Token").length > 0) {
+                        alert("連線錯誤請重新登入");
+                        location.href = "../Handler/SignOut.aspx";
+                    }
+
                     if ($(data).find("Error").length > 0) {
                         alert($(data).find("Error").attr("Message"));
                     }
@@ -90,7 +96,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetPopulationList.aspx",
                 data: {
-                    CityNo: $.getQueryString("city")
+                    CityNo: $.getQueryString("city"),
+                    Token: document.getElementById("InfoToken").value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -119,6 +126,7 @@
 <!-- Preloader -->
 
     <div class="WrapperBody" id="WrapperBody">
+        <input type="hidden" id="InfoToken" runat="server" ClientIDMode='Static' value="">
    <div class="container margin15T" id="ContentWrapper">
 
        <div class="twocol titleLineA">

@@ -56,8 +56,8 @@
                     async: false, //在沒有返回值之前,不會執行下一步動作
                     url: "handler/UserLogin.aspx",
                     data: {
-                        acc: $("#AccTxt").val(),
-                        pwd: $("#PwdTxt").val()
+                        anb: $("#AnbTxt").val(),
+                        word: $("#WordTxt").val()
                     },
                     error: function (xhr) {
                         alert(xhr.responseText);
@@ -120,8 +120,8 @@
             <div class="container margin15T" id="ContentWrapper">
                 <div class="logcss">
                     <div style="text-align:center">
-                        <div style="margin-bottom:10px;">帳號：<input id="AccTxt" type="text" class="inputex" /></div>
-                        <div style="margin-bottom:10px;">密碼：<input id="PwdTxt" type="password" class="inputex" /></div>
+                        <div style="margin-bottom:10px;">帳號：<input id="AnbTxt" type="text" class="inputex" /></div>
+                        <div style="margin-bottom:10px;">密碼：<input id="WordTxt" type="password" class="inputex" /></div>
                         <input id="lgbtn" type="button" value="登入" class="genbtn" />
                     </div>
                 </div>

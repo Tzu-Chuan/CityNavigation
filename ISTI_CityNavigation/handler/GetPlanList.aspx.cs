@@ -26,34 +26,55 @@ namespace ISTI_CityNavigation.handler
             /// * Request["SortMethod"]: 排序方式
             ///-----------------------------------------------------
             XmlDocument xDoc = new XmlDocument();
-            try
+            //CSRF
+            string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
+            if (VeriftyToken(token))
             {
-                string City = (string.IsNullOrEmpty(Request["City"])) ? "" : Request["City"].ToString().Trim();
-                string ServiceType = (string.IsNullOrEmpty(Request["ServiceType"])) ? "" : Request["ServiceType"].ToString().Trim();
-                string PlanName = (string.IsNullOrEmpty(Request["PlanName"])) ? "" : Request["PlanName"].ToString().Trim();
-                string CompanyName = (string.IsNullOrEmpty(Request["CompanyName"])) ? "" : Request["CompanyName"].ToString().Trim();
-                string SortName = (Request["SortName"] != null) ? Request["SortName"].ToString().Trim() : "";
-                string SortMethod = (Request["SortMethod"] != null) ? Request["SortMethod"].ToString().Trim() : "-";
-                SortMethod = (SortMethod == "+") ? "asc" : "desc";
-                string SortCommand = (SortName != "") ? SortName + " " + SortMethod : "";
+                try
+                {
+                    string City = (string.IsNullOrEmpty(Request["City"])) ? "" : Request["City"].ToString().Trim();
+                    string ServiceType = (string.IsNullOrEmpty(Request["ServiceType"])) ? "" : Request["ServiceType"].ToString().Trim();
+                    string PlanName = (string.IsNullOrEmpty(Request["PlanName"])) ? "" : Request["PlanName"].ToString().Trim();
+                    string CompanyName = (string.IsNullOrEmpty(Request["CompanyName"])) ? "" : Request["CompanyName"].ToString().Trim();
+                    string SortName = (Request["SortName"] != null) ? Request["SortName"].ToString().Trim() : "";
+                    string SortMethod = (Request["SortMethod"] != null) ? Request["SortMethod"].ToString().Trim() : "-";
+                    SortMethod = (SortMethod == "+") ? "asc" : "desc";
+                    string SortCommand = (SortName != "") ? SortName + " " + SortMethod : "";
 
-                string xmlstr = string.Empty;
+                    string xmlstr = string.Empty;
 
-                cst_db._CS_HostCompany = CompanyName;
-                cst_db._CS_PlanName = PlanName;
-                cst_db._CS_ServiceType = ServiceType;
-                DataTable dt = cst_db.GetList(City, SortCommand);
+                    cst_db._CS_HostCompany = CompanyName;
+                    cst_db._CS_PlanName = PlanName;
+                    cst_db._CS_ServiceType = ServiceType;
+                    DataTable dt = cst_db.GetList(City, SortCommand);
 
-                xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
-                xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
-                xDoc.LoadXml(xmlstr);
+                    xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
+                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
+                    xDoc.LoadXml(xmlstr);
+                }
+                catch (Exception ex)
+                {
+                    xDoc = ExceptionUtil.GetExceptionDocument(ex);
+                }
+                Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
+                xDoc.Save(Response.Output);
             }
-            catch (Exception ex)
+            else
             {
-                xDoc = ExceptionUtil.GetExceptionDocument(ex);
+                xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
+                Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
+                xDoc.Save(Response.Output);
             }
-            Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-            xDoc.Save(Response.Output);
+        }
+        private bool VeriftyToken(string clientToken)
+        {
+            if (string.IsNullOrEmpty(clientToken)) return false;
+
+            string serverToken = HttpContext.Current.Session["Token"].ToString();
+            if (clientToken.Equals(serverToken))
+                return true;
+            else
+                return false;
         }
     }
 }

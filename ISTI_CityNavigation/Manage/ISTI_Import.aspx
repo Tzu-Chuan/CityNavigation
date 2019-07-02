@@ -59,14 +59,21 @@
                     var iframe = $('<iframe name="postiframe" id="postiframe" style="display: none" />');
                     var form = $("form")[0];
                     var strType = document.createElement('input');
-
+                    
                     strType.setAttribute("id", "selType");
                     strType.setAttribute("name", "selType");
                     strType.setAttribute("value", $("#selType").val());
                     strType.setAttribute("style", "display: none");
 
+                    var srtToken = document.createElement('input');
+                    srtToken.setAttribute("id", "mToken");
+                    srtToken.setAttribute("name", "mToken");
+                    srtToken.setAttribute("value", document.getElementById('mToken').value);
+                    srtToken.setAttribute("type", "hidden");
+
                     form.appendChild(iframe[0]);
                     form.appendChild(strType);
+                    form.appendChild(srtToken);
 
                     form.setAttribute("action", "" + strpost + "");
                     form.setAttribute("method", "post");
@@ -81,10 +88,15 @@
             });
         });
 
-
-
         function feedbackFun(msg) {
-            alert(msg);
+            if (msg == "上傳成功") {
+                alert(msg);
+                location.reload();
+            }
+            else {
+                alert(msg);
+                location.href = "../../Handler/SignOut.aspx";
+            }
         }
     </script>
 </asp:Content>
@@ -115,5 +127,6 @@
     </div>
     <div style="margin-top:10px;">
         選擇檔案：<input type="file" id="importFile" name="importFile" class="inputex" />&nbsp;<input type="button" id="btnUpload" class="genbtn" value="上傳" />
+        <input type="hidden" id="mToken" name="mToken" runat="server" ClientIDMode='Static' value="">
     </div>
 </asp:Content>

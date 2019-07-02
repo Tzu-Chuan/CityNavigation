@@ -23,161 +23,170 @@ namespace ISTI_CityNavigation.Manage.mHandler
         DateTime dtNow = DateTime.Now;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //建立共用connection & transaction
-            SqlConnection oConn = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
-            oConn.Open();
-            SqlCommand oCmd = new SqlCommand();
-            oCmd.Connection = oConn;
-            SqlTransaction myTrans = oConn.BeginTransaction();
-            oCmd.Transaction = myTrans;
-
-            //建立DataTable Bulk Copy用
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Fa_CityNo", typeof(string));
-            dt.Columns.Add("Fa_CityName", typeof(string));
-            dt.Columns.Add("Fa_FarmingLossYear", typeof(string));
-            dt.Columns.Add("Fa_FarmingLoss", typeof(string));
-            dt.Columns.Add("Fa_AnimalLossYear", typeof(string));
-            dt.Columns.Add("Fa_AnimalLoss", typeof(string));
-            dt.Columns.Add("Fa_FishLossYear", typeof(string));
-            dt.Columns.Add("Fa_FishLoss", typeof(string));
-            dt.Columns.Add("Fa_ForestLossYear", typeof(string));
-            dt.Columns.Add("Fa_ForestLoss", typeof(string));
-            dt.Columns.Add("Fa_AllLossYear", typeof(string));
-            dt.Columns.Add("Fa_AllLoss", typeof(string));
-            dt.Columns.Add("Fa_FacilityLossYear", typeof(string));
-            dt.Columns.Add("Fa_FacilityLoss", typeof(string));
-            dt.Columns.Add("Fa_FarmingOutputValueYear", typeof(string));
-            dt.Columns.Add("Fa_FarmingOutputValue", typeof(string));
-            dt.Columns.Add("Fa_FarmingOutputRateYearDesc", typeof(string));
-            dt.Columns.Add("Fa_FarmingOutputRate", typeof(string));
-            dt.Columns.Add("Fa_FarmerYear", typeof(string));
-            dt.Columns.Add("Fa_Farmer", typeof(string));
-            dt.Columns.Add("Fa_FarmEmploymentOutputValueYear", typeof(string));
-            dt.Columns.Add("Fa_FarmEmploymentOutputValue", typeof(string));
-            dt.Columns.Add("Fa_CreateDate", typeof(DateTime));
-            dt.Columns.Add("Fa_CreateID", typeof(string));
-            dt.Columns.Add("Fa_CreateName", typeof(string));
-            dt.Columns.Add("Fa_Status", typeof(string));
-            dt.Columns.Add("Fa_Version", typeof(int));
-
-            try
+            string token = (string.IsNullOrEmpty(Request.Form["mToken"])) ? "" : Request.Form["mToken"].ToString().Trim();
+            if (VeriftyToken(token))
             {
-                HttpFileCollection uploadFiles = Request.Files;//檔案集合
-                HttpPostedFile aFile = uploadFiles[0];
-                //判斷有沒有檔案
-                if (uploadFiles.Count < 1 || aFile.FileName == "")
+                //建立共用connection & transaction
+                SqlConnection oConn = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"].ToString());
+                oConn.Open();
+                SqlCommand oCmd = new SqlCommand();
+                oCmd.Connection = oConn;
+                SqlTransaction myTrans = oConn.BeginTransaction();
+                oCmd.Transaction = myTrans;
+
+                //建立DataTable Bulk Copy用
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Fa_CityNo", typeof(string));
+                dt.Columns.Add("Fa_CityName", typeof(string));
+                dt.Columns.Add("Fa_FarmingLossYear", typeof(string));
+                dt.Columns.Add("Fa_FarmingLoss", typeof(string));
+                dt.Columns.Add("Fa_AnimalLossYear", typeof(string));
+                dt.Columns.Add("Fa_AnimalLoss", typeof(string));
+                dt.Columns.Add("Fa_FishLossYear", typeof(string));
+                dt.Columns.Add("Fa_FishLoss", typeof(string));
+                dt.Columns.Add("Fa_ForestLossYear", typeof(string));
+                dt.Columns.Add("Fa_ForestLoss", typeof(string));
+                dt.Columns.Add("Fa_AllLossYear", typeof(string));
+                dt.Columns.Add("Fa_AllLoss", typeof(string));
+                dt.Columns.Add("Fa_FacilityLossYear", typeof(string));
+                dt.Columns.Add("Fa_FacilityLoss", typeof(string));
+                dt.Columns.Add("Fa_FarmingOutputValueYear", typeof(string));
+                dt.Columns.Add("Fa_FarmingOutputValue", typeof(string));
+                dt.Columns.Add("Fa_FarmingOutputRateYearDesc", typeof(string));
+                dt.Columns.Add("Fa_FarmingOutputRate", typeof(string));
+                dt.Columns.Add("Fa_FarmerYear", typeof(string));
+                dt.Columns.Add("Fa_Farmer", typeof(string));
+                dt.Columns.Add("Fa_FarmEmploymentOutputValueYear", typeof(string));
+                dt.Columns.Add("Fa_FarmEmploymentOutputValue", typeof(string));
+                dt.Columns.Add("Fa_CreateDate", typeof(DateTime));
+                dt.Columns.Add("Fa_CreateID", typeof(string));
+                dt.Columns.Add("Fa_CreateName", typeof(string));
+                dt.Columns.Add("Fa_Status", typeof(string));
+                dt.Columns.Add("Fa_Version", typeof(int));
+
+                try
                 {
-                    throw new Exception("請選擇檔案");
-                }
-
-                //有檔案繼續往下做
-                if (uploadFiles.Count > 0)
-                {
-                    string extension = (System.IO.Path.GetExtension(aFile.FileName) == "") ? "" : System.IO.Path.GetExtension(aFile.FileName);
-                    if (extension != ".xls" && extension != ".xlsx")
+                    HttpFileCollection uploadFiles = Request.Files;//檔案集合
+                    HttpPostedFile aFile = uploadFiles[0];
+                    //判斷有沒有檔案
+                    if (uploadFiles.Count < 1 || aFile.FileName == "")
                     {
-                        throw new Exception("請選擇xls或xlsx檔案上傳");
+                        throw new Exception("請選擇檔案");
                     }
 
-                    IWorkbook workbook;// = new HSSFWorkbook();//创建Workbook对象
-                    workbook = new XSSFWorkbook(aFile.InputStream);
-
-                    ISheet sheet = workbook.GetSheetAt(0);//當前sheet
-
-                    //簡易判斷這份Excel是不是農業的Excel
-                    int cellsCount = sheet.GetRow(0).Cells.Count;
-                    //1.判斷表頭欄位數
-                    if (cellsCount != 11)
+                    //有檔案繼續往下做
+                    if (uploadFiles.Count > 0)
                     {
-                        throw new Exception("請檢查是否為農業的匯入檔案");
-                    }
-                    //2.檢查欄位名稱
-                    if (sheet.GetRow(0).GetCell(1).ToString().Trim() != "臺閩地區農業天然災害產物損失" || sheet.GetRow(0).GetCell(2).ToString().Trim() != "天然災害畜牧業產物損失")
-                    {
-                        throw new Exception("請檢查是否為農業的匯入檔案");
-                    }
-
-                    //取得當前最大版次 (+1變成現在版次)
-                    strMaxVersion = FA_DB.getMaxVersin() + 1;
-
-                    //取得代碼檔
-                    CodeTable_DB code_db = new CodeTable_DB();
-                    DataTable dtCode = code_db.getCommonCode("02");
-
-                    string cityNo = string.Empty;
-
-                    //資料從第四筆開始 最後一筆是合計不進資料庫
-                    for (int j = 3; j < sheet.PhysicalNumberOfRows - 1; j++)
-                    {
-                        if (sheet.GetRow(j).GetCell(0).ToString().Trim() != "" && sheet.GetRow(j).GetCell(0).ToString().Trim() != "全台平均")
+                        string extension = (System.IO.Path.GetExtension(aFile.FileName) == "") ? "" : System.IO.Path.GetExtension(aFile.FileName);
+                        if (extension != ".xls" && extension != ".xlsx")
                         {
-                            DataRow row = dt.NewRow();
-                            cityNo = Common.GetCityCodeItem(dtCode, sheet.GetRow(j).GetCell(0).ToString().Trim());//縣市代碼
-                            if (cityNo == "")
+                            throw new Exception("請選擇xls或xlsx檔案上傳");
+                        }
+
+                        IWorkbook workbook;// = new HSSFWorkbook();//创建Workbook对象
+                        workbook = new XSSFWorkbook(aFile.InputStream);
+
+                        ISheet sheet = workbook.GetSheetAt(0);//當前sheet
+
+                        //簡易判斷這份Excel是不是農業的Excel
+                        int cellsCount = sheet.GetRow(0).Cells.Count;
+                        //1.判斷表頭欄位數
+                        if (cellsCount != 11)
+                        {
+                            throw new Exception("請檢查是否為農業的匯入檔案");
+                        }
+                        //2.檢查欄位名稱
+                        if (sheet.GetRow(0).GetCell(1).ToString().Trim() != "臺閩地區農業天然災害產物損失" || sheet.GetRow(0).GetCell(2).ToString().Trim() != "天然災害畜牧業產物損失")
+                        {
+                            throw new Exception("請檢查是否為農業的匯入檔案");
+                        }
+
+                        //取得當前最大版次 (+1變成現在版次)
+                        strMaxVersion = FA_DB.getMaxVersin() + 1;
+
+                        //取得代碼檔
+                        CodeTable_DB code_db = new CodeTable_DB();
+                        DataTable dtCode = code_db.getCommonCode("02");
+
+                        string cityNo = string.Empty;
+
+                        //資料從第四筆開始 最後一筆是合計不進資料庫
+                        for (int j = 3; j < sheet.PhysicalNumberOfRows - 1; j++)
+                        {
+                            if (sheet.GetRow(j).GetCell(0).ToString().Trim() != "" && sheet.GetRow(j).GetCell(0).ToString().Trim() != "全台平均")
                             {
-                                throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
+                                DataRow row = dt.NewRow();
+                                cityNo = Common.GetCityCodeItem(dtCode, sheet.GetRow(j).GetCell(0).ToString().Trim());//縣市代碼
+                                if (cityNo == "")
+                                {
+                                    throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
+                                }
+                                row["Fa_CityNo"] = cityNo;//縣市代碼
+                                row["Fa_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
+                                row["Fa_FarmingLossYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//臺閩地區農業天然災害產物損失-資料年度(民國年)
+                                row["Fa_FarmingLoss"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//臺閩地區農業天然災害產物損失-千元
+                                row["Fa_AnimalLossYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");//天然災害畜牧業產物損失-資料年度(民國年)
+                                row["Fa_AnimalLoss"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//天然災害畜牧業產物損失-千元
+                                row["Fa_FishLossYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//天然災害漁業產物損失-資料年度(民國年)
+                                row["Fa_FishLoss"] = sheet.GetRow(j).GetCell(3).ToString().Trim();//天然災害漁業產物損失-千元
+                                row["Fa_ForestLossYear"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//臺閩地區林業天然災害產物損失-資料年度(民國年)
+                                row["Fa_ForestLoss"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//臺閩地區林業天然災害產物損失-千元
+                                row["Fa_AllLossYear"] = sheet.GetRow(1).GetCell(5).ToString().Trim().Replace("年", "");//農林漁牧天然災害產物損失-資料年度(民國年)
+                                row["Fa_AllLoss"] = sheet.GetRow(j).GetCell(5).ToString().Trim();//農林漁牧天然災害產物損失-千元
+                                row["Fa_FacilityLossYear"] = sheet.GetRow(1).GetCell(6).ToString().Trim().Replace("年", "");//農林漁牧天然災害設施(備)損失-資料年度(民國年)
+                                row["Fa_FacilityLoss"] = sheet.GetRow(j).GetCell(6).ToString().Trim();//農林漁牧天然災害設施(備)損失-千元
+                                row["Fa_FarmingOutputValueYear"] = sheet.GetRow(1).GetCell(7).ToString().Trim().Replace("年", "");//農業產值-資料年度(民國年)
+                                row["Fa_FarmingOutputValue"] = sheet.GetRow(j).GetCell(7).ToString().Trim();//農業產值-千元
+                                row["Fa_FarmingOutputRateYearDesc"] = sheet.GetRow(1).GetCell(8).ToString().Trim().Replace("年", "");//農業產值成長率-資料年度(民國年)
+                                row["Fa_FarmingOutputRate"] = sheet.GetRow(j).GetCell(8).ToString().Trim();//農業產值成長率-%
+                                row["Fa_FarmerYear"] = sheet.GetRow(1).GetCell(9).ToString().Trim().Trim().Replace("年", "");//農戶人口數-資料年度(民國年)
+                                row["Fa_Farmer"] = sheet.GetRow(j).GetCell(9).ToString().Trim();//農戶人口數-人
+                                row["Fa_FarmEmploymentOutputValueYear"] = sheet.GetRow(1).GetCell(10).ToString().Trim().Replace("年", "");//平均農業從業人口產值-資料年度(民國年)
+                                row["Fa_FarmEmploymentOutputValue"] = sheet.GetRow(j).GetCell(10).ToString().Trim();//平均農業從業人口產值-千元
+                                row["Fa_CreateDate"] = dtNow;
+                                row["Fa_CreateID"] = LogInfo.mGuid;//上傳者GUID
+                                row["Fa_CreateName"] = LogInfo.name;//上傳者姓名
+                                row["Fa_Status"] = "A";
+                                row["Fa_Version"] = strMaxVersion;
+
+                                if (chkYear == "")
+                                    chkYear = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");
+
+                                dt.Rows.Add(row);
                             }
-                            row["Fa_CityNo"] = cityNo;//縣市代碼
-                            row["Fa_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
-                            row["Fa_FarmingLossYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//臺閩地區農業天然災害產物損失-資料年度(民國年)
-                            row["Fa_FarmingLoss"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//臺閩地區農業天然災害產物損失-千元
-                            row["Fa_AnimalLossYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");//天然災害畜牧業產物損失-資料年度(民國年)
-                            row["Fa_AnimalLoss"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//天然災害畜牧業產物損失-千元
-                            row["Fa_FishLossYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//天然災害漁業產物損失-資料年度(民國年)
-                            row["Fa_FishLoss"] = sheet.GetRow(j).GetCell(3).ToString().Trim();//天然災害漁業產物損失-千元
-                            row["Fa_ForestLossYear"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//臺閩地區林業天然災害產物損失-資料年度(民國年)
-                            row["Fa_ForestLoss"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//臺閩地區林業天然災害產物損失-千元
-                            row["Fa_AllLossYear"] = sheet.GetRow(1).GetCell(5).ToString().Trim().Replace("年", "");//農林漁牧天然災害產物損失-資料年度(民國年)
-                            row["Fa_AllLoss"] = sheet.GetRow(j).GetCell(5).ToString().Trim();//農林漁牧天然災害產物損失-千元
-                            row["Fa_FacilityLossYear"] = sheet.GetRow(1).GetCell(6).ToString().Trim().Replace("年", "");//農林漁牧天然災害設施(備)損失-資料年度(民國年)
-                            row["Fa_FacilityLoss"] = sheet.GetRow(j).GetCell(6).ToString().Trim();//農林漁牧天然災害設施(備)損失-千元
-                            row["Fa_FarmingOutputValueYear"] = sheet.GetRow(1).GetCell(7).ToString().Trim().Replace("年", "");//農業產值-資料年度(民國年)
-                            row["Fa_FarmingOutputValue"] = sheet.GetRow(j).GetCell(7).ToString().Trim();//農業產值-千元
-                            row["Fa_FarmingOutputRateYearDesc"] = sheet.GetRow(1).GetCell(8).ToString().Trim().Replace("年", "");//農業產值成長率-資料年度(民國年)
-                            row["Fa_FarmingOutputRate"] = sheet.GetRow(j).GetCell(8).ToString().Trim();//農業產值成長率-%
-                            row["Fa_FarmerYear"] = sheet.GetRow(1).GetCell(9).ToString().Trim().Trim().Replace("年", "");//農戶人口數-資料年度(民國年)
-                            row["Fa_Farmer"] = sheet.GetRow(j).GetCell(9).ToString().Trim();//農戶人口數-人
-                            row["Fa_FarmEmploymentOutputValueYear"] = sheet.GetRow(1).GetCell(10).ToString().Trim().Replace("年", "");//平均農業從業人口產值-資料年度(民國年)
-                            row["Fa_FarmEmploymentOutputValue"] = sheet.GetRow(j).GetCell(10).ToString().Trim();//平均農業從業人口產值-千元
-                            row["Fa_CreateDate"] = dtNow;
-                            row["Fa_CreateID"] = LogInfo.mGuid;//上傳者GUID
-                            row["Fa_CreateName"] = LogInfo.name;//上傳者姓名
-                            row["Fa_Status"] = "A";
-                            row["Fa_Version"] = strMaxVersion;
 
-                            if (chkYear == "")
-                                chkYear = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");
-
-                            dt.Rows.Add(row);
                         }
 
-                    }
-
-                    if (dt.Rows.Count > 0)
-                    {
-                        BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
-                        DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
-                        //最後再commit
-                        myTrans.Commit();
-                        if (strErrorMsg == "")
+                        if (dt.Rows.Count > 0)
                         {
-                            strErrorMsg = "上傳成功";
+                            BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
+                            DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
+                                                                 //最後再commit
+                            myTrans.Commit();
+                            if (strErrorMsg == "")
+                            {
+                                strErrorMsg = "上傳成功";
+                            }
+
                         }
-
                     }
-                }
 
+                }
+                catch (Exception ex)
+                {
+                    strErrorMsg += ex.Message;
+                    myTrans.Rollback();
+                }
+                finally
+                {
+                    oCmd.Connection.Close();
+                    oConn.Close();
+                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                strErrorMsg += ex.Message;
-                myTrans.Rollback();
-            }
-            finally
-            {
-                oCmd.Connection.Close();
-                oConn.Close();
+                strErrorMsg = "連線失敗請重新登入";
                 Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
             }
         }
@@ -257,6 +266,18 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 strErrorMsg += "農業匯入 error：" + ex.Message.ToString() + "\n";
             }
 
+        }
+
+        //判斷Token是否正確
+        private bool VeriftyToken(string clientToken)
+        {
+            if (string.IsNullOrEmpty(clientToken)) return false;
+
+            string serverToken = HttpContext.Current.Session["Token"].ToString();
+            if (clientToken.Equals(serverToken))
+                return true;
+            else
+                return false;
         }
     }
 }

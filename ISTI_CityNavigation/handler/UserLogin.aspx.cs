@@ -27,10 +27,10 @@ namespace ISTI_CityNavigation.handler
             XmlDocument xDoc = new XmlDocument();
             try
             {
-                string acc = (string.IsNullOrEmpty(Request.Form["acc"])) ? "" : Request.Form["acc"].ToString().Trim();
-                string pw = (string.IsNullOrEmpty(Request.Form["pwd"])) ? "" : Request.Form["pwd"].ToString().Trim();
+                string ab = (string.IsNullOrEmpty(Request.Form["anb"])) ? "" : Request.Form["anb"].ToString().Trim();
+                string wo = (string.IsNullOrEmpty(Request.Form["word"])) ? "" : Request.Form["word"].ToString().Trim();
 
-                AccountInfo accInfo = new Account().ExecLogon(acc, Common.sha1en(pw));
+                AccountInfo accInfo = new Account().ExecLogon(ab, Common.sha1en(wo));
                 string xmlstr = string.Empty;
                 if (accInfo != null)
                 {

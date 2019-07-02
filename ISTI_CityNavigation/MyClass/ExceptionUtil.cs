@@ -55,4 +55,19 @@ public class ExceptionUtil
 
         return result;
     }
+
+    public static XmlDocument GetTokenErrorMassageDocument()
+    {
+        ///---------------------------------------------------------------------------
+        /// 作    者: Vincent
+        /// 功    能: 把錯誤訊息封裝為 XmlDocument
+        /// 說    明: 
+        ///---------------------------------------------------------------------------
+        XmlDocument xDoc = new XmlDocument();
+        xDoc.LoadXml(@"<?xml version='1.0' encoding='utf-8'?><root />");
+        XmlElement xNode = xDoc.CreateElement("Token");
+        xNode.SetAttribute("Message", "TokenFail");
+        xDoc.DocumentElement.AppendChild(xNode);
+        return xDoc;
+    }
 }
