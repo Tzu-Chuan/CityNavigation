@@ -14,36 +14,36 @@ namespace ISTI_CityNavigation
         Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
-            hid_token.Value = com.GenToken();
+            //hid_token.Value = com.GenToken();
             if (LogInfo.mGuid != "")
                 Response.Redirect("~/WebPage/CityInfo.aspx");
         }
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            if (com.VeriftyToken(hid_token.Value))
+            //if (com.VeriftyToken(hid_token.Value))
+            //{
+            string ab = AnbTxt.Value.Trim();
+            string wo = WordTxt.Value.Trim();
+            string strErrorMsg = "";
+
+            AccountInfo accInfo = new Account().ExecLogon(ab, Common.sha1en(wo));
+            if (accInfo != null)
             {
-                string ab = AnbTxt.Value.Trim();
-                string wo = WordTxt.Value.Trim();
-                string strErrorMsg = "";
-
-                AccountInfo accInfo = new Account().ExecLogon(ab, Common.sha1en(wo));
-                if (accInfo != null)
-                {
-                    Response.Redirect("~/WebPage/CityInfo.aspx");
-                }
-                else
-                {
-                    strErrorMsg = "帳號密碼有誤";
-                    JavaScript.AlertMessage(this.Page, strErrorMsg);
-                }
+                Response.Redirect("~/WebPage/CityInfo.aspx");
             }
+            else
+            {
+                strErrorMsg = "帳號密碼有誤";
+                JavaScript.AlertMessage(this.Page, strErrorMsg);
+            }
+            //}
         }
 
-        protected void Page_Init(object sender, EventArgs e)
-        {
-            ViewStateUserKey = User.Identity.Name;
-        }
+        //protected void Page_Init(object sender, EventArgs e)
+        //{
+        //    ViewStateUserKey = User.Identity.Name;
+        //}
 
     }
 }
