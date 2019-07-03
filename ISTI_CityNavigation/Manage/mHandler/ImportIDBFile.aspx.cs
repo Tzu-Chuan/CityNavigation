@@ -23,6 +23,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
         CityPlanTable_DB cpt_db = new CityPlanTable_DB();
         CodeTable_DB ct_db = new CodeTable_DB();
         string err = string.Empty;
+        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -48,28 +49,36 @@ namespace ISTI_CityNavigation.Manage.mHandler
             oCmd.Transaction = myTrans;
             try
             {
-                HttpFileCollection uploadFiles = Request.Files;//檔案集合
-                HttpPostedFile aFile = uploadFiles[0];
+                string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
+                if (com.VeriftyToken(token))
+                {
+                    HttpFileCollection uploadFiles = Request.Files;//檔案集合
+                    HttpPostedFile aFile = uploadFiles[0];
 
-                IWorkbook workbook = new XSSFWorkbook(aFile.InputStream);
+                    IWorkbook workbook = new XSSFWorkbook(aFile.InputStream);
 
-                /// 預計經費執行情形
-                DoCitySubMoney(workbook, oConn, myTrans);
-                /// 補助經費縣市分析
-                DoBudgetExecution(workbook, oConn, myTrans);
-                /// 補助經費服務主軸分析
-                DoServiceSubMoney(workbook, oConn, myTrans);
-                /// 補助經費計畫類別分析
-                DoCategorySubMoney(workbook, oConn, myTrans);
-                /// 縣市總表
-                DoCitySummaryTable(workbook, oConn, myTrans);
-                /// 各縣市計畫列表
-                DoCityPlanTable(workbook, oConn, myTrans);
+                    /// 預計經費執行情形
+                    DoCitySubMoney(workbook, oConn, myTrans);
+                    /// 補助經費縣市分析
+                    DoBudgetExecution(workbook, oConn, myTrans);
+                    /// 補助經費服務主軸分析
+                    DoServiceSubMoney(workbook, oConn, myTrans);
+                    /// 補助經費計畫類別分析
+                    DoCategorySubMoney(workbook, oConn, myTrans);
+                    /// 縣市總表
+                    DoCitySummaryTable(workbook, oConn, myTrans);
+                    /// 各縣市計畫列表
+                    DoCityPlanTable(workbook, oConn, myTrans);
 
-                myTrans.Commit();
-                oCmd.Connection.Close();
-                oConn.Close();
-                Response.Write("<script type='text/JavaScript'>parent.feedbackFun('上傳成功');</script>");
+                    myTrans.Commit();
+                    oCmd.Connection.Close();
+                    oConn.Close();
+                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('上傳成功');</script>");
+                }
+                else
+                {
+                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('驗證失敗');</script>");
+                }
             }
             catch (Exception ex)
             {
@@ -350,7 +359,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     dt.Rows.Add(row);
                 }
             }
-           
+
             if (dt.Rows.Count > 0)
             {
                 cpt_db.BeforeBulkCopy(oConn, myTrans); // update old data set status='D'

@@ -12,6 +12,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
     public partial class GetMemberInfo : System.Web.UI.Page
     {
         Member_DB m_db = new Member_DB();
+        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -23,15 +24,24 @@ namespace ISTI_CityNavigation.Manage.mHandler
             try
             {
                 string id = (Request["id"] != null) ? Request["id"].ToString().Trim() : "";
+                string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
+                if (com.VeriftyToken(token))
+                {
+                    string xmlstr = string.Empty;
 
-                string xmlstr = string.Empty;
+                    m_db._M_ID = id;
+                    DataTable dt = m_db.getMemberById();
 
-                m_db._M_ID = id;
-                DataTable dt = m_db.getMemberById();
-
-                xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
-                xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
-                xDoc.LoadXml(xmlstr);
+                    xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
+                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
+                    xDoc.LoadXml(xmlstr);
+                }
+                else
+                {
+                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
+                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
+                    xDoc.Save(Response.Output);
+                }
             }
             catch (Exception ex)
             {

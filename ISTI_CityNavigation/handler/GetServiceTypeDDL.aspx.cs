@@ -12,6 +12,7 @@ namespace ISTI_CityNavigation.handler
     public partial class GetServiceTypeDDL : System.Web.UI.Page
     {
         CitySummaryTable_DB cst_db = new CitySummaryTable_DB();
+        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -22,12 +23,21 @@ namespace ISTI_CityNavigation.handler
             try
             {
                 string xmlstr = string.Empty;
+                string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
+                if (com.VeriftyToken(token))
+                {
+                    DataTable dt = cst_db.getPlanType_ddl();
 
-                DataTable dt = cst_db.getPlanType_ddl();
-
-                xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
-                xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
-                xDoc.LoadXml(xmlstr);
+                    xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
+                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
+                    xDoc.LoadXml(xmlstr);
+                }
+                else
+                {
+                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
+                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
+                    xDoc.Save(Response.Output);
+                }
             }
             catch (Exception ex)
             {

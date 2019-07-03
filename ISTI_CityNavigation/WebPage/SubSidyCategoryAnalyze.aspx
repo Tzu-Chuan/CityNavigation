@@ -10,6 +10,9 @@
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetCategorySubMoney.aspx",
+                data: {
+                    Token: document.getElementById('<%=hfToken.ClientID%>').value
+                },
                 error: function (xhr) {
                     alert(xhr.responseText);
                 },
@@ -34,7 +37,7 @@
                                 tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_Subsidy").text().trim()).toFixed(1)) + '</td>';
                                 tabstr += '<td nowrap align="right">' + $.FormatThousandGroup(Number($(this).children("C_TotalMoney").text().trim()).toFixed(1)) + '</td>';
                                 tabstr += '<td nowrap align="right">' + Number((parseFloat($(this).children("C_SubsidyRatio").text().trim()) * 100).toFixed(1)) + '%</td>';
-                                tabstr += '<td nowrap align="right">' +  Number((parseFloat($(this).children("C_TotalMoneyRatio").text().trim()) * 100).toFixed(1)) + '%</td>';
+                                tabstr += '<td nowrap align="right">' + Number((parseFloat($(this).children("C_TotalMoneyRatio").text().trim()) * 100).toFixed(1)) + '%</td>';
                                 tabstr += '</tr>';
                             });
                             $("#tablist tbody").empty();
@@ -78,4 +81,5 @@
             <tbody></tbody>
         </table>
     </div>
+    <input type="hidden" id="hfToken" runat="server" />
 </asp:Content>

@@ -139,7 +139,7 @@ $(document).ready(MainFunction);//主程式:所有JS程式放在此
 	function PreloadFunction(){
 		$('#status').fadeOut(); // will first fade out the loading animation
 		$('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
-		$('body').delay(350);
+		$('body').delay(50);
 		animateFunction();//畫面讀取完畢後直接執行的動畫
 	}//預載動畫END
 	

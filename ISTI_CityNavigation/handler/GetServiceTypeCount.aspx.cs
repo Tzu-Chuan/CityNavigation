@@ -12,6 +12,7 @@ namespace ISTI_CityNavigation.handler
     public partial class GetServiceTypeCount : System.Web.UI.Page
     {
         CityPlanTable_DB cpt_db = new CityPlanTable_DB();
+        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -23,9 +24,16 @@ namespace ISTI_CityNavigation.handler
             try
             {
                 string City = (string.IsNullOrEmpty(Request["City"])) ? "" : Request["City"].ToString().Trim();
-                
-                DataTable dt = cpt_db.GetServiceTypeCount(City);
-                JsonStr = JsonConvert.SerializeObject(dt, Formatting.Indented);
+                string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
+                if (com.VeriftyToken(token))
+                {
+                    DataTable dt = cpt_db.GetServiceTypeCount(City);
+                    JsonStr = JsonConvert.SerializeObject(dt, Formatting.Indented);
+                }
+                else
+                {
+                    JsonStr = JsonConvert.SerializeObject(ExceptionUtil.GetErrorMassageJson("error"));
+                }
             }
             catch (Exception ex)
             {

@@ -13,8 +13,12 @@ namespace ISTI_CityNavigation.WebPage
         CodeTable_DB ct_db = new CodeTable_DB();
         public string CityName;
         public string CityTableClass;
+        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
+            //驗證token 資安用
+            InfoToken.Value = com.GenToken();
+
             if (!string.IsNullOrEmpty(Request.QueryString["city"]))
             {
                 /// 查詢縣市代碼

@@ -12,6 +12,7 @@ namespace ISTI_CityNavigation.handler
     public partial class GetDDL : System.Web.UI.Page
     {
         CodeTable_DB ct_db = new CodeTable_DB();
+        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -25,14 +26,23 @@ namespace ISTI_CityNavigation.handler
             {
                 string group = (string.IsNullOrEmpty(Request["group"])) ? "" : Request["group"].ToString().Trim();
                 string item = (string.IsNullOrEmpty(Request["item"])) ? "" : Request["item"].ToString().Trim();
+                string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
+                if (com.VeriftyToken(token))
+                {
+                    ct_db._C_Item = item;
+                    DataTable dt = ct_db.getCommonCode(group);
 
-                ct_db._C_Item = item;
-                DataTable dt = ct_db.getCommonCode(group);
-
-                string xmlstr = string.Empty;
-                xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
-                xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
-                xDoc.LoadXml(xmlstr);
+                    string xmlstr = string.Empty;
+                    xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
+                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
+                    xDoc.LoadXml(xmlstr);
+                }
+                else
+                {
+                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
+                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
+                    xDoc.Save(Response.Output);
+                }
             }
             catch (Exception ex)
             {

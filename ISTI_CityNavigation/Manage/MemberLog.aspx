@@ -27,10 +27,14 @@
         });// end js
 
         function getData(p) {
+            var Token_v = document.getElementById('<%=InfoToken.ClientID%>').value;
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "mHandler/GetMemberLogList.aspx",
+                data: {
+                    Token: Token_v
+                },
                 data: {
                     PageNo: p,
                     PageSize: Page.Option.PageSize,
@@ -95,4 +99,6 @@
         </table>
         <div id="pageblock" class="margin20T textcenter"></div>
     </div>
+
+    <input type="hidden" id="InfoToken" runat="server" >
 </asp:Content>

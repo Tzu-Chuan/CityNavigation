@@ -10,6 +10,9 @@
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetBudgetExecution.aspx",
+                data: {
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
+                },
                 error: function (xhr) {
                     alert(xhr.responseText);
                 },
@@ -88,4 +91,6 @@
        <div id="TabDiv" class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal margin20T margin10B">
            <table id="tablist" border="0" cellspacing="0" cellpadding="0" width="100%"></table>
        </div>
+
+    <input type="hidden" id="InfoToken" runat="server" >
 </asp:Content>

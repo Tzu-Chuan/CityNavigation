@@ -309,6 +309,47 @@ public class Common
     }
     #endregion
 
+    /// <summary>
+    /// 驗證Token
+    /// </summary>
+    /// <param name="clientToken"></param>
+    /// <returns></returns>
+    public bool VeriftyToken(string clientToken)
+    {
+        if (string.IsNullOrEmpty(clientToken)) return false;
+
+        string serverToken = HttpContext.Current.Session["Token"].ToString();
+        if (clientToken.Equals(serverToken))
+            return true;
+        else
+            return false;
+    }
+
+
+    /// <summary>
+    /// 產生Token 並設定
+    /// </summary>
+    /// <returns></returns>
+    public string  GenToken()
+    {
+        string token = CreateToken();        
+        SaveTokenToServer(token);
+        return token;
+    }
+
+    private string CreateToken()
+    {
+        string tokenKey = HttpContext.Current.Session.SessionID + DateTime.Now.Ticks.ToString();
+        System.Security.Cryptography.MD5CryptoServiceProvider md5 =
+                new System.Security.Cryptography.MD5CryptoServiceProvider();
+        byte[] b = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(tokenKey));
+        return BitConverter.ToString(b).Replace("-", string.Empty);
+    }
+
+    private void SaveTokenToServer(string pToken)
+    {
+        HttpContext.Current.Session["Token"] = pToken;
+    }
 }
 
 

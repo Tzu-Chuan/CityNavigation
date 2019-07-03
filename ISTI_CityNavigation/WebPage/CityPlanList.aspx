@@ -183,6 +183,9 @@
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetServiceTypeDDL.aspx",
+                data: {
+                    Token: document.getElementById('hfToken').value
+                },
                 error: function (xhr) {
                     alert(xhr.responseText);
                 },
@@ -211,7 +214,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetDDL.aspx",
                 data: {
-                    Group: gno
+                    Group: gno,
+                    Token: document.getElementById('hfToken').value
                 },
                 error: function (xhr) {
                     alert("Error " + xhr.status);

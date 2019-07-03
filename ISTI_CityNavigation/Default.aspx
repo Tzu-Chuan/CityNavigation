@@ -71,42 +71,7 @@
     <!-- equal height解決bootstrap grid layout內容不等高時排版問題 -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.scrollbar.min.js") %>"></script>
     <!-- scrollbar美化 -->
-    <%--<script type="text/javascript">--%>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(document).on("keyup", "body", function (e) {
-                if (e.keyCode == 13)
-                    $("#lgbtn").click();
-            });
 
-            $(document).on("click", "#lgbtn", function () {
-                document.getElementById("AnbHid").value = $("#AnbTxt").val();
-                document.getElementById("WordHid").value = $("#WordTxt").val();
-                document.getElementById("<%= this.lbtnDelete.ClientID %>").click();
-                //$.ajax({
-                //    type: "POST",
-                //    async: false, //在沒有返回值之前,不會執行下一步動作
-                //    url: "handler/UserLogin.aspx",
-                //    data: {
-                //        anb: $("#AnbTxt").val(),
-                //        word: $("#WordTxt").val()
-                //    },
-                //    error: function (xhr) {
-                //        alert(xhr.responseText);
-                //    },
-                //    success: function (data) {
-                //        if ($(data).find("Error").length > 0) {
-                //            alert($(data).find("Error").attr("Message"));
-                //        }
-                //        else {
-                //            location.href = $("Redirect", data).text();
-                //        }
-                //    }
-                //});
-            });
-        });// end js
-       
-    </script>
     <style>
         .logcss {
             height: 200px;
@@ -153,19 +118,18 @@
                     <!-- container -->
                 </div>
                 <!-- WrapperHeader -->
-
+                <asp:Panel DefaultButton="btn" ID="pan" runat="server">
                 <div class="container margin15T" id="ContentWrapper">
                     <div class="logcss">
                         <div style="text-align: center">
-                            <div style="margin-bottom: 10px;">帳號：<input id="AnbTxt" type="text" class="inputex" /></div>
-                            <div style="margin-bottom: 10px;">密碼：<input id="WordTxt" type="password" class="inputex" /></div>
-                            <input type="hidden" id="AnbHid" name="AnbHid" runat="server" value="13" />
-                            <input type="hidden" id="WordHid" name="WordHid" runat="server" value="14" />
-                            <input id="lgbtn" type="button" value="登入" class="genbtn" runat="server" />
-                            <asp:LinkButton ID="lbtnDelete" runat="server" OnClick="lbtnDelete_Click"></asp:LinkButton>
+                            <div style="margin-bottom: 10px;">帳號：<input id="AnbTxt" runat="server" type="text" class="inputex" /></div>
+                            <div style="margin-bottom: 10px;">密碼：<input id="WordTxt" runat="server" type="password" class="inputex" /></div>
+                            <asp:Button ID="btn" runat="server" class="genbtn"  OnClick="btn_Click" Text="登入" />
+                            <asp:HiddenField ID="hid_token" runat="server" />
                         </div>
                     </div>
                 </div>
+                </asp:Panel>
                 <!-- ContentWrapper -->
             </div>
             <!-- WrapperBody -->

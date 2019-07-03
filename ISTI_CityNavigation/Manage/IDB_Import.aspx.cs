@@ -7,11 +7,13 @@ using System.Web.UI.WebControls;
 
 namespace ISTI_CityNavigation.Manage
 {
+    
     public partial class IDB_Import : System.Web.UI.Page
     {
+        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            InfoToken.Value = com.GenToken();
         }
     }
 }

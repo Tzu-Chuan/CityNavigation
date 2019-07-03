@@ -144,7 +144,8 @@
                 data: {
                     CityNo: "All",
                     SortName: Page.Option.SortName,
-                    SortMethod: Page.Option.SortMethod
+                    SortMethod: Page.Option.SortMethod,
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -207,5 +208,6 @@
                 </div><!-- col -->
             </div><!-- row -->
         </div>
+        <input type="hidden" id="InfoToken" runat="server" >
     </div><!-- WrapperBody -->
 </asp:Content>

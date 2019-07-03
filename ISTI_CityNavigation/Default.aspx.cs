@@ -11,21 +11,23 @@ namespace ISTI_CityNavigation
 {
     public partial class Default : System.Web.UI.Page
     {
+        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
+            hid_token.Value = com.GenToken();
             if (LogInfo.mGuid != "")
                 Response.Redirect("~/WebPage/CityInfo.aspx");
         }
 
-        protected void lbtnDelete_Click(object sender, EventArgs e)
+        protected void btn_Click(object sender, EventArgs e)
         {
-            XmlDocument xDoc = new XmlDocument();
-            string ab = (string.IsNullOrEmpty(Request.Form["AnbHid"])) ? "" : Request.Form["AnbHid"].ToString().Trim();
-            string wo = (string.IsNullOrEmpty(Request.Form["WordHid"])) ? "" : Request.Form["WordHid"].ToString().Trim();
+            //if (VeriftyToken(hid_token.Value))
+            //{
+            string ab = AnbTxt.Value.Trim();
+            string wo = WordTxt.Value.Trim();
             string strErrorMsg = "";
 
             AccountInfo accInfo = new Account().ExecLogon(ab, Common.sha1en(wo));
-            string xmlstr = string.Empty;
             if (accInfo != null)
             {
                 Response.Redirect("~/WebPage/CityInfo.aspx");
@@ -33,8 +35,15 @@ namespace ISTI_CityNavigation
             else
             {
                 strErrorMsg = "帳號密碼有誤";
-                Response.Write("<script type='text/JavaScript'>alert('" + strErrorMsg + "');</script>");
+                JavaScript.AlertMessage(this.Page, strErrorMsg);
             }
+            //}
         }
+
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            ViewStateUserKey = User.Identity.Name;
+        }
+
     }
 }

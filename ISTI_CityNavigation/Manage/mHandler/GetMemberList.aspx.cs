@@ -12,6 +12,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
     public partial class GetMemberList : System.Web.UI.Page
     {
         Member_DB m_db = new Member_DB();
+        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -36,20 +37,30 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 SortMethod = (SortMethod == "+") ? "asc" : "desc";
                 string SortCommand = SortName + " " + SortMethod;
 
-                //計算起始與結束
-                int pageEnd = (int.Parse(PageNo) + 1) * PageSize;
-                int pageStart = pageEnd - PageSize + 1;
+                string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
+                if (com.VeriftyToken(token))
+                {
+                    //計算起始與結束
+                    int pageEnd = (int.Parse(PageNo) + 1) * PageSize;
+                    int pageStart = pageEnd - PageSize + 1;
 
-                string xmlstr = string.Empty;
-                string xmlstr2 = string.Empty;
+                    string xmlstr = string.Empty;
+                    string xmlstr2 = string.Empty;
 
-                m_db._KeyWord = SearchStr;
-                DataSet ds = m_db.getMemberList(pageStart.ToString(), pageEnd.ToString(), SortCommand, SearchComp);
+                    m_db._KeyWord = SearchStr;
+                    DataSet ds = m_db.getMemberList(pageStart.ToString(), pageEnd.ToString(), SortCommand, SearchComp);
 
-                xmlstr = "<total>" + ds.Tables[0].Rows[0]["total"].ToString() + "</total>";
-                xmlstr2 = DataTableToXml.ConvertDatatableToXML(ds.Tables[1], "dataList", "data_item");
-                xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + xmlstr2 + "</root>";
-                xDoc.LoadXml(xmlstr);
+                    xmlstr = "<total>" + ds.Tables[0].Rows[0]["total"].ToString() + "</total>";
+                    xmlstr2 = DataTableToXml.ConvertDatatableToXML(ds.Tables[1], "dataList", "data_item");
+                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + xmlstr2 + "</root>";
+                    xDoc.LoadXml(xmlstr);
+                }
+                else
+                {
+                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
+                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
+                    xDoc.Save(Response.Output);
+                }
             }
             catch (Exception ex)
             {

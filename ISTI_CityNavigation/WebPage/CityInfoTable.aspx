@@ -70,7 +70,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetPopulationList.aspx",
                 data: {
-                    CityNo: $.getQueryString("city")
+                    CityNo: $.getQueryString("city"),
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -154,7 +155,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetTravelList.aspx",
                 data: {
-                    CityNo: $.getQueryString("city")
+                    CityNo: $.getQueryString("city"),
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -238,7 +240,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetTrafficList.aspx",
                 data: {
-                    CityNo: $.getQueryString("city")
+                    CityNo: $.getQueryString("city"),
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -323,7 +326,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetFarmingList.aspx",
                 data: {
-                    CityNo: $.getQueryString("city")
+                    CityNo: $.getQueryString("city"),
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -434,7 +438,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetIndustryList.aspx",
                 data: {
-                    CityNo: $.getQueryString("city")
+                    CityNo: $.getQueryString("city"),
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -487,7 +492,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetRetailList.aspx",
                 data: {
-                    CityNo: $.getQueryString("city")
+                    CityNo: $.getQueryString("city"),
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -584,7 +590,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetSafetyList.aspx",
                 data: {
-                    CityNo: $.getQueryString("city")
+                    CityNo: $.getQueryString("city"),
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -686,7 +693,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetEnergyList.aspx",
                 data: {
-                    CityNo: $.getQueryString("city")
+                    CityNo: $.getQueryString("city"),
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -741,7 +749,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetHealthList.aspx",
                 data: {
-                    CityNo: $.getQueryString("city")
+                    CityNo: $.getQueryString("city"),
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -824,7 +833,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetEducationList.aspx",
                 data: {
-                    CityNo: $.getQueryString("city")
+                    CityNo: $.getQueryString("city"),
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -1008,4 +1018,6 @@
         </div>
     </div>
     <!--magpopup -->
+
+     <input type="hidden" id="InfoToken" runat="server" >
 </asp:Content>

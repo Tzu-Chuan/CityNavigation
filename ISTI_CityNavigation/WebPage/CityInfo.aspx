@@ -2,7 +2,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-
             //取得get參數
             //如果沒有帶參數，直接重新刷新頁面，預設帶02台北市
             if ($.getQueryString("city") == "") {
@@ -19,12 +18,12 @@
                     return;
                 }
             }
-
+            
             //撈市長/副市長、行政區數 資料 
-            getMayorList();
+            getMayorList();                       
             //撈土地面積、人口 資料
             getPopulationList();
-
+ 
             //進頁面把帶過來的縣市代碼將對應區塊標上顏色
             $("#" + $.getQueryString("city") + "").attr("class", "areaboxactive");//不能用addClass會沒效果
             //$(".areabox[cno='" + CityNo + "']").attr("class", "areaboxactive");
@@ -53,13 +52,14 @@
 
         //撈市市長/副市長列表
         function getMayorList() {
+            var Token_v = document.getElementById('<%=InfoToken.ClientID%>').value;
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetMayorList.aspx",
                 data: {
                     CityNo: $.getQueryString("city"),
-                    Token: document.getElementById('InfoToken').value
+                    Token: Token_v
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -91,13 +91,14 @@
 
         //撈土地列表 人口列表
         function getPopulationList() {
+             var Token_v = document.getElementById('<%=InfoToken.ClientID%>').value;
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetPopulationList.aspx",
                 data: {
                     CityNo: $.getQueryString("city"),
-                    Token: document.getElementById("InfoToken").value
+                    Token: Token_v
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -126,7 +127,7 @@
 <!-- Preloader -->
 
     <div class="WrapperBody" id="WrapperBody">
-        <input type="hidden" id="InfoToken" runat="server" ClientIDMode='Static' value="">
+        <input type="hidden" id="InfoToken" runat="server" >
    <div class="container margin15T" id="ContentWrapper">
 
        <div class="twocol titleLineA">

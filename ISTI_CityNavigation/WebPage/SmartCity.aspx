@@ -70,7 +70,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetServiceTypeCount.aspx",
                 data: {
-                    City: $.getQueryString("city")
+                    City: $.getQueryString("city"),
+                    Token: document.getElementById('<%=hfToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -155,4 +156,5 @@
             <div id="ServiceTypePei" class="maxWithA"></div>
         </div><!-- col -->
     </div><!-- row -->
+    <input type="hidden" id="hfToken" runat="server" />
 </asp:Content>

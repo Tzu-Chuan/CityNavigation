@@ -41,6 +41,7 @@
                     url: "mHandler/GetMemberInfo.aspx",
                     data: {
                         id: $(this).attr("aid"),
+                         Token: document.getElementById('<%=InfoToken.ClientID%>').value
                     },
                     error: function (xhr) {
                         alert(xhr.responseText);
@@ -95,7 +96,8 @@
                         oldpw: $("#tmppw").val(),
                         M_Email: $("#mEmail").val(),
                         oldmail: $("#tmpmail").val(),
-                        M_Competence: $("#mComp").val()
+                        M_Competence: $("#mComp").val(),
+                         Token: document.getElementById('<%=InfoToken.ClientID%>').value
                     },
                     error: function (xhr) {
                         alert(xhr.responseText);
@@ -122,6 +124,7 @@
                         url: "mHandler/DeleteMember.aspx",
                         data: {
                             id: $(this).attr("aid"),
+                             Token: document.getElementById('<%=InfoToken.ClientID%>').value
                         },
                         error: function (xhr) {
                             alert(xhr.responseText);
@@ -151,7 +154,8 @@
                     PageNo: p,
                     PageSize: Page.Option.PageSize,
                     SortName: Page.Option.SortName,
-                    SortMethod: Page.Option.SortMethod
+                    SortMethod: Page.Option.SortMethod,
+                     Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -214,7 +218,8 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "mHandler/GetDDL.aspx",
                 data: {
-                    Group: gno
+                    Group: gno,
+                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -321,4 +326,5 @@
                 <input type="button" class="genbtn" id="cancelbtn" value="取消" />
             </div>
     </div>
+    <input type="hidden" id="InfoToken" runat="server" >
 </asp:Content>

@@ -14,6 +14,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
     {
         Member_DB m_db = new Member_DB();
         MemberLog_DB ml_db = new MemberLog_DB();
+        Common com = new Common();
         string id, mGuid, M_Name, M_Account, OldAcc, M_Pwd, OldPW, M_Email, OldMail, M_Competence;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -54,67 +55,76 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 M_Email = (string.IsNullOrEmpty(Request["M_Email"])) ? "" : Request["M_Email"].ToString().Trim();
                 OldMail = (string.IsNullOrEmpty(Request["oldmail"])) ? "" : Request["oldmail"].ToString().Trim();
                 M_Competence = (string.IsNullOrEmpty(Request["M_Competence"])) ? "" : Request["M_Competence"].ToString().Trim();
-
-                string xmlstr = string.Empty;
-
-                /// 檢查帳號是否重複
-                if (M_Account != OldAcc)
+                string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
+                if (com.VeriftyToken(token))
                 {
+                    string xmlstr = string.Empty;
+
+                    /// 檢查帳號是否重複
+                    if (M_Account != OldAcc)
+                    {
+                        m_db._M_Account = M_Account;
+                        int chkAcc = m_db.CheckAccount();
+                        if (chkAcc > 0)
+                        {
+                            xDoc = ExceptionUtil.GetErrorMassageDocument("此帳號已存在，請重新輸入");
+                            Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
+                            xDoc.Save(Response.Output);
+                            return;
+                        }
+                    }
+
+                    /// 檢查E-Mail 是否重複
+                    if (M_Email != OldMail)
+                    {
+                        m_db._M_Email = M_Email;
+                        int chkEmail = m_db.CheckEmail();
+                        if (chkEmail > 0)
+                        {
+                            xDoc = ExceptionUtil.GetErrorMassageDocument("此 E-Mail 已存在，請重新輸入");
+                            Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
+                            xDoc.Save(Response.Output);
+                            return;
+                        }
+                    }
+
+                    /// 檢查密碼是否修改
+                    if (OldPW != M_Pwd)
+                        m_db._M_Pwd = Common.sha1en(M_Pwd);
+                    else
+                        m_db._M_Pwd = M_Pwd;
+
+                    m_db._M_ID = id;
+                    m_db._M_Guid = mGuid;
                     m_db._M_Account = M_Account;
-                    int chkAcc = m_db.CheckAccount();
-                    if (chkAcc > 0)
-                    {
-                        xDoc = ExceptionUtil.GetErrorMassageDocument("此帳號已存在，請重新輸入");
-                        Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                        xDoc.Save(Response.Output);
-                        return;
-                    }
-                }
-
-                /// 檢查E-Mail 是否重複
-                if (M_Email != OldMail)
-                {
+                    m_db._M_Name = M_Name;
                     m_db._M_Email = M_Email;
-                    int chkEmail = m_db.CheckEmail();
-                    if (chkEmail > 0)
+                    m_db._M_Competence = M_Competence;
+                    m_db._M_CreateId = LogInfo.mGuid;
+                    m_db._M_CreateName = LogInfo.name;
+                    m_db._M_ModId = LogInfo.mGuid;
+                    m_db._M_ModName = LogInfo.name;
+                    if (id == "")
                     {
-                        xDoc = ExceptionUtil.GetErrorMassageDocument("此 E-Mail 已存在，請重新輸入");
-                        Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                        xDoc.Save(Response.Output);
-                        return;
+                        m_db.addMember();
+                        Add_Log();
                     }
-                }
+                    else
+                    {
+                        DataTable OldDt = m_db.getMemberById();
+                        m_db.modMember();
+                        Modify_Log(OldDt);
+                    }
 
-                /// 檢查密碼是否修改
-                if (OldPW != M_Pwd)
-                    m_db._M_Pwd = Common.sha1en(M_Pwd);
-                else
-                    m_db._M_Pwd = M_Pwd;
-
-                m_db._M_ID = id;
-                m_db._M_Guid = mGuid;
-                m_db._M_Account = M_Account;
-                m_db._M_Name = M_Name;
-                m_db._M_Email = M_Email;
-                m_db._M_Competence = M_Competence;
-                m_db._M_CreateId = LogInfo.mGuid;
-                m_db._M_CreateName = LogInfo.name;
-                m_db._M_ModId = LogInfo.mGuid;
-                m_db._M_ModName = LogInfo.name;
-                if (id == "")
-                {
-                    m_db.addMember();
-                    Add_Log();
+                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root><Response>儲存成功</Response></root>";
+                    xDoc.LoadXml(xmlstr);
                 }
                 else
                 {
-                    DataTable OldDt = m_db.getMemberById();
-                    m_db.modMember();
-                    Modify_Log(OldDt);
+                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
+                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
+                    xDoc.Save(Response.Output);
                 }
-
-                xmlstr = "<?xml version='1.0' encoding='utf-8'?><root><Response>儲存成功</Response></root>";
-                xDoc.LoadXml(xmlstr);
             }
             catch (Exception ex)
             {
@@ -122,6 +132,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             }
             Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
             xDoc.Save(Response.Output);
+
         }
 
         /// <summary>

@@ -26,8 +26,8 @@
 
                     form.appendChild(iframe[0]);
                     //form.appendChild(year[0]);
-
-                    form.setAttribute("action", "mHandler/ImportIDBFile.aspx");
+                    var Token_v = document.getElementById('<%=InfoToken.ClientID%>').value;
+                    form.setAttribute("action", "mHandler/ImportIDBFile.aspx?Token=" + Token_v);
                     form.setAttribute("method", "post");
                     form.setAttribute("enctype", "multipart/form-data");
                     form.setAttribute("encoding", "multipart/form-data");
@@ -61,4 +61,6 @@
     </div>
     <div id="load" class="margin10T" style="display:none;"><img src="<%= ResolveUrl("~/images/loading.gif") %>" width="40" />資料上傳中，請稍後...</div>
     <div id="Msg" class="margin10T" style="color:red;"></div>
+
+    <input type="hidden" id="InfoToken" runat="server" >
 </asp:Content>
