@@ -21,23 +21,23 @@ namespace ISTI_CityNavigation
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            //if (VeriftyToken(hid_token.Value))
-            //{
-            string ab = AnbTxt.Value.Trim();
-            string wo = WordTxt.Value.Trim();
-            string strErrorMsg = "";
+            if (com.VeriftyToken(hid_token.Value))
+            {
+                string ab = AnbTxt.Value.Trim();
+                string wo = WordTxt.Value.Trim();
+                string strErrorMsg = "";
 
-            AccountInfo accInfo = new Account().ExecLogon(ab, Common.sha1en(wo));
-            if (accInfo != null)
-            {
-                Response.Redirect("~/WebPage/CityInfo.aspx");
+                AccountInfo accInfo = new Account().ExecLogon(ab, Common.sha1en(wo));
+                if (accInfo != null)
+                {
+                    Response.Redirect("~/WebPage/CityInfo.aspx");
+                }
+                else
+                {
+                    strErrorMsg = "帳號密碼有誤";
+                    JavaScript.AlertMessage(this.Page, strErrorMsg);
+                }
             }
-            else
-            {
-                strErrorMsg = "帳號密碼有誤";
-                JavaScript.AlertMessage(this.Page, strErrorMsg);
-            }
-            //}
         }
 
         protected void Page_Init(object sender, EventArgs e)
