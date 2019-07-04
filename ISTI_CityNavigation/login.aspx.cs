@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Xml;
 
 namespace ISTI_CityNavigation
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class login : System.Web.UI.Page
     {
         Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!IsPostBack)
-            //{
-            //    hid_token.Value = com.GenToken();
-            //    if (LogInfo.mGuid != "")
-            //        Response.Redirect("~/WebPage/CityInfo.aspx");
-            //}
-            Response.Redirect("~/login.aspx");
+            if (!IsPostBack)
+            {
+                hid_token.Value = com.GenToken();
+                if (LogInfo.mGuid != "")
+                    Response.Redirect("~/WebPage/CityInfo.aspx");
+            }
         }
 
         protected void btn_Click(object sender, EventArgs e)
@@ -52,6 +49,5 @@ namespace ISTI_CityNavigation
         {
             ViewStateUserKey = User.Identity.Name;
         }
-
     }
 }

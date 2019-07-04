@@ -9,10 +9,15 @@ namespace ISTI_CityNavigation.handler
 {
     public partial class SignOut : System.Web.UI.Page
     {
+        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session.Abandon();
-            Response.Redirect("~/Default.aspx");
+            string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
+            if (com.VeriftyToken(token))
+            {
+                Session.Abandon();
+                Response.Redirect("~/Default.aspx");
+            }
         }
     }
 }

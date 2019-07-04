@@ -72,7 +72,7 @@
             });
 
             $(document).on("click", "#signout_btn", function () {
-                location.href = "../Handler/SignOut.aspx";
+                location.href = "../Handler/SignOut.aspx?token=" + document.getElementById('<%=hid_token_master.ClientID%>').value;
             });
 
             $(document).on("click", "a[name='ItemBtn']", function () {
@@ -123,8 +123,8 @@
 </head>
 <body>
      <div>
-        <form>
-            <!-- Preloader -->
+        <form id="from1" runat="server">
+<%--            <!-- Preloader -->
             <div id="preloader">
                 <div id="status">
                     <div id="CSS3loading">
@@ -141,8 +141,8 @@
                 </div>
                 <!-- status -->
             </div>
-            <!-- preloader -->
-
+            <!-- preloader -->--%>
+                     <asp:HiddenField ID="hid_token_master" runat="server" />
             <div class="WrapperBody" id="WrapperBody">
                 <div class="WrapperHeader">
                     <div class="container">

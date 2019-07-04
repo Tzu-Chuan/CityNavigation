@@ -1,5 +1,5 @@
 // JavaScript Document
-$(window).on('load', function () { PreloadFunction() }); //預載畫面移除
+//$(window).on('load', function () { PreloadFunction() }); //預載畫面移除
 $(document).ready(MainFunction);//主程式:所有JS程式放在此
 //主程式內容
 	function MainFunction(){

@@ -21,7 +21,8 @@
                 </tr>
                 <tr>
                     <td class="font_size13">
-                    <a href="<%=ResolveUrl("~/Default.aspx")%>" target="_self">返回首頁</a>
+                        <asp:LinkButton id="lbtn_index" runat="server" OnClick="lbtn_index_Click">返回首頁</asp:LinkButton>
+                        <asp:HiddenField ID="hid_token" runat="server" />
                     </td>
                 </tr>
              </table>

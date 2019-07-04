@@ -17,7 +17,8 @@ namespace ISTI_CityNavigation.WebPage
         protected void Page_Load(object sender, EventArgs e)
         {
             //驗證token 資安用
-            InfoToken.Value = com.GenToken();
+            if (!IsPostBack)
+                InfoToken.Value = com.GenToken();
 
             if (!string.IsNullOrEmpty(Request.QueryString["city"]))
             {

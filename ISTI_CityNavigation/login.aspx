@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="ISTI_CityNavigation.Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="ISTI_CityNavigation.login" %>
 
 <!DOCTYPE html>
 
@@ -150,6 +150,5 @@
     <script type="text/javascript" src="<%=ResolveUrl("~/js/NickCommon.js") %>"></script>
     <!-- 系統共用 JS -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/autoHeight.js") %>"></script>
-    <!-- 高度不足頁面的絕對置底footer -->
 </body>
 </html>
