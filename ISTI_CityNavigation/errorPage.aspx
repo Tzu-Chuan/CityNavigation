@@ -8,7 +8,7 @@
     <title></title>
 </head>
 <body>
-    <form>
+    <form runat="server">
      <div>
      <fieldset>
             <legend class="font_black font_size15">錯誤訊息</legend>

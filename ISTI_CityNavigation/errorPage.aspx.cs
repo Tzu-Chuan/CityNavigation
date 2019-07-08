@@ -19,7 +19,7 @@ namespace ISTI_CityNavigation
         protected void lbtn_index_Click(object sender, EventArgs e)
         {
             if (Common.VeriftyToken(hid_token.Value))
-                Response.Redirect("login.aspx");
+                Response.Redirect("Login.aspx");
         }
     }
 }
