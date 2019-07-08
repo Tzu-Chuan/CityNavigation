@@ -7,46 +7,36 @@ using System.Web.UI.WebControls;
 
 namespace ISTI_CityNavigation
 {
-    public partial class login : System.Web.UI.Page
+    public partial class Login : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                hid_token.Value = Common.GenToken();
+                InfoToken.Value = Common.GenToken();
                 if (LogInfo.mGuid != "")
-                    Response.Redirect("~/WebPage/CityInfo.aspx");
+                    Response.Redirect("~/WebPage/CityInfo.aspx?city=02");
             }
         }
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            if (Common.VeriftyToken(hid_token.Value))
+            if (Common.VeriftyToken(InfoToken.Value))
             {
-                string ab = AnbTxt.Value.Trim();
-                string wo = WordTxt.Value.Trim();
-                string strErrorMsg = "";
+                string uTxt = uStr.Text.Trim();
+                string pTxt = pStr.Text.Trim();
+                string strErrorMsg = string.Empty;
 
-                AccountInfo accInfo = new Account().ExecLogon(ab, Common.sha1en(wo));
+                AccountInfo accInfo = new Account().ExecLogon(uTxt, Common.sha1en(pTxt));
                 if (accInfo != null)
-                {
                     Response.Redirect("~/WebPage/CityInfo.aspx?city=02");
-                }
                 else
-                {
-                    strErrorMsg = "帳號密碼有誤";
-                    JavaScript.AlertMessage(this.Page, strErrorMsg);
-                }
+                    JavaScript.AlertMessage(this.Page, "帳號密碼有誤");
             }
             else
             {
-                JavaScript.AlertMessage(this.Page, "token驗證失敗");
+                JavaScript.AlertMessage(this.Page, "網頁驗證失敗");
             }
-        }
-
-        protected void Page_Init(object sender, EventArgs e)
-        {
-            ViewStateUserKey = User.Identity.Name;
         }
     }
 }

@@ -1,76 +1,48 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="ISTI_CityNavigation.login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="ISTI_CityNavigation.Login" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>經濟部智慧城鄉生活應用導航資料庫｜會員登入</title>
     <link href="<%=ResolveUrl("~/css/jquery-ui.css") %>" rel="stylesheet" type="text/css" />
-    <link href="<%=ResolveUrl("~/css/bootstrap.css") %>" rel="stylesheet" />
-    <!-- normalize & bootstrap's grid system -->
-    <link href="<%=ResolveUrl("~/css/font-awesome.min.css") %>" rel="stylesheet" />
-    <!-- css icon -->
-    <link href="<%=ResolveUrl("~/css/fontello.css") %>" rel="stylesheet" />
-    <!-- css icon:http://fontello.com/  -->
-    <link href="<%=ResolveUrl("~/css/superfish.css") %>" rel="stylesheet" type="text/css" />
-    <!-- 下拉選單 -->
-    <link href="<%=ResolveUrl("~/css/jquery.mmenu.css") %>" rel="stylesheet" type="text/css" />
-    <!-- mmenu css:行動裝置選單 -->
-    <link href="<%=ResolveUrl("~/css/jquery.powertip.css") %>" rel="stylesheet" type="text/css" />
-    <!-- powertip:tooltips -->
-    <link href="<%=ResolveUrl("~/css/jquery.datetimepicker.css") %>" rel="stylesheet" type="text/css" />
-    <!-- datepicker -->
-    <link href="<%=ResolveUrl("~/css/magnific-popup.css") %>" rel="stylesheet" type="text/css" />
-    <!-- popup dialog -->
-    <link href="<%=ResolveUrl("~/css/scrollbar.css") %>" rel="stylesheet" type="text/css" />
-    <!-- scrollbar美化 -->
-    <link href="<%=ResolveUrl("~/css/OchiLayout.css") %>" rel="stylesheet" type="text/css" />
-    <!-- ochsion layout base -->
-    <link href="<%=ResolveUrl("~/css/OchiColor.css") %>" rel="stylesheet" type="text/css" />
-    <!-- ochsion layout color -->
-    <link href="<%=ResolveUrl("~/css/OchiRWD.css") %>" rel="stylesheet" type="text/css" />
-    <!-- ochsion layout RWD -->
+    <link href="<%=ResolveUrl("~/css/bootstrap.css") %>" rel="stylesheet" /><!-- normalize & bootstrap's grid system -->
+    <link href="<%=ResolveUrl("~/css/font-awesome.min.css") %>" rel="stylesheet" /><!-- css icon -->
+    <link href="<%=ResolveUrl("~/css/fontello.css") %>" rel="stylesheet" /><!-- css icon:http://fontello.com/  -->
+    <link href="<%=ResolveUrl("~/css/superfish.css") %>" rel="stylesheet" type="text/css" /><!-- 下拉選單 -->
+    <link href="<%=ResolveUrl("~/css/jquery.mmenu.css") %>" rel="stylesheet" type="text/css" /><!-- mmenu css:行動裝置選單 -->
+    <link href="<%=ResolveUrl("~/css/jquery.powertip.css") %>" rel="stylesheet" type="text/css" /><!-- powertip:tooltips -->
+    <link href="<%=ResolveUrl("~/css/jquery.datetimepicker.css") %>" rel="stylesheet" type="text/css" /><!-- datepicker -->
+    <link href="<%=ResolveUrl("~/css/magnific-popup.css") %>" rel="stylesheet" type="text/css" /><!-- popup dialog -->
+    <link href="<%=ResolveUrl("~/css/scrollbar.css") %>" rel="stylesheet" type="text/css" /><!-- scrollbar美化 -->
+    <link href="<%=ResolveUrl("~/css/OchiLayout.css") %>" rel="stylesheet" type="text/css" /><!-- ochsion layout base -->
+    <link href="<%=ResolveUrl("~/css/OchiColor.css") %>" rel="stylesheet" type="text/css" /><!-- ochsion layout color -->
+    <link href="<%=ResolveUrl("~/css/OchiRWD.css") %>" rel="stylesheet" type="text/css" /><!-- ochsion layout RWD -->
     <link href="<%=ResolveUrl("~/css/style.css") %>" rel="stylesheet" type="text/css" />
     <link href="<%=ResolveUrl("~/css/NickStyle.css") %>" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery-3.4.1.min.js") %>"></script>
     <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery-ui.1.12.1.js") %>"></script>
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.breakpoint-min.js") %>"></script>
-    <!-- 斷點設定 -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/superfish.min.js") %>"></script>
-    <!-- 下拉選單 -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/supposition.js") %>"></script>
-    <!-- 下拉選單:修正最後項在視窗大小不夠時的BUG -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.mmenu.min.js") %>"></script>
-    <!-- mmenu js:行動裝置選單 -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.touchSwipe.min.js") %>"></script>
-    <!-- 增加JS觸控操作 for mmenu -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.powertip.min.js") %>"></script>
-    <!-- powertip:tooltips -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.datetimepicker.js") %>"></script>
-    <!-- datepicker -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.easytabs.min.js") %>"></script>
-    <!-- easytabs tab -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.magnific-popup.min.js") %>"></script>
-    <!-- popup dialog -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/animatescroll.min.js") %>"></script>
-    <!-- 動態滾動 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.breakpoint-min.js") %>"></script><!-- 斷點設定 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/superfish.min.js") %>"></script><!-- 下拉選單 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/supposition.js") %>"></script><!-- 下拉選單:修正最後項在視窗大小不夠時的BUG -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.mmenu.min.js") %>"></script><!-- mmenu js:行動裝置選單 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.touchSwipe.min.js") %>"></script><!-- 增加JS觸控操作 for mmenu -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.powertip.min.js") %>"></script><!-- powertip:tooltips -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.datetimepicker.js") %>"></script><!-- datepicker -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.easytabs.min.js") %>"></script><!-- easytabs tab -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.magnific-popup.min.js") %>"></script><!-- popup dialog -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/animatescroll.min.js") %>"></script><!-- 動態滾動 -->
     <!-- 動畫套件 -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery-timing.min.js") %>"></script>
-    <!-- 組織動畫用JS.wait() -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/TweenMax.min.js") %>"></script>
-    <!-- GSAP -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery-timing.min.js") %>"></script><!-- 組織動畫用JS.wait() -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/TweenMax.min.js") %>"></script><!-- GSAP -->
     <!-- 滾動偵測 -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.scrollmagic.min.js") %>"></script>
-    <!-- scrollmagic配合捲軸動畫 -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.scrollmagic.debug.js") %>"></script>
-    <!-- scrollmagic配合捲軸動畫:顯示起啟位置參考線(上線前移除) -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.scrollmagic.min.js") %>"></script><!-- scrollmagic配合捲軸動畫 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.scrollmagic.debug.js") %>"></script><!-- scrollmagic配合捲軸動畫:顯示起啟位置參考線(上線前移除) -->
     <!-- 網站套件 -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.matchHeight-min.js") %>"></script>
-    <!-- equal height解決bootstrap grid layout內容不等高時排版問題 -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.scrollbar.min.js") %>"></script>
-    <!-- scrollbar美化 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.matchHeight-min.js") %>"></script><!-- equal height解決bootstrap grid layout內容不等高時排版問題 -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.scrollbar.min.js") %>"></script><!-- scrollbar美化 -->
 
     <style>
         .logcss {
@@ -87,7 +59,8 @@
 </head>
 <body>
     <div>
-        <form id="form1" runat="server">
+        <form runat="server">
+        <asp:HiddenField ID="InfoToken" runat="server" />
             <!-- Preloader -->
             <div id="preloader">
                 <div id="status">
@@ -118,37 +91,27 @@
                     <!-- container -->
                 </div>
                 <!-- WrapperHeader -->
-                <asp:Panel DefaultButton="btn" ID="pan" runat="server">
                 <div class="container margin15T" id="ContentWrapper">
                     <div class="logcss">
                         <div style="text-align: center">
-                            <div style="margin-bottom: 10px;">帳號：<input id="AnbTxt" runat="server" type="text" class="inputex" /></div>
-                            <div style="margin-bottom: 10px;">密碼：<input id="WordTxt" runat="server" type="password" class="inputex" /></div>
-                            <asp:Button ID="btn" runat="server" class="genbtn"  OnClick="btn_Click" Text="登入" />
-                            <asp:HiddenField ID="hid_token" runat="server" />
+                            <div style="margin-bottom: 10px;">帳號：<asp:TextBox ID="uStr" runat="server" CssClass="inputex"></asp:TextBox></div>
+                            <div style="margin-bottom: 10px;">密碼：<asp:TextBox ID="pStr" runat="server" TextMode="Password" CssClass="inputex"></asp:TextBox></div>
+                            <asp:Button ID="btn" runat="server" OnClick="btn_Click" Text="登入" CssClass="genbtn" />
                         </div>
                     </div>
-                </div>
-                </asp:Panel>
-                <!-- ContentWrapper -->
-            </div>
-            <!-- WrapperBody -->
+                </div><!-- ContentWrapper -->
+            </div><!-- WrapperBody -->
 
             <div class="WrapperFooter">
                 <div class="footerblock container font-normal">
                     版權所有©2019 智慧城鄉計畫辦公室｜ 建議瀏覽解析度1024x768以上
-                </div>
-                <!--{* footerblock *}-->
-            </div>
-            <!-- WrapperFooter -->
+                </div><!--{* footerblock *}-->
+            </div><!-- WrapperFooter -->
         </form>
     </div>
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/GenCommon.js") %>"></script>
-    <!-- UIcolor JS -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/PageCommon.js") %>"></script>
-    <!-- 系統共用 JS -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/NickCommon.js") %>"></script>
-    <!-- 系統共用 JS -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/autoHeight.js") %>"></script>
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/GenCommon.js") %>"></script><!-- UIcolor JS -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/PageCommon.js") %>"></script><!-- 系統共用 JS -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/NickCommon.js") %>"></script><!-- 系統共用 JS -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/autoHeight.js") %>"></script><!-- 高度不足頁面的絕對置底footer -->
 </body>
 </html>

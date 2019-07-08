@@ -10,43 +10,34 @@
 namespace ISTI_CityNavigation {
     
     
-    public partial class login {
+    public partial class Login {
         
         /// <summary>
-        /// form1 控制項。
+        /// InfoToken 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.HiddenField InfoToken;
         
         /// <summary>
-        /// pan 控制項。
+        /// uStr 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pan;
+        protected global::System.Web.UI.WebControls.TextBox uStr;
         
         /// <summary>
-        /// AnbTxt 控制項。
+        /// pStr 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText AnbTxt;
-        
-        /// <summary>
-        /// WordTxt 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputPassword WordTxt;
+        protected global::System.Web.UI.WebControls.TextBox pStr;
         
         /// <summary>
         /// btn 控制項。
@@ -56,14 +47,5 @@ namespace ISTI_CityNavigation {
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn;
-        
-        /// <summary>
-        /// hid_token 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hid_token;
     }
 }
