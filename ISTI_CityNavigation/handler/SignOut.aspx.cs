@@ -12,12 +12,12 @@ namespace ISTI_CityNavigation.handler
         Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
-            string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-            if (com.VeriftyToken(token))
-            {
+            //string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
+            //if (com.VeriftyToken(token))
+            //{
                 Session.Abandon();
                 Response.Redirect("~/Default.aspx");
-            }
+            //}
         }
     }
 }

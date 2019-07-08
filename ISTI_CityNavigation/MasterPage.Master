@@ -72,7 +72,7 @@
             });
 
             $(document).on("click", "#signout_btn", function () {
-                location.href = "../Handler/SignOut.aspx?token=" + document.getElementById('<%=hid_token_master.ClientID%>').value;
+                location.href = "../Handler/SignOut.aspx"; //?token=" + document.getElementById('<%=hid_token_master.ClientID%>').value
             });
 
             $(document).on("click", "a[name='ItemBtn']", function () {

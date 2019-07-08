@@ -14,8 +14,9 @@ namespace ISTI_CityNavigation
         Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-                hid_token_master.Value = com.GenToken();
+            //if (!IsPostBack)
+            //    hid_token_master.Value = com.GenToken();
+
             if (LogInfo.mGuid != "")
             {
                 UserName = LogInfo.name;
