@@ -12,7 +12,6 @@ namespace ISTI_CityNavigation.handler
     public partial class GetDDL : System.Web.UI.Page
     {
         CodeTable_DB ct_db = new CodeTable_DB();
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -27,7 +26,7 @@ namespace ISTI_CityNavigation.handler
                 string group = (string.IsNullOrEmpty(Request["group"])) ? "" : Request["group"].ToString().Trim();
                 string item = (string.IsNullOrEmpty(Request["item"])) ? "" : Request["item"].ToString().Trim();
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     ct_db._C_Item = item;
                     DataTable dt = ct_db.getCommonCode(group);
@@ -39,9 +38,7 @@ namespace ISTI_CityNavigation.handler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
             catch (Exception ex)

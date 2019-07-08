@@ -11,15 +11,9 @@ namespace ISTI_CityNavigation.WebPage
     public partial class CityInfoTable : System.Web.UI.Page
     {
         CodeTable_DB ct_db = new CodeTable_DB();
-        public string CityName;
-        public string CityTableClass;
-        Common com = new Common();
+        public string CityName, CityTableClass;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //驗證token 資安用
-            if (!IsPostBack)
-                InfoToken.Value = com.GenToken();
-
             if (!string.IsNullOrEmpty(Request.QueryString["city"]))
             {
                 /// 查詢縣市代碼

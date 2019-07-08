@@ -17,17 +17,17 @@
                         return;
                     }
                     var iframe = $('<iframe name="postiframe" id="postiframe" style="display: none" />');
-                    //var year = $('<input type="hidden" name="year" id="year" value="" />');
+                    //var token = $('<input type="hidden" name="InfoToken" id="InfoToken" value="' + $("#InfoToken").val() + '" />');
                     var form = $("form")[0];
 
                     //如果沒有重新導頁需要刪除上次資訊
                     $("#postiframe").remove();
-                    //$("input[name='year']").remove();
+                    //$("input[name='token']").remove();
 
                     form.appendChild(iframe[0]);
-                    //form.appendChild(year[0]);
-                    var Token_v = document.getElementById('<%=InfoToken.ClientID%>').value;
-                    form.setAttribute("action", "mHandler/ImportIDBFile.aspx?Token=" + Token_v);
+                    //form.appendChild(token[0]);
+
+                    form.setAttribute("action", "mHandler/ImportIDBFile.aspx");
                     form.setAttribute("method", "post");
                     form.setAttribute("enctype", "multipart/form-data");
                     form.setAttribute("encoding", "multipart/form-data");
@@ -61,6 +61,4 @@
     </div>
     <div id="load" class="margin10T" style="display:none;"><img src="<%= ResolveUrl("~/images/loading.gif") %>" width="40" />資料上傳中，請稍後...</div>
     <div id="Msg" class="margin10T" style="color:red;"></div>
-
-    <input type="hidden" id="InfoToken" runat="server" >
 </asp:Content>

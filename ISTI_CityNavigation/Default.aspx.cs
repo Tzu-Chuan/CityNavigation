@@ -11,7 +11,6 @@ namespace ISTI_CityNavigation
 {
     public partial class Default : System.Web.UI.Page
     {
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             //if (!IsPostBack)
@@ -25,7 +24,7 @@ namespace ISTI_CityNavigation
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            if (com.VeriftyToken(hid_token.Value))
+            if (Common.VeriftyToken(hid_token.Value))
             {
                 string ab = AnbTxt.Value.Trim();
                 string wo = WordTxt.Value.Trim();

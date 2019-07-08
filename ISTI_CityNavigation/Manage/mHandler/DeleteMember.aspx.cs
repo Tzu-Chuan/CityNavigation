@@ -14,7 +14,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
         Member_DB m_db = new Member_DB();
         MemberLog_DB ml_db = new MemberLog_DB();
         string id;
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -42,7 +41,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 id = (string.IsNullOrEmpty(Request["id"])) ? "" : Request["id"].ToString().Trim();
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     m_db._M_ID = id;
                     m_db._M_ModId = LogInfo.mGuid;
@@ -55,9 +54,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
             catch (Exception ex)

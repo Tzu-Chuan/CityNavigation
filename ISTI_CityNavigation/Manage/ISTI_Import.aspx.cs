@@ -9,10 +9,9 @@ namespace ISTI_CityNavigation.Manage
 {
     public partial class ISTI_Import : System.Web.UI.Page
     {
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
-            mToken.Value = com.GenToken();
+            mToken.Value = Common.GenToken();
         }
 
     }

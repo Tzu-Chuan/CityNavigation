@@ -14,7 +14,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
     {
         Member_DB m_db = new Member_DB();
         MemberLog_DB ml_db = new MemberLog_DB();
-        Common com = new Common();
         string id, mGuid, M_Name, M_Account, OldAcc, M_Pwd, OldPW, M_Email, OldMail, M_Competence;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -55,8 +54,9 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 M_Email = (string.IsNullOrEmpty(Request["M_Email"])) ? "" : Request["M_Email"].ToString().Trim();
                 OldMail = (string.IsNullOrEmpty(Request["oldmail"])) ? "" : Request["oldmail"].ToString().Trim();
                 M_Competence = (string.IsNullOrEmpty(Request["M_Competence"])) ? "" : Request["M_Competence"].ToString().Trim();
+
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     string xmlstr = string.Empty;
 
@@ -121,9 +121,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
             catch (Exception ex)

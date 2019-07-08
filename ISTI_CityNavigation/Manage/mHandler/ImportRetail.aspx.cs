@@ -24,7 +24,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
         protected void Page_Load(object sender, EventArgs e)
         {
             //讀取Token值
-            string token = (string.IsNullOrEmpty(Request.Form["mToken"])) ? "" : Request.Form["mToken"].ToString().Trim();
+            string token = (string.IsNullOrEmpty(Request["InfoToken"])) ? "" : Request["InfoToken"].ToString().Trim();
             if (VeriftyToken(token))
             {
                 //建立共用connection & transaction

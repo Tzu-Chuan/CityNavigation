@@ -12,7 +12,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
     public partial class GetMemberList : System.Web.UI.Page
     {
         Member_DB m_db = new Member_DB();
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -38,7 +37,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 string SortCommand = SortName + " " + SortMethod;
 
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     //計算起始與結束
                     int pageEnd = (int.Parse(PageNo) + 1) * PageSize;
@@ -57,9 +56,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
             catch (Exception ex)

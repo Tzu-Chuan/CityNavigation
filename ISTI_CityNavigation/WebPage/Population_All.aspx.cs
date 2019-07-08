@@ -9,11 +9,9 @@ namespace ISTI_CityNavigation.WebPage
 {
     public partial class Population_All : System.Web.UI.Page
     {
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
-            //驗證token 資安用
-            InfoToken.Value = com.GenToken();
+
         }
     }
 }

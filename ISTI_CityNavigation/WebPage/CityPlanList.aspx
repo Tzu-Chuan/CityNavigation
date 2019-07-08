@@ -45,7 +45,7 @@
                     CompanyName: $("#strCompany").val(),
                     SortName: Page.Option.SortName,
                     SortMethod: Page.Option.SortMethod,
-                    Token: document.getElementById('hfToken').value
+                    Token: $("#InfoToken").val()
                 },
                 beforeSend: function () {
                     $("#tablist thead").hide();
@@ -184,7 +184,7 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetServiceTypeDDL.aspx",
                 data: {
-                    Token: document.getElementById('hfToken').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -215,7 +215,7 @@
                 url: "../handler/GetDDL.aspx",
                 data: {
                     Group: gno,
-                    Token: document.getElementById('hfToken').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert("Error " + xhr.status);
@@ -368,5 +368,4 @@
             <tbody></tbody>
         </table>
     </div>
-    <input type="hidden" id="hfToken" runat="server" ClientIDMode='Static' value="">
 </asp:Content>

@@ -10,9 +10,10 @@ namespace ISTI_CityNavigation.Manage
 {
     public partial class BackEnd : System.Web.UI.MasterPage
     {
-        public string UserName,CompStr;
+        public string UserName,CompStr, TokenStr;
         protected void Page_Load(object sender, EventArgs e)
         {
+            TokenStr = Common.GenToken();
             if (LogInfo.mGuid != "")
             {
                 UserName = LogInfo.name;

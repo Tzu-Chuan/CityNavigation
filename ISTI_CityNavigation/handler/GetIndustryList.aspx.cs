@@ -23,7 +23,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             {
                 string Ind_CityNo = (Request["CityNo"] != null) ? Request["CityNo"].ToString().Trim() : "";
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     n_db._Ind_CityNo = Ind_CityNo;
                     DataTable dt = n_db.getIndustryList();
@@ -34,9 +34,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
             catch (Exception ex)

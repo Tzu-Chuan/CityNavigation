@@ -12,7 +12,6 @@ namespace ISTI_CityNavigation.WebPage.wHandler
     public partial class GetFarmingList : System.Web.UI.Page
     {
         Farming_DB n_db = new Farming_DB();
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -22,9 +21,9 @@ namespace ISTI_CityNavigation.WebPage.wHandler
             try
             {
                 string Fa_CityNo = (Request["CityNo"] != null) ? Request["CityNo"].ToString().Trim() : "";
-                //CSRF
+
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     n_db._Fa_CityNo = Fa_CityNo;
                 DataTable dt = n_db.getFarmingList();
@@ -35,9 +34,7 @@ namespace ISTI_CityNavigation.WebPage.wHandler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
             catch (Exception ex)

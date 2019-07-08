@@ -12,7 +12,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
     public partial class GetMemberInfo : System.Web.UI.Page
     {
         Member_DB m_db = new Member_DB();
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -25,7 +24,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             {
                 string id = (Request["id"] != null) ? Request["id"].ToString().Trim() : "";
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     string xmlstr = string.Empty;
 
@@ -38,9 +37,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
             catch (Exception ex)

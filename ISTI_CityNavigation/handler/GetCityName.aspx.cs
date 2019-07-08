@@ -12,7 +12,6 @@ namespace ISTI_CityNavigation.handler
     public partial class GetCityName : System.Web.UI.Page
     {
         CodeTable_DB n_db = new CodeTable_DB();
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -23,7 +22,7 @@ namespace ISTI_CityNavigation.handler
             {
                 string C_Item = (Request["CityNo"] != null) ? Request["CityNo"].ToString().Trim() : "";
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     n_db._C_Item = C_Item;
                     DataTable dt = n_db.getCityName();
@@ -34,9 +33,7 @@ namespace ISTI_CityNavigation.handler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
             catch (Exception ex)

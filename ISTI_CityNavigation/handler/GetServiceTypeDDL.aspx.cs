@@ -24,7 +24,7 @@ namespace ISTI_CityNavigation.handler
             {
                 string xmlstr = string.Empty;
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     DataTable dt = cst_db.getPlanType_ddl();
 
@@ -34,9 +34,7 @@ namespace ISTI_CityNavigation.handler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
             catch (Exception ex)

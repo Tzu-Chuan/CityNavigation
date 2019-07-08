@@ -12,7 +12,6 @@ namespace ISTI_CityNavigation.handler
     public partial class GetCitySubMoney : System.Web.UI.Page
     {
         CitySubMoney_DB csm_db = new CitySubMoney_DB();
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -26,7 +25,7 @@ namespace ISTI_CityNavigation.handler
 
                 DataTable dt = csm_db.getCitySubsidyAnalyze();
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
                     xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
@@ -34,9 +33,7 @@ namespace ISTI_CityNavigation.handler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
             catch (Exception ex)

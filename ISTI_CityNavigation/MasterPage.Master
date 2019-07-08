@@ -72,7 +72,7 @@
             });
 
             $(document).on("click", "#signout_btn", function () {
-                location.href = "../Handler/SignOut.aspx"; //?token=" + document.getElementById('<%=hid_token_master.ClientID%>').value
+                location.href = "../Handler/SignOut.aspx";
             });
 
             $(document).on("click", "a[name='ItemBtn']", function () {
@@ -124,7 +124,7 @@
 <body>
      <div>
         <form id="from1" runat="server">
-<%--            <!-- Preloader -->
+            <!-- Preloader -->
             <div id="preloader">
                 <div id="status">
                     <div id="CSS3loading">
@@ -141,8 +141,8 @@
                 </div>
                 <!-- status -->
             </div>
-            <!-- preloader -->--%>
-                     <asp:HiddenField ID="hid_token_master" runat="server" />
+            <!-- preloader -->
+
             <div class="WrapperBody" id="WrapperBody">
                 <div class="WrapperHeader">
                     <div class="container">
@@ -182,7 +182,7 @@
                             <!-- 桌機主選單 -->
                             <div class="superfishmenu">
                                 <ul>
-                                    <li><a href="<%=ResolveUrl("~/Webpage/CityInfo.aspx") %>">首頁</a></li>
+                                    <li><a href="<%=ResolveUrl("~/Webpage/CityInfo.aspx?city=02") %>">首頁</a></li>
                                     <li><a href="javascript:void(0);">智慧城鄉計畫提案</a>
                                         <ul>
                                             <li><a href="<%=ResolveUrl("~/Webpage/BudgetExecution.aspx") %>">經費總表</a></li>
@@ -1490,6 +1490,7 @@
 
     </div>
     <input type="hidden" id="compstr" value="<%= CompStr %>" />
+    <input type="hidden" id="InfoToken" value="<%= TokenStr %>" />
     <script type="text/javascript" src="<%=ResolveUrl("~/js/GenCommon.js") %>"></script><!-- UIcolor JS -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/PageCommon.js") %>"></script><!-- 系統共用 JS -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/NickCommon.js") %>"></script><!-- 系統共用 JS -->

@@ -9,10 +9,9 @@ namespace ISTI_CityNavigation.Manage
 {
     public partial class MemberLog : System.Web.UI.Page
     {
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
-            InfoToken.Value = com.GenToken();
+
         }
     }
 }

@@ -28,7 +28,7 @@ namespace ISTI_CityNavigation.WebPage.wHandler
                 SortMethod = (SortMethod == "+") ? "asc" : "desc";
 
                 DataTable dt = new DataTable();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     n_db._P_CityNo = P_CityNo;
                     if (P_CityNo != "All")
@@ -42,9 +42,7 @@ namespace ISTI_CityNavigation.WebPage.wHandler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
 

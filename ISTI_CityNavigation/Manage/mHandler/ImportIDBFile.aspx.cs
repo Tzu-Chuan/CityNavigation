@@ -23,7 +23,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
         CityPlanTable_DB cpt_db = new CityPlanTable_DB();
         CodeTable_DB ct_db = new CodeTable_DB();
         string err = string.Empty;
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -49,8 +48,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
             oCmd.Transaction = myTrans;
             try
             {
-                string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                string token = (string.IsNullOrEmpty(Request["InfoToken"])) ? "" : Request["InfoToken"].ToString().Trim();
+                if (Common.VeriftyToken(token))
                 {
                     HttpFileCollection uploadFiles = Request.Files;//檔案集合
                     HttpPostedFile aFile = uploadFiles[0];
@@ -77,7 +76,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 }
                 else
                 {
-                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('驗證失敗');</script>");
+                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('網站驗證失敗');</script>");
                 }
             }
             catch (Exception ex)

@@ -12,7 +12,6 @@ namespace ISTI_CityNavigation.handler
     public partial class GetBudgetExecution : System.Web.UI.Page
     {
         BudgetExecution_DB be_db = new BudgetExecution_DB();
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -24,7 +23,7 @@ namespace ISTI_CityNavigation.handler
             {
                 string xmlstr = string.Empty;
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     DataTable dt = be_db.getBudgetExecution();
                     if (dt.Rows.Count > 0)
@@ -35,9 +34,7 @@ namespace ISTI_CityNavigation.handler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
             catch (Exception ex)

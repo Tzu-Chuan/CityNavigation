@@ -26,21 +26,20 @@ namespace ISTI_CityNavigation.handler
             /// * Request["SortMethod"]: 排序方式
             ///-----------------------------------------------------
             XmlDocument xDoc = new XmlDocument();
-            //CSRF
-            string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-            if (VeriftyToken(token))
+            try
             {
-                try
-                {
-                    string City = (string.IsNullOrEmpty(Request["City"])) ? "" : Request["City"].ToString().Trim();
-                    string ServiceType = (string.IsNullOrEmpty(Request["ServiceType"])) ? "" : Request["ServiceType"].ToString().Trim();
-                    string PlanName = (string.IsNullOrEmpty(Request["PlanName"])) ? "" : Request["PlanName"].ToString().Trim();
-                    string CompanyName = (string.IsNullOrEmpty(Request["CompanyName"])) ? "" : Request["CompanyName"].ToString().Trim();
-                    string SortName = (Request["SortName"] != null) ? Request["SortName"].ToString().Trim() : "";
-                    string SortMethod = (Request["SortMethod"] != null) ? Request["SortMethod"].ToString().Trim() : "-";
-                    SortMethod = (SortMethod == "+") ? "asc" : "desc";
-                    string SortCommand = (SortName != "") ? SortName + " " + SortMethod : "";
+                string City = (string.IsNullOrEmpty(Request["City"])) ? "" : Request["City"].ToString().Trim();
+                string ServiceType = (string.IsNullOrEmpty(Request["ServiceType"])) ? "" : Request["ServiceType"].ToString().Trim();
+                string PlanName = (string.IsNullOrEmpty(Request["PlanName"])) ? "" : Request["PlanName"].ToString().Trim();
+                string CompanyName = (string.IsNullOrEmpty(Request["CompanyName"])) ? "" : Request["CompanyName"].ToString().Trim();
+                string SortName = (Request["SortName"] != null) ? Request["SortName"].ToString().Trim() : "";
+                string SortMethod = (Request["SortMethod"] != null) ? Request["SortMethod"].ToString().Trim() : "-";
+                SortMethod = (SortMethod == "+") ? "asc" : "desc";
+                string SortCommand = (SortName != "") ? SortName + " " + SortMethod : "";
 
+                string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
+                if (Common.VeriftyToken(token))
+                {
                     string xmlstr = string.Empty;
 
                     cst_db._CS_HostCompany = CompanyName;
@@ -52,29 +51,18 @@ namespace ISTI_CityNavigation.handler
                     xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
                     xDoc.LoadXml(xmlstr);
                 }
-                catch (Exception ex)
+                else
                 {
-                    xDoc = ExceptionUtil.GetExceptionDocument(ex);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
-                Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                xDoc.Save(Response.Output);
             }
-            else
+            catch (Exception ex)
             {
-                xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                xDoc.Save(Response.Output);
+                xDoc = ExceptionUtil.GetExceptionDocument(ex);
             }
-        }
-        private bool VeriftyToken(string clientToken)
-        {
-            if (string.IsNullOrEmpty(clientToken)) return false;
 
-            string serverToken = HttpContext.Current.Session["Token"].ToString();
-            if (clientToken.Equals(serverToken))
-                return true;
-            else
-                return false;
+            Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
+            xDoc.Save(Response.Output);
         }
     }
 }

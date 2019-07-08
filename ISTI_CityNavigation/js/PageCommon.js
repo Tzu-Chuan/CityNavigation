@@ -1,5 +1,5 @@
 // JavaScript Document
-//$(window).on('load', function () { PreloadFunction() }); //預載畫面移除
+$(window).on('load', function () { PreloadFunction() }); //預載畫面移除
 $(document).ready(MainFunction);//主程式:所有JS程式放在此
 //主程式內容
 	function MainFunction(){
@@ -139,7 +139,7 @@ $(document).ready(MainFunction);//主程式:所有JS程式放在此
 	function PreloadFunction(){
 		$('#status').fadeOut(); // will first fade out the loading animation
 		$('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
-		$('body').delay(50);
+		$('body').delay(350);
 		animateFunction();//畫面讀取完畢後直接執行的動畫
 	}//預載動畫END
 	

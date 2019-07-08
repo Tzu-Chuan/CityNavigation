@@ -10,7 +10,6 @@ namespace ISTI_CityNavigation.WebPage
 {
     public partial class SmartCity : System.Web.UI.Page
     {
-        Common com = new Common();
         CodeTable_DB ct_db = new CodeTable_DB();
         public string CityName;
         protected void Page_Load(object sender, EventArgs e)
@@ -23,8 +22,6 @@ namespace ISTI_CityNavigation.WebPage
                 if (CodeDt.Rows.Count > 0)
                     CityName = CodeDt.Rows[0]["C_Item_Cn"].ToString();
             }
-            //驗證token 資安用
-            hfToken.Value = com.GenToken();
         }
     }
 }

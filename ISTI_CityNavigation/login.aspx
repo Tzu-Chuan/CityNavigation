@@ -88,7 +88,7 @@
 <body>
     <div>
         <form id="form1" runat="server">
-<%--            <!-- Preloader -->
+            <!-- Preloader -->
             <div id="preloader">
                 <div id="status">
                     <div id="CSS3loading">
@@ -105,7 +105,7 @@
                 </div>
                 <!-- status -->
             </div>
-            <!-- preloader -->--%>
+            <!-- preloader -->
 
 
             <div class="WrapperBody" id="WrapperBody">

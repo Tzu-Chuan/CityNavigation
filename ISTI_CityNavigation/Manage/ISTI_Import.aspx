@@ -65,15 +65,8 @@
                     strType.setAttribute("value", $("#selType").val());
                     strType.setAttribute("style", "display: none");
 
-                    var srtToken = document.createElement('input');
-                    srtToken.setAttribute("id", "mToken");
-                    srtToken.setAttribute("name", "mToken");
-                    srtToken.setAttribute("value", document.getElementById('mToken').value);
-                    srtToken.setAttribute("type", "hidden");
-
                     form.appendChild(iframe[0]);
                     form.appendChild(strType);
-                    form.appendChild(srtToken);
 
                     form.setAttribute("action", "" + strpost + "");
                     form.setAttribute("method", "post");

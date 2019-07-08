@@ -173,6 +173,7 @@
 
             <!-- 側邊選單內容:動態複製主選單內容 -->
             <div id="sidebar-wrapper"></div><!-- sidebar-wrapper -->
+            <input type="hidden" id="InfoToken" name="InfoToken" value="<%= TokenStr %>" />
         </form>
     </div>
     <input id="CompStr" type="hidden" value="<%= CompStr %>" />

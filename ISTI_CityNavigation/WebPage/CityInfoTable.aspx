@@ -71,7 +71,7 @@
                 url: "../handler/GetPopulationList.aspx",
                 data: {
                     CityNo: $.getQueryString("city"),
-                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -156,7 +156,7 @@
                 url: "../handler/GetTravelList.aspx",
                 data: {
                     CityNo: $.getQueryString("city"),
-                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -241,7 +241,7 @@
                 url: "../handler/GetTrafficList.aspx",
                 data: {
                     CityNo: $.getQueryString("city"),
-                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -327,7 +327,7 @@
                 url: "../handler/GetFarmingList.aspx",
                 data: {
                     CityNo: $.getQueryString("city"),
-                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -439,7 +439,7 @@
                 url: "../handler/GetIndustryList.aspx",
                 data: {
                     CityNo: $.getQueryString("city"),
-                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -493,7 +493,7 @@
                 url: "../handler/GetRetailList.aspx",
                 data: {
                     CityNo: $.getQueryString("city"),
-                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
+                    Token:$("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -591,7 +591,7 @@
                 url: "../handler/GetSafetyList.aspx",
                 data: {
                     CityNo: $.getQueryString("city"),
-                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -694,7 +694,7 @@
                 url: "../handler/GetEnergyList.aspx",
                 data: {
                     CityNo: $.getQueryString("city"),
-                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -750,7 +750,7 @@
                 url: "../handler/GetHealthList.aspx",
                 data: {
                     CityNo: $.getQueryString("city"),
-                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -834,7 +834,7 @@
                 url: "../handler/GetEducationList.aspx",
                 data: {
                     CityNo: $.getQueryString("city"),
-                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -1018,6 +1018,4 @@
         </div>
     </div>
     <!--magpopup -->
-
-     <input type="hidden" id="InfoToken" runat="server" >
 </asp:Content>

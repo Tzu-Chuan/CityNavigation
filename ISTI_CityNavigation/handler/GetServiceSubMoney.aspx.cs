@@ -26,7 +26,7 @@ namespace ISTI_CityNavigation.handler
 
                 DataTable dt = ssm_db.getSubsidyServiceAnalyze();
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
-                if (com.VeriftyToken(token))
+                if (Common.VeriftyToken(token))
                 {
                     xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
                     xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
@@ -34,9 +34,7 @@ namespace ISTI_CityNavigation.handler
                 }
                 else
                 {
-                    xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                    Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                    xDoc.Save(Response.Output);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
             }
             catch (Exception ex)

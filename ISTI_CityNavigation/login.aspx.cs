@@ -9,12 +9,11 @@ namespace ISTI_CityNavigation
 {
     public partial class login : System.Web.UI.Page
     {
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                hid_token.Value = com.GenToken();
+                hid_token.Value = Common.GenToken();
                 if (LogInfo.mGuid != "")
                     Response.Redirect("~/WebPage/CityInfo.aspx");
             }
@@ -22,7 +21,7 @@ namespace ISTI_CityNavigation
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            if (com.VeriftyToken(hid_token.Value))
+            if (Common.VeriftyToken(hid_token.Value))
             {
                 string ab = AnbTxt.Value.Trim();
                 string wo = WordTxt.Value.Trim();
@@ -31,7 +30,7 @@ namespace ISTI_CityNavigation
                 AccountInfo accInfo = new Account().ExecLogon(ab, Common.sha1en(wo));
                 if (accInfo != null)
                 {
-                    Response.Redirect("~/WebPage/CityInfo.aspx");
+                    Response.Redirect("~/WebPage/CityInfo.aspx?city=02");
                 }
                 else
                 {

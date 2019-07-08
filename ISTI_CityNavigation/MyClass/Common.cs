@@ -314,7 +314,7 @@ public class Common
     /// </summary>
     /// <param name="clientToken"></param>
     /// <returns></returns>
-    public bool VeriftyToken(string clientToken)
+    public static bool VeriftyToken(string clientToken)
     {
         if (string.IsNullOrEmpty(clientToken)) return false;
 
@@ -330,23 +330,22 @@ public class Common
     /// 產生Token 並設定
     /// </summary>
     /// <returns></returns>
-    public string  GenToken()
+    public static string  GenToken()
     {
-        string token = CreateToken();        
-        SaveTokenToServer(token);
+        string token = CreateToken();
+        SaveTokenToSession(token);
         return token;
     }
 
-    private string CreateToken()
+    private static string CreateToken()
     {
         string tokenKey = HttpContext.Current.Session.SessionID + DateTime.Now.Ticks.ToString();
-        System.Security.Cryptography.MD5CryptoServiceProvider md5 =
-                new System.Security.Cryptography.MD5CryptoServiceProvider();
-        byte[] b = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(tokenKey));
+        MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+        byte[] b = md5.ComputeHash(Encoding.UTF8.GetBytes(tokenKey));
         return BitConverter.ToString(b).Replace("-", string.Empty);
     }
 
-    private void SaveTokenToServer(string pToken)
+    private static void SaveTokenToSession(string pToken)
     {
         HttpContext.Current.Session["Token"] = pToken;
     }

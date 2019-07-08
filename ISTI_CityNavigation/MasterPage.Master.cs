@@ -10,13 +10,10 @@ namespace ISTI_CityNavigation
 {
     public partial class MasterPage : System.Web.UI.MasterPage
     {
-        public string UserName,CompStr;
-        Common com = new Common();
+        public string UserName,CompStr,TokenStr;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!IsPostBack)
-            //    hid_token_master.Value = com.GenToken();
-
+            TokenStr = Common.GenToken();
             if (LogInfo.mGuid != "")
             {
                 UserName = LogInfo.name;

@@ -11,7 +11,7 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetBudgetExecution.aspx",
                 data: {
-                    Token: document.getElementById('<%=InfoToken.ClientID%>').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -82,15 +82,13 @@
         <div class="right">首頁 / 智慧城鄉計畫提案 / 經費總表</div><!-- right -->
     </div><!-- twocol -->
 
-     <div class="tabmenublockV2wrapper margin10T">
-           <div class="tabmenublockV2 font-size3">
-               <!--#include file="MoneyLink.html"-->
-           </div><!-- tabmenublock -->
-       </div><!-- tabmenublockV2wrapper -->
+    <div class="tabmenublockV2wrapper margin10T">
+        <div class="tabmenublockV2 font-size3">
+            <!--#include file="MoneyLink.html"-->
+        </div><!-- tabmenublock -->
+    </div><!-- tabmenublockV2wrapper -->
 
-       <div id="TabDiv" class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal margin20T margin10B">
-           <table id="tablist" border="0" cellspacing="0" cellpadding="0" width="100%"></table>
-       </div>
-
-    <input type="hidden" id="InfoToken" runat="server" >
+    <div id="TabDiv" class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal margin20T margin10B">
+        <table id="tablist" border="0" cellspacing="0" cellpadding="0" width="100%"></table>
+    </div>
 </asp:Content>

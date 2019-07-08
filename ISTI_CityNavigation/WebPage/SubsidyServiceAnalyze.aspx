@@ -11,7 +11,7 @@
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetServiceSubMoney.aspx",
                 data: {
-                    Token: document.getElementById('<%=hfToken.ClientID%>').value
+                    Token: $("#InfoToken").val()
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -81,5 +81,4 @@
             <tbody></tbody>
         </table>
     </div>
-    <input type="hidden" id="hfToken" runat="server" />
 </asp:Content>

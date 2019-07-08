@@ -18,14 +18,13 @@ namespace ISTI_CityNavigation.Manage.mHandler
             ///功    能: 撈市長副市長列表
             ///-----------------------------------------------------
             XmlDocument xDoc = new XmlDocument();
-            //讀取Token值
-            string token = (string.IsNullOrEmpty(Request.Form["Token"])) ? "" : Request.Form["Token"].ToString().Trim();
-            if (VeriftyToken(token))
+            try
             {
-                try
-                {
-                    string MR_CityNo = (Request["CityNo"] != null) ? Request["CityNo"].ToString().Trim() : "";
+                string MR_CityNo = (Request["CityNo"] != null) ? Request["CityNo"].ToString().Trim() : "";
+                string token = (string.IsNullOrEmpty(Request.Form["Token"])) ? "" : Request.Form["Token"].ToString().Trim();
 
+                if (Common.VeriftyToken(token))
+                {
                     n_db._MR_CityNo = MR_CityNo;
                     DataTable dt = n_db.getMayorList();
                     string xmlstr = string.Empty;
@@ -33,34 +32,18 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
                     xDoc.LoadXml(xmlstr);
                 }
-
-                catch (Exception ex)
+                else
                 {
-                    xDoc = ExceptionUtil.GetExceptionDocument(ex);
+                    xDoc = ExceptionUtil.GetErrorMassageDocument("TokenFail");
                 }
-
-                Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                xDoc.Save(Response.Output);
             }
-            else
+            catch (Exception ex)
             {
-                xDoc = ExceptionUtil.GetTokenErrorMassageDocument();
-                Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
-                xDoc.Save(Response.Output);
+                xDoc = ExceptionUtil.GetExceptionDocument(ex);
             }
-                
-        }
 
-        //判斷Token是否正確
-        private bool VeriftyToken(string clientToken)
-        {
-            if (string.IsNullOrEmpty(clientToken)) return false;
-
-            string serverToken = HttpContext.Current.Session["Token"].ToString();
-            if (clientToken.Equals(serverToken))
-                return true;
-            else
-                return false;
+            Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
+            xDoc.Save(Response.Output);
         }
     }
 }
