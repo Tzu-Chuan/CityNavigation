@@ -142,7 +142,6 @@ public class ServiceSubMoney_DB
             sqlBC.DestinationTableName = "ServiceSubMoney";
 
             /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-            sqlBC.ColumnMappings.Add("S_ID", "S_ID");
             sqlBC.ColumnMappings.Add("S_Type", "S_Type");
             sqlBC.ColumnMappings.Add("S_PlanCount", "S_PlanCount");
             sqlBC.ColumnMappings.Add("S_Subsidy", "S_Subsidy");

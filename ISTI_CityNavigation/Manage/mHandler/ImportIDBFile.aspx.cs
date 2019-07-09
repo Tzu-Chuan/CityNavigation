@@ -69,6 +69,9 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     /// 各縣市計畫列表
                     DoCityPlanTable(workbook, oConn, myTrans);
 
+                    ///執行到此表示EXCEL資料未出現錯誤，Error Message 清空
+                    err = string.Empty;
+
                     myTrans.Commit();
                     oCmd.Connection.Close();
                     oConn.Close();
@@ -95,11 +98,11 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 抓最大版次+1
             int maxV = be_db.getMaxVersion() + 1;
             DataTable dt = CreateBudgetExecution();
-            /// 資料從第3筆開始
+            /// 資料從第3欄開始
             for (int i = 2; i < 5; i++)
             {
                 err = "Sheet Name：" + sheet.SheetName.Trim() + "<br>";
-                err += "行數：第 " + (i + 1).ToString() + " 筆";
+                err += "欄數：第 " + (i + 1).ToString() + " 欄";
                 DataRow row = dt.NewRow();
                 row["B_Year"] = sheet.GetRow(1).GetCell(i).ToString().Trim().Replace("年度", "");
                 row["B_Commission"] = sheet.GetRow(2).GetCell(i).ToString().Trim();
@@ -375,14 +378,14 @@ namespace ISTI_CityNavigation.Manage.mHandler
         private DataTable CreateBudgetExecution()
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("B_Year", typeof(string));
-            dt.Columns.Add("B_Commission", typeof(string));
-            dt.Columns.Add("B_Subsidy", typeof(string));
-            dt.Columns.Add("B_Sub01", typeof(string));
-            dt.Columns.Add("B_Sub02", typeof(string));
-            dt.Columns.Add("B_Sub03", typeof(string));
-            dt.Columns.Add("B_RemainBudget", typeof(string));
-            dt.Columns.Add("B_Rate", typeof(string));
+            dt.Columns.Add("B_Year", typeof(string)).MaxLength = 5;
+            dt.Columns.Add("B_Commission", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("B_Subsidy", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("B_Sub01", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("B_Sub02", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("B_Sub03", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("B_RemainBudget", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("B_Rate", typeof(string)).MaxLength = 50;
             dt.Columns.Add("B_CreateId", typeof(string));
             dt.Columns.Add("B_CreateName", typeof(string));
             dt.Columns.Add("B_Version", typeof(Int32));
@@ -395,13 +398,12 @@ namespace ISTI_CityNavigation.Manage.mHandler
         private DataTable CreateServiceSubMoney()
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("S_ID", typeof(string));
-            dt.Columns.Add("S_Type", typeof(string));
-            dt.Columns.Add("S_PlanCount", typeof(string));
-            dt.Columns.Add("S_Subsidy", typeof(string));
-            dt.Columns.Add("S_TotalMoney", typeof(string));
-            dt.Columns.Add("S_SubsidyRatio", typeof(string));
-            dt.Columns.Add("S_TotalMoneyRatio", typeof(string));
+            dt.Columns.Add("S_Type", typeof(string)).MaxLength = 10;
+            dt.Columns.Add("S_PlanCount", typeof(string)).MaxLength = 10;
+            dt.Columns.Add("S_Subsidy", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("S_TotalMoney", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("S_SubsidyRatio", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("S_TotalMoneyRatio", typeof(string)).MaxLength = 50;
             dt.Columns.Add("S_CreateId", typeof(string));
             dt.Columns.Add("S_CreateName", typeof(string));
             dt.Columns.Add("S_Version", typeof(Int32));
@@ -414,13 +416,12 @@ namespace ISTI_CityNavigation.Manage.mHandler
         private DataTable CreateCategorySubMoney()
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("C_ID", typeof(string));
-            dt.Columns.Add("C_Type", typeof(string));
-            dt.Columns.Add("C_PlanCount", typeof(string));
-            dt.Columns.Add("C_Subsidy", typeof(string));
-            dt.Columns.Add("C_TotalMoney", typeof(string));
-            dt.Columns.Add("C_SubsidyRatio", typeof(string));
-            dt.Columns.Add("C_TotalMoneyRatio", typeof(string));
+            dt.Columns.Add("C_Type", typeof(string)).MaxLength = 10;
+            dt.Columns.Add("C_PlanCount", typeof(string)).MaxLength = 10;
+            dt.Columns.Add("C_Subsidy", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_TotalMoney", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_SubsidyRatio", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_TotalMoneyRatio", typeof(string)).MaxLength = 50;
             dt.Columns.Add("C_CreateId", typeof(string));
             dt.Columns.Add("C_CreateName", typeof(string));
             dt.Columns.Add("C_Version", typeof(Int32));
@@ -433,64 +434,64 @@ namespace ISTI_CityNavigation.Manage.mHandler
         private DataTable CreateCitySummaryTable()
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("CS_PlanSchedule", typeof(string));
-            dt.Columns.Add("CS_No", typeof(string));
-            dt.Columns.Add("CS_PlanType", typeof(string));
-            dt.Columns.Add("CS_PlanTypeDetail", typeof(string));
-            dt.Columns.Add("CS_CaseNo", typeof(string));
-            dt.Columns.Add("CS_HostCompany", typeof(string));
+            dt.Columns.Add("CS_PlanSchedule", typeof(string)).MaxLength = 10;
+            dt.Columns.Add("CS_No", typeof(string)).MaxLength = 10;
+            dt.Columns.Add("CS_PlanType", typeof(string)).MaxLength = 10;
+            dt.Columns.Add("CS_PlanTypeDetail", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_CaseNo", typeof(string)).MaxLength = 12;
+            dt.Columns.Add("CS_HostCompany", typeof(string)).MaxLength = 50;
             dt.Columns.Add("CS_JointCompany", typeof(string));
-            dt.Columns.Add("CS_PlanName", typeof(string));
-            dt.Columns.Add("CS_ServiceArea", typeof(string));
-            dt.Columns.Add("CS_ServiceType", typeof(string));
-            dt.Columns.Add("CS_CityArea", typeof(string));
+            dt.Columns.Add("CS_PlanName", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_ServiceArea", typeof(string)).MaxLength = 200;
+            dt.Columns.Add("CS_ServiceType", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_CityArea", typeof(string)).MaxLength = 200;
             dt.Columns.Add("CS_CityAreaDetail", typeof(string));
-            dt.Columns.Add("CS_PlanTotalMoney", typeof(string));
-            dt.Columns.Add("CS_PlanSubMoney", typeof(string));
-            dt.Columns.Add("CS_NewTaipei_Total", typeof(string));
-            dt.Columns.Add("CS_Taipei_Total", typeof(string));
-            dt.Columns.Add("CS_Taoyuan_Total", typeof(string));
-            dt.Columns.Add("CS_Taichung_Total", typeof(string));
-            dt.Columns.Add("CS_Tainan_Total", typeof(string));
-            dt.Columns.Add("CS_Kaohsiung_Total", typeof(string));
-            dt.Columns.Add("CS_Yilan_Total", typeof(string));
-            dt.Columns.Add("CS_HsinchuCounty_Total", typeof(string));
-            dt.Columns.Add("CS_Miaoli_Total", typeof(string));
-            dt.Columns.Add("CS_Changhua_Total", typeof(string));
-            dt.Columns.Add("CS_Nantou_Total", typeof(string));
-            dt.Columns.Add("CS_Yunlin_Total", typeof(string));
-            dt.Columns.Add("CS_ChiayiCounty_Total", typeof(string));
-            dt.Columns.Add("CS_Pingtung_Total", typeof(string));
-            dt.Columns.Add("CS_Taitung_Total", typeof(string));
-            dt.Columns.Add("CS_Hualien_Total", typeof(string));
-            dt.Columns.Add("CS_Penghu_Total", typeof(string));
-            dt.Columns.Add("CS_Keelung_Total", typeof(string));
-            dt.Columns.Add("CS_HsinchuCity_Total", typeof(string));
-            dt.Columns.Add("CS_ChiayiCity_Total", typeof(string));
-            dt.Columns.Add("CS_Kinmen_Total", typeof(string));
-            dt.Columns.Add("CS_Lienchiang_Total", typeof(string));
-            dt.Columns.Add("CS_NewTaipei_Sub", typeof(string));
-            dt.Columns.Add("CS_Taipei_Sub", typeof(string));
-            dt.Columns.Add("CS_Taoyuan_Sub", typeof(string));
-            dt.Columns.Add("CS_Taichung_Sub", typeof(string));
-            dt.Columns.Add("CS_Tainan_Sub", typeof(string));
-            dt.Columns.Add("CS_Kaohsiung_Sub", typeof(string));
-            dt.Columns.Add("CS_Yilan_Sub", typeof(string));
-            dt.Columns.Add("CS_HsinchuCounty_Sub", typeof(string));
-            dt.Columns.Add("CS_Miaoli_Sub", typeof(string));
-            dt.Columns.Add("CS_Changhua_Sub", typeof(string));
-            dt.Columns.Add("CS_Nantou_Sub", typeof(string));
-            dt.Columns.Add("CS_Yunlin_Sub", typeof(string));
-            dt.Columns.Add("CS_ChiayiCounty_Sub", typeof(string));
-            dt.Columns.Add("CS_Pingtung_Sub", typeof(string));
-            dt.Columns.Add("CS_Taitung_Sub", typeof(string));
-            dt.Columns.Add("CS_Hualien_Sub", typeof(string));
-            dt.Columns.Add("CS_Penghu_Sub", typeof(string));
-            dt.Columns.Add("CS_Keelung_Sub", typeof(string));
-            dt.Columns.Add("CS_HsinchuCity_Sub", typeof(string));
-            dt.Columns.Add("CS_ChiayiCity_Sub", typeof(string));
-            dt.Columns.Add("CS_Kinmen_Sub", typeof(string));
-            dt.Columns.Add("CS_Lienchiang_Sub", typeof(string));
+            dt.Columns.Add("CS_PlanTotalMoney", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_PlanSubMoney", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_NewTaipei_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Taipei_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Taoyuan_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Taichung_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Tainan_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Kaohsiung_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Yilan_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_HsinchuCounty_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Miaoli_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Changhua_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Nantou_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Yunlin_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_ChiayiCounty_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Pingtung_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Taitung_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Hualien_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Penghu_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Keelung_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_HsinchuCity_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_ChiayiCity_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Kinmen_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Lienchiang_Total", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_NewTaipei_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Taipei_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Taoyuan_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Taichung_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Tainan_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Kaohsiung_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Yilan_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_HsinchuCounty_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Miaoli_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Changhua_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Nantou_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Yunlin_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_ChiayiCounty_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Pingtung_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Taitung_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Hualien_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Penghu_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Keelung_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_HsinchuCity_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_ChiayiCity_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Kinmen_Sub", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CS_Lienchiang_Sub", typeof(string)).MaxLength = 50;
             dt.Columns.Add("CS_CreateId", typeof(string));
             dt.Columns.Add("CS_CreateName", typeof(string));
             dt.Columns.Add("CS_Version", typeof(Int32));
@@ -499,28 +500,28 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
         #endregion
 
-        #region CitySummaryTable
+        #region CityPlanTable
         private DataTable CreateCityPlanTable()
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("CP_City", typeof(string));
-            dt.Columns.Add("CP_CityCode", typeof(string));
-            dt.Columns.Add("CP_PlanSchedule", typeof(string));
-            dt.Columns.Add("CP_No", typeof(string));
-            dt.Columns.Add("CP_PlanType", typeof(string));
-            dt.Columns.Add("CP_PlanTypeDetail", typeof(string));
-            dt.Columns.Add("CP_CaseNo", typeof(string));
-            dt.Columns.Add("CP_HostCompany", typeof(string));
+            dt.Columns.Add("CP_City", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CP_CityCode", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CP_PlanSchedule", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CP_No", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CP_PlanType", typeof(string)).MaxLength = 10;
+            dt.Columns.Add("CP_PlanTypeDetail", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CP_CaseNo", typeof(string)).MaxLength = 12;
+            dt.Columns.Add("CP_HostCompany", typeof(string)).MaxLength = 50;
             dt.Columns.Add("CP_JointCompany", typeof(string));
-            dt.Columns.Add("CP_PlanName", typeof(string));
-            dt.Columns.Add("CP_ServiceArea", typeof(string));
-            dt.Columns.Add("CP_ServiceType", typeof(string));
-            dt.Columns.Add("CP_CityArea", typeof(string));
+            dt.Columns.Add("CP_PlanName", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CP_ServiceArea", typeof(string)).MaxLength = 200;
+            dt.Columns.Add("CP_ServiceType", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CP_CityArea", typeof(string)).MaxLength = 200;
             dt.Columns.Add("CP_CityAreaDetail", typeof(string));
-            dt.Columns.Add("CP_PlanTotalMoney", typeof(string));
-            dt.Columns.Add("CP_PlanSubMoney", typeof(string));
-            dt.Columns.Add("CP_CityTotalMoney", typeof(string));
-            dt.Columns.Add("CP_CitySubMoney", typeof(string));
+            dt.Columns.Add("CP_PlanTotalMoney", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CP_PlanSubMoney", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CP_CityTotalMoney", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("CP_CitySubMoney", typeof(string)).MaxLength = 50;
             dt.Columns.Add("CP_CreateId", typeof(string));
             dt.Columns.Add("CP_CreateName", typeof(string));
             dt.Columns.Add("CP_Version", typeof(Int32));
@@ -533,19 +534,19 @@ namespace ISTI_CityNavigation.Manage.mHandler
         private DataTable CreateCitySubMoney()
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("C_City", typeof(string));
-            dt.Columns.Add("C_PlanCount_NotAll", typeof(string));
-            dt.Columns.Add("C_SubMoney_NotAll", typeof(string));
-            dt.Columns.Add("C_PlanMoney_NotAll", typeof(string));
-            dt.Columns.Add("C_AssignSubMoney", typeof(string));
-            dt.Columns.Add("C_AssignTotalMoney", typeof(string));
-            dt.Columns.Add("C_CitySubMoneyRatio_NotAll", typeof(string));
-            dt.Columns.Add("C_CityTotalMoneyRatio_NotAll", typeof(string));
-            dt.Columns.Add("C_PlanCount", typeof(string));
-            dt.Columns.Add("C_SubMoney", typeof(string));
-            dt.Columns.Add("C_PlanMoney", typeof(string));
-            dt.Columns.Add("C_CitySubMoneyRatio", typeof(string));
-            dt.Columns.Add("C_CityTotalMoneyRatio", typeof(string));
+            dt.Columns.Add("C_City", typeof(string)).MaxLength = 10;
+            dt.Columns.Add("C_PlanCount_NotAll", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_SubMoney_NotAll", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_PlanMoney_NotAll", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_AssignSubMoney", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_AssignTotalMoney", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_CitySubMoneyRatio_NotAll", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_CityTotalMoneyRatio_NotAll", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_PlanCount", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_SubMoney", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_PlanMoney", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_CitySubMoneyRatio", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("C_CityTotalMoneyRatio", typeof(string)).MaxLength = 50;
             dt.Columns.Add("C_CreateId", typeof(string));
             dt.Columns.Add("C_CreateName", typeof(string));
             dt.Columns.Add("C_Version", typeof(Int32));

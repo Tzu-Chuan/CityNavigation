@@ -143,7 +143,6 @@ public class CategorySubMoney_DB
             sqlBC.DestinationTableName = "CategorySubMoney";
 
             /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-            sqlBC.ColumnMappings.Add("C_ID", "C_ID");
             sqlBC.ColumnMappings.Add("C_Type", "C_Type");
             sqlBC.ColumnMappings.Add("C_PlanCount", "C_PlanCount");
             sqlBC.ColumnMappings.Add("C_Subsidy", "C_Subsidy");
