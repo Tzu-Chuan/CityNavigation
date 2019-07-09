@@ -99,7 +99,7 @@
                             tabstr += '<tr>';
                             tabstr += '<td align="left" nowrap="nowrap">0-14歲幼年人口數</td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("P_ChildYear", data).text().trim() + '年' + '</td>';
-                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_PeopleTotalPercent", data).text().trim()).toFixed(0)) + '人' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_Child", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
