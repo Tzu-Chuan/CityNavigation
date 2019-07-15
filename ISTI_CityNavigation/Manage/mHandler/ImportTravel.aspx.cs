@@ -37,25 +37,25 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 //建立DataTable Bulk Copy用
                 DataTable dt = new DataTable();
-                dt.Columns.Add("T_CityNo", typeof(string));
-                dt.Columns.Add("T_CityName", typeof(string));
-                dt.Columns.Add("T_HotelUseYear", typeof(string));
-                dt.Columns.Add("T_HotelUseRate", typeof(string));
-                dt.Columns.Add("T_PointYear", typeof(string));
-                dt.Columns.Add("T_PointYearDesc", typeof(string));
-                dt.Columns.Add("T_PointPeople", typeof(string));
-                dt.Columns.Add("T_HotelsYear", typeof(string));
-                dt.Columns.Add("T_Hotels", typeof(string));
-                dt.Columns.Add("T_HotelRoomsYear", typeof(string));
-                dt.Columns.Add("T_HotelRooms", typeof(string));
-                dt.Columns.Add("T_HotelAvgPriceYear", typeof(string));
-                dt.Columns.Add("T_HotelAvgPrice", typeof(string));
+                dt.Columns.Add("T_CityNo", typeof(string)).MaxLength=2;
+                dt.Columns.Add("T_CityName", typeof(string)).MaxLength=10;
+                dt.Columns.Add("T_HotelUseYear", typeof(string)).MaxLength=3;
+                dt.Columns.Add("T_HotelUseRate", typeof(string)).MaxLength=7;
+                dt.Columns.Add("T_PointYear", typeof(string)).MaxLength=3;
+                dt.Columns.Add("T_PointYearDesc", typeof(string)).MaxLength=50;
+                dt.Columns.Add("T_PointPeople", typeof(string)).MaxLength=20;
+                dt.Columns.Add("T_HotelsYear", typeof(string)).MaxLength=3;
+                dt.Columns.Add("T_Hotels", typeof(string)).MaxLength=20;
+                dt.Columns.Add("T_HotelRoomsYear", typeof(string)).MaxLength=3;
+                dt.Columns.Add("T_HotelRooms", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("T_HotelAvgPriceYear", typeof(string)).MaxLength=3;
+                dt.Columns.Add("T_HotelAvgPrice", typeof(string)).MaxLength=20;
                 dt.Columns.Add("T_CreateDate", typeof(DateTime));
                 dt.Columns.Add("T_CreateID", typeof(string));
                 dt.Columns.Add("T_CreateName", typeof(string));
                 dt.Columns.Add("T_Status", typeof(string));
                 dt.Columns.Add("T_Version", typeof(int));
-
+                
                 try
                 {
                     HttpFileCollection uploadFiles = Request.Files;//檔案集合
@@ -113,6 +113,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 {
                                     throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                                 }
+
+                                strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
                                 row["T_CityNo"] = cityNo;//縣市代碼
                                 row["T_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["T_HotelUseYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//觀光旅館住用率-資料年度(民國年)
@@ -141,14 +143,12 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                         if (dt.Rows.Count > 0)
                         {
+                            strErrorMsg = "";
                             BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
                             DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
                                                                  //最後再commit
                             myTrans.Commit();
-                            if (strErrorMsg == "")
-                            {
-                                strErrorMsg = "上傳成功";
-                            }
+                            
 
                         }
                     }
@@ -156,14 +156,83 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 }
                 catch (Exception ex)
                 {
-                    strErrorMsg += ex.Message;
+                    string Errormsg = ex.Message;
+                    string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。"," ","'"}, StringSplitOptions.None);
+                    string ErrorField = eArray[3].ToString();
+                    switch (ErrorField)
+                    {
+                        case "T_CityName":
+                            strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
+
+                            break;
+                        case "T_HotelUseYear":
+                            strErrorMsg += "欄位:觀光旅館住用率-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+                        case "T_HotelUseRate":
+                            strErrorMsg += "欄位:觀光旅館住用率<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可超出7位數";
+                            break;
+
+                        case "T_PointYear":
+                            strErrorMsg += "欄位:觀光遊憩據點(縣市)人次統計-資料年<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "T_PointYearDesc":
+                            strErrorMsg += "欄位:觀光遊憩據點(縣市)人次統計-資料年<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可超出50位數";
+                            break;
+
+                        case "T_PointPeople":
+                            strErrorMsg += "欄位:觀光遊憩據點(縣市)人次統計<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "T_HotelsYear":
+                            strErrorMsg += "欄位:觀光旅館家數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "T_Hotels":
+                            strErrorMsg += "欄位:觀光旅館家數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可超出20位數";
+                            break;
+
+                        case "T_HotelRoomsYear":
+                            strErrorMsg += "欄位:觀光旅館房間數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "T_HotelRooms":
+                            strErrorMsg += "欄位:觀光旅館房間數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "T_HotelAvgPriceYear":
+                            strErrorMsg += "欄位:觀光旅館平均房價-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "T_HotelAvgPrice":
+                            strErrorMsg += "欄位:觀光旅館平均房價<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+                    }
                     myTrans.Rollback();
                 }
                 finally
                 {
                     oCmd.Connection.Close();
                     oConn.Close();
-                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    if (strErrorMsg == "")
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('觀光匯入成功');</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    }
                 }
             }
             else
@@ -198,8 +267,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
         //觀光 BulkCopy
         private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
         {
-            try
-            {
+            //try
+            //{
                 SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
                 using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
                 {
@@ -233,11 +302,11 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     /// 開始寫入資料
                     sqlBC.WriteToServer(srcData);
                 }
-            }
-            catch (Exception ex)
-            {
-                strErrorMsg += "觀光匯入 error：" + ex.Message.ToString() + "\n";
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    strErrorMsg += "觀光匯入 error：" + ex.Message.ToString() + "\n";
+            //}
 
         }
         //判斷Token是否正確

@@ -37,26 +37,26 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 //建立DataTable Bulk Copy用
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Hea_CityNo", typeof(string));
-                dt.Columns.Add("Hea_CityName", typeof(string));
-                dt.Columns.Add("Hea_10KPeopleBedYear", typeof(string));
-                dt.Columns.Add("Hea_10KPeopleBed", typeof(string));
-                dt.Columns.Add("Hea_10KPeopleAcuteGeneralBedYear", typeof(string));
-                dt.Columns.Add("Hea_10KPeopleAcuteGeneralBed", typeof(string));
-                dt.Columns.Add("Hea_10KpeoplePractitionerYear", typeof(string));
-                dt.Columns.Add("Hea_10KpeoplePractitioner", typeof(string));
-                dt.Columns.Add("Hea_DisabledPersonOfCityRateYear", typeof(string));
-                dt.Columns.Add("Hea_DisabledPersonOfCityRate", typeof(string));
-                dt.Columns.Add("Hea_LongTermPersonYear", typeof(string));
-                dt.Columns.Add("Hea_LongTermPerson", typeof(string));
-                dt.Columns.Add("Hea_LongTermPersonOfOldMenRateYear", typeof(string));
-                dt.Columns.Add("Hea_LongTermPersonOfOldMenRate", typeof(string));
-                dt.Columns.Add("Hea_MedicalInstitutionsYear", typeof(string));
-                dt.Columns.Add("Hea_MedicalInstitutions", typeof(string));
-                dt.Columns.Add("Hea_MedicalInstitutionsAvgPersonYear", typeof(string));
-                dt.Columns.Add("Hea_MedicalInstitutionsAvgPerson", typeof(string));
-                dt.Columns.Add("Hea_GOVPayOfNHIYear", typeof(string));
-                dt.Columns.Add("Hea_GOVPayOfNHI", typeof(string));
+                dt.Columns.Add("Hea_CityNo", typeof(string)).MaxLength = 2;
+                dt.Columns.Add("Hea_CityName", typeof(string)).MaxLength = 10;
+                dt.Columns.Add("Hea_10KPeopleBedYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Hea_10KPeopleBed", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Hea_10KPeopleAcuteGeneralBedYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Hea_10KPeopleAcuteGeneralBed", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Hea_10KpeoplePractitionerYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Hea_10KpeoplePractitioner", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Hea_DisabledPersonOfCityRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Hea_DisabledPersonOfCityRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Hea_LongTermPersonYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Hea_LongTermPerson", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Hea_LongTermPersonOfOldMenRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Hea_LongTermPersonOfOldMenRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Hea_MedicalInstitutionsYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Hea_MedicalInstitutions", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Hea_MedicalInstitutionsAvgPersonYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Hea_MedicalInstitutionsAvgPerson", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Hea_GOVPayOfNHIYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Hea_GOVPayOfNHI", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("Hea_CreateDate", typeof(DateTime));
                 dt.Columns.Add("Hea_CreateID", typeof(string));
                 dt.Columns.Add("Hea_CreateName", typeof(string));
@@ -120,6 +120,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 {
                                     throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                                 }
+
+                                strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
                                 row["Hea_CityNo"] = cityNo;//縣市代碼
                                 row["Hea_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["Hea_10KPeopleBedYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//每萬人口病床數-資料年度(民國年)
@@ -156,29 +158,129 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                         if (dt.Rows.Count > 0)
                         {
+                            strErrorMsg = "";
                             BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
-                            DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
-                                                                 //最後再commit
-                            myTrans.Commit();
-                            if (strErrorMsg == "")
-                            {
-                                strErrorMsg = "上傳成功";
-                            }
-
+                            DoBulkCopy(myTrans, dt);//匯入
+                            myTrans.Commit();      //最後再commit
                         }
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    strErrorMsg += ex.Message;
+                    string Errormsg = ex.Message;
+                    string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
+                    string ErrorField = eArray[3].ToString();
+                    switch (ErrorField)
+                    {
+                        case "Hea_CityName":
+                            strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
+                            break;
+
+                        case "Hea_10KPeopleBedYear":
+                            strErrorMsg += "欄位:每萬人口病床數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Hea_10KPeopleBed":
+                            strErrorMsg += "欄位:每萬人口病床數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Hea_10KPeopleAcuteGeneralBedYear":
+                            strErrorMsg += "欄位:每萬人口急性一般病床數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Hea_10KPeopleAcuteGeneralBed":
+                            strErrorMsg += "欄位:每萬人口急性一般病床數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Hea_10KpeoplePractitionerYear":
+                            strErrorMsg += "欄位:每萬人執業醫事人員數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Hea_10KpeoplePractitioner":
+                            strErrorMsg += "欄位:每萬人執業醫事人員數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Hea_DisabledPersonOfCityRateYear":
+                            strErrorMsg += "欄位:身心障礙人口占全縣(市)總人口比率-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Hea_DisabledPersonOfCityRate":
+                            strErrorMsg += "欄位:身心障礙人口占全縣(市)總人口比率<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Hea_LongTermPersonYear":
+                            strErrorMsg += "欄位:長期照顧機構可供進駐人數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Hea_LongTermPerson":
+                            strErrorMsg += "欄位:長期照顧機構可供進駐人數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Hea_LongTermPersonOfOldMenRateYear":
+                            strErrorMsg += "欄位:長期照顧機構可供進駐人數佔預估失能老人需求比例-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Hea_LongTermPersonOfOldMenRate":
+                            strErrorMsg += "欄位:長期照顧機構可供進駐人數佔預估失能老人需求比例<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Hea_MedicalInstitutionsYear":
+                            strErrorMsg += "欄位:醫療機構數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Hea_MedicalInstitutions":
+                            strErrorMsg += "欄位:醫療機構數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Hea_MedicalInstitutionsAvgPersonYear":
+                            strErrorMsg += "欄位:平均每一醫療機構服務人數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Hea_MedicalInstitutionsAvgPerson":
+                            strErrorMsg += "欄位:平均每一醫療機構服務人數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Hea_GOVPayOfNHIYear":
+                            strErrorMsg += "欄位:政府部門醫療保健支出-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Hea_GOVPayOfNHI":
+                            strErrorMsg += "欄位:政府部門醫療保健支出<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+                    }
                     myTrans.Rollback();
                 }
                 finally
                 {
                     oCmd.Connection.Close();
                     oConn.Close();
-                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    if (strErrorMsg == "")
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('健康匯入成功');</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    }
                 }
             }
             else
@@ -211,82 +313,48 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
 
         //健康 BulkCopy
-        private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
+        private void DoBulkCopy(SqlTransaction oTran, DataTable srcData)
         {
-            try
+            SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
+            using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
             {
-                SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
-                using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
-                {
-                    sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
-                    //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
-                    ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
-                    //sqlBC.NotifyAfter = 10000;
-                    ///設定要寫入的資料庫
-                    sqlBC.DestinationTableName = "Health";
+                sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
+                //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
+                ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
+                //sqlBC.NotifyAfter = 10000;
+                ///設定要寫入的資料庫
+                sqlBC.DestinationTableName = "Health";
 
-                    /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-                    
-                    
-                    
+                /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
+                sqlBC.ColumnMappings.Add("Hea_CityNo", "Hea_CityNo");
+                sqlBC.ColumnMappings.Add("Hea_CityName", "Hea_CityName");
+                sqlBC.ColumnMappings.Add("Hea_10KPeopleBedYear", "Hea_10KPeopleBedYear");
+                sqlBC.ColumnMappings.Add("Hea_10KPeopleBed", "Hea_10KPeopleBed");
+                sqlBC.ColumnMappings.Add("Hea_10KPeopleAcuteGeneralBedYear", "Hea_10KPeopleAcuteGeneralBedYear");
+                sqlBC.ColumnMappings.Add("Hea_10KPeopleAcuteGeneralBed", "Hea_10KPeopleAcuteGeneralBed");
+                sqlBC.ColumnMappings.Add("Hea_10KpeoplePractitionerYear", "Hea_10KpeoplePractitionerYear");
+                sqlBC.ColumnMappings.Add("Hea_10KpeoplePractitioner", "Hea_10KpeoplePractitioner");
+                sqlBC.ColumnMappings.Add("Hea_DisabledPersonOfCityRateYear", "Hea_DisabledPersonOfCityRateYear");
+                sqlBC.ColumnMappings.Add("Hea_DisabledPersonOfCityRate", "Hea_DisabledPersonOfCityRate");
+                sqlBC.ColumnMappings.Add("Hea_LongTermPersonYear", "Hea_LongTermPersonYear");
+                sqlBC.ColumnMappings.Add("Hea_LongTermPerson", "Hea_LongTermPerson");
+                sqlBC.ColumnMappings.Add("Hea_LongTermPersonOfOldMenRateYear", "Hea_LongTermPersonOfOldMenRateYear");
+                sqlBC.ColumnMappings.Add("Hea_LongTermPersonOfOldMenRate", "Hea_LongTermPersonOfOldMenRate");
+                sqlBC.ColumnMappings.Add("Hea_MedicalInstitutionsYear", "Hea_MedicalInstitutionsYear");
+                sqlBC.ColumnMappings.Add("Hea_MedicalInstitutions", "Hea_MedicalInstitutions");
+                sqlBC.ColumnMappings.Add("Hea_MedicalInstitutionsAvgPersonYear", "Hea_MedicalInstitutionsAvgPersonYear");
+                sqlBC.ColumnMappings.Add("Hea_MedicalInstitutionsAvgPerson", "Hea_MedicalInstitutionsAvgPerson");
+                sqlBC.ColumnMappings.Add("Hea_GOVPayOfNHIYear", "Hea_GOVPayOfNHIYear");
+                sqlBC.ColumnMappings.Add("Hea_GOVPayOfNHI", "Hea_GOVPayOfNHI");
+                sqlBC.ColumnMappings.Add("Hea_CreateDate", "Hea_CreateDate");
+                sqlBC.ColumnMappings.Add("Hea_CreateID", "Hea_CreateID");
+                sqlBC.ColumnMappings.Add("Hea_CreateName", "Hea_CreateName");
+                sqlBC.ColumnMappings.Add("Hea_Status", "Hea_Status");
+                sqlBC.ColumnMappings.Add("Hea_Version", "Hea_Version");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    sqlBC.ColumnMappings.Add("Hea_CityNo", "Hea_CityNo");
-                    sqlBC.ColumnMappings.Add("Hea_CityName", "Hea_CityName");
-                    sqlBC.ColumnMappings.Add("Hea_10KPeopleBedYear", "Hea_10KPeopleBedYear");
-                    sqlBC.ColumnMappings.Add("Hea_10KPeopleBed", "Hea_10KPeopleBed");
-                    sqlBC.ColumnMappings.Add("Hea_10KPeopleAcuteGeneralBedYear", "Hea_10KPeopleAcuteGeneralBedYear");
-                    sqlBC.ColumnMappings.Add("Hea_10KPeopleAcuteGeneralBed", "Hea_10KPeopleAcuteGeneralBed");
-                    sqlBC.ColumnMappings.Add("Hea_10KpeoplePractitionerYear", "Hea_10KpeoplePractitionerYear");
-                    sqlBC.ColumnMappings.Add("Hea_10KpeoplePractitioner", "Hea_10KpeoplePractitioner");
-                    sqlBC.ColumnMappings.Add("Hea_DisabledPersonOfCityRateYear", "Hea_DisabledPersonOfCityRateYear");
-                    sqlBC.ColumnMappings.Add("Hea_DisabledPersonOfCityRate", "Hea_DisabledPersonOfCityRate");
-                    sqlBC.ColumnMappings.Add("Hea_LongTermPersonYear", "Hea_LongTermPersonYear");
-                    sqlBC.ColumnMappings.Add("Hea_LongTermPerson", "Hea_LongTermPerson");
-                    sqlBC.ColumnMappings.Add("Hea_LongTermPersonOfOldMenRateYear", "Hea_LongTermPersonOfOldMenRateYear");
-                    sqlBC.ColumnMappings.Add("Hea_LongTermPersonOfOldMenRate", "Hea_LongTermPersonOfOldMenRate");
-                    sqlBC.ColumnMappings.Add("Hea_MedicalInstitutionsYear", "Hea_MedicalInstitutionsYear");
-                    sqlBC.ColumnMappings.Add("Hea_MedicalInstitutions", "Hea_MedicalInstitutions");
-                    sqlBC.ColumnMappings.Add("Hea_MedicalInstitutionsAvgPersonYear", "Hea_MedicalInstitutionsAvgPersonYear");
-                    sqlBC.ColumnMappings.Add("Hea_MedicalInstitutionsAvgPerson", "Hea_MedicalInstitutionsAvgPerson");
-                    sqlBC.ColumnMappings.Add("Hea_GOVPayOfNHIYear", "Hea_GOVPayOfNHIYear");
-                    sqlBC.ColumnMappings.Add("Hea_GOVPayOfNHI", "Hea_GOVPayOfNHI");
-                    sqlBC.ColumnMappings.Add("Hea_CreateDate", "Hea_CreateDate");
-                    sqlBC.ColumnMappings.Add("Hea_CreateID", "Hea_CreateID");
-                    sqlBC.ColumnMappings.Add("Hea_CreateName", "Hea_CreateName");
-                    sqlBC.ColumnMappings.Add("Hea_Status", "Hea_Status");
-                    sqlBC.ColumnMappings.Add("Hea_Version", "Hea_Version");
-
-                    /// 開始寫入資料
-                    sqlBC.WriteToServer(srcData);
-                }
+                /// 開始寫入資料
+                sqlBC.WriteToServer(srcData);
             }
-            catch (Exception ex)
-            {
-                strErrorMsg += "健康匯入 error：" + ex.Message.ToString() + "\n";
-            }
-
         }
 
         //判斷Token是否正確

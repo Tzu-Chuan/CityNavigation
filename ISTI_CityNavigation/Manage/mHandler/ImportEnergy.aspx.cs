@@ -37,16 +37,16 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 //建立DataTable Bulk Copy用
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Ene_CityNo", typeof(string));
-                dt.Columns.Add("Ene_CityName", typeof(string));
-                dt.Columns.Add("Ene_DeviceCapacityNumYear", typeof(string));
-                dt.Columns.Add("Ene_DeviceCapacityNum", typeof(string));
-                dt.Columns.Add("Ene_TPCBuyElectricityYear", typeof(string));
-                dt.Columns.Add("Ene_TPCBuyElectricity", typeof(string));
-                dt.Columns.Add("Ene_ElectricityUsedYear", typeof(string));
-                dt.Columns.Add("Ene_ElectricityUsed", typeof(string));
-                dt.Columns.Add("Ene_ReEnergyOfElectricityRateYear", typeof(string));
-                dt.Columns.Add("Ene_ReEnergyOfElectricityRate", typeof(string));
+                dt.Columns.Add("Ene_CityNo", typeof(string)).MaxLength = 2;
+                dt.Columns.Add("Ene_CityName", typeof(string)).MaxLength = 10;
+                dt.Columns.Add("Ene_DeviceCapacityNumYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Ene_DeviceCapacityNum", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Ene_TPCBuyElectricityYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Ene_TPCBuyElectricity", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Ene_ElectricityUsedYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Ene_ElectricityUsed", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Ene_ReEnergyOfElectricityRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Ene_ReEnergyOfElectricityRate", typeof(string)).MaxLength = 7;
                 dt.Columns.Add("Ene_CreateDate", typeof(DateTime));
                 dt.Columns.Add("Ene_CreateID", typeof(string));
                 dt.Columns.Add("Ene_CreateName", typeof(string));
@@ -110,6 +110,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 {
                                     throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                                 }
+
+                                strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
                                 row["Ene_CityNo"] = cityNo;//縣市代碼
                                 row["Ene_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["Ene_DeviceCapacityNumYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//再生能源裝置容量數-資料年度(民國年)
@@ -136,29 +138,79 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                         if (dt.Rows.Count > 0)
                         {
+                            strErrorMsg = "";
                             BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
-                            DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
-                                                                 //最後再commit
-                            myTrans.Commit();
-                            if (strErrorMsg == "")
-                            {
-                                strErrorMsg = "上傳成功";
-                            }
-
+                            DoBulkCopy(myTrans, dt);//匯入
+                            myTrans.Commit();                   //最後再commit
                         }
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    strErrorMsg += ex.Message;
+                    string Errormsg = ex.Message;
+                    string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
+                    string ErrorField = eArray[3].ToString();
+                    switch (ErrorField)
+                    {
+                        case "Ene_CityName":
+                            strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
+                            break;
+
+                        case "Ene_DeviceCapacityNumYear":
+                            strErrorMsg += "欄位:再生能源裝置容量數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Ene_DeviceCapacityNum":
+                            strErrorMsg += "欄位:再生能源裝置容量數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Ene_TPCBuyElectricityYear":
+                            strErrorMsg += "欄位:台電購入再生能源電量-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Ene_TPCBuyElectricity":
+                            strErrorMsg += "欄位:台電購入再生能源電量<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Ene_ElectricityUsedYear":
+                            strErrorMsg += "欄位:用電量-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Ene_ElectricityUsed":
+                            strErrorMsg += "欄位:用電量<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Ene_ReEnergyOfElectricityRateYear":
+                            strErrorMsg += "欄位:再生能源電量佔用電量比例-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Ene_ReEnergyOfElectricityRate":
+                            strErrorMsg += "欄位:再生能源電量佔用電量比例<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+                    }
                     myTrans.Rollback();
                 }
                 finally
                 {
                     oCmd.Connection.Close();
                     oConn.Close();
-                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    if (strErrorMsg == "")
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('能源匯入成功');</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    }
                 }
             }
             else
@@ -190,46 +242,38 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
 
         //能源 BulkCopy
-        private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
+        private void DoBulkCopy(SqlTransaction oTran, DataTable srcData)
         {
-            try
+            SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
+            using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
             {
-                SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
-                using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
-                {
-                    sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
-                    //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
-                    ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
-                    //sqlBC.NotifyAfter = 10000;
-                    ///設定要寫入的資料庫
-                    sqlBC.DestinationTableName = "Energy";
+                sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
+                //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
+                ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
+                //sqlBC.NotifyAfter = 10000;
+                ///設定要寫入的資料庫
+                sqlBC.DestinationTableName = "Energy";
 
-                    /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-                    sqlBC.ColumnMappings.Add("Ene_CityNo", "Ene_CityNo");
-                    sqlBC.ColumnMappings.Add("Ene_CityName", "Ene_CityName");
-                    sqlBC.ColumnMappings.Add("Ene_DeviceCapacityNumYear", "Ene_DeviceCapacityNumYear");
-                    sqlBC.ColumnMappings.Add("Ene_DeviceCapacityNum", "Ene_DeviceCapacityNum");
-                    sqlBC.ColumnMappings.Add("Ene_TPCBuyElectricityYear", "Ene_TPCBuyElectricityYear");
-                    sqlBC.ColumnMappings.Add("Ene_TPCBuyElectricity", "Ene_TPCBuyElectricity");
-                    sqlBC.ColumnMappings.Add("Ene_ElectricityUsedYear", "Ene_ElectricityUsedYear");
-                    sqlBC.ColumnMappings.Add("Ene_ElectricityUsed", "Ene_ElectricityUsed");
-                    sqlBC.ColumnMappings.Add("Ene_ReEnergyOfElectricityRateYear", "Ene_ReEnergyOfElectricityRateYear");
-                    sqlBC.ColumnMappings.Add("Ene_ReEnergyOfElectricityRate", "Ene_ReEnergyOfElectricityRate");
-                    sqlBC.ColumnMappings.Add("Ene_CreateDate", "Ene_CreateDate");
-                    sqlBC.ColumnMappings.Add("Ene_CreateID", "Ene_CreateID");
-                    sqlBC.ColumnMappings.Add("Ene_CreateName", "Ene_CreateName");
-                    sqlBC.ColumnMappings.Add("Ene_Status", "Ene_Status");
-                    sqlBC.ColumnMappings.Add("Ene_Version", "Ene_Version");
+                /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
+                sqlBC.ColumnMappings.Add("Ene_CityNo", "Ene_CityNo");
+                sqlBC.ColumnMappings.Add("Ene_CityName", "Ene_CityName");
+                sqlBC.ColumnMappings.Add("Ene_DeviceCapacityNumYear", "Ene_DeviceCapacityNumYear");
+                sqlBC.ColumnMappings.Add("Ene_DeviceCapacityNum", "Ene_DeviceCapacityNum");
+                sqlBC.ColumnMappings.Add("Ene_TPCBuyElectricityYear", "Ene_TPCBuyElectricityYear");
+                sqlBC.ColumnMappings.Add("Ene_TPCBuyElectricity", "Ene_TPCBuyElectricity");
+                sqlBC.ColumnMappings.Add("Ene_ElectricityUsedYear", "Ene_ElectricityUsedYear");
+                sqlBC.ColumnMappings.Add("Ene_ElectricityUsed", "Ene_ElectricityUsed");
+                sqlBC.ColumnMappings.Add("Ene_ReEnergyOfElectricityRateYear", "Ene_ReEnergyOfElectricityRateYear");
+                sqlBC.ColumnMappings.Add("Ene_ReEnergyOfElectricityRate", "Ene_ReEnergyOfElectricityRate");
+                sqlBC.ColumnMappings.Add("Ene_CreateDate", "Ene_CreateDate");
+                sqlBC.ColumnMappings.Add("Ene_CreateID", "Ene_CreateID");
+                sqlBC.ColumnMappings.Add("Ene_CreateName", "Ene_CreateName");
+                sqlBC.ColumnMappings.Add("Ene_Status", "Ene_Status");
+                sqlBC.ColumnMappings.Add("Ene_Version", "Ene_Version");
 
-                    /// 開始寫入資料
-                    sqlBC.WriteToServer(srcData);
-                }
+                /// 開始寫入資料
+                sqlBC.WriteToServer(srcData);
             }
-            catch (Exception ex)
-            {
-                strErrorMsg += "能源匯入 error：" + ex.Message.ToString() + "\n";
-            }
-
         }
 
         //判斷Token是否正確

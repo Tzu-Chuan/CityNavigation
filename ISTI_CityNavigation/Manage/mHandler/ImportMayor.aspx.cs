@@ -33,16 +33,16 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
             //建立DataTable Bulk Copy用
             DataTable dt = new DataTable();
-            dt.Columns.Add("MR_CityNo", typeof(string));
-            dt.Columns.Add("MR_CityName", typeof(string));
-            dt.Columns.Add("MR_MayorYear", typeof(string));
-            dt.Columns.Add("MR_Mayor", typeof(string));
-            dt.Columns.Add("MR_ViceMayorYear", typeof(string));
-            dt.Columns.Add("MR_ViceMayor", typeof(string));
-            dt.Columns.Add("MR_PoliticalPartyYear", typeof(string));
-            dt.Columns.Add("MR_PoliticalParty", typeof(string));
-            dt.Columns.Add("MR_AdAreaYear", typeof(string));
-            dt.Columns.Add("MR_AdArea", typeof(string));
+            dt.Columns.Add("MR_CityNo", typeof(string)).MaxLength = 2;
+            dt.Columns.Add("MR_CityName", typeof(string)).MaxLength = 10;
+            dt.Columns.Add("MR_MayorYear", typeof(string)).MaxLength = 3;
+            dt.Columns.Add("MR_Mayor", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("MR_ViceMayorYear", typeof(string)).MaxLength = 3;
+            dt.Columns.Add("MR_ViceMayor", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("MR_PoliticalPartyYear", typeof(string)).MaxLength = 3;
+            dt.Columns.Add("MR_PoliticalParty", typeof(string)).MaxLength = 50;
+            dt.Columns.Add("MR_AdAreaYear", typeof(string)).MaxLength = 3;
+            dt.Columns.Add("MR_AdArea", typeof(string)).MaxLength = 10;
             dt.Columns.Add("MR_CreateDate", typeof(DateTime));
             dt.Columns.Add("MR_CreateID", typeof(string));
             dt.Columns.Add("MR_CreateName", typeof(string));
@@ -106,6 +106,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                             {
                                 throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                             }
+
+                            strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
                             row["MR_CityNo"] = cityNo;//縣市代碼
                             row["MR_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                             row["MR_MayorYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//直轄市/縣市長-資料年度(民國年)
@@ -132,29 +134,79 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                     if (dt.Rows.Count > 0)
                     {
+                        strErrorMsg = "";
                         BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
                         DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
-                        //最後再commit
-                        myTrans.Commit();
-                        if (strErrorMsg == "")
-                        {
-                            strErrorMsg = "上傳成功";
-                        }
-
+                        myTrans.Commit();//最後再commit
                     }
                 }
 
             }
             catch (Exception ex)
             {
-                strErrorMsg += ex.Message;
+                string Errormsg = ex.Message;
+                string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
+                string ErrorField = eArray[3].ToString();
+                switch (ErrorField)
+                {
+                    case "MR_CityName":
+                        strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
+                        break;
+
+                    case "MR_MayorYear":
+                        strErrorMsg += "欄位:直轄市/縣市長-資料年度<br>";
+                        strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                        break;
+
+                    case "MR_Mayor":
+                        strErrorMsg += "欄位:直轄市/縣市長<br>";
+                        strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出50位數";
+                        break;
+
+                    case "MR_ViceMayorYear":
+                        strErrorMsg += "欄位:副縣/市長-資料年度<br>";
+                        strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                        break;
+
+                    case "MR_ViceMayor":
+                        strErrorMsg += "欄位:副縣/市長<br>";
+                        strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出50位數";
+                        break;
+
+                    case "MR_PoliticalPartyYear":
+                        strErrorMsg += "欄位:推薦政黨-資料年度<br>";
+                        strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                        break;
+
+                    case "MR_PoliticalParty":
+                        strErrorMsg += "欄位:推薦政黨<br>";
+                        strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出50位數";
+                        break;
+
+                    case "MR_AdAreaYear":
+                        strErrorMsg += "欄位:行政區數-資料年度<br>";
+                        strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                        break;
+
+                    case "MR_AdArea":
+                        strErrorMsg += "欄位:行政區數<br>";
+                        strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出10位數";
+                        break;
+                }
                 myTrans.Rollback();
             }
             finally
             {
                 oCmd.Connection.Close();
                 oConn.Close();
-                Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                if (strErrorMsg == "")
+                {
+                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('市長副市長匯入成功');</script>");
+                }
+                else
+                {
+                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                }
             }
         }
 
@@ -183,44 +235,36 @@ namespace ISTI_CityNavigation.Manage.mHandler
         //市長/副市長 BulkCopy
         private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
         {
-            try
+            SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
+            using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
             {
-                SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
-                using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
-                {
-                    sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
-                    //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
-                    ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
-                    //sqlBC.NotifyAfter = 10000;
-                    ///設定要寫入的資料庫
-                    sqlBC.DestinationTableName = "Mayor";
+                sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
+                //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
+                ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
+                //sqlBC.NotifyAfter = 10000;
+                ///設定要寫入的資料庫
+                sqlBC.DestinationTableName = "Mayor";
 
-                    /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-                    sqlBC.ColumnMappings.Add("MR_CityNo", "MR_CityNo");
-                    sqlBC.ColumnMappings.Add("MR_CityName", "MR_CityName");
-                    sqlBC.ColumnMappings.Add("MR_MayorYear", "MR_MayorYear");
-                    sqlBC.ColumnMappings.Add("MR_Mayor", "MR_Mayor");
-                    sqlBC.ColumnMappings.Add("MR_ViceMayorYear", "MR_ViceMayorYear");
-                    sqlBC.ColumnMappings.Add("MR_ViceMayor", "MR_ViceMayor");
-                    sqlBC.ColumnMappings.Add("MR_PoliticalPartyYear", "MR_PoliticalPartyYear");
-                    sqlBC.ColumnMappings.Add("MR_PoliticalParty", "MR_PoliticalParty");
-                    sqlBC.ColumnMappings.Add("MR_AdAreaYear", "MR_AdAreaYear");
-                    sqlBC.ColumnMappings.Add("MR_AdArea", "MR_AdArea");
-                    sqlBC.ColumnMappings.Add("MR_CreateDate", "MR_CreateDate");
-                    sqlBC.ColumnMappings.Add("MR_CreateID", "MR_CreateID");
-                    sqlBC.ColumnMappings.Add("MR_CreateName", "MR_CreateName");
-                    sqlBC.ColumnMappings.Add("MR_Status", "MR_Status");
-                    sqlBC.ColumnMappings.Add("MR_Version", "MR_Version");
+                /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
+                sqlBC.ColumnMappings.Add("MR_CityNo", "MR_CityNo");
+                sqlBC.ColumnMappings.Add("MR_CityName", "MR_CityName");
+                sqlBC.ColumnMappings.Add("MR_MayorYear", "MR_MayorYear");
+                sqlBC.ColumnMappings.Add("MR_Mayor", "MR_Mayor");
+                sqlBC.ColumnMappings.Add("MR_ViceMayorYear", "MR_ViceMayorYear");
+                sqlBC.ColumnMappings.Add("MR_ViceMayor", "MR_ViceMayor");
+                sqlBC.ColumnMappings.Add("MR_PoliticalPartyYear", "MR_PoliticalPartyYear");
+                sqlBC.ColumnMappings.Add("MR_PoliticalParty", "MR_PoliticalParty");
+                sqlBC.ColumnMappings.Add("MR_AdAreaYear", "MR_AdAreaYear");
+                sqlBC.ColumnMappings.Add("MR_AdArea", "MR_AdArea");
+                sqlBC.ColumnMappings.Add("MR_CreateDate", "MR_CreateDate");
+                sqlBC.ColumnMappings.Add("MR_CreateID", "MR_CreateID");
+                sqlBC.ColumnMappings.Add("MR_CreateName", "MR_CreateName");
+                sqlBC.ColumnMappings.Add("MR_Status", "MR_Status");
+                sqlBC.ColumnMappings.Add("MR_Version", "MR_Version");
 
-                    /// 開始寫入資料
-                    sqlBC.WriteToServer(srcData);
-                }
+                /// 開始寫入資料
+                sqlBC.WriteToServer(srcData);
             }
-            catch (Exception ex)
-            {
-                strErrorMsg += "市長副市長匯入 error：" + ex.Message.ToString() + "\n";
-            }
-
         }
     }
 }
