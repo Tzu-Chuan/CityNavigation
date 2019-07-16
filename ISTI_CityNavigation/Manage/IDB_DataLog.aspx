@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Manage/BackEnd.Master" AutoEventWireup="true" CodeBehind="MemberLog.aspx.cs" Inherits="ISTI_CityNavigation.Manage.MemberLog" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Manage/BackEnd.Master" AutoEventWireup="true" CodeBehind="IDB_DataLog.aspx.cs" Inherits="ISTI_CityNavigation.Manage.IDB_DataLog" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
             //分頁設定
             Page.Option.SortMethod = "-";
-            Page.Option.SortName = "ML_ModDate";
+            Page.Option.SortName = "IDL_ModDate";
             getData(0);
 
             /// 表頭排序
@@ -30,7 +30,7 @@
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "mHandler/GetMemberLogList.aspx",
+                url: "mHandler/GetIDB_DataLogList.aspx",
                 data: {
                     PageNo: p,
                     PageSize: Page.Option.PageSize,
@@ -51,10 +51,10 @@
                             $(data).find("data_item").each(function (i) {
                                 tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("itemNo").text().trim() + '</td>';
-                                tabstr += '<td align="left">' + $(this).children("ML_Description").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("ML_IP").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("ML_ModName").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $.datepicker.formatDate('yy/mm/dd', new Date($(this).children("ML_ModDate").text().trim())) + '</td>';
+                                tabstr += '<td align="left">' + $(this).children("IDL_Description").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("IDL_IP").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("IDL_ModName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $.datepicker.formatDate('yy/mm/dd', new Date($(this).children("IDL_ModDate").text().trim())) + '</td>';
                                 tabstr += '</tr>';
                             });
                         }
@@ -71,24 +71,19 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="twocol titleLineA">
-        <div class="left"><span class="font-size4">會員修改紀錄</span></div><!-- left -->
-        <div class="right">後臺管理 / 會員修改紀錄</div><!-- right -->
+        <div class="left"><span class="font-size4">IDB 資料上傳紀錄</span></div><!-- left -->
+        <div class="right">後臺管理 / IDB 資料上傳紀錄</div><!-- right -->
     </div><!-- twocol -->
-
-    <%--<div class="margin10T">
-        關鍵字：<input id="SearchStr" type="test" class="inputex width30" />&nbsp;&nbsp;
-        <input id="SearchBtn" type="button" value="查詢" class="genbtn" onclick="getData(0)" />
-    </div>--%>
 
     <div class="stripeMeCS margin10TB font-normal">
         <table id="tablist" width="100%" border="1" cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
                     <th nowrap="nowrap" style="width:40px;">項次</th>
-                    <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="ML_Description">事件</a></th>
-                    <th nowrap="nowrap" style="width:10%;"><a href="javascript:void(0);" name="sortbtn" sortname="ML_IP">IP</a></th>
-                    <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="ML_ModName">異動者</th>
-                    <th nowrap="nowrap" style="width:10%;"><a href="javascript:void(0);" name="sortbtn" sortname="ML_ModDate">異動日期</a></th>
+                    <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="IDL_Description">事件</a></th>
+                    <th nowrap="nowrap" style="width:10%;"><a href="javascript:void(0);" name="sortbtn" sortname="IDL_IP">IP</a></th>
+                    <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="IDL_ModName">異動者</th>
+                    <th nowrap="nowrap" style="width:10%;"><a href="javascript:void(0);" name="sortbtn" sortname="IDL_ModDate">異動日期</a></th>
                 </tr>
             </thead>
             <tbody></tbody>

@@ -150,8 +150,8 @@
                                     <li class="sa" style="display:none;"><a href="javascript:void(0);">系統修改紀錄</a>
                                         <ul>
                                             <li><a href="<%=ResolveUrl("~/Manage/MemberLog.aspx") %>">會員修改紀錄</a></li>
-                                            <li><a href="<%=ResolveUrl("~/Manage/MemberLog.aspx") %>">ISTI 資料上傳紀錄</a></li>
-                                            <li><a href="<%=ResolveUrl("~/Manage/MemberLog.aspx") %>">IDB 資料上傳紀錄</a></li>
+                                            <li><a href="<%=ResolveUrl("~/Manage/ISTI_DataLog.aspx") %>">ISTI 資料上傳紀錄</a></li>
+                                            <li><a href="<%=ResolveUrl("~/Manage/IDB_DataLog.aspx") %>">IDB 資料上傳紀錄</a></li>
                                         </ul>
                                     </li>
                                 </ul>

@@ -40,13 +40,13 @@ public class ImportData_Log
         StringBuilder sb = new StringBuilder();
 
         sb.Append(@"
-select * into #tmpAll from ImportData_Log ");
+select * into #tmpAll from ImportData_Log where 1=1");
 
         //if (KeyWord != "")
         //    sb.Append(@"and ((upper(M_Name) LIKE '%' + upper(@KeyWord) + '%') or (upper(M_Email) LIKE '%' + upper(@KeyWord) + '%')) ");
 
-        //if (strComp != "")
-        //    sb.Append(@"and M_Competence=@strComp ");
+        if (IDL_Type != "")
+            sb.Append(@"and IDL_Type=@IDL_Type ");
 
         sb.Append(@"
 --總筆數
@@ -64,7 +64,7 @@ drop table #tmpAll  ");
         SqlDataAdapter oda = new SqlDataAdapter(oCmd);
         DataSet ds = new DataSet();
 
-        //oCmd.Parameters.AddWithValue("@KeyWord", KeyWord);
+        oCmd.Parameters.AddWithValue("@IDL_Type", IDL_Type);
         oCmd.Parameters.AddWithValue("@pStart", pStart);
         oCmd.Parameters.AddWithValue("@pEnd", pEnd);
         oda.Fill(ds);
