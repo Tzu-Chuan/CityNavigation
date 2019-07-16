@@ -37,26 +37,26 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 //建立DataTable Bulk Copy用
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Tra_CityNo", typeof(string));
-                dt.Columns.Add("Tra_CityName", typeof(string));
-                dt.Columns.Add("Tra_PublicTransportRateYear", typeof(string));
-                dt.Columns.Add("Tra_PublicTransportRate", typeof(string));
-                dt.Columns.Add("Tra_CarParkTimeYear", typeof(string));
-                dt.Columns.Add("Tra_CarParkTime", typeof(string));
-                dt.Columns.Add("Tra_CarParkSpaceYear", typeof(string));
-                dt.Columns.Add("Tra_CarParkSpace", typeof(string));
-                dt.Columns.Add("Tra_10KHaveCarParkYear", typeof(string));
-                dt.Columns.Add("Tra_10KHaveCarPark", typeof(string));
-                dt.Columns.Add("Tra_CarCountYear", typeof(string));
-                dt.Columns.Add("Tra_CarCount", typeof(string));
-                dt.Columns.Add("Tra_100HaveCarYear", typeof(string));
-                dt.Columns.Add("Tra_100HaveCar", typeof(string));
-                dt.Columns.Add("Tra_100HaveCarRateYearDec", typeof(string));
-                dt.Columns.Add("Tra_100HaveCarRate", typeof(string));
-                dt.Columns.Add("Tra_10KMotoIncidentsNumYear", typeof(string));
-                dt.Columns.Add("Tra_10KMotoIncidentsNum", typeof(string));
-                dt.Columns.Add("Tra_100KNumberOfCasualtiesYear", typeof(string));
-                dt.Columns.Add("Tra_100KNumberOfCasualties", typeof(string));
+                dt.Columns.Add("Tra_CityNo", typeof(string)).MaxLength = 2;
+                dt.Columns.Add("Tra_CityName", typeof(string)).MaxLength = 10;
+                dt.Columns.Add("Tra_PublicTransportRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Tra_PublicTransportRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Tra_CarParkTimeYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Tra_CarParkTime", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Tra_CarParkSpaceYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Tra_CarParkSpace", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Tra_10KHaveCarParkYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Tra_10KHaveCarPark", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Tra_CarCountYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Tra_CarCount", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Tra_100HaveCarYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Tra_100HaveCar", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Tra_100HaveCarRateYearDec", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Tra_100HaveCarRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Tra_10KMotoIncidentsNumYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Tra_10KMotoIncidentsNum", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Tra_100KNumberOfCasualtiesYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Tra_100KNumberOfCasualties", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("Tra_CreateDate", typeof(DateTime));
                 dt.Columns.Add("Tra_CreateID", typeof(string));
                 dt.Columns.Add("Tra_CreateName", typeof(string));
@@ -121,6 +121,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                     throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                                 }
 
+                                strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
                                 row["Tra_CityNo"] = cityNo;//縣市代碼
                                 row["Tra_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["Tra_PublicTransportRateYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//通勤學民眾運具次數之公共運具市佔率-資料年度(民國年)
@@ -157,29 +158,130 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                         if (dt.Rows.Count > 0)
                         {
+                            strErrorMsg = "";
                             BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
-                            DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
+                            DoBulkCopy(myTrans, dt);//匯入
                                                                  //最後再commit
                             myTrans.Commit();
-                            if (strErrorMsg == "")
-                            {
-                                strErrorMsg = "上傳成功";
-                            }
-
                         }
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    strErrorMsg += ex.Message;
+                    string Errormsg = ex.Message;
+                    string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
+                    string ErrorField = eArray[3].ToString();
+                    switch (ErrorField)
+                    {
+                        case "Tra_CityName":
+                            strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
+                            break;
+
+                        case "Tra_PublicTransportRateYear":
+                            strErrorMsg += "欄位:通勤學民眾運具次數之公共運具市佔率-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Tra_PublicTransportRate":
+                            strErrorMsg += "欄位:通勤學民眾運具次數之公共運具市佔率<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Tra_CarParkTimeYear":
+                            strErrorMsg += "欄位:自小客車在居家附近每次尋找停車位時間-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Tra_CarParkTime":
+                            strErrorMsg += "欄位:自小客車在居家附近每次尋找停車位時間<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Tra_CarParkSpaceYear":
+                            strErrorMsg += "欄位:小汽車路邊及路外停車位-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Tra_CarParkSpace":
+                            strErrorMsg += "欄位:小汽車路邊及路外停車位<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Tra_10KHaveCarParkYear":
+                            strErrorMsg += "欄位:每萬輛小型車擁有路外及路邊停車位數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Tra_10KHaveCarPark":
+                            strErrorMsg += "欄位:每萬輛小型車擁有路外及路邊停車位數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Tra_CarCountYear":
+                            strErrorMsg += "欄位:汽車登記數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Tra_CarCount":
+                            strErrorMsg += "欄位:汽車登記數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Tra_100HaveCarYear":
+                            strErrorMsg += "欄位:每百人擁有汽車數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Tra_100HaveCar":
+                            strErrorMsg += "欄位:每百人擁有汽車數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Tra_100HaveCarRateYearDec":
+                            strErrorMsg += "欄位:每百人擁有汽車數成長率-資料年度敘述<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Tra_100HaveCarRate":
+                            strErrorMsg += "欄位:每百人擁有汽車數成長率<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Tra_10KMotoIncidentsNumYear":
+                            strErrorMsg += "欄位:每萬輛機動車肇事數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Tra_10KMotoIncidentsNum":
+                            strErrorMsg += "欄位:每萬輛機動車肇事數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Tra_100KNumberOfCasualtiesYear":
+                            strErrorMsg += "欄位:每十萬人道路交通事故死傷人數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Tra_100KNumberOfCasualties":
+                            strErrorMsg += "欄位:每十萬人道路交通事故死傷人數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+                    }
                     myTrans.Rollback();
                 }
                 finally
                 {
                     oCmd.Connection.Close();
                     oConn.Close();
-                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    if (strErrorMsg == "")
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('交通匯入成功');</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    }
                 }
             }
             else
@@ -213,56 +315,48 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
 
         //交通 BulkCopy
-        private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
+        private void DoBulkCopy(SqlTransaction oTran, DataTable srcData)
         {
-            try
+            SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
+            using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
             {
-                SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
-                using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
-                {
-                    sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
-                    //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
-                    ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
-                    //sqlBC.NotifyAfter = 10000;
-                    ///設定要寫入的資料庫
-                    sqlBC.DestinationTableName = "Traffic";
+                sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
+                //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
+                ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
+                //sqlBC.NotifyAfter = 10000;
+                ///設定要寫入的資料庫
+                sqlBC.DestinationTableName = "Traffic";
 
-                    /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-                    sqlBC.ColumnMappings.Add("Tra_CityNo", "Tra_CityNo");
-                    sqlBC.ColumnMappings.Add("Tra_CityName", "Tra_CityName");
-                    sqlBC.ColumnMappings.Add("Tra_PublicTransportRateYear", "Tra_PublicTransportRateYear");
-                    sqlBC.ColumnMappings.Add("Tra_PublicTransportRate", "Tra_PublicTransportRate");
-                    sqlBC.ColumnMappings.Add("Tra_CarParkTimeYear", "Tra_CarParkTimeYear");
-                    sqlBC.ColumnMappings.Add("Tra_CarParkTime", "Tra_CarParkTime");
-                    sqlBC.ColumnMappings.Add("Tra_CarParkSpaceYear", "Tra_CarParkSpaceYear");
-                    sqlBC.ColumnMappings.Add("Tra_CarParkSpace", "Tra_CarParkSpace");
-                    sqlBC.ColumnMappings.Add("Tra_10KHaveCarParkYear", "Tra_10KHaveCarParkYear");
-                    sqlBC.ColumnMappings.Add("Tra_10KHaveCarPark", "Tra_10KHaveCarPark");
-                    sqlBC.ColumnMappings.Add("Tra_CarCountYear", "Tra_CarCountYear");
-                    sqlBC.ColumnMappings.Add("Tra_CarCount", "Tra_CarCount");
-                    sqlBC.ColumnMappings.Add("Tra_100HaveCarYear", "Tra_100HaveCarYear");
-                    sqlBC.ColumnMappings.Add("Tra_100HaveCar", "Tra_100HaveCar");
-                    sqlBC.ColumnMappings.Add("Tra_100HaveCarRateYearDec", "Tra_100HaveCarRateYearDec");
-                    sqlBC.ColumnMappings.Add("Tra_100HaveCarRate", "Tra_100HaveCarRate");
-                    sqlBC.ColumnMappings.Add("Tra_10KMotoIncidentsNumYear", "Tra_10KMotoIncidentsNumYear");
-                    sqlBC.ColumnMappings.Add("Tra_10KMotoIncidentsNum", "Tra_10KMotoIncidentsNum");
-                    sqlBC.ColumnMappings.Add("Tra_100KNumberOfCasualtiesYear", "Tra_100KNumberOfCasualtiesYear");
-                    sqlBC.ColumnMappings.Add("Tra_100KNumberOfCasualties", "Tra_100KNumberOfCasualties");
-                    sqlBC.ColumnMappings.Add("Tra_CreateDate", "Tra_CreateDate");
-                    sqlBC.ColumnMappings.Add("Tra_CreateID", "Tra_CreateID");
-                    sqlBC.ColumnMappings.Add("Tra_CreateName", "Tra_CreateName");
-                    sqlBC.ColumnMappings.Add("Tra_Status", "Tra_Status");
-                    sqlBC.ColumnMappings.Add("Tra_Version", "Tra_Version");
+                /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
+                sqlBC.ColumnMappings.Add("Tra_CityNo", "Tra_CityNo");
+                sqlBC.ColumnMappings.Add("Tra_CityName", "Tra_CityName");
+                sqlBC.ColumnMappings.Add("Tra_PublicTransportRateYear", "Tra_PublicTransportRateYear");
+                sqlBC.ColumnMappings.Add("Tra_PublicTransportRate", "Tra_PublicTransportRate");
+                sqlBC.ColumnMappings.Add("Tra_CarParkTimeYear", "Tra_CarParkTimeYear");
+                sqlBC.ColumnMappings.Add("Tra_CarParkTime", "Tra_CarParkTime");
+                sqlBC.ColumnMappings.Add("Tra_CarParkSpaceYear", "Tra_CarParkSpaceYear");
+                sqlBC.ColumnMappings.Add("Tra_CarParkSpace", "Tra_CarParkSpace");
+                sqlBC.ColumnMappings.Add("Tra_10KHaveCarParkYear", "Tra_10KHaveCarParkYear");
+                sqlBC.ColumnMappings.Add("Tra_10KHaveCarPark", "Tra_10KHaveCarPark");
+                sqlBC.ColumnMappings.Add("Tra_CarCountYear", "Tra_CarCountYear");
+                sqlBC.ColumnMappings.Add("Tra_CarCount", "Tra_CarCount");
+                sqlBC.ColumnMappings.Add("Tra_100HaveCarYear", "Tra_100HaveCarYear");
+                sqlBC.ColumnMappings.Add("Tra_100HaveCar", "Tra_100HaveCar");
+                sqlBC.ColumnMappings.Add("Tra_100HaveCarRateYearDec", "Tra_100HaveCarRateYearDec");
+                sqlBC.ColumnMappings.Add("Tra_100HaveCarRate", "Tra_100HaveCarRate");
+                sqlBC.ColumnMappings.Add("Tra_10KMotoIncidentsNumYear", "Tra_10KMotoIncidentsNumYear");
+                sqlBC.ColumnMappings.Add("Tra_10KMotoIncidentsNum", "Tra_10KMotoIncidentsNum");
+                sqlBC.ColumnMappings.Add("Tra_100KNumberOfCasualtiesYear", "Tra_100KNumberOfCasualtiesYear");
+                sqlBC.ColumnMappings.Add("Tra_100KNumberOfCasualties", "Tra_100KNumberOfCasualties");
+                sqlBC.ColumnMappings.Add("Tra_CreateDate", "Tra_CreateDate");
+                sqlBC.ColumnMappings.Add("Tra_CreateID", "Tra_CreateID");
+                sqlBC.ColumnMappings.Add("Tra_CreateName", "Tra_CreateName");
+                sqlBC.ColumnMappings.Add("Tra_Status", "Tra_Status");
+                sqlBC.ColumnMappings.Add("Tra_Version", "Tra_Version");
 
-                    /// 開始寫入資料
-                    sqlBC.WriteToServer(srcData);
-                }
+                /// 開始寫入資料
+                sqlBC.WriteToServer(srcData);
             }
-            catch (Exception ex)
-            {
-                strErrorMsg += "交通匯入 error：" + ex.Message.ToString() + "\n";
-            }
-
         }
 
         //判斷Token是否正確

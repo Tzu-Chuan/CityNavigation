@@ -37,16 +37,16 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 //建立DataTable Bulk Copy用
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Ind_CityNo", typeof(string));
-                dt.Columns.Add("Ind_CityName", typeof(string));
-                dt.Columns.Add("Ind_BusinessYear", typeof(string));
-                dt.Columns.Add("Ind_Business", typeof(string));
-                dt.Columns.Add("Ind_FactoryYear", typeof(string));
-                dt.Columns.Add("Ind_Factory", typeof(string));
-                dt.Columns.Add("Ind_IncomeYear", typeof(string));
-                dt.Columns.Add("Ind_Income", typeof(string));
-                dt.Columns.Add("Ind_SalesYear", typeof(string));
-                dt.Columns.Add("Ind_Sales", typeof(string));
+                dt.Columns.Add("Ind_CityNo", typeof(string)).MaxLength = 2;
+                dt.Columns.Add("Ind_CityName", typeof(string)).MaxLength = 10;
+                dt.Columns.Add("Ind_BusinessYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Ind_Business", typeof(string)).MaxLength = 500;
+                dt.Columns.Add("Ind_FactoryYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Ind_Factory", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Ind_IncomeYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Ind_Income", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Ind_SalesYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Ind_Sales", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("Ind_CreateDate", typeof(string));
                 dt.Columns.Add("Ind_CreateID", typeof(string));
                 dt.Columns.Add("Ind_CreateName", typeof(string));
@@ -110,6 +110,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 {
                                     throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                                 }
+
+                                strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
                                 row["Ind_CityNo"] = cityNo;//縣市代碼
                                 row["Ind_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["Ind_BusinessYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//形成群聚之產業(依工研院產科國際所群聚資料)-資料年度(民國年)
@@ -136,29 +138,79 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                         if (dt.Rows.Count > 0)
                         {
+                            strErrorMsg = "";
                             BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
                             DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
-                                                                 //最後再commit
-                            myTrans.Commit();
-                            if (strErrorMsg == "")
-                            {
-                                strErrorMsg = "上傳成功";
-                            }
-
+                            myTrans.Commit();//最後再commit
                         }
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    strErrorMsg += ex.Message;
+                    string Errormsg = ex.Message;
+                    string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
+                    string ErrorField = eArray[3].ToString();
+                    switch (ErrorField)
+                    {
+                        case "Ind_CityName":
+                            strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
+                            break;
+
+                        case "Ind_BusinessYear":
+                            strErrorMsg += "欄位:形成群聚之產業(依工研院產科國際所群聚資料)-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Ind_Business":
+                            strErrorMsg += "欄位:形成群聚之產業(依工研院產科國際所群聚資料)<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出500位數";
+                            break;
+
+                        case "Ind_FactoryYear":
+                            strErrorMsg += "欄位:營運中工廠家數-資料年度(民國年)<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Ind_Factory":
+                            strErrorMsg += "欄位:營運中工廠家數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Ind_IncomeYear":
+                            strErrorMsg += "欄位:工廠營業收入-資料年度(民國年)<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Ind_Income":
+                            strErrorMsg += "欄位:工廠營業收入<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Ind_SalesYear":
+                            strErrorMsg += "欄位:營利事業銷售額-資料年度(民國年)<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Ind_Sales":
+                            strErrorMsg += "欄位:營利事業銷售額<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+                    }
                     myTrans.Rollback();
                 }
                 finally
                 {
                     oCmd.Connection.Close();
                     oConn.Close();
-                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    if (strErrorMsg == "")
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('產業匯入成功');</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    }
                 }
             }
             else
@@ -193,44 +245,36 @@ namespace ISTI_CityNavigation.Manage.mHandler
         //產業 BulkCopy
         private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
         {
-            try
+            SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
+            using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
             {
-                SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
-                using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
-                {
-                    sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
-                    //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
-                    ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
-                    //sqlBC.NotifyAfter = 10000;
-                    ///設定要寫入的資料庫
-                    sqlBC.DestinationTableName = "Industry";
+                sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
+                //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
+                ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
+                //sqlBC.NotifyAfter = 10000;
+                ///設定要寫入的資料庫
+                sqlBC.DestinationTableName = "Industry";
 
-                    /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-                    sqlBC.ColumnMappings.Add("Ind_CityNo", "Ind_CityNo");
-                    sqlBC.ColumnMappings.Add("Ind_CityName", "Ind_CityName");
-                    sqlBC.ColumnMappings.Add("Ind_BusinessYear", "Ind_BusinessYear");
-                    sqlBC.ColumnMappings.Add("Ind_Business", "Ind_Business");
-                    sqlBC.ColumnMappings.Add("Ind_FactoryYear", "Ind_FactoryYear");
-                    sqlBC.ColumnMappings.Add("Ind_Factory", "Ind_Factory");
-                    sqlBC.ColumnMappings.Add("Ind_IncomeYear", "Ind_IncomeYear");
-                    sqlBC.ColumnMappings.Add("Ind_Income", "Ind_Income");
-                    sqlBC.ColumnMappings.Add("Ind_SalesYear", "Ind_SalesYear");
-                    sqlBC.ColumnMappings.Add("Ind_Sales", "Ind_Sales");
-                    sqlBC.ColumnMappings.Add("Ind_CreateDate", "Ind_CreateDate");
-                    sqlBC.ColumnMappings.Add("Ind_CreateID", "Ind_CreateID");
-                    sqlBC.ColumnMappings.Add("Ind_CreateName", "Ind_CreateName");
-                    sqlBC.ColumnMappings.Add("Ind_Status", "Ind_Status");
-                    sqlBC.ColumnMappings.Add("Ind_Version", "Ind_Version");
+                /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
+                sqlBC.ColumnMappings.Add("Ind_CityNo", "Ind_CityNo");
+                sqlBC.ColumnMappings.Add("Ind_CityName", "Ind_CityName");
+                sqlBC.ColumnMappings.Add("Ind_BusinessYear", "Ind_BusinessYear");
+                sqlBC.ColumnMappings.Add("Ind_Business", "Ind_Business");
+                sqlBC.ColumnMappings.Add("Ind_FactoryYear", "Ind_FactoryYear");
+                sqlBC.ColumnMappings.Add("Ind_Factory", "Ind_Factory");
+                sqlBC.ColumnMappings.Add("Ind_IncomeYear", "Ind_IncomeYear");
+                sqlBC.ColumnMappings.Add("Ind_Income", "Ind_Income");
+                sqlBC.ColumnMappings.Add("Ind_SalesYear", "Ind_SalesYear");
+                sqlBC.ColumnMappings.Add("Ind_Sales", "Ind_Sales");
+                sqlBC.ColumnMappings.Add("Ind_CreateDate", "Ind_CreateDate");
+                sqlBC.ColumnMappings.Add("Ind_CreateID", "Ind_CreateID");
+                sqlBC.ColumnMappings.Add("Ind_CreateName", "Ind_CreateName");
+                sqlBC.ColumnMappings.Add("Ind_Status", "Ind_Status");
+                sqlBC.ColumnMappings.Add("Ind_Version", "Ind_Version");
 
-                    /// 開始寫入資料
-                    sqlBC.WriteToServer(srcData);
-                }
+                /// 開始寫入資料
+                sqlBC.WriteToServer(srcData);
             }
-            catch (Exception ex)
-            {
-                strErrorMsg += "產業匯入 error：" + ex.Message.ToString() + "\n";
-            }
-
         }
 
         //判斷Token是否正確

@@ -37,46 +37,46 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 //建立DataTable Bulk Copy用
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Edu_CityNo", typeof(string));
-                dt.Columns.Add("Edu_CityName", typeof(string));
-                dt.Columns.Add("Edu_15upJSDownRateYear", typeof(string));
-                dt.Columns.Add("Edu_15upJSDownRate", typeof(string));
-                dt.Columns.Add("Edu_15upHSRateYear", typeof(string));
-                dt.Columns.Add("Edu_15upHSRate", typeof(string));
-                dt.Columns.Add("Edu_15upUSUpRateYear", typeof(string));
-                dt.Columns.Add("Edu_15upUSUpRate", typeof(string));
-                dt.Columns.Add("Edu_ESStudentDropOutRateYear", typeof(string));
-                dt.Columns.Add("Edu_ESStudentDropOutRate", typeof(string));
-                dt.Columns.Add("Edu_JSStudentDropOutRateYear", typeof(string));
-                dt.Columns.Add("Edu_JSStudentDropOutRate", typeof(string));
-                dt.Columns.Add("Edu_ESStudentsYear", typeof(string));
-                dt.Columns.Add("Edu_ESStudents", typeof(string));
-                dt.Columns.Add("Edu_JSStudentsYear", typeof(string));
-                dt.Columns.Add("Edu_JSStudents", typeof(string));
-                dt.Columns.Add("Edu_HSStudentsYear", typeof(string));
-                dt.Columns.Add("Edu_HSStudents", typeof(string));
-                dt.Columns.Add("Edu_ESToHSIndigenousYear", typeof(string));
-                dt.Columns.Add("Edu_ESToHSIdigenous", typeof(string));
-                dt.Columns.Add("Edu_ESToHSIndigenousRateYear", typeof(string));
-                dt.Columns.Add("Edu_ESToHSIndigenousRate", typeof(string));
-                dt.Columns.Add("Edu_ESJSNewInhabitantsYear", typeof(string));
-                dt.Columns.Add("Edu_ESJSNewInhabitants", typeof(string));
-                dt.Columns.Add("Edu_ESJSNewInhabitantsRateYear", typeof(string));
-                dt.Columns.Add("Edu_ESToJSNewInhabitantsRate", typeof(string));
-                dt.Columns.Add("Edu_ESJSTeachersYear", typeof(string));
-                dt.Columns.Add("Edu_ESJSTeachers", typeof(string));
-                dt.Columns.Add("Edu_ESJSTeachersOfStudentRateYear", typeof(string));
-                dt.Columns.Add("Edu_ESJSTeachersOfStudentRate", typeof(string));
-                dt.Columns.Add("Edu_BudgetYear", typeof(string));
-                dt.Columns.Add("Edu_Budget", typeof(string));
-                dt.Columns.Add("Edu_BudgetUpRateYearDesc", typeof(string));
-                dt.Columns.Add("Edu_BudgetUpRate", typeof(string));
-                dt.Columns.Add("Edu_ESToHSAvgBudgetYear", typeof(string));
-                dt.Columns.Add("Edu_ESToHSAvgBudget", typeof(string));
-                dt.Columns.Add("Edu_ESJSPCNumYear", typeof(string));
-                dt.Columns.Add("Edu_ESJSPCNum", typeof(string));
-                dt.Columns.Add("Edu_ESJSAvgPCNumYear", typeof(string));
-                dt.Columns.Add("Edu_ESJSAvgPCNum", typeof(string));
+                dt.Columns.Add("Edu_CityNo", typeof(string)).MaxLength = 2;
+                dt.Columns.Add("Edu_CityName", typeof(string)).MaxLength = 10;
+                dt.Columns.Add("Edu_15upJSDownRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_15upJSDownRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Edu_15upHSRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_15upHSRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Edu_15upUSUpRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_15upUSUpRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Edu_ESStudentDropOutRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_ESStudentDropOutRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Edu_JSStudentDropOutRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_JSStudentDropOutRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Edu_ESStudentsYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_ESStudents", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Edu_JSStudentsYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_JSStudents", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Edu_HSStudentsYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_HSStudents", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Edu_ESToHSIndigenousYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_ESToHSIdigenous", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Edu_ESToHSIndigenousRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_ESToHSIndigenousRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Edu_ESJSNewInhabitantsYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_ESJSNewInhabitants", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Edu_ESJSNewInhabitantsRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_ESToJSNewInhabitantsRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Edu_ESJSTeachersYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_ESJSTeachers", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Edu_ESJSTeachersOfStudentRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_ESJSTeachersOfStudentRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Edu_BudgetYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_Budget", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Edu_BudgetUpRateYearDesc", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Edu_BudgetUpRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Edu_ESToHSAvgBudgetYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_ESToHSAvgBudget", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Edu_ESJSPCNumYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_ESJSPCNum", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Edu_ESJSAvgPCNumYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_ESJSAvgPCNum", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("Edu_CreateDate", typeof(DateTime));
                 dt.Columns.Add("Edu_CreateID", typeof(string));
                 dt.Columns.Add("Edu_CreateName", typeof(string));
@@ -140,6 +140,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 {
                                     throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                                 }
+
+                                strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
                                 row["Edu_CityNo"] = cityNo;//縣市代碼
                                 row["Edu_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["Edu_15upJSDownRateYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//
@@ -196,29 +198,230 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                         if (dt.Rows.Count > 0)
                         {
-                            BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
-                            DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
-                                                                 //最後再commit
-                            myTrans.Commit();
-                            if (strErrorMsg == "")
-                            {
-                                strErrorMsg = "上傳成功";
-                            }
 
+                            strErrorMsg = "";
+                            BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
+                            DoBulkCopy(myTrans, dt);//匯入
+                            myTrans.Commit();     //最後再commit
                         }
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    strErrorMsg += ex.Message;
+                    string Errormsg = ex.Message;
+                    string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
+                    string ErrorField = eArray[3].ToString();
+                    switch (ErrorField)
+                    {
+                        case "Edu_CityName":
+                            strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
+                            break;
+
+                        case "Edu_15upJSDownRateYear":
+                            strErrorMsg += "欄位:15歲以上民間人口之教育程度結構-國中及以下-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_15upJSDownRate":
+                            strErrorMsg += "欄位:15歲以上民間人口之教育程度結構-國中及以下<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Edu_15upHSRateYear":
+                            strErrorMsg += "欄位:15歲以上民間人口之教育程度結構-高中(職)-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_15upHSRate":
+                            strErrorMsg += "欄位:15歲以上民間人口之教育程度結構-高中(職)<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Edu_15upUSUpRateYear":
+                            strErrorMsg += "欄位:15歲以上民間人口之教育程度結構-大專及以上-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_15upUSUpRate":
+                            strErrorMsg += "欄位:15歲以上民間人口之教育程度結構-大專及以上<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Edu_ESStudentDropOutRateYear":
+                            strErrorMsg += "欄位:國小學生輟學率-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_ESStudentDropOutRate":
+                            strErrorMsg += "欄位:國小學生輟學率<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Edu_JSStudentDropOutRateYear":
+                            strErrorMsg += "欄位:國中學生輟學率-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_JSStudentDropOutRate":
+                            strErrorMsg += "欄位:國中學生輟學率<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Edu_ESStudentsYear":
+                            strErrorMsg += "欄位:國小總學生數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_ESStudents":
+                            strErrorMsg += "欄位:國小總學生數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
+                            break;
+
+                        case "Edu_JSStudentsYear":
+                            strErrorMsg += "欄位:國中總學生數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_JSStudents":
+                            strErrorMsg += "欄位:國中總學生數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
+                            break;
+
+                        case "Edu_HSStudentsYear":
+                            strErrorMsg += "欄位:高中(職)總學生數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_HSStudents":
+                            strErrorMsg += "欄位:高中(職)總學生數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
+                            break;
+
+                        case "Edu_ESToHSIndigenousYear":
+                            strErrorMsg += "欄位:國小-高中(職)原住民學生數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_ESToHSIdigenous":
+                            strErrorMsg += "欄位:國小-高中(職)原住民學生數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
+                            break;
+
+                        case "Edu_ESToHSIndigenousRateYear":
+                            strErrorMsg += "欄位:國小-高中(職)原住民學生數比例-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_ESToHSIndigenousRate":
+                            strErrorMsg += "欄位:國小-高中(職)原住民學生數比例<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Edu_ESJSNewInhabitantsYear":
+                            strErrorMsg += "欄位:國中小新住民人數-資料年度(民國年)<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_ESJSNewInhabitants":
+                            strErrorMsg += "欄位:國中小新住民人數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
+                            break;
+
+                        case "Edu_ESJSNewInhabitantsRateYear":
+                            strErrorMsg += "欄位:國中小新住民學生比例-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_ESToJSNewInhabitantsRate":
+                            strErrorMsg += "欄位:國中小新住民學生比例<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Edu_ESJSTeachersYear":
+                            strErrorMsg += "欄位:國中小教師數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_ESJSTeachers":
+                            strErrorMsg += "欄位:國中小教師數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
+                            break;
+
+                        case "Edu_ESJSTeachersOfStudentRateYear":
+                            strErrorMsg += "欄位:國中小生師比(平均每位教師教導學生數)-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_ESJSTeachersOfStudentRate":
+                            strErrorMsg += "欄位:國中小生師比(平均每位教師教導學生數)<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Edu_BudgetYear":
+                            strErrorMsg += "欄位:教育預算-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_Budget":
+                            strErrorMsg += "欄位:教育預算<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
+                            break;
+
+                        case "Edu_BudgetUpRateYearDesc":
+                            strErrorMsg += "欄位:教育預算成長率-資料年度敘述<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出20位數";
+                            break;
+
+                        case "Edu_BudgetUpRate":
+                            strErrorMsg += "欄位:教育預算成長率<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Edu_ESToHSAvgBudgetYear":
+                            strErrorMsg += "欄位:國小-高中(職)平均每人教育預算-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_ESToHSAvgBudget":
+                            strErrorMsg += "欄位:國小-高中(職)平均每人教育預算<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
+                            break;
+
+                        case "Edu_ESJSPCNumYear":
+                            strErrorMsg += "欄位:國中小教學電腦數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_ESJSPCNum":
+                            strErrorMsg += "欄位:國中小教學電腦數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
+                            break;
+
+                        case "Edu_ESJSAvgPCNumYear":
+                            strErrorMsg += "欄位:國中小平均每人教學電腦數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Edu_ESJSAvgPCNum":
+                            strErrorMsg += "欄位:國中小平均每人教學電腦數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+                    }
                     myTrans.Rollback();
                 }
                 finally
                 {
                     oCmd.Connection.Close();
                     oConn.Close();
-                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    if (strErrorMsg == "")
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('教育匯入成功');</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    }
                 }
             }
         }
@@ -246,75 +449,67 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
 
         //教育 BulkCopy
-        private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
+        private void DoBulkCopy(SqlTransaction oTran, DataTable srcData)
         {
-            try
+            SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
+            using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
             {
-                SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
-                using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
-                {
-                    sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
-                    //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
-                    ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
-                    //sqlBC.NotifyAfter = 10000;
-                    ///設定要寫入的資料庫
-                    sqlBC.DestinationTableName = "Education";
+                sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
+                //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
+                ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
+                //sqlBC.NotifyAfter = 10000;
+                ///設定要寫入的資料庫
+                sqlBC.DestinationTableName = "Education";
 
-                    /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-                    sqlBC.ColumnMappings.Add("Edu_CityNo", "Edu_CityNo");
-                    sqlBC.ColumnMappings.Add("Edu_CityName", "Edu_CityName");
-                    sqlBC.ColumnMappings.Add("Edu_15upJSDownRateYear", "Edu_15upJSDownRateYear");
-                    sqlBC.ColumnMappings.Add("Edu_15upJSDownRate", "Edu_15upJSDownRate");
-                    sqlBC.ColumnMappings.Add("Edu_15upHSRateYear", "Edu_15upHSRateYear");
-                    sqlBC.ColumnMappings.Add("Edu_15upHSRate", "Edu_15upHSRate");
-                    sqlBC.ColumnMappings.Add("Edu_15upUSUpRateYear", "Edu_15upUSUpRateYear");
-                    sqlBC.ColumnMappings.Add("Edu_15upUSUpRate", "Edu_15upUSUpRate");
-                    sqlBC.ColumnMappings.Add("Edu_ESStudentDropOutRateYear", "Edu_ESStudentDropOutRateYear");
-                    sqlBC.ColumnMappings.Add("Edu_ESStudentDropOutRate", "Edu_ESStudentDropOutRate");
-                    sqlBC.ColumnMappings.Add("Edu_JSStudentDropOutRateYear", "Edu_JSStudentDropOutRateYear");
-                    sqlBC.ColumnMappings.Add("Edu_JSStudentDropOutRate", "Edu_JSStudentDropOutRate");
-                    sqlBC.ColumnMappings.Add("Edu_ESStudentsYear", "Edu_ESStudentsYear");
-                    sqlBC.ColumnMappings.Add("Edu_ESStudents", "Edu_ESStudents");
-                    sqlBC.ColumnMappings.Add("Edu_JSStudentsYear", "Edu_JSStudentsYear");
-                    sqlBC.ColumnMappings.Add("Edu_JSStudents", "Edu_JSStudents");
-                    sqlBC.ColumnMappings.Add("Edu_HSStudentsYear", "Edu_HSStudentsYear");
-                    sqlBC.ColumnMappings.Add("Edu_HSStudents", "Edu_HSStudents");
-                    sqlBC.ColumnMappings.Add("Edu_ESToHSIndigenousYear", "Edu_ESToHSIndigenousYear");
-                    sqlBC.ColumnMappings.Add("Edu_ESToHSIdigenous", "Edu_ESToHSIdigenous");
-                    sqlBC.ColumnMappings.Add("Edu_ESToHSIndigenousRateYear", "Edu_ESToHSIndigenousRateYear");
-                    sqlBC.ColumnMappings.Add("Edu_ESToHSIndigenousRate", "Edu_ESToHSIndigenousRate");
-                    sqlBC.ColumnMappings.Add("Edu_ESJSNewInhabitantsYear", "Edu_ESJSNewInhabitantsYear");
-                    sqlBC.ColumnMappings.Add("Edu_ESJSNewInhabitants", "Edu_ESJSNewInhabitants");
-                    sqlBC.ColumnMappings.Add("Edu_ESJSNewInhabitantsRateYear", "Edu_ESJSNewInhabitantsRateYear");
-                    sqlBC.ColumnMappings.Add("Edu_ESToJSNewInhabitantsRate", "Edu_ESToJSNewInhabitantsRate");
-                    sqlBC.ColumnMappings.Add("Edu_ESJSTeachersYear", "Edu_ESJSTeachersYear");
-                    sqlBC.ColumnMappings.Add("Edu_ESJSTeachers", "Edu_ESJSTeachers");
-                    sqlBC.ColumnMappings.Add("Edu_ESJSTeachersOfStudentRateYear", "Edu_ESJSTeachersOfStudentRateYear");
-                    sqlBC.ColumnMappings.Add("Edu_ESJSTeachersOfStudentRate", "Edu_ESJSTeachersOfStudentRate");
-                    sqlBC.ColumnMappings.Add("Edu_BudgetYear", "Edu_BudgetYear");
-                    sqlBC.ColumnMappings.Add("Edu_Budget", "Edu_Budget");
-                    sqlBC.ColumnMappings.Add("Edu_BudgetUpRateYearDesc", "Edu_BudgetUpRateYearDesc");
-                    sqlBC.ColumnMappings.Add("Edu_BudgetUpRate", "Edu_BudgetUpRate");
-                    sqlBC.ColumnMappings.Add("Edu_ESToHSAvgBudgetYear", "Edu_ESToHSAvgBudgetYear");
-                    sqlBC.ColumnMappings.Add("Edu_ESToHSAvgBudget", "Edu_ESToHSAvgBudget");
-                    sqlBC.ColumnMappings.Add("Edu_ESJSPCNumYear", "Edu_ESJSPCNumYear");
-                    sqlBC.ColumnMappings.Add("Edu_ESJSPCNum", "Edu_ESJSPCNum");
-                    sqlBC.ColumnMappings.Add("Edu_ESJSAvgPCNumYear", "Edu_ESJSAvgPCNumYear");
-                    sqlBC.ColumnMappings.Add("Edu_ESJSAvgPCNum", "Edu_ESJSAvgPCNum");
-                    sqlBC.ColumnMappings.Add("Edu_CreateDate", "Edu_CreateDate");
-                    sqlBC.ColumnMappings.Add("Edu_CreateID", "Edu_CreateID");
-                    sqlBC.ColumnMappings.Add("Edu_CreateName", "Edu_CreateName");
-                    sqlBC.ColumnMappings.Add("Edu_Status", "Edu_Status");
-                    sqlBC.ColumnMappings.Add("Edu_Version", "Edu_Version");
-                    /// 開始寫入資料
-                    sqlBC.WriteToServer(srcData);
-                }
+                /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
+                sqlBC.ColumnMappings.Add("Edu_CityNo", "Edu_CityNo");
+                sqlBC.ColumnMappings.Add("Edu_CityName", "Edu_CityName");
+                sqlBC.ColumnMappings.Add("Edu_15upJSDownRateYear", "Edu_15upJSDownRateYear");
+                sqlBC.ColumnMappings.Add("Edu_15upJSDownRate", "Edu_15upJSDownRate");
+                sqlBC.ColumnMappings.Add("Edu_15upHSRateYear", "Edu_15upHSRateYear");
+                sqlBC.ColumnMappings.Add("Edu_15upHSRate", "Edu_15upHSRate");
+                sqlBC.ColumnMappings.Add("Edu_15upUSUpRateYear", "Edu_15upUSUpRateYear");
+                sqlBC.ColumnMappings.Add("Edu_15upUSUpRate", "Edu_15upUSUpRate");
+                sqlBC.ColumnMappings.Add("Edu_ESStudentDropOutRateYear", "Edu_ESStudentDropOutRateYear");
+                sqlBC.ColumnMappings.Add("Edu_ESStudentDropOutRate", "Edu_ESStudentDropOutRate");
+                sqlBC.ColumnMappings.Add("Edu_JSStudentDropOutRateYear", "Edu_JSStudentDropOutRateYear");
+                sqlBC.ColumnMappings.Add("Edu_JSStudentDropOutRate", "Edu_JSStudentDropOutRate");
+                sqlBC.ColumnMappings.Add("Edu_ESStudentsYear", "Edu_ESStudentsYear");
+                sqlBC.ColumnMappings.Add("Edu_ESStudents", "Edu_ESStudents");
+                sqlBC.ColumnMappings.Add("Edu_JSStudentsYear", "Edu_JSStudentsYear");
+                sqlBC.ColumnMappings.Add("Edu_JSStudents", "Edu_JSStudents");
+                sqlBC.ColumnMappings.Add("Edu_HSStudentsYear", "Edu_HSStudentsYear");
+                sqlBC.ColumnMappings.Add("Edu_HSStudents", "Edu_HSStudents");
+                sqlBC.ColumnMappings.Add("Edu_ESToHSIndigenousYear", "Edu_ESToHSIndigenousYear");
+                sqlBC.ColumnMappings.Add("Edu_ESToHSIdigenous", "Edu_ESToHSIdigenous");
+                sqlBC.ColumnMappings.Add("Edu_ESToHSIndigenousRateYear", "Edu_ESToHSIndigenousRateYear");
+                sqlBC.ColumnMappings.Add("Edu_ESToHSIndigenousRate", "Edu_ESToHSIndigenousRate");
+                sqlBC.ColumnMappings.Add("Edu_ESJSNewInhabitantsYear", "Edu_ESJSNewInhabitantsYear");
+                sqlBC.ColumnMappings.Add("Edu_ESJSNewInhabitants", "Edu_ESJSNewInhabitants");
+                sqlBC.ColumnMappings.Add("Edu_ESJSNewInhabitantsRateYear", "Edu_ESJSNewInhabitantsRateYear");
+                sqlBC.ColumnMappings.Add("Edu_ESToJSNewInhabitantsRate", "Edu_ESToJSNewInhabitantsRate");
+                sqlBC.ColumnMappings.Add("Edu_ESJSTeachersYear", "Edu_ESJSTeachersYear");
+                sqlBC.ColumnMappings.Add("Edu_ESJSTeachers", "Edu_ESJSTeachers");
+                sqlBC.ColumnMappings.Add("Edu_ESJSTeachersOfStudentRateYear", "Edu_ESJSTeachersOfStudentRateYear");
+                sqlBC.ColumnMappings.Add("Edu_ESJSTeachersOfStudentRate", "Edu_ESJSTeachersOfStudentRate");
+                sqlBC.ColumnMappings.Add("Edu_BudgetYear", "Edu_BudgetYear");
+                sqlBC.ColumnMappings.Add("Edu_Budget", "Edu_Budget");
+                sqlBC.ColumnMappings.Add("Edu_BudgetUpRateYearDesc", "Edu_BudgetUpRateYearDesc");
+                sqlBC.ColumnMappings.Add("Edu_BudgetUpRate", "Edu_BudgetUpRate");
+                sqlBC.ColumnMappings.Add("Edu_ESToHSAvgBudgetYear", "Edu_ESToHSAvgBudgetYear");
+                sqlBC.ColumnMappings.Add("Edu_ESToHSAvgBudget", "Edu_ESToHSAvgBudget");
+                sqlBC.ColumnMappings.Add("Edu_ESJSPCNumYear", "Edu_ESJSPCNumYear");
+                sqlBC.ColumnMappings.Add("Edu_ESJSPCNum", "Edu_ESJSPCNum");
+                sqlBC.ColumnMappings.Add("Edu_ESJSAvgPCNumYear", "Edu_ESJSAvgPCNumYear");
+                sqlBC.ColumnMappings.Add("Edu_ESJSAvgPCNum", "Edu_ESJSAvgPCNum");
+                sqlBC.ColumnMappings.Add("Edu_CreateDate", "Edu_CreateDate");
+                sqlBC.ColumnMappings.Add("Edu_CreateID", "Edu_CreateID");
+                sqlBC.ColumnMappings.Add("Edu_CreateName", "Edu_CreateName");
+                sqlBC.ColumnMappings.Add("Edu_Status", "Edu_Status");
+                sqlBC.ColumnMappings.Add("Edu_Version", "Edu_Version");
+                /// 開始寫入資料
+                sqlBC.WriteToServer(srcData);
             }
-            catch (Exception ex)
-            {
-                strErrorMsg += "教育匯入 error：" + ex.Message.ToString() + "\n";
-            }
-
         }
 
         //判斷Token是否正確

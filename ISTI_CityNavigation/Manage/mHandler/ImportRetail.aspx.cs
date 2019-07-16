@@ -37,22 +37,22 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 //建立DataTable Bulk Copy用
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Re_CityNo", typeof(string));
-                dt.Columns.Add("Re_CityName", typeof(string));
-                dt.Columns.Add("Re_StreetStandYear", typeof(string));
-                dt.Columns.Add("Re_StreetStand", typeof(string));
-                dt.Columns.Add("Re_Re_StreetVendorYear", typeof(string));
-                dt.Columns.Add("Re_StreetVendor", typeof(string));
-                dt.Columns.Add("Re_StreetVendorIncomeYear", typeof(string));
-                dt.Columns.Add("Re_StreetVendorIncome", typeof(string));
-                dt.Columns.Add("Re_StreetVendorAvgIncomeYear", typeof(string));
-                dt.Columns.Add("Re_StreetVendorAvgIncome", typeof(string));
-                dt.Columns.Add("Re_RetailBusinessSalesYear", typeof(string));
-                dt.Columns.Add("Re_RetailBusinessSales", typeof(string));
-                dt.Columns.Add("Re_RetailBusinessSalesRateYearDesc", typeof(string));
-                dt.Columns.Add("Re_RetailBusinessSalesRate", typeof(string));
-                dt.Columns.Add("Re_RetailBusinessAvgSalesYear", typeof(string));
-                dt.Columns.Add("Re_RetailBusinessAvgSales", typeof(string));
+                dt.Columns.Add("Re_CityNo", typeof(string)).MaxLength = 2; ;
+                dt.Columns.Add("Re_CityName", typeof(string)).MaxLength = 10;
+                dt.Columns.Add("Re_StreetStandYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Re_StreetStand", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Re_Re_StreetVendorYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Re_StreetVendor", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Re_StreetVendorIncomeYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Re_StreetVendorIncome", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Re_StreetVendorAvgIncomeYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Re_StreetVendorAvgIncome", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Re_RetailBusinessSalesYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Re_RetailBusinessSales", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Re_RetailBusinessSalesRateYearDesc", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Re_RetailBusinessSalesRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Re_RetailBusinessAvgSalesYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Re_RetailBusinessAvgSales", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("Re_CreateDate", typeof(DateTime));
                 dt.Columns.Add("Re_CreateID", typeof(string));
                 dt.Columns.Add("Re_CreateName", typeof(string));
@@ -117,6 +117,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 {
                                     throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                                 }
+
+                                strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
                                 row["Re_CityNo"] = cityNo;//縣市代碼
                                 row["Re_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["Re_StreetStandYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//攤販經營家數-資料年度(民國年)
@@ -149,29 +151,109 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                         if (dt.Rows.Count > 0)
                         {
+                            strErrorMsg = "";
                             BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
                             DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
-                                                                 //最後再commit
-                            myTrans.Commit();
-                            if (strErrorMsg == "")
-                            {
-                                strErrorMsg = "上傳成功";
-                            }
-
+                            myTrans.Commit();                   //最後再commit
                         }
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    strErrorMsg += ex.Message;
+                    string Errormsg = ex.Message;
+                    string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
+                    string ErrorField = eArray[3].ToString();
+                    switch (ErrorField)
+                    {
+                        case "Re_CityName":
+                            strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
+                            break;
+
+                        case "Re_StreetStandYear":
+                            strErrorMsg += "欄位:攤販經營家數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Re_StreetStand":
+                            strErrorMsg += "欄位:攤販經營家數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Re_Re_StreetVendorYear":
+                            strErrorMsg += "欄位:攤販從業人數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Re_StreetVendor":
+                            strErrorMsg += "欄位:攤販從業人數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Re_StreetVendorIncomeYear":
+                            strErrorMsg += "欄位:攤販全年收入-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Re_StreetVendorIncome":
+                            strErrorMsg += "欄位:攤販全年收入<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Re_StreetVendorAvgIncomeYear":
+                            strErrorMsg += "欄位:攤販全年平均收入-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Re_StreetVendorAvgIncome":
+                            strErrorMsg += "欄位:攤販全年平均收入<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Re_RetailBusinessSalesYear":
+                            strErrorMsg += "欄位:零售業營利事業銷售額-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Re_RetailBusinessSales":
+                            strErrorMsg += "欄位:零售業營利事業銷售額<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Re_RetailBusinessSalesRateYearDesc":
+                            strErrorMsg += "欄位:零售業營利事業銷售額成長率-年度敘述<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Re_RetailBusinessSalesRate":
+                            strErrorMsg += "欄位:零售業營利事業銷售額成長率<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Re_RetailBusinessAvgSalesYear":
+                            strErrorMsg += "欄位:零售業營利事業平均每家銷售額-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Re_RetailBusinessAvgSales":
+                            strErrorMsg += "欄位:零售業營利事業平均每家銷售額<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+                    }
                     myTrans.Rollback();
                 }
                 finally
                 {
                     oCmd.Connection.Close();
                     oConn.Close();
-                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    if (strErrorMsg == "")
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('零售匯入成功');</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    }
                 }
             }
             else
@@ -206,50 +288,42 @@ namespace ISTI_CityNavigation.Manage.mHandler
         //零售 BulkCopy
         private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
         {
-            try
+            SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
+            using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
             {
-                SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
-                using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
-                {
-                    sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
-                    //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
-                    ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
-                    //sqlBC.NotifyAfter = 10000;
-                    ///設定要寫入的資料庫
-                    sqlBC.DestinationTableName = "Retail";
+                sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
+                //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
+                ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
+                //sqlBC.NotifyAfter = 10000;
+                ///設定要寫入的資料庫
+                sqlBC.DestinationTableName = "Retail";
 
-                    /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-                    sqlBC.ColumnMappings.Add("Re_CityNo", "Re_CityNo");
-                    sqlBC.ColumnMappings.Add("Re_CityName", "Re_CityName");
-                    sqlBC.ColumnMappings.Add("Re_StreetStandYear", "Re_StreetStandYear");
-                    sqlBC.ColumnMappings.Add("Re_StreetStand", "Re_StreetStand");
-                    sqlBC.ColumnMappings.Add("Re_Re_StreetVendorYear", "Re_Re_StreetVendorYear");
-                    sqlBC.ColumnMappings.Add("Re_StreetVendor", "Re_StreetVendor");
-                    sqlBC.ColumnMappings.Add("Re_StreetVendorIncomeYear", "Re_StreetVendorIncomeYear");
-                    sqlBC.ColumnMappings.Add("Re_StreetVendorIncome", "Re_StreetVendorIncome");
-                    sqlBC.ColumnMappings.Add("Re_StreetVendorAvgIncomeYear", "Re_StreetVendorAvgIncomeYear");
-                    sqlBC.ColumnMappings.Add("Re_StreetVendorAvgIncome", "Re_StreetVendorAvgIncome");
-                    sqlBC.ColumnMappings.Add("Re_RetailBusinessSalesYear", "Re_RetailBusinessSalesYear");
-                    sqlBC.ColumnMappings.Add("Re_RetailBusinessSales", "Re_RetailBusinessSales");
-                    sqlBC.ColumnMappings.Add("Re_RetailBusinessSalesRateYearDesc", "Re_RetailBusinessSalesRateYearDesc");
-                    sqlBC.ColumnMappings.Add("Re_RetailBusinessSalesRate", "Re_RetailBusinessSalesRate");
-                    sqlBC.ColumnMappings.Add("Re_RetailBusinessAvgSalesYear", "Re_RetailBusinessAvgSalesYear");
-                    sqlBC.ColumnMappings.Add("Re_RetailBusinessAvgSales", "Re_RetailBusinessAvgSales");
-                    sqlBC.ColumnMappings.Add("Re_CreateDate", "Re_CreateDate");
-                    sqlBC.ColumnMappings.Add("Re_CreateID", "Re_CreateID");
-                    sqlBC.ColumnMappings.Add("Re_CreateName", "Re_CreateName");
-                    sqlBC.ColumnMappings.Add("Re_Status", "Re_Status");
-                    sqlBC.ColumnMappings.Add("Re_Version", "Re_Version");
+                /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
+                sqlBC.ColumnMappings.Add("Re_CityNo", "Re_CityNo");
+                sqlBC.ColumnMappings.Add("Re_CityName", "Re_CityName");
+                sqlBC.ColumnMappings.Add("Re_StreetStandYear", "Re_StreetStandYear");
+                sqlBC.ColumnMappings.Add("Re_StreetStand", "Re_StreetStand");
+                sqlBC.ColumnMappings.Add("Re_Re_StreetVendorYear", "Re_Re_StreetVendorYear");
+                sqlBC.ColumnMappings.Add("Re_StreetVendor", "Re_StreetVendor");
+                sqlBC.ColumnMappings.Add("Re_StreetVendorIncomeYear", "Re_StreetVendorIncomeYear");
+                sqlBC.ColumnMappings.Add("Re_StreetVendorIncome", "Re_StreetVendorIncome");
+                sqlBC.ColumnMappings.Add("Re_StreetVendorAvgIncomeYear", "Re_StreetVendorAvgIncomeYear");
+                sqlBC.ColumnMappings.Add("Re_StreetVendorAvgIncome", "Re_StreetVendorAvgIncome");
+                sqlBC.ColumnMappings.Add("Re_RetailBusinessSalesYear", "Re_RetailBusinessSalesYear");
+                sqlBC.ColumnMappings.Add("Re_RetailBusinessSales", "Re_RetailBusinessSales");
+                sqlBC.ColumnMappings.Add("Re_RetailBusinessSalesRateYearDesc", "Re_RetailBusinessSalesRateYearDesc");
+                sqlBC.ColumnMappings.Add("Re_RetailBusinessSalesRate", "Re_RetailBusinessSalesRate");
+                sqlBC.ColumnMappings.Add("Re_RetailBusinessAvgSalesYear", "Re_RetailBusinessAvgSalesYear");
+                sqlBC.ColumnMappings.Add("Re_RetailBusinessAvgSales", "Re_RetailBusinessAvgSales");
+                sqlBC.ColumnMappings.Add("Re_CreateDate", "Re_CreateDate");
+                sqlBC.ColumnMappings.Add("Re_CreateID", "Re_CreateID");
+                sqlBC.ColumnMappings.Add("Re_CreateName", "Re_CreateName");
+                sqlBC.ColumnMappings.Add("Re_Status", "Re_Status");
+                sqlBC.ColumnMappings.Add("Re_Version", "Re_Version");
 
-                    /// 開始寫入資料
-                    sqlBC.WriteToServer(srcData);
-                }
+                /// 開始寫入資料
+                sqlBC.WriteToServer(srcData);
             }
-            catch (Exception ex)
-            {
-                strErrorMsg += "零售匯入 error：" + ex.Message.ToString() + "\n";
-            }
-
         }
 
         //判斷Token是否正確

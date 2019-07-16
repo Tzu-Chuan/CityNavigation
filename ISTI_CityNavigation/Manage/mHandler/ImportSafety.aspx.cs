@@ -37,28 +37,28 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 //建立DataTable Bulk Copy用
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Sf_CityNo", typeof(string));
-                dt.Columns.Add("Sf_CityName", typeof(string));
-                dt.Columns.Add("Sf_SoilAreaYear", typeof(string));
-                dt.Columns.Add("Sf_SoilArea", typeof(string));
-                dt.Columns.Add("Sf_UnderWaterAreaYear", typeof(string));
-                dt.Columns.Add("Sf_UnderWaterArea", typeof(string));
-                dt.Columns.Add("Sf_PM25QuantityYear", typeof(string));
-                dt.Columns.Add("Sf_PM25Quantity", typeof(string));
-                dt.Columns.Add("Sf_10KPeopleFireTimesYear", typeof(string));
-                dt.Columns.Add("Sf_10KPeopleFireTimes", typeof(string));
-                dt.Columns.Add("Sf_100KPeopleBurglaryTimesYear", typeof(string));
-                dt.Columns.Add("Sf_100KPeopleBurglaryTimes", typeof(string));
-                dt.Columns.Add("Sf_BurglaryClearanceRateYear", typeof(string));
-                dt.Columns.Add("Sf_BurglaryClearanceRate", typeof(string));
-                dt.Columns.Add("Sf_100KPeopleCriminalCaseTimesYear", typeof(string));
-                dt.Columns.Add("Sf_100KPeopleCriminalCaseTimes", typeof(string));
-                dt.Columns.Add("Sf_CriminalCaseClearanceRateYear", typeof(string));
-                dt.Columns.Add("Sf_CriminalCaseClearanceRate", typeof(string));
-                dt.Columns.Add("Sf_100KPeopleViolentCrimesTimesYear", typeof(string));
-                dt.Columns.Add("Sf_100KPeopleViolentCrimesTimes", typeof(string));
-                dt.Columns.Add("Sf_ViolentCrimesClearanceRateYear", typeof(string));
-                dt.Columns.Add("Sf_ViolentCrimesClearanceRate", typeof(string));
+                dt.Columns.Add("Sf_CityNo", typeof(string)).MaxLength = 2;
+                dt.Columns.Add("Sf_CityName", typeof(string)).MaxLength = 10;
+                dt.Columns.Add("Sf_SoilAreaYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Sf_SoilArea", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Sf_UnderWaterAreaYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Sf_UnderWaterArea", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Sf_PM25QuantityYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Sf_PM25Quantity", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Sf_10KPeopleFireTimesYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Sf_10KPeopleFireTimes", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Sf_100KPeopleBurglaryTimesYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Sf_100KPeopleBurglaryTimes", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Sf_BurglaryClearanceRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Sf_BurglaryClearanceRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Sf_100KPeopleCriminalCaseTimesYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Sf_100KPeopleCriminalCaseTimes", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Sf_CriminalCaseClearanceRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Sf_CriminalCaseClearanceRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Sf_100KPeopleViolentCrimesTimesYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Sf_100KPeopleViolentCrimesTimes", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Sf_ViolentCrimesClearanceRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Sf_ViolentCrimesClearanceRate", typeof(string)).MaxLength = 7;
                 dt.Columns.Add("Sf_CreateDate", typeof(DateTime));
                 dt.Columns.Add("Sf_CreateID", typeof(string));
                 dt.Columns.Add("Sf_CreateName", typeof(string));
@@ -122,6 +122,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 {
                                     throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                                 }
+
+                                strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
                                 row["Sf_CityNo"] = cityNo;//縣市代碼
                                 row["Sf_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["Sf_SoilAreaYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//土壤污染控制場址面積-資料年度(民國年)
@@ -160,29 +162,139 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                         if (dt.Rows.Count > 0)
                         {
+                            strErrorMsg = "";
                             BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
                             DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
-                                                                 //最後再commit
-                            myTrans.Commit();
-                            if (strErrorMsg == "")
-                            {
-                                strErrorMsg = "上傳成功";
-                            }
-
+                            myTrans.Commit();                   //最後再commit
                         }
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    strErrorMsg += ex.Message;
+                    string Errormsg = ex.Message;
+                    string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
+                    string ErrorField = eArray[3].ToString();
+                    switch (ErrorField)
+                    {
+                        case "Sf_CityName":
+                            strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
+                            break;
+
+                        case "Sf_SoilAreaYear":
+                            strErrorMsg += "欄位:土壤污染控制場址面積-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Sf_SoilArea":
+                            strErrorMsg += "欄位:土壤污染控制場址面積<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Sf_UnderWaterAreaYear":
+                            strErrorMsg += "欄位:地下水受污染使用限制面積-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Sf_UnderWaterArea":
+                            strErrorMsg += "欄位:地下水受污染使用限制面積<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Sf_PM25QuantityYear":
+                            strErrorMsg += "欄位:總懸浮微粒排放量-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Sf_PM25Quantity":
+                            strErrorMsg += "欄位:總懸浮微粒排放量<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Sf_10KPeopleFireTimesYear":
+                            strErrorMsg += "欄位:每萬人火災發生次數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Sf_10KPeopleFireTimes":
+                            strErrorMsg += "欄位:每萬人火災發生次數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Sf_100KPeopleBurglaryTimesYear":
+                            strErrorMsg += "欄位:每十萬人竊盜案發生數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Sf_100KPeopleBurglaryTimes":
+                            strErrorMsg += "欄位:每十萬人竊盜案發生數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Sf_BurglaryClearanceRateYear":
+                            strErrorMsg += "欄位:竊盜案破獲率-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Sf_BurglaryClearanceRate":
+                            strErrorMsg += "欄位:竊盜案破獲率<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Sf_100KPeopleCriminalCaseTimesYear":
+                            strErrorMsg += "欄位:每十萬人刑案發生數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Sf_100KPeopleCriminalCaseTimes":
+                            strErrorMsg += "欄位:每十萬人刑案發生數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Sf_CriminalCaseClearanceRateYear":
+                            strErrorMsg += "欄位:刑案破獲率-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Sf_CriminalCaseClearanceRate":
+                            strErrorMsg += "欄位:刑案破獲率<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Sf_100KPeopleViolentCrimesTimesYear":
+                            strErrorMsg += "欄位:每十萬人暴力犯罪發生數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Sf_100KPeopleViolentCrimesTimes":
+                            strErrorMsg += "欄位:每十萬人暴力犯罪發生數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Sf_ViolentCrimesClearanceRateYear":
+                            strErrorMsg += "欄位:暴力犯罪破獲率-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Sf_ViolentCrimesClearanceRate":
+                            strErrorMsg += "欄位:暴力犯罪破獲率<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+                    }
                     myTrans.Rollback();
                 }
                 finally
                 {
                     oCmd.Connection.Close();
                     oConn.Close();
-                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    if (strErrorMsg == "")
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('安全匯入成功');</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    }
                 }
             }
             else
@@ -217,56 +329,48 @@ namespace ISTI_CityNavigation.Manage.mHandler
         //安全 BulkCopy
         private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
         {
-            try
+            SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
+            using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
             {
-                SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
-                using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
-                {
-                    sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
-                    //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
-                    ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
-                    //sqlBC.NotifyAfter = 10000;
-                    ///設定要寫入的資料庫
-                    sqlBC.DestinationTableName = "Safety";
+                sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
+                //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
+                ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
+                //sqlBC.NotifyAfter = 10000;
+                ///設定要寫入的資料庫
+                sqlBC.DestinationTableName = "Safety";
 
-                    /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-                    sqlBC.ColumnMappings.Add("Sf_CityNo", "Sf_CityNo");
-                    sqlBC.ColumnMappings.Add("Sf_CityName", "Sf_CityName");
-                    sqlBC.ColumnMappings.Add("Sf_SoilAreaYear", "Sf_SoilAreaYear");
-                    sqlBC.ColumnMappings.Add("Sf_SoilArea", "Sf_SoilArea");
-                    sqlBC.ColumnMappings.Add("Sf_UnderWaterAreaYear", "Sf_UnderWaterAreaYear");
-                    sqlBC.ColumnMappings.Add("Sf_UnderWaterArea", "Sf_UnderWaterArea");
-                    sqlBC.ColumnMappings.Add("Sf_PM25QuantityYear", "Sf_PM25QuantityYear");
-                    sqlBC.ColumnMappings.Add("Sf_PM25Quantity", "Sf_PM25Quantity");
-                    sqlBC.ColumnMappings.Add("Sf_10KPeopleFireTimesYear", "Sf_10KPeopleFireTimesYear");
-                    sqlBC.ColumnMappings.Add("Sf_10KPeopleFireTimes", "Sf_10KPeopleFireTimes");
-                    sqlBC.ColumnMappings.Add("Sf_100KPeopleBurglaryTimesYear", "Sf_100KPeopleBurglaryTimesYear");
-                    sqlBC.ColumnMappings.Add("Sf_100KPeopleBurglaryTimes", "Sf_100KPeopleBurglaryTimes");
-                    sqlBC.ColumnMappings.Add("Sf_BurglaryClearanceRateYear", "Sf_BurglaryClearanceRateYear");
-                    sqlBC.ColumnMappings.Add("Sf_BurglaryClearanceRate", "Sf_BurglaryClearanceRate");
-                    sqlBC.ColumnMappings.Add("Sf_100KPeopleCriminalCaseTimesYear", "Sf_100KPeopleCriminalCaseTimesYear");
-                    sqlBC.ColumnMappings.Add("Sf_100KPeopleCriminalCaseTimes", "Sf_100KPeopleCriminalCaseTimes");
-                    sqlBC.ColumnMappings.Add("Sf_CriminalCaseClearanceRateYear", "Sf_CriminalCaseClearanceRateYear");
-                    sqlBC.ColumnMappings.Add("Sf_CriminalCaseClearanceRate", "Sf_CriminalCaseClearanceRate");
-                    sqlBC.ColumnMappings.Add("Sf_100KPeopleViolentCrimesTimesYear", "Sf_100KPeopleViolentCrimesTimesYear");
-                    sqlBC.ColumnMappings.Add("Sf_100KPeopleViolentCrimesTimes", "Sf_100KPeopleViolentCrimesTimes");
-                    sqlBC.ColumnMappings.Add("Sf_ViolentCrimesClearanceRateYear", "Sf_ViolentCrimesClearanceRateYear");
-                    sqlBC.ColumnMappings.Add("Sf_ViolentCrimesClearanceRate", "Sf_ViolentCrimesClearanceRate");
-                    sqlBC.ColumnMappings.Add("Sf_CreateDate", "Sf_CreateDate");
-                    sqlBC.ColumnMappings.Add("Sf_CreateID", "Sf_CreateID");
-                    sqlBC.ColumnMappings.Add("Sf_CreateName", "Sf_CreateName");
-                    sqlBC.ColumnMappings.Add("Sf_Status", "Sf_Status");
-                    sqlBC.ColumnMappings.Add("Sf_Version", "Sf_Version");
+                /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
+                sqlBC.ColumnMappings.Add("Sf_CityNo", "Sf_CityNo");
+                sqlBC.ColumnMappings.Add("Sf_CityName", "Sf_CityName");
+                sqlBC.ColumnMappings.Add("Sf_SoilAreaYear", "Sf_SoilAreaYear");
+                sqlBC.ColumnMappings.Add("Sf_SoilArea", "Sf_SoilArea");
+                sqlBC.ColumnMappings.Add("Sf_UnderWaterAreaYear", "Sf_UnderWaterAreaYear");
+                sqlBC.ColumnMappings.Add("Sf_UnderWaterArea", "Sf_UnderWaterArea");
+                sqlBC.ColumnMappings.Add("Sf_PM25QuantityYear", "Sf_PM25QuantityYear");
+                sqlBC.ColumnMappings.Add("Sf_PM25Quantity", "Sf_PM25Quantity");
+                sqlBC.ColumnMappings.Add("Sf_10KPeopleFireTimesYear", "Sf_10KPeopleFireTimesYear");
+                sqlBC.ColumnMappings.Add("Sf_10KPeopleFireTimes", "Sf_10KPeopleFireTimes");
+                sqlBC.ColumnMappings.Add("Sf_100KPeopleBurglaryTimesYear", "Sf_100KPeopleBurglaryTimesYear");
+                sqlBC.ColumnMappings.Add("Sf_100KPeopleBurglaryTimes", "Sf_100KPeopleBurglaryTimes");
+                sqlBC.ColumnMappings.Add("Sf_BurglaryClearanceRateYear", "Sf_BurglaryClearanceRateYear");
+                sqlBC.ColumnMappings.Add("Sf_BurglaryClearanceRate", "Sf_BurglaryClearanceRate");
+                sqlBC.ColumnMappings.Add("Sf_100KPeopleCriminalCaseTimesYear", "Sf_100KPeopleCriminalCaseTimesYear");
+                sqlBC.ColumnMappings.Add("Sf_100KPeopleCriminalCaseTimes", "Sf_100KPeopleCriminalCaseTimes");
+                sqlBC.ColumnMappings.Add("Sf_CriminalCaseClearanceRateYear", "Sf_CriminalCaseClearanceRateYear");
+                sqlBC.ColumnMappings.Add("Sf_CriminalCaseClearanceRate", "Sf_CriminalCaseClearanceRate");
+                sqlBC.ColumnMappings.Add("Sf_100KPeopleViolentCrimesTimesYear", "Sf_100KPeopleViolentCrimesTimesYear");
+                sqlBC.ColumnMappings.Add("Sf_100KPeopleViolentCrimesTimes", "Sf_100KPeopleViolentCrimesTimes");
+                sqlBC.ColumnMappings.Add("Sf_ViolentCrimesClearanceRateYear", "Sf_ViolentCrimesClearanceRateYear");
+                sqlBC.ColumnMappings.Add("Sf_ViolentCrimesClearanceRate", "Sf_ViolentCrimesClearanceRate");
+                sqlBC.ColumnMappings.Add("Sf_CreateDate", "Sf_CreateDate");
+                sqlBC.ColumnMappings.Add("Sf_CreateID", "Sf_CreateID");
+                sqlBC.ColumnMappings.Add("Sf_CreateName", "Sf_CreateName");
+                sqlBC.ColumnMappings.Add("Sf_Status", "Sf_Status");
+                sqlBC.ColumnMappings.Add("Sf_Version", "Sf_Version");
 
-                    /// 開始寫入資料
-                    sqlBC.WriteToServer(srcData);
-                }
+                /// 開始寫入資料
+                sqlBC.WriteToServer(srcData);
             }
-            catch (Exception ex)
-            {
-                strErrorMsg += " 安全匯入 error：" + ex.Message.ToString() + "\n";
-            }
-
         }
 
         //判斷Token是否正確

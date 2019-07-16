@@ -82,14 +82,7 @@
         });
 
         function feedbackFun(msg) {
-            if (msg == "上傳成功") {
-                alert(msg);
-                location.reload();
-            }
-            else {
-                alert(msg);
-                location.href = "../../Handler/SignOut.aspx";
-            }
+            $("#Msg").html(msg);
         }
     </script>
 </asp:Content>
@@ -122,4 +115,5 @@
         選擇檔案：<input type="file" id="importFile" name="importFile" class="inputex" />&nbsp;<input type="button" id="btnUpload" class="genbtn" value="上傳" />
         <input type="hidden" id="mToken" name="mToken" runat="server" ClientIDMode='Static' value="">
     </div>
+    <div id="Msg" class="margin10T" style="color:red;"></div>
 </asp:Content>

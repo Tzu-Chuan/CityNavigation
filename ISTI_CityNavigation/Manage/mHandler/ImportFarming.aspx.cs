@@ -36,28 +36,28 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 //建立DataTable Bulk Copy用
                 DataTable dt = new DataTable();
-                dt.Columns.Add("Fa_CityNo", typeof(string));
-                dt.Columns.Add("Fa_CityName", typeof(string));
-                dt.Columns.Add("Fa_FarmingLossYear", typeof(string));
-                dt.Columns.Add("Fa_FarmingLoss", typeof(string));
-                dt.Columns.Add("Fa_AnimalLossYear", typeof(string));
-                dt.Columns.Add("Fa_AnimalLoss", typeof(string));
-                dt.Columns.Add("Fa_FishLossYear", typeof(string));
-                dt.Columns.Add("Fa_FishLoss", typeof(string));
-                dt.Columns.Add("Fa_ForestLossYear", typeof(string));
-                dt.Columns.Add("Fa_ForestLoss", typeof(string));
-                dt.Columns.Add("Fa_AllLossYear", typeof(string));
-                dt.Columns.Add("Fa_AllLoss", typeof(string));
-                dt.Columns.Add("Fa_FacilityLossYear", typeof(string));
-                dt.Columns.Add("Fa_FacilityLoss", typeof(string));
-                dt.Columns.Add("Fa_FarmingOutputValueYear", typeof(string));
-                dt.Columns.Add("Fa_FarmingOutputValue", typeof(string));
-                dt.Columns.Add("Fa_FarmingOutputRateYearDesc", typeof(string));
-                dt.Columns.Add("Fa_FarmingOutputRate", typeof(string));
-                dt.Columns.Add("Fa_FarmerYear", typeof(string));
-                dt.Columns.Add("Fa_Farmer", typeof(string));
-                dt.Columns.Add("Fa_FarmEmploymentOutputValueYear", typeof(string));
-                dt.Columns.Add("Fa_FarmEmploymentOutputValue", typeof(string));
+                dt.Columns.Add("Fa_CityNo", typeof(string)).MaxLength = 2;
+                dt.Columns.Add("Fa_CityName", typeof(string)).MaxLength = 10;
+                dt.Columns.Add("Fa_FarmingLossYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Fa_FarmingLoss", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Fa_AnimalLossYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Fa_AnimalLoss", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Fa_FishLossYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Fa_FishLoss", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Fa_ForestLossYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Fa_ForestLoss", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Fa_AllLossYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Fa_AllLoss", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Fa_FacilityLossYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Fa_FacilityLoss", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Fa_FarmingOutputValueYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Fa_FarmingOutputValue", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Fa_FarmingOutputRateYearDesc", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Fa_FarmingOutputRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Fa_FarmerYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Fa_Farmer", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Fa_FarmEmploymentOutputValueYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Fa_FarmEmploymentOutputValue", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("Fa_CreateDate", typeof(DateTime));
                 dt.Columns.Add("Fa_CreateID", typeof(string));
                 dt.Columns.Add("Fa_CreateName", typeof(string));
@@ -121,6 +121,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 {
                                     throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                                 }
+
+                                strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
                                 row["Fa_CityNo"] = cityNo;//縣市代碼
                                 row["Fa_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["Fa_FarmingLossYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//臺閩地區農業天然災害產物損失-資料年度(民國年)
@@ -159,29 +161,139 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                         if (dt.Rows.Count > 0)
                         {
+                            strErrorMsg = "";
                             BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
                             DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
-                                                                 //最後再commit
-                            myTrans.Commit();
-                            if (strErrorMsg == "")
-                            {
-                                strErrorMsg = "上傳成功";
-                            }
-
+                            myTrans.Commit();                   //最後再commit
                         }
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    strErrorMsg += ex.Message;
+                    string Errormsg = ex.Message;
+                    string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
+                    string ErrorField = eArray[3].ToString();
+                    switch (ErrorField)
+                    {
+                        case "Fa_CityName":
+                            strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
+                            break;
+
+                        case "Fa_FarmingLossYear":
+                            strErrorMsg += "欄位:臺閩地區農業天然災害產物損失-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Fa_FarmingLoss":
+                            strErrorMsg += "欄位:臺閩地區農業天然災害產物損失<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Fa_AnimalLossYear":
+                            strErrorMsg += "欄位:天然災害畜牧業產物損失-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Fa_AnimalLoss":
+                            strErrorMsg += "欄位:天然災害畜牧業產物損失<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Fa_FishLossYear":
+                            strErrorMsg += "欄位:天然災害漁業產物損失-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Fa_FishLoss":
+                            strErrorMsg += "欄位:天然災害漁業產物損失<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Fa_ForestLossYear":
+                            strErrorMsg += "欄位:臺閩地區林業天然災害產物損失-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Fa_ForestLoss":
+                            strErrorMsg += "欄位:臺閩地區林業天然災害產物損失<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Fa_AllLossYear":
+                            strErrorMsg += "欄位:農林漁牧天然災害產物損失-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Fa_AllLoss":
+                            strErrorMsg += "欄位:農林漁牧天然災害產物損失<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Fa_FacilityLossYear":
+                            strErrorMsg += "欄位:農林漁牧天然災害設施(備)損失-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Fa_FacilityLoss":
+                            strErrorMsg += "欄位:農林漁牧天然災害設施(備)損失<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+
+                        case "Fa_FarmingOutputValueYear":
+                            strErrorMsg += "欄位:農業產值-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Fa_FarmingOutputValue":
+                            strErrorMsg += "欄位:農業產<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Fa_FarmingOutputRateYearDesc":
+                            strErrorMsg += "欄位:<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Fa_FarmingOutputRate":
+                            strErrorMsg += "欄位:農業產值成長率-資料年度敘述<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
+                            break;
+
+                        case "Fa_FarmerYear":
+                            strErrorMsg += "欄位:農戶人口數-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Fa_Farmer":
+                            strErrorMsg += "欄位:農戶人口數<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
+                            break;
+
+                        case "Fa_FarmEmploymentOutputValueYear":
+                            strErrorMsg += "欄位:平均農業從業人口產值-資料年度<br>";
+                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
+                            break;
+
+                        case "Fa_FarmEmploymentOutputValue":
+                            strErrorMsg += "欄位:平均農業從業人口產值<br>";
+                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
+                            break;
+                    }
                     myTrans.Rollback();
                 }
                 finally
                 {
                     oCmd.Connection.Close();
                     oConn.Close();
-                    Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    if (strErrorMsg == "")
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('市長副市長匯入成功');</script>");
+                    }
+                    else
+                    {
+                        Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
+                    }
                 }
             }
             else
@@ -216,56 +328,48 @@ namespace ISTI_CityNavigation.Manage.mHandler
         //農業 BulkCopy
         private void DoBulkCopy(SqlTransaction oTran, DataTable srcData, string errorMsg)
         {
-            try
+            SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
+            using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
             {
-                SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
-                using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
-                {
-                    sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
-                    //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
-                    ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
-                    //sqlBC.NotifyAfter = 10000;
-                    ///設定要寫入的資料庫
-                    sqlBC.DestinationTableName = "Farming";
+                sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
+                //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
+                ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
+                //sqlBC.NotifyAfter = 10000;
+                ///設定要寫入的資料庫
+                sqlBC.DestinationTableName = "Farming";
 
-                    /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-                    sqlBC.ColumnMappings.Add("Fa_CityNo", "Fa_CityNo");
-                    sqlBC.ColumnMappings.Add("Fa_CityName", "Fa_CityName");
-                    sqlBC.ColumnMappings.Add("Fa_FarmingLossYear", "Fa_FarmingLossYear");
-                    sqlBC.ColumnMappings.Add("Fa_FarmingLoss", "Fa_FarmingLoss");
-                    sqlBC.ColumnMappings.Add("Fa_AnimalLossYear", "Fa_AnimalLossYear");
-                    sqlBC.ColumnMappings.Add("Fa_AnimalLoss", "Fa_AnimalLoss");
-                    sqlBC.ColumnMappings.Add("Fa_FishLossYear", "Fa_FishLossYear");
-                    sqlBC.ColumnMappings.Add("Fa_FishLoss", "Fa_FishLoss");
-                    sqlBC.ColumnMappings.Add("Fa_ForestLossYear", "Fa_ForestLossYear");
-                    sqlBC.ColumnMappings.Add("Fa_ForestLoss", "Fa_ForestLoss");
-                    sqlBC.ColumnMappings.Add("Fa_AllLossYear", "Fa_AllLossYear");
-                    sqlBC.ColumnMappings.Add("Fa_AllLoss", "Fa_AllLoss");
-                    sqlBC.ColumnMappings.Add("Fa_FacilityLossYear", "Fa_FacilityLossYear");
-                    sqlBC.ColumnMappings.Add("Fa_FacilityLoss", "Fa_FacilityLoss");
-                    sqlBC.ColumnMappings.Add("Fa_FarmingOutputValueYear", "Fa_FarmingOutputValueYear");
-                    sqlBC.ColumnMappings.Add("Fa_FarmingOutputValue", "Fa_FarmingOutputValue");
-                    sqlBC.ColumnMappings.Add("Fa_FarmingOutputRateYearDesc", "Fa_FarmingOutputRateYearDesc");
-                    sqlBC.ColumnMappings.Add("Fa_FarmingOutputRate", "Fa_FarmingOutputRate");
-                    sqlBC.ColumnMappings.Add("Fa_FarmerYear", "Fa_FarmerYear");
-                    sqlBC.ColumnMappings.Add("Fa_Farmer", "Fa_Farmer");
-                    sqlBC.ColumnMappings.Add("Fa_FarmEmploymentOutputValueYear", "Fa_FarmEmploymentOutputValueYear");
-                    sqlBC.ColumnMappings.Add("Fa_FarmEmploymentOutputValue", "Fa_FarmEmploymentOutputValue");
-                    sqlBC.ColumnMappings.Add("Fa_CreateDate", "Fa_CreateDate");
-                    sqlBC.ColumnMappings.Add("Fa_CreateID", "Fa_CreateID");
-                    sqlBC.ColumnMappings.Add("Fa_CreateName", "Fa_CreateName");
-                    sqlBC.ColumnMappings.Add("Fa_Status", "Fa_Status");
-                    sqlBC.ColumnMappings.Add("Fa_Version", "Fa_Version");
+                /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
+                sqlBC.ColumnMappings.Add("Fa_CityNo", "Fa_CityNo");
+                sqlBC.ColumnMappings.Add("Fa_CityName", "Fa_CityName");
+                sqlBC.ColumnMappings.Add("Fa_FarmingLossYear", "Fa_FarmingLossYear");
+                sqlBC.ColumnMappings.Add("Fa_FarmingLoss", "Fa_FarmingLoss");
+                sqlBC.ColumnMappings.Add("Fa_AnimalLossYear", "Fa_AnimalLossYear");
+                sqlBC.ColumnMappings.Add("Fa_AnimalLoss", "Fa_AnimalLoss");
+                sqlBC.ColumnMappings.Add("Fa_FishLossYear", "Fa_FishLossYear");
+                sqlBC.ColumnMappings.Add("Fa_FishLoss", "Fa_FishLoss");
+                sqlBC.ColumnMappings.Add("Fa_ForestLossYear", "Fa_ForestLossYear");
+                sqlBC.ColumnMappings.Add("Fa_ForestLoss", "Fa_ForestLoss");
+                sqlBC.ColumnMappings.Add("Fa_AllLossYear", "Fa_AllLossYear");
+                sqlBC.ColumnMappings.Add("Fa_AllLoss", "Fa_AllLoss");
+                sqlBC.ColumnMappings.Add("Fa_FacilityLossYear", "Fa_FacilityLossYear");
+                sqlBC.ColumnMappings.Add("Fa_FacilityLoss", "Fa_FacilityLoss");
+                sqlBC.ColumnMappings.Add("Fa_FarmingOutputValueYear", "Fa_FarmingOutputValueYear");
+                sqlBC.ColumnMappings.Add("Fa_FarmingOutputValue", "Fa_FarmingOutputValue");
+                sqlBC.ColumnMappings.Add("Fa_FarmingOutputRateYearDesc", "Fa_FarmingOutputRateYearDesc");
+                sqlBC.ColumnMappings.Add("Fa_FarmingOutputRate", "Fa_FarmingOutputRate");
+                sqlBC.ColumnMappings.Add("Fa_FarmerYear", "Fa_FarmerYear");
+                sqlBC.ColumnMappings.Add("Fa_Farmer", "Fa_Farmer");
+                sqlBC.ColumnMappings.Add("Fa_FarmEmploymentOutputValueYear", "Fa_FarmEmploymentOutputValueYear");
+                sqlBC.ColumnMappings.Add("Fa_FarmEmploymentOutputValue", "Fa_FarmEmploymentOutputValue");
+                sqlBC.ColumnMappings.Add("Fa_CreateDate", "Fa_CreateDate");
+                sqlBC.ColumnMappings.Add("Fa_CreateID", "Fa_CreateID");
+                sqlBC.ColumnMappings.Add("Fa_CreateName", "Fa_CreateName");
+                sqlBC.ColumnMappings.Add("Fa_Status", "Fa_Status");
+                sqlBC.ColumnMappings.Add("Fa_Version", "Fa_Version");
 
-                    /// 開始寫入資料
-                    sqlBC.WriteToServer(srcData);
-                }
+                /// 開始寫入資料
+                sqlBC.WriteToServer(srcData);
             }
-            catch (Exception ex)
-            {
-                strErrorMsg += "農業匯入 error：" + ex.Message.ToString() + "\n";
-            }
-
         }
 
         //判斷Token是否正確
