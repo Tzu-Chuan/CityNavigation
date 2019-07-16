@@ -191,8 +191,7 @@
                                     </li>
                                     <li><a href="Population_All.aspx">全國資料</a>
                                         <ul>
-                                            <li><a href="<%=ResolveUrl("~/Webpage/Population_All.aspx") %>">人口</a></li>
-                                            <li><a href="javascript:void(0);">土地</a></li>
+                                            <li><a href="<%=ResolveUrl("~/Webpage/Population_All.aspx") %>">人口土地</a></li>
                                             <li><a href="javascript:void(0);">產業</a></li>
                                             <li><a href="javascript:void(0);">智慧城鄉計畫提案</a></li>
                                             <li><a href="javascript:void(0);">農業</a></li>
