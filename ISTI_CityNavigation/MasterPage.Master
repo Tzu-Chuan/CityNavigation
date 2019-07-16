@@ -37,7 +37,7 @@
     <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery-ui.1.12.1.js") %>"></script>
     <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.breakpoint-min.js") %>"></script><!-- 斷點設定 -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/superfish.min.js") %>"></script><!-- 下拉選單 -->
-    <script type="text/javascript" src="<%=ResolveUrl("~/js/supposition.js") %>"></script><!-- 下拉選單:修正最後項在視窗大小不夠時的BUG -->
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/supposition.js") %>"></script><!-- 下拉選單:修正最後項在視窗大小不夠時的BUG --><!--使用此JS,Chorme會閃點不到-->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.mmenu.min.js") %>"></script><!-- mmenu js:行動裝置選單 -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.touchSwipe.min.js") %>"></script><!-- 增加JS觸控操作 for mmenu -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/jquery.powertip.min.js") %>"></script><!-- powertip:tooltips -->

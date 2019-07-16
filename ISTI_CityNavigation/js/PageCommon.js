@@ -158,7 +158,7 @@ function clonemenu() {
     //移除superfish的id與class並給予新id
     clonemenu.appendTo($("#sidebar-wrapper")).attr("id", "sidemenu");
     //啟動下拉選單superfish
-    $(".superfishmenu > ul").superfish({ delay: 300, }).supposition();
+    $(".superfishmenu > ul").superfish({ delay: 300, });
     //啟動mmenu
     $("#sidebar-wrapper").mmenu({
         //設定下拉選單為直接向下展開,而非滑動
