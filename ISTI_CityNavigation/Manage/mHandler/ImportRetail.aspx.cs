@@ -16,6 +16,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
     public partial class ImportRetail : System.Web.UI.Page
     {
         Retail_DB RL_DB = new Retail_DB();
+        ImportData_Log idl_db = new ImportData_Log();
         //建立共用參數
         string strErrorMsg = "";
         int strMaxVersion = 0;
@@ -246,6 +247,15 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 {
                     oCmd.Connection.Close();
                     oConn.Close();
+
+                    /// Log
+                    idl_db._IDL_Type = "ISTI";
+                    idl_db._IDL_IP = Common.GetIPv4Address();
+                    idl_db._IDL_Description = "檔案類別:零售 , 狀態：上傳成功";
+                    idl_db._IDL_ModId = LogInfo.mGuid;
+                    idl_db._IDL_ModName = LogInfo.name;
+                    idl_db.addLog();
+
                     if (strErrorMsg == "")
                     {
                         Response.Write("<script type='text/JavaScript'>parent.feedbackFun('零售匯入成功');</script>");
