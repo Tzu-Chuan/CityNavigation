@@ -160,7 +160,7 @@
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
                                 tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr += '<td align="left" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_TotalYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_PeopleTotal").text().trim()).toFixed(0)) + '人' + '</td>';
                                 Population_All_Array.push($(this).children("P_PeopleTotal").text().trim().toString());
@@ -184,10 +184,23 @@
     <div class="WrapperBody" id="WrapperBody">
         <div class="container margin15T" id="ContentWrapper">
             <div class="twocol titleLineA">
-                <div class="left"><span class="font-size4">全國人口</span></div><!-- left -->
-                <div class="right">首頁 / 全國人口</div><!-- right -->
+                <div class="left"><span class="font-size4">全國資料</span></div><!-- left -->
+                <div class="right"><a href="CityInfo.aspx">首頁</a> / 全國資料 / 土地人口</div><!-- right -->
             </div><!-- twocol -->
-
+            <div style="margin-top:10px;">
+        檔案類別：
+        <select id="selType" name="selClass" class="inputex">
+            <option value="01">土地面積</option>
+            <option value="02">年底戶籍總人口數</option>
+            <option value="03">年底戶籍總人口數成長率</option>
+            <option value="04">0-14歲幼年人口數</option>
+            <option value="05">0-14歲幼年人口比例</option>
+            <option value="06">15-64歲青壯年人口數</option>
+            <option value="07">15-64歲青壯年人口比例</option>
+            <option value="08">65歲以上老年人口數</option>
+            <option value="09">65歲以上歲老年人口比例</option>
+        </select>
+    </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal">
