@@ -27,6 +27,7 @@ public class CitySummaryTable_DB
     string CS_PlanName = string.Empty;
     string CS_ServiceArea = string.Empty;
     string CS_ServiceType = string.Empty;
+    string CS_AllArea = string.Empty;
     string CS_CityArea = string.Empty;
     string CS_CityAreaDetail = string.Empty;
     string CS_PlanTotalMoney = string.Empty;
@@ -93,6 +94,7 @@ public class CitySummaryTable_DB
     public string _CS_PlanName { set { CS_PlanName = value; } }
     public string _CS_ServiceArea { set { CS_ServiceArea = value; } }
     public string _CS_ServiceType { set { CS_ServiceType = value; } }
+    public string _CS_AllArea { set { CS_AllArea = value; } }
     public string _CS_CityArea { set { CS_CityArea = value; } }
     public string _CS_CityAreaDetail { set { CS_CityAreaDetail = value; } }
     public string _CS_PlanTotalMoney { set { CS_PlanTotalMoney = value; } }
@@ -158,6 +160,9 @@ public class CitySummaryTable_DB
         {
             sb.Append(@"Select * from CityPlanTable where CP_Status='A' ");
 
+            if (CS_AllArea != "")
+                sb.Append(@"and CP_AllArea=@AllArea ");
+
             if (City != "")
                 sb.Append(@"and CP_CityCode=@City ");
 
@@ -173,6 +178,9 @@ public class CitySummaryTable_DB
         else
         {
             sb.Append(@"Select * from CitySummaryTable where CS_Status='A' ");
+
+            if (CS_AllArea != "")
+                sb.Append(@"and CS_AllArea=@AllArea ");
 
             if (CS_HostCompany != "")
                 sb.Append(@"and CS_HostCompany LIKE '%' + @HostCompany + '%' ");
@@ -192,6 +200,7 @@ public class CitySummaryTable_DB
         SqlDataAdapter oda = new SqlDataAdapter(oCmd);
         DataTable ds = new DataTable();
         
+        oCmd.Parameters.AddWithValue("@AllArea", CS_AllArea);
         oCmd.Parameters.AddWithValue("@City", City);
         oCmd.Parameters.AddWithValue("@HostCompany", CS_HostCompany);
         oCmd.Parameters.AddWithValue("@PlanName", CS_PlanName);
@@ -276,6 +285,7 @@ order by CS_ServiceType ");
             sqlBC.ColumnMappings.Add("CS_PlanName", "CS_PlanName");
             sqlBC.ColumnMappings.Add("CS_ServiceArea", "CS_ServiceArea");
             sqlBC.ColumnMappings.Add("CS_ServiceType", "CS_ServiceType");
+            sqlBC.ColumnMappings.Add("CS_AllArea", "CS_AllArea");
             sqlBC.ColumnMappings.Add("CS_CityArea", "CS_CityArea");
             sqlBC.ColumnMappings.Add("CS_CityAreaDetail", "CS_CityAreaDetail");
             sqlBC.ColumnMappings.Add("CS_PlanTotalMoney", "CS_PlanTotalMoney");

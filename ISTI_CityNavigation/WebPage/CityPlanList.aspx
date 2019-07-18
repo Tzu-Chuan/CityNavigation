@@ -27,9 +27,21 @@
                 getData();
             });
 
+            /// 查詢
             $(document).on("click", "#SearchBtn", function () {
+                $("#LoadStatus").val("true");
                 Page.Option.SortName = "";
                 getData();
+            });
+
+            /// Tab 切換
+            $(document).on("click", "a[name='AreaBtn']", function () {
+                $(".SlimTabBtnV2").removeClass("SlimTabBtnV2Current");
+                $(this).parent().addClass("SlimTabBtnV2Current");
+                $("#AllArea").val($(this).attr("area"));
+                // 如果是PageLoad進來直接切換,則不查詢
+                if ($("#LoadStatus").val() != "")
+                    getData();
             });
         });
 
@@ -39,6 +51,7 @@
                 async: true, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetPlanList.aspx",
                 data: {
+                    Area: $("#AllArea").val(),
                     City: $("#ddlCity").val(),
                     ServiceType: $("#ddlServiceType").val(),
                     PlanName: $("#strPlan").val(),
@@ -250,6 +263,8 @@
 </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <input type="hidden" id="AllArea" value="Y" />
+    <input type="hidden" id="LoadStatus" value="" />
     <div class="twocol titleLineA">
         <div class="left"><span class="font-size4">計畫查詢</span></div><!-- left -->
         <div class="right">首頁 / 智慧城鄉計畫提案 / 計畫查詢</div><!-- right -->
@@ -257,8 +272,8 @@
 
     <div class="tabmenublockV2wrapper margin10T">
         <div class="tabmenublockV2 font-size3">
-            <span class="SlimTabBtnV2 SlimTabBtnV2Current"><a href="javascript:void(0);" target="_self">補助經費區域分析(含全區)</a></span>
-            <span class="SlimTabBtnV2"><a href="javascript:void(0);" target="_self">補助經費區域分析(不含全區)</a></span>
+            <span class="SlimTabBtnV2 SlimTabBtnV2Current"><a href="javascript:void(0);" area="Y" name="AreaBtn">補助經費區域分析(含全區)</a></span>
+            <span class="SlimTabBtnV2"><a href="javascript:void(0);" area="N" name="AreaBtn">補助經費區域分析(不含全區)</a></span>
         </div><!-- tabmenublock -->
     </div><!-- tabmenublockV2wrapper -->
 

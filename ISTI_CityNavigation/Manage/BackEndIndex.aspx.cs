@@ -11,7 +11,7 @@ namespace ISTI_CityNavigation.Manage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (LogInfo.mGuid != null)
+            if (!string.IsNullOrEmpty(LogInfo.mGuid))
             {
                 switch (LogInfo.competence)
                 {
@@ -27,7 +27,7 @@ namespace ISTI_CityNavigation.Manage
                 }
             }
             else
-                Response.Write("<script>alert('請先登入'); location.href='../Default.aspx';</script>");
+                Response.Write("<script>alert('請先登入'); location.href='../Login.aspx';</script>");
         }
     }
 }

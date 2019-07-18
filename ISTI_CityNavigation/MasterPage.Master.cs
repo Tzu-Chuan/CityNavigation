@@ -14,7 +14,7 @@ namespace ISTI_CityNavigation
         protected void Page_Load(object sender, EventArgs e)
         {
             TokenStr = Common.GenToken();
-            if (LogInfo.mGuid != "")
+            if (!string.IsNullOrEmpty(LogInfo.mGuid))
             {
                 UserName = LogInfo.name;
                 CompStr = LogInfo.competence;

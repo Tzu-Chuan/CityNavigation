@@ -14,7 +14,7 @@ namespace ISTI_CityNavigation
             if (!IsPostBack)
             {
                 InfoToken.Value = Common.GenToken();
-                if (LogInfo.mGuid != "")
+                if (!string.IsNullOrEmpty(LogInfo.mGuid))
                     Response.Redirect("~/WebPage/CityInfo.aspx?city=02");
             }
         }

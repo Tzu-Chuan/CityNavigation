@@ -18,6 +18,7 @@ namespace ISTI_CityNavigation.handler
             ///-----------------------------------------------------
             ///功    能: 查詢計畫列表
             ///說    明:
+            /// * Request["Area"]: 含 / 不含全區
             /// * Request["City"]: 縣市代碼
             /// * Request["ServiceType"]: 領域別
             /// * Request["PlanName"]: 計畫名稱
@@ -28,6 +29,7 @@ namespace ISTI_CityNavigation.handler
             XmlDocument xDoc = new XmlDocument();
             try
             {
+                string Area = (string.IsNullOrEmpty(Request["Area"])) ? "" : Request["Area"].ToString().Trim();
                 string City = (string.IsNullOrEmpty(Request["City"])) ? "" : Request["City"].ToString().Trim();
                 string ServiceType = (string.IsNullOrEmpty(Request["ServiceType"])) ? "" : Request["ServiceType"].ToString().Trim();
                 string PlanName = (string.IsNullOrEmpty(Request["PlanName"])) ? "" : Request["PlanName"].ToString().Trim();
@@ -42,6 +44,8 @@ namespace ISTI_CityNavigation.handler
                 {
                     string xmlstr = string.Empty;
 
+                    if (Area == "N")
+                        cst_db._CS_AllArea = Area;
                     cst_db._CS_HostCompany = CompanyName;
                     cst_db._CS_PlanName = PlanName;
                     cst_db._CS_ServiceType = ServiceType;

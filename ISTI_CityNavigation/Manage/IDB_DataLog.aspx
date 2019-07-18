@@ -71,8 +71,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="twocol titleLineA">
-        <div class="left"><span class="font-size4">IDB 資料上傳紀錄</span></div><!-- left -->
-        <div class="right">後臺管理 / IDB 資料上傳紀錄</div><!-- right -->
+        <div class="left"><span class="font-size4">IDB 資料管理紀錄</span></div><!-- left -->
+        <div class="right">後臺管理 / 系統修改紀錄 / IDB 資料管理紀錄</div><!-- right -->
     </div><!-- twocol -->
 
     <div class="stripeMeCS margin10TB font-normal">

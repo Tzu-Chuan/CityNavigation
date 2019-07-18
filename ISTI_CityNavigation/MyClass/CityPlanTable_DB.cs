@@ -152,6 +152,7 @@ public class CityPlanTable_DB
             sqlBC.ColumnMappings.Add("CP_PlanName", "CP_PlanName");
             sqlBC.ColumnMappings.Add("CP_ServiceArea", "CP_ServiceArea");
             sqlBC.ColumnMappings.Add("CP_ServiceType", "CP_ServiceType");
+            sqlBC.ColumnMappings.Add("CP_AllArea", "CP_AllArea");
             sqlBC.ColumnMappings.Add("CP_CityArea", "CP_CityArea");
             sqlBC.ColumnMappings.Add("CP_CityAreaDetail", "CP_CityAreaDetail");
             sqlBC.ColumnMappings.Add("CP_PlanTotalMoney", "CP_PlanTotalMoney");

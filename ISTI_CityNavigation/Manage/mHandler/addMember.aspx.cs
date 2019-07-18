@@ -35,7 +35,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             try
             {
                 #region 登入判斷
-                if (LogInfo.mGuid == "")
+                if (string.IsNullOrEmpty(LogInfo.mGuid))
                 {
                     xDoc = ExceptionUtil.GetErrorMassageDocument("請重新登入");
                     Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Xml;
