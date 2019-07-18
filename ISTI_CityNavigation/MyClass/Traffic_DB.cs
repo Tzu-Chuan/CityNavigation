@@ -196,4 +196,20 @@ public class Traffic_DB
         return dt;
     }
 
+    public DataTable getTraffic_All(string sortName, string sortMethod)
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"select * from Traffic where Tra_Status='A' order by convert(int," + sortName + @") " + sortMethod);
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable dt = new DataTable();
+
+        oda.Fill(dt);
+        return dt;
+    }
 }

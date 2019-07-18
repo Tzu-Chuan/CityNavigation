@@ -1,15 +1,13 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Population_All.aspx.cs" Inherits="ISTI_CityNavigation.WebPage.Population_All" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Retail_All.aspx.cs" Inherits="ISTI_CityNavigation.WebPage.Retail_All" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script type="text/javascript">
-
+     <script type="text/javascript">
         $(document).ready(function () {
             /// 表頭排序設定
             Page.Option.SortMethod = "+";
-            Page.Option.SortName = "P_CityNo";
+            Page.Option.SortName = "Re_CityNo";
 
             getData();
-            
+
             /// 表頭排序
             $(document).on("click", "a[name='sortbtn']", function () {
                 $("a[name='sortbtn']").removeClass("asc desc")
@@ -34,7 +32,7 @@
                     type: 'pie'
                 },
                 title: {
-                    text: '全國人口比例'
+                    text: '零售業營利事業銷售額'
                 },
                 series: [{
                     name: '',
@@ -42,91 +40,91 @@
                     data: [
                         {
                             name: '臺北市',
-                            y: parseFloat(Population_All_Array[1])
+                            y: parseFloat(Retail_All_Array[1])
                         },
                         {
                             name: '新北市',
-                            y: parseFloat(Population_All_Array[0])
+                            y: parseFloat(Retail_All_Array[0])
                         },
                         {
                             name: '基隆市',
-                            y: parseFloat(Population_All_Array[17])
+                            y: parseFloat(Retail_All_Array[17])
                         },
                         {
                             name: '桃園市',
-                            y: parseFloat(Population_All_Array[2])
+                            y: parseFloat(Retail_All_Array[2])
                         },
                         {
                             name: '宜蘭縣',
-                            y: parseFloat(Population_All_Array[6])
+                            y: parseFloat(Retail_All_Array[6])
                         },
                         {
                             name: '新竹縣',
-                            y: parseFloat(Population_All_Array[7])
+                            y: parseFloat(Retail_All_Array[7])
                         },
                         {
                             name: '新竹市',
-                            y: parseFloat(Population_All_Array[18])
+                            y: parseFloat(Retail_All_Array[18])
                         },
                         {
                             name: '苗栗縣',
-                            y: parseFloat(Population_All_Array[8])
+                            y: parseFloat(Retail_All_Array[8])
                         },
                         {
                             name: '臺中市',
-                            y: parseFloat(Population_All_Array[3])
+                            y: parseFloat(Retail_All_Array[3])
                         },
                         {
                             name: '彰化縣',
-                            y: parseFloat(Population_All_Array[9])
+                            y: parseFloat(Retail_All_Array[9])
                         },
                         {
                             name: '南投縣',
-                            y: parseFloat(Population_All_Array[10])
+                            y: parseFloat(Retail_All_Array[10])
                         },
                         {
                             name: '雲林縣',
-                            y: parseFloat(Population_All_Array[11])
+                            y: parseFloat(Retail_All_Array[11])
                         },
                         {
                             name: '嘉義縣',
-                            y: parseFloat(Population_All_Array[12])
+                            y: parseFloat(Retail_All_Array[12])
                         },
                         {
                             name: '嘉義市',
-                            y: parseFloat(Population_All_Array[19])
+                            y: parseFloat(Retail_All_Array[19])
                         },
                         {
                             name: '臺南市',
-                            y: parseFloat(Population_All_Array[4])
+                            y: parseFloat(Retail_All_Array[4])
                         },
                         {
                             name: '高雄市',
-                            y: parseFloat(Population_All_Array[5])
+                            y: parseFloat(Retail_All_Array[5])
                         },
                         {
                             name: '屏東縣',
-                            y: parseFloat(Population_All_Array[13])
+                            y: parseFloat(Retail_All_Array[13])
                         },
                         {
                             name: '花蓮縣',
-                            y: parseFloat(Population_All_Array[15])
+                            y: parseFloat(Retail_All_Array[15])
                         },
                         {
                             name: '臺東縣',
-                            y: parseFloat(Population_All_Array[14])
+                            y: parseFloat(Retail_All_Array[14])
                         },
                         {
                             name: '金門縣',
-                            y: parseFloat(Population_All_Array[20])
+                            y: parseFloat(Retail_All_Array[20])
                         },
                         {
                             name: '連江縣',
-                            y: parseFloat(Population_All_Array[21])
+                            y: parseFloat(Retail_All_Array[21])
                         },
                         {
                             name: '澎湖縣',
-                            y: parseFloat(Population_All_Array[16])
+                            y: parseFloat(Retail_All_Array[16])
                         },
                     ]
                 }]
@@ -134,13 +132,13 @@
         }); //js end
 
 
-        var Population_All_Array = [];
-        //撈總人口列表
+        var Retail_All_Array = [];
+        //撈觀光列表
         function getData() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "../handler/GetPopulationList.aspx",
+                url: "../handler/GetRetailList.aspx",
                 data: {
                     CityNo: "All",
                     SortName: Page.Option.SortName,
@@ -160,10 +158,10 @@
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
                                 tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_TotalYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_PeopleTotal").text().trim()).toFixed(0)) + '人' + '</td>';
-                                Population_All_Array.push($(this).children("P_PeopleTotal").text().trim().toString());
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_RetailBusinessSalesYear").text().trim() + '年' + '</td>';
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Re_RetailBusinessSales").text().trim()).toFixed(0)) + '千元' + '</td>';
+                                Retail_All_Array.push($(this).children("Re_RetailBusinessSales").text().trim().toString());
                                 tabstr += '</td></tr>';
                             });
                         }
@@ -184,42 +182,47 @@
     <div class="WrapperBody" id="WrapperBody">
         <div class="container margin15T" id="ContentWrapper">
             <div class="twocol titleLineA">
-                <div class="left"><span class="font-size4">全國資料</span></div><!-- left -->
-                <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / 全國資料 / 土地人口</div><!-- right -->
-            </div><!-- twocol -->
-            <div style="margin-top:10px;">
-        檔案類別：
+                <div class="left"><span class="font-size4">全國資料</span></div>
+                <!-- left -->
+                <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / 全國資料 / 零售</div>
+                <!-- right -->
+            </div>
+            <!-- twocol -->
+            <div style="margin-top: 10px;">
+                檔案類別：
         <select id="selType" name="selClass" class="inputex">
-            <option value="01">土地面積</option>
-            <option value="02">年底戶籍總人口數</option>
-            <option value="03">年底戶籍總人口數成長率</option>
-            <option value="04">0-14歲幼年人口數</option>
-            <option value="05">0-14歲幼年人口比例</option>
-            <option value="06">15-64歲青壯年人口數</option>
-            <option value="07">15-64歲青壯年人口比例</option>
-            <option value="08">65歲以上老年人口數</option>
-            <option value="09">65歲以上歲老年人口比例</option>
+            <option value="01">零售業營利事業銷售額</option>
+            <option value="02">攤販經營家數</option>
+            <option value="03">攤販從業人數</option>
+            <option value="04">攤販全年收入</option>
+            <option value="05">攤販全年平均收入</option>
+            <option value="06">零售業營利事業銷售額成長率</option>
+            <option value="07">零售業營利事業平均每家銷售額</option>
         </select>
-    </div>
+            </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal">
                         <table border="0" cellspacing="0" cellpadding="0" width="100%" id="tablist">
                             <thead>
                                 <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_CityNo">縣市</a></th>
                                     <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_PeopleTotal">人口數</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_RetailBusinessSales">零售業營利事業銷售額</a></th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
                     </div>
-                </div><!-- col -->
+                </div>
+                <!-- col -->
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div id="stackedcolumn1" class="maxWithA"></div>
-                </div><!-- col -->
-            </div><!-- row -->
+                </div>
+                <!-- col -->
+            </div>
+            <!-- row -->
         </div>
-    </div><!-- WrapperBody -->
+    </div>
+    <!-- WrapperBody -->
 </asp:Content>

@@ -108,7 +108,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                             }
 
-                            strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
+                            strErrorMsg = "行數:第" + (j + 1).ToString() + " 筆<br>";
                             row["MR_CityNo"] = cityNo;//縣市代碼
                             row["MR_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                             row["MR_MayorYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//直轄市/縣市長-資料年度(民國年)
@@ -145,55 +145,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
             }
             catch (Exception ex)
             {
-                string Errormsg = ex.Message;
-                string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
-                string ErrorField = eArray[3].ToString();
-                switch (ErrorField)
-                {
-                    case "MR_CityName":
-                        strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
-                        break;
-
-                    case "MR_MayorYear":
-                        strErrorMsg += "欄位:直轄市/縣市長-資料年度<br>";
-                        strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                        break;
-
-                    case "MR_Mayor":
-                        strErrorMsg += "欄位:直轄市/縣市長<br>";
-                        strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出50位數";
-                        break;
-
-                    case "MR_ViceMayorYear":
-                        strErrorMsg += "欄位:副縣/市長-資料年度<br>";
-                        strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                        break;
-
-                    case "MR_ViceMayor":
-                        strErrorMsg += "欄位:副縣/市長<br>";
-                        strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出50位數";
-                        break;
-
-                    case "MR_PoliticalPartyYear":
-                        strErrorMsg += "欄位:推薦政黨-資料年度<br>";
-                        strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                        break;
-
-                    case "MR_PoliticalParty":
-                        strErrorMsg += "欄位:推薦政黨<br>";
-                        strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出50位數";
-                        break;
-
-                    case "MR_AdAreaYear":
-                        strErrorMsg += "欄位:行政區數-資料年度<br>";
-                        strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                        break;
-
-                    case "MR_AdArea":
-                        strErrorMsg += "欄位:行政區數<br>";
-                        strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出10位數";
-                        break;
-                }
+                strErrorMsg += "錯誤訊息:" + ex.Message + "<br>";
+                strErrorMsg += "(欄位名稱請參考上傳範例檔)";
                 myTrans.Rollback();
             }
             finally
@@ -201,20 +154,26 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 oCmd.Connection.Close();
                 oConn.Close();
 
-                /// Log
-                idl_db._IDL_Type = "ISTI";
-                idl_db._IDL_IP = Common.GetIPv4Address();
-                idl_db._IDL_Description = "檔案類別:市長副市長 , 狀態：上傳成功";
-                idl_db._IDL_ModId = LogInfo.mGuid;
-                idl_db._IDL_ModName = LogInfo.name;
-                idl_db.addLog();
-
                 if (strErrorMsg == "")
                 {
+                    /// Log
+                    idl_db._IDL_Type = "ISTI";
+                    idl_db._IDL_IP = Common.GetIPv4Address();
+                    idl_db._IDL_Description = "檔案類別:市長副市長 , 狀態：上傳成功";
+                    idl_db._IDL_ModId = LogInfo.mGuid;
+                    idl_db._IDL_ModName = LogInfo.name;
+                    idl_db.addLog();
                     Response.Write("<script type='text/JavaScript'>parent.feedbackFun('市長副市長匯入成功');</script>");
                 }
                 else
                 {
+                    /// Log
+                    idl_db._IDL_Type = "ISTI";
+                    idl_db._IDL_IP = Common.GetIPv4Address();
+                    idl_db._IDL_Description = "檔案類別:市長副市長 , 狀態：上傳失敗";
+                    idl_db._IDL_ModId = LogInfo.mGuid;
+                    idl_db._IDL_ModName = LogInfo.name;
+                    idl_db.addLog();
                     Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
                 }
             }

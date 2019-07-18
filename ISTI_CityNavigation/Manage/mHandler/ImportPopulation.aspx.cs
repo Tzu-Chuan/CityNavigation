@@ -121,7 +121,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 {
                                     throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                                 }
-                                strErrorMsg = sheet.GetRow(j).GetCell(0).ToString().Trim() + "資料錯誤<br>";
+                                strErrorMsg = "行數:第" + (j + 1).ToString() + " 筆<br>";
                                 row["P_CityNo"] = cityNo;//縣市代碼
                                 row["P_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["P_AreaYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//土地面積-年
@@ -169,105 +169,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 }
                 catch (Exception ex)
                 {
-                    strErrorMsg += "錯誤原因:"+ex.Message+"</br>";
-                    strErrorMsg += "請參考範例檔修改";
-                    //string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
-                    //string ErrorField = eArray[3].ToString();
-                    //switch (ErrorField)
-                    //{
-                    //    case "P_CityName":
-                    //        strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
-
-                    //        break;
-                    //    case "P_AreaYear":
-                    //        strErrorMsg += "欄位:土地面積-資料年度<br>";
-                    //        strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                    //        break;
-                    //    case "P_Area":
-                    //        strErrorMsg += "欄位:土地面積<br>";
-                    //        strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可超出50位數";
-                    //        break;
-
-                    //    case "P_TotalYear":
-                    //        strErrorMsg += "欄位:年底戶籍總人口數-資料年度<br>";
-                    //        strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                    //        break;
-
-                    //    case "P_PeopleTotal":
-                    //        strErrorMsg += "欄位:年底戶籍總人口數<br>";
-                    //        strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可超出50位數";
-                    //        break;
-
-                    //    case "P_PeopleTotalPercentYear":
-                    //        strErrorMsg += "欄位:年底戶籍總人口數成長率-資料年度<br>";
-                    //        strErrorMsg += "錯誤原因:儲存格內資料不可以超出10位數";
-                    //        break;
-
-                    //    case "P_PeopleTotalPercent":
-                    //        strErrorMsg += "欄位:年底戶籍總人口數成長率<br>";
-                    //        strErrorMsg += "錯誤原因:儲存格內資料不可以超出7位數";
-                    //        break;
-
-                    //    case "P_ChildYear":
-                    //        strErrorMsg += "欄位:0-14歲幼年人口數 - 資料年度<br>";
-                    //        strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                    //        break;
-
-                    //    case "P_Child":
-                    //        strErrorMsg += "欄位:0-14歲幼年人口數<br>";
-                    //        strErrorMsg += "錯誤原因:儲存格內資料不可以超出50位數";
-                    //        break;
-
-                    //    case "P_ChildPercentYear":
-                    //        strErrorMsg += "欄位:0-14歲幼年人口比例 - 資料年度<br>";
-                    //        strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                    //        break;
-
-                    //    case "P_ChildPercent":
-                    //        strErrorMsg += "欄位:0-14歲幼年人口比例<br>";
-                    //        strErrorMsg += "錯誤原因:儲存格內資料不可以超出7位數";
-                    //        break;
-
-                    //    case "P_TeenagerYear":
-                    //        strErrorMsg += "欄位:15-64歲青壯年人口數-資料年度<br>";
-                    //        strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                    //        break;
-
-                    //    case "P_Teenager":
-                    //        strErrorMsg += "欄位:15-64歲青壯年人口數<br>";
-                    //        strErrorMsg += "錯誤原因:儲存格內資料不可以超出50位數";
-                    //        break;
-
-                    //    case "P_TeenagerPercentYear":
-                    //        strErrorMsg += "欄位:15-64歲青壯年人口比例-資料年度<br>";
-                    //        strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                    //        break;
-
-                    //    case "P_TeenagerPercent":
-                    //        strErrorMsg += "欄位:15-64歲青壯年人口比例<br>";
-                    //        strErrorMsg += "錯誤原因:儲存格內資料不可以超出7位數";
-                    //        break;
-
-                    //    case "P_OldMenYear":
-                    //        strErrorMsg += "欄位:65歲以上老年人口數-資料年度<br>";
-                    //        strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                    //        break;
-
-                    //    case "P_OldMen":
-                    //        strErrorMsg += "欄位:65歲以上老年人口數<br>";
-                    //        strErrorMsg += "錯誤原因:儲存格內資料不可以超出50位數";
-                    //        break;
-
-                    //    case "P_OldMenPercentYear":
-                    //        strErrorMsg += "欄位:65歲以上歲老年人口比例-資料年度<br>";
-                    //        strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                    //        break;
-
-                    //    case "P_OldMenPercent":
-                    //        strErrorMsg += "欄位:65歲以上歲老年人口比例<br>";
-                    //        strErrorMsg += "錯誤原因:儲存格內資料不可以超出7位數";
-                    //        break;
-                    //}
+                    strErrorMsg += "錯誤訊息:" + ex.Message + "<br>";
+                    strErrorMsg += "(欄位名稱請參考上傳範例檔)";
                     myTrans.Rollback();
                 }
                 finally

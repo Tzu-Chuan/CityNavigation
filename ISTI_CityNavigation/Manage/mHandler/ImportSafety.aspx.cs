@@ -124,7 +124,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                     throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                                 }
 
-                                strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
+                                strErrorMsg = "行數:第" + (j + 1).ToString() + " 筆<br>";
                                 row["Sf_CityNo"] = cityNo;//縣市代碼
                                 row["Sf_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["Sf_SoilAreaYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//土壤污染控制場址面積-資料年度(民國年)
@@ -173,115 +173,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 }
                 catch (Exception ex)
                 {
-                    string Errormsg = ex.Message;
-                    string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
-                    string ErrorField = eArray[3].ToString();
-                    switch (ErrorField)
-                    {
-                        case "Sf_CityName":
-                            strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
-                            break;
-
-                        case "Sf_SoilAreaYear":
-                            strErrorMsg += "欄位:土壤污染控制場址面積-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Sf_SoilArea":
-                            strErrorMsg += "欄位:土壤污染控制場址面積<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料不可以超出20位數";
-                            break;
-
-                        case "Sf_UnderWaterAreaYear":
-                            strErrorMsg += "欄位:地下水受污染使用限制面積-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Sf_UnderWaterArea":
-                            strErrorMsg += "欄位:地下水受污染使用限制面積<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
-                            break;
-
-                        case "Sf_PM25QuantityYear":
-                            strErrorMsg += "欄位:總懸浮微粒排放量-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Sf_PM25Quantity":
-                            strErrorMsg += "欄位:總懸浮微粒排放量<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
-                            break;
-
-                        case "Sf_10KPeopleFireTimesYear":
-                            strErrorMsg += "欄位:每萬人火災發生次數-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Sf_10KPeopleFireTimes":
-                            strErrorMsg += "欄位:每萬人火災發生次數<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
-                            break;
-
-                        case "Sf_100KPeopleBurglaryTimesYear":
-                            strErrorMsg += "欄位:每十萬人竊盜案發生數-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Sf_100KPeopleBurglaryTimes":
-                            strErrorMsg += "欄位:每十萬人竊盜案發生數<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
-                            break;
-
-                        case "Sf_BurglaryClearanceRateYear":
-                            strErrorMsg += "欄位:竊盜案破獲率-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Sf_BurglaryClearanceRate":
-                            strErrorMsg += "欄位:竊盜案破獲率<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
-                            break;
-
-                        case "Sf_100KPeopleCriminalCaseTimesYear":
-                            strErrorMsg += "欄位:每十萬人刑案發生數-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Sf_100KPeopleCriminalCaseTimes":
-                            strErrorMsg += "欄位:每十萬人刑案發生數<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
-                            break;
-
-                        case "Sf_CriminalCaseClearanceRateYear":
-                            strErrorMsg += "欄位:刑案破獲率-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Sf_CriminalCaseClearanceRate":
-                            strErrorMsg += "欄位:刑案破獲率<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
-                            break;
-
-                        case "Sf_100KPeopleViolentCrimesTimesYear":
-                            strErrorMsg += "欄位:每十萬人暴力犯罪發生數-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Sf_100KPeopleViolentCrimesTimes":
-                            strErrorMsg += "欄位:每十萬人暴力犯罪發生數<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
-                            break;
-
-                        case "Sf_ViolentCrimesClearanceRateYear":
-                            strErrorMsg += "欄位:暴力犯罪破獲率-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Sf_ViolentCrimesClearanceRate":
-                            strErrorMsg += "欄位:暴力犯罪破獲率<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
-                            break;
-                    }
+                    strErrorMsg += "錯誤訊息:" + ex.Message + "<br>";
+                    strErrorMsg += "(欄位名稱請參考上傳範例檔)";
                     myTrans.Rollback();
                 }
                 finally
@@ -289,20 +182,26 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     oCmd.Connection.Close();
                     oConn.Close();
 
-                    /// Log
-                    idl_db._IDL_Type = "ISTI";
-                    idl_db._IDL_IP = Common.GetIPv4Address();
-                    idl_db._IDL_Description = "檔案類別:安全 , 狀態：上傳成功";
-                    idl_db._IDL_ModId = LogInfo.mGuid;
-                    idl_db._IDL_ModName = LogInfo.name;
-                    idl_db.addLog();
-
                     if (strErrorMsg == "")
                     {
+                        /// Log
+                        idl_db._IDL_Type = "ISTI";
+                        idl_db._IDL_IP = Common.GetIPv4Address();
+                        idl_db._IDL_Description = "檔案類別:安全 , 狀態：上傳成功";
+                        idl_db._IDL_ModId = LogInfo.mGuid;
+                        idl_db._IDL_ModName = LogInfo.name;
+                        idl_db.addLog();
                         Response.Write("<script type='text/JavaScript'>parent.feedbackFun('安全匯入成功');</script>");
                     }
                     else
                     {
+                        /// Log
+                        idl_db._IDL_Type = "ISTI";
+                        idl_db._IDL_IP = Common.GetIPv4Address();
+                        idl_db._IDL_Description = "檔案類別:安全 , 狀態：上傳失敗";
+                        idl_db._IDL_ModId = LogInfo.mGuid;
+                        idl_db._IDL_ModName = LogInfo.name;
+                        idl_db.addLog();
                         Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
                     }
                 }

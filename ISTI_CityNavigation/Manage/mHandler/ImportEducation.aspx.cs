@@ -142,7 +142,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                     throw new Exception("第" + (j + 1) + "筆資料：" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "不是一個正確的縣市名稱");
                                 }
 
-                                strErrorMsg = "縣市名稱:" + sheet.GetRow(j).GetCell(0).ToString().Trim() + "<br>";
+                                strErrorMsg = "行數:第" + (j + 1).ToString() + " 筆<br>";
                                 row["Edu_CityNo"] = cityNo;//縣市代碼
                                 row["Edu_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["Edu_15upJSDownRateYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//
@@ -210,205 +210,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 }
                 catch (Exception ex)
                 {
-                    string Errormsg = ex.Message;
-                    string[] eArray = Errormsg.Split(new string[] { "無法設定資料行", "。該值違反了這個資料行的 MaxLength 限制。", " ", "'" }, StringSplitOptions.None);
-                    string ErrorField = eArray[3].ToString();
-                    switch (ErrorField)
-                    {
-                        case "Edu_CityName":
-                            strErrorMsg += "錯誤原因:城市名稱長度錯誤<br>";
-                            break;
-
-                        case "Edu_15upJSDownRateYear":
-                            strErrorMsg += "欄位:15歲以上民間人口之教育程度結構-國中及以下-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_15upJSDownRate":
-                            strErrorMsg += "欄位:15歲以上民間人口之教育程度結構-國中及以下<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
-                            break;
-
-                        case "Edu_15upHSRateYear":
-                            strErrorMsg += "欄位:15歲以上民間人口之教育程度結構-高中(職)-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_15upHSRate":
-                            strErrorMsg += "欄位:15歲以上民間人口之教育程度結構-高中(職)<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
-                            break;
-
-                        case "Edu_15upUSUpRateYear":
-                            strErrorMsg += "欄位:15歲以上民間人口之教育程度結構-大專及以上-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_15upUSUpRate":
-                            strErrorMsg += "欄位:15歲以上民間人口之教育程度結構-大專及以上<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
-                            break;
-
-                        case "Edu_ESStudentDropOutRateYear":
-                            strErrorMsg += "欄位:國小學生輟學率-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_ESStudentDropOutRate":
-                            strErrorMsg += "欄位:國小學生輟學率<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
-                            break;
-
-                        case "Edu_JSStudentDropOutRateYear":
-                            strErrorMsg += "欄位:國中學生輟學率-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_JSStudentDropOutRate":
-                            strErrorMsg += "欄位:國中學生輟學率<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
-                            break;
-
-                        case "Edu_ESStudentsYear":
-                            strErrorMsg += "欄位:國小總學生數-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_ESStudents":
-                            strErrorMsg += "欄位:國小總學生數<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
-                            break;
-
-                        case "Edu_JSStudentsYear":
-                            strErrorMsg += "欄位:國中總學生數-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_JSStudents":
-                            strErrorMsg += "欄位:國中總學生數<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
-                            break;
-
-                        case "Edu_HSStudentsYear":
-                            strErrorMsg += "欄位:高中(職)總學生數-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_HSStudents":
-                            strErrorMsg += "欄位:高中(職)總學生數<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
-                            break;
-
-                        case "Edu_ESToHSIndigenousYear":
-                            strErrorMsg += "欄位:國小-高中(職)原住民學生數-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_ESToHSIdigenous":
-                            strErrorMsg += "欄位:國小-高中(職)原住民學生數<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
-                            break;
-
-                        case "Edu_ESToHSIndigenousRateYear":
-                            strErrorMsg += "欄位:國小-高中(職)原住民學生數比例-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_ESToHSIndigenousRate":
-                            strErrorMsg += "欄位:國小-高中(職)原住民學生數比例<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
-                            break;
-
-                        case "Edu_ESJSNewInhabitantsYear":
-                            strErrorMsg += "欄位:國中小新住民人數-資料年度(民國年)<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_ESJSNewInhabitants":
-                            strErrorMsg += "欄位:國中小新住民人數<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
-                            break;
-
-                        case "Edu_ESJSNewInhabitantsRateYear":
-                            strErrorMsg += "欄位:國中小新住民學生比例-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_ESToJSNewInhabitantsRate":
-                            strErrorMsg += "欄位:國中小新住民學生比例<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
-                            break;
-
-                        case "Edu_ESJSTeachersYear":
-                            strErrorMsg += "欄位:國中小教師數-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_ESJSTeachers":
-                            strErrorMsg += "欄位:國中小教師數<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
-                            break;
-
-                        case "Edu_ESJSTeachersOfStudentRateYear":
-                            strErrorMsg += "欄位:國中小生師比(平均每位教師教導學生數)-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_ESJSTeachersOfStudentRate":
-                            strErrorMsg += "欄位:國中小生師比(平均每位教師教導學生數)<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
-                            break;
-
-                        case "Edu_BudgetYear":
-                            strErrorMsg += "欄位:教育預算-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_Budget":
-                            strErrorMsg += "欄位:教育預算<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
-                            break;
-
-                        case "Edu_BudgetUpRateYearDesc":
-                            strErrorMsg += "欄位:教育預算成長率-資料年度敘述<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出20位數";
-                            break;
-
-                        case "Edu_BudgetUpRate":
-                            strErrorMsg += "欄位:教育預算成長率<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出7位數";
-                            break;
-
-                        case "Edu_ESToHSAvgBudgetYear":
-                            strErrorMsg += "欄位:國小-高中(職)平均每人教育預算-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_ESToHSAvgBudget":
-                            strErrorMsg += "欄位:國小-高中(職)平均每人教育預算<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
-                            break;
-
-                        case "Edu_ESJSPCNumYear":
-                            strErrorMsg += "欄位:國中小教學電腦數-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_ESJSPCNum":
-                            strErrorMsg += "欄位:國中小教學電腦數<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含不可以超出20位數";
-                            break;
-
-                        case "Edu_ESJSAvgPCNumYear":
-                            strErrorMsg += "欄位:國中小平均每人教學電腦數-資料年度<br>";
-                            strErrorMsg += "錯誤原因:年分不可以超出3位數";
-                            break;
-
-                        case "Edu_ESJSAvgPCNum":
-                            strErrorMsg += "欄位:國中小平均每人教學電腦數<br>";
-                            strErrorMsg += "錯誤原因:儲存格內資料包含小數點不可以超出20位數";
-                            break;
-                    }
+                    strErrorMsg += "錯誤訊息:" + ex.Message + "<br>";
+                    strErrorMsg += "(欄位名稱請參考上傳範例檔)";
                     myTrans.Rollback();
                 }
                 finally
@@ -416,20 +219,26 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     oCmd.Connection.Close();
                     oConn.Close();
 
-                    /// Log
-                    idl_db._IDL_Type = "ISTI";
-                    idl_db._IDL_IP = Common.GetIPv4Address();
-                    idl_db._IDL_Description = "檔案類別:教育 , 狀態：上傳成功";
-                    idl_db._IDL_ModId = LogInfo.mGuid;
-                    idl_db._IDL_ModName = LogInfo.name;
-                    idl_db.addLog();
-
                     if (strErrorMsg == "")
                     {
+                        /// Log
+                        idl_db._IDL_Type = "ISTI";
+                        idl_db._IDL_IP = Common.GetIPv4Address();
+                        idl_db._IDL_Description = "檔案類別:教育 , 狀態：上傳成功";
+                        idl_db._IDL_ModId = LogInfo.mGuid;
+                        idl_db._IDL_ModName = LogInfo.name;
+                        idl_db.addLog();
                         Response.Write("<script type='text/JavaScript'>parent.feedbackFun('教育匯入成功');</script>");
                     }
                     else
                     {
+                        /// Log
+                        idl_db._IDL_Type = "ISTI";
+                        idl_db._IDL_IP = Common.GetIPv4Address();
+                        idl_db._IDL_Description = "檔案類別:教育 , 狀態：上傳失敗";
+                        idl_db._IDL_ModId = LogInfo.mGuid;
+                        idl_db._IDL_ModName = LogInfo.name;
+                        idl_db.addLog();
                         Response.Write("<script type='text/JavaScript'>parent.feedbackFun('" + strErrorMsg.Replace("'", "") + "');</script>");
                     }
                 }
