@@ -8,6 +8,13 @@
             Page.Option.SortMethod = "+";
             Page.Option.SortName = "P_CityNo";
 
+            ///Highcharts千分位
+            Highcharts.setOptions({
+                lang: {
+                    thousandsSep: ','
+                }
+            });
+
             getData();
 
             /// 表頭排序

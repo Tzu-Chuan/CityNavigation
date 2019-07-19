@@ -6,6 +6,13 @@
             Page.Option.SortMethod = "+";
             Page.Option.SortName = "Edu_CityNo";
 
+            ///Highcharts千分位
+            Highcharts.setOptions({
+                lang: {
+                    thousandsSep: ','
+                }
+            });
+
             getData();
 
             /// 表頭排序

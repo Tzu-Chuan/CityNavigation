@@ -1,11 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Traffic_All.aspx.cs" Inherits="ISTI_CityNavigation.WebPage.Traffic_All" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-<script type="text/javascript">
-    $(document).ready(function () {
+    <script type="text/javascript">
+        $(document).ready(function () {
             /// 表頭排序設定
             Page.Option.SortMethod = "+";
             Page.Option.SortName = "Tra_CityNo";
+
+            ///Highcharts千分位
+            Highcharts.setOptions({
+                lang: {
+                    thousandsSep: ','
+                }
+            });
 
             getData();
 
@@ -132,8 +139,8 @@
             });
         }); //js end
 
-
         var Travel_All_Array = [];
+
         //撈觀光列表
         function getData() {
             $.ajax({
@@ -176,10 +183,14 @@
                 }
             })
         }
-</script>
+
+
+
+
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <input type="hidden" id="tmpGuid" />
+    <input type="hidden" id="tmpGuid" />
     <div class="WrapperBody" id="WrapperBody">
         <div class="container margin15T" id="ContentWrapper">
             <div class="twocol titleLineA">
@@ -190,8 +201,8 @@
             </div>
             <!-- twocol -->
             <div style="margin-top: 10px;">
-               <%-- 類別：--%>
-        <%--<select id="selType" name="selClass" class="inputex">
+                <%-- 類別：--%>
+                <%--<select id="selType" name="selClass" class="inputex">
             <option value="01">小汽車路邊及路外停車位</option>
             <option value="02">通勤學民眾運具次數之公共運具市佔率</option>
             <option value="03">自小客車在居家附近每次尋找停車位時間</option>

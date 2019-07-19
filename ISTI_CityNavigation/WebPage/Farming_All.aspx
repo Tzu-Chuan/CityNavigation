@@ -7,6 +7,13 @@
             Page.Option.SortMethod = "+";
             Page.Option.SortName = "Fa_CityNo";
 
+            ///Highcharts千分位
+            Highcharts.setOptions({
+                lang: {
+                    thousandsSep: ','
+                }
+            });
+
             getData();
             //getAllCityTypePei();
 
