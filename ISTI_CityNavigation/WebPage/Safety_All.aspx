@@ -189,8 +189,8 @@
             </div>
             <!-- twocol -->
             <div style="margin-top: 10px;">
-                檔案類別：
-        <select id="selType" name="selClass" class="inputex">
+               <%-- 類別：--%>
+        <%--<select id="selType" name="selClass" class="inputex">
             <option value="01">土壤污染控制場址面積</option>
             <option value="02">地下水受污染使用限制面積</option>
             <option value="03">總懸浮微粒排放量</option>
@@ -201,7 +201,7 @@
             <option value="08">刑案破獲率</option>
             <option value="09">每十萬人暴力犯罪發生數</option>
             <option value="10">暴力犯罪破獲率</option>
-        </select>
+        </select>--%>
             </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">

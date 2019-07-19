@@ -9,7 +9,7 @@
             Page.Option.SortName = "P_CityNo";
 
             getData();
-            
+
             /// 表頭排序
             $(document).on("click", "a[name='sortbtn']", function () {
                 $("a[name='sortbtn']").removeClass("asc desc")
@@ -184,12 +184,15 @@
     <div class="WrapperBody" id="WrapperBody">
         <div class="container margin15T" id="ContentWrapper">
             <div class="twocol titleLineA">
-                <div class="left"><span class="font-size4">全國資料</span></div><!-- left -->
-                <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / 全國資料 / 土地人口</div><!-- right -->
-            </div><!-- twocol -->
-            <div style="margin-top:10px;">
-        檔案類別：
-        <select id="selType" name="selClass" class="inputex">
+                <div class="left"><span class="font-size4">全國資料</span></div>
+                <!-- left -->
+                <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / 全國資料 / 土地人口</div>
+                <!-- right -->
+            </div>
+            <!-- twocol -->
+            <div style="margin-top: 10px;">
+                <%--類別：--%>
+                <%--<select id="selType" name="selClass" class="inputex">
             <option value="01">土地面積</option>
             <option value="02">年底戶籍總人口數</option>
             <option value="03">年底戶籍總人口數成長率</option>
@@ -199,8 +202,8 @@
             <option value="07">15-64歲青壯年人口比例</option>
             <option value="08">65歲以上老年人口數</option>
             <option value="09">65歲以上歲老年人口比例</option>
-        </select>
-    </div>
+        </select>--%>
+            </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal">
@@ -215,11 +218,15 @@
                             <tbody></tbody>
                         </table>
                     </div>
-                </div><!-- col -->
+                </div>
+                <!-- col -->
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div id="stackedcolumn1" class="maxWithA"></div>
-                </div><!-- col -->
-            </div><!-- row -->
+                </div>
+                <!-- col -->
+            </div>
+            <!-- row -->
         </div>
-    </div><!-- WrapperBody -->
+    </div>
+    <!-- WrapperBody -->
 </asp:Content>

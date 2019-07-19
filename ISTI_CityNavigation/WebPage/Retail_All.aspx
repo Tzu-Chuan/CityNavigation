@@ -189,8 +189,8 @@
             </div>
             <!-- twocol -->
             <div style="margin-top: 10px;">
-                檔案類別：
-        <select id="selType" name="selClass" class="inputex">
+               <%-- 類別：--%>
+        <%--<select id="selType" name="selClass" class="inputex">
             <option value="01">零售業營利事業銷售額</option>
             <option value="02">攤販經營家數</option>
             <option value="03">攤販從業人數</option>
@@ -198,7 +198,7 @@
             <option value="05">攤販全年平均收入</option>
             <option value="06">零售業營利事業銷售額成長率</option>
             <option value="07">零售業營利事業平均每家銷售額</option>
-        </select>
+        </select>--%>
             </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">

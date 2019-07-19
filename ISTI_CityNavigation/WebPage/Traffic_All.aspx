@@ -190,8 +190,8 @@
             </div>
             <!-- twocol -->
             <div style="margin-top: 10px;">
-                檔案類別：
-        <select id="selType" name="selClass" class="inputex">
+               <%-- 類別：--%>
+        <%--<select id="selType" name="selClass" class="inputex">
             <option value="01">小汽車路邊及路外停車位</option>
             <option value="02">通勤學民眾運具次數之公共運具市佔率</option>
             <option value="03">自小客車在居家附近每次尋找停車位時間</option>
@@ -201,7 +201,7 @@
             <option value="07">每百人擁有汽車數成長率</option>
             <option value="08">每萬輛機動車肇事數</option>
             <option value="09">每十萬人道路交通事故死傷人數</option>
-        </select>
+        </select>--%>
             </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">

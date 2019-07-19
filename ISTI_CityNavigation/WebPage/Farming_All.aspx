@@ -191,8 +191,8 @@
             </div>
             <!-- twocol -->
             <div style="margin-top: 10px;">
-                檔案類別：
-        <select id="selType" name="selClass" class="inputex">
+               <%-- 類別：--%>
+        <%--<select id="selType" name="selClass" class="inputex">
             <option value="01">天然災害漁業產物損失</option>
             <option value="02">臺閩地區農業天然災害產物損失</option>
             <option value="03">天然災害畜牧業產物損失</option>
@@ -203,7 +203,7 @@
             <option value="08">農業產值成長率</option>
             <option value="09">農戶人口數</option>
             <option value="10">平均農業從業人口產值</option>
-        </select>
+        </select>--%>
             </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">

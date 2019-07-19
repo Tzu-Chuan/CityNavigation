@@ -189,13 +189,13 @@
             </div>
             <!-- twocol -->
             <div style="margin-top: 10px;">
-                檔案類別：
-        <select id="selType" name="selClass" class="inputex">
+                <%--類別：--%>
+        <%--<select id="selType" name="selClass" class="inputex">
             <option value="01">營運中工廠家數</option>
             <option value="02">工廠營業收入</option>
             <option value="03">營利事業銷售額</option>
             <option value="03">形成群聚之產業(依工研院產科國際所群聚資料)</option>
-        </select>
+        </select>--%>
             </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">

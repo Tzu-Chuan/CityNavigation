@@ -189,13 +189,13 @@
             </div>
             <!-- twocol -->
             <div style="margin-top: 10px;">
-                檔案類別：
-        <select id="selType" name="selClass" class="inputex">
+               <%-- 類別：--%>
+        <%--<select id="selType" name="selClass" class="inputex">
             <option value="01">再生能源裝置容量數</option>
             <option value="02">台電購入再生能源電量</option>
             <option value="03">用電量</option>
             <option value="04">再生能源電量佔用電量比例</option>
-        </select>
+        </select>--%>
             </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">

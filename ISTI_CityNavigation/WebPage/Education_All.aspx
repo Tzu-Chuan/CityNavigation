@@ -189,8 +189,8 @@
             </div>
             <!-- twocol -->
             <div style="margin-top: 10px;">
-                檔案類別：
-        <select id="selType" name="selClass" class="inputex">
+                <%--類別：--%>
+        <%--<select id="selType" name="selClass" class="inputex">
             <option value="01">國小總學生數</option>
             <option value="02">15歲以上民間人口之教育程度結構-國中及以下</option>
             <option value="03">15歲以上民間人口之教育程度結構-高中(職)</option>
@@ -209,7 +209,7 @@
             <option value="16">國小-高中(職)平均每人教育預算</option>
             <option value="17">國中小教學電腦數</option>
             <option value="18">國中小平均每人教學電腦數</option>
-        </select>
+        </select>--%>
             </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">

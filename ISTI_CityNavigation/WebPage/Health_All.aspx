@@ -189,8 +189,8 @@
             </div>
             <!-- twocol -->
             <div style="margin-top: 10px;">
-                檔案類別：
-        <select id="selType" name="selClass" class="inputex">
+                <%--類別：--%>
+        <%--<select id="selType" name="selClass" class="inputex">
             <option value="01">長期照顧機構可供進駐人數</option>
             <option value="02">每萬人口病床數</option>
             <option value="03">每萬人口急性一般病床數</option>
@@ -200,7 +200,7 @@
             <option value="07">醫療機構數</option>
             <option value="08">平均每一醫療機構服務人數</option>
             <option value="08">政府部門醫療保健支出</option>
-        </select>
+        </select>--%>
             </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">

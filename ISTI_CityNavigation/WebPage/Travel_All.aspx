@@ -190,14 +190,14 @@
             </div>
             <!-- twocol -->
             <div style="margin-top: 10px;">
-                檔案類別：
-        <select id="selType" name="selClass" class="inputex">
+                <%--類別：--%>
+        <%--<select id="selType" name="selClass" class="inputex">
             <option value="01">觀光遊憩據點(縣市)人次統計</option>
             <option value="02">觀光旅館住用率</option>
             <option value="03">觀光旅館家數</option>
             <option value="04">觀光旅館房間數</option>
             <option value="05">觀光旅館平均房價</option>
-        </select>
+        </select>--%>
             </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">
