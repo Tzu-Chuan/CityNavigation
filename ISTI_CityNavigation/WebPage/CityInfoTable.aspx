@@ -982,7 +982,7 @@
             <div class="twocol titleLineA">
                 <div class="left"><span class="font-size4"><%= CityName %></span></div>
                 <!-- left -->
-                <div class="right">首頁 / <span><%= CityName %></span> / <span><%= CityTableClass %></span></div>
+                <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / <span><%= CityName %></span> / <span><%= CityTableClass %></span></div>
                 <!-- right -->
             </div>
             <!-- twocol -->

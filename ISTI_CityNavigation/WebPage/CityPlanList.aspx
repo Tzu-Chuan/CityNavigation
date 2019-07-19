@@ -267,7 +267,7 @@
     <input type="hidden" id="LoadStatus" value="" />
     <div class="twocol titleLineA">
         <div class="left"><span class="font-size4">計畫查詢</span></div><!-- left -->
-        <div class="right">首頁 / 智慧城鄉計畫提案 / 計畫查詢</div><!-- right -->
+        <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / 智慧城鄉計畫提案 / 計畫查詢</div><!-- right -->
     </div><!-- twocol -->
 
     <div class="tabmenublockV2wrapper margin10T">

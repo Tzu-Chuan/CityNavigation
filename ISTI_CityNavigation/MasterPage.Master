@@ -189,7 +189,7 @@
                                             <li><a href="<%=ResolveUrl("~/Webpage/CityPlanList.aspx") %>">計畫查詢</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="Population_All.aspx">全國資料</a>
+                                    <li><a href="javascript:void(0);">全國資料</a>
                                         <ul>
                                             <li><a href="<%=ResolveUrl("~/Webpage/Population_All.aspx") %>">人口土地</a></li>
                                             <li><a href="<%=ResolveUrl("~/Webpage/Industry_All.aspx") %>">產業</a></li>

@@ -77,7 +77,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="twocol titleLineA">
         <div class="left"><span class="font-size4">經費總表</span></div><!-- left -->
-        <div class="right">首頁 / 智慧城鄉計畫提案 / 經費總表</div><!-- right -->
+        <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / 智慧城鄉計畫提案 / 經費總表</div><!-- right -->
     </div><!-- twocol -->
 
     <div class="tabmenublockV2wrapper margin10T">
