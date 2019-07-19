@@ -212,7 +212,7 @@
                                 <tr>
                                     <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ene_CityNo">縣市</a></th>
                                     <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="T_PointPeople">再生能源裝置容量數</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ene_DeviceCapacityNum">再生能源裝置容量數</a></th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

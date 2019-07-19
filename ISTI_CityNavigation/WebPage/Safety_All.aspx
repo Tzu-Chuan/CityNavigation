@@ -218,7 +218,7 @@
                                 <tr>
                                     <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Sf_CityNo">縣市</a></th>
                                     <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="T_PointPeople">土壤污染控制場址面積</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Sf_SoilArea">土壤污染控制場址面積</a></th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
