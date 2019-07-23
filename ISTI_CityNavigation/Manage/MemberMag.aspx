@@ -141,6 +141,33 @@
                     });
                 }
             });
+
+            /// 解鎖帳號
+            $(document).on("click", "input[name='recoverbtn']", function () {
+                if (confirm('確定解鎖此帳號?')) {
+                    $.ajax({
+                        type: "POST",
+                        async: false, //在沒有返回值之前,不會執行下一步動作
+                        url: "mHandler/RecoverMember.aspx",
+                        data: {
+                            id: $(this).attr("aid"),
+                            Token: $("#InfoToken").val()
+                        },
+                        error: function (xhr) {
+                            alert(xhr.responseText);
+                        },
+                        success: function (data) {
+                            if ($(data).find("Error").length > 0) {
+                                alert($(data).find("Error").attr("Message"));
+                            }
+                            else {
+                                alert($("Response", data).text());
+                                getData(0);
+                            }
+                        }
+                    });
+                }
+            });
         });// end js
 
         function getData(p) {
@@ -178,6 +205,9 @@
                                 tabstr += '<td align="center" nowrap="nowrap">';
                                 tabstr += '<input class="genbtn" type="button" name="modbtn" value="修改" aid="' + $(this).children("M_ID").text().trim() + '">&nbsp;';
                                 tabstr += '<input class="genbtn" type="button" name="delbtn" value="刪除" aid="' + $(this).children("M_ID").text().trim() + '">';
+                                tabstr += '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">';
+                                tabstr += (parseInt($(this).children("M_LoginFail").text().trim()) < 5) ? '正常' : '<input class="genbtn" type="button" name="recoverbtn" value="解鎖" aid="' + $(this).children("M_ID").text().trim() + '">';
                                 tabstr += '</td></tr>';
                             });
                         }
@@ -293,6 +323,7 @@
                     <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="M_CreateDate">建立日期</th>
                     <th nowrap="nowrap"><a href="javascript:void(0);" name="sortbtn" sortname="M_Competence">所屬單位/權限</a></th>
                     <th nowrap="nowrap" style="width:150px;">動作</th>
+                    <th nowrap="nowrap" style="width:100px;">狀態</th>
                 </tr>
             </thead>
             <tbody></tbody>

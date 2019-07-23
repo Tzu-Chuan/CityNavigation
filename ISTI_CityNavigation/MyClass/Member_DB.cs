@@ -333,4 +333,86 @@ where M_ID=@M_ID ");
 
         return Int32.Parse(ds.Rows[0]["num"].ToString());
     }
+
+    /// <summary>
+    /// 帳號密碼錯誤，凍結欄位 + 1
+    /// </summary>
+    public void addFailCount()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        oCmd.CommandText = @"
+declare @tmpCount int = (select M_LoginFail from Member where M_Account=@M_Account and M_Status='A')
+
+if @tmpCount is not null
+	begin
+		update Member set M_LoginFail=(@tmpCount+1) where M_Account=@M_Account and M_Status='A'
+	end
+";
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        oCmd.Parameters.AddWithValue("@M_Account", M_Account);
+
+        oCmd.Connection.Open();
+        oCmd.ExecuteNonQuery();
+        oCmd.Connection.Close();
+    }
+
+    /// <summary>
+    /// 檢查帳號是否凍結
+    /// </summary>
+    public int CheckAccAlive()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"select M_LoginFail from Member where M_Status='A' and M_Account=@M_Account ");
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable ds = new DataTable();
+        oCmd.Parameters.AddWithValue("@M_Account", M_Account);
+        oda.Fill(ds);
+
+        if (ds.Rows.Count > 0)
+            return Int32.Parse(ds.Rows[0]["M_LoginFail"].ToString());
+        else
+            return 0;
+    }
+
+    /// <summary>
+    /// 帳號登入失敗歸0
+    /// </summary>
+    public void RecoverFailCount()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        oCmd.CommandText = @"update Member set M_LoginFail=0 where M_Account=@M_Account and M_Status='A' ";
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        oCmd.Parameters.AddWithValue("@M_Account", M_Account);
+
+        oCmd.Connection.Open();
+        oCmd.ExecuteNonQuery();
+        oCmd.Connection.Close();
+    }
+
+    /// <summary>
+    /// 解鎖凍結帳號
+    /// </summary>
+    public void RecoverMember()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        oCmd.CommandText = @"update Member set M_LoginFail=0 where M_ID=@M_ID ";
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        oCmd.Parameters.AddWithValue("@M_ID", M_ID);
+
+        oCmd.Connection.Open();
+        oCmd.ExecuteNonQuery();
+        oCmd.Connection.Close();
+    }
 }

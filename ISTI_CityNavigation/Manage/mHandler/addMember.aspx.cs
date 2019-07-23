@@ -14,6 +14,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
     {
         Member_DB m_db = new Member_DB();
         MemberLog_DB ml_db = new MemberLog_DB();
+        MailUtil sMail = new MailUtil();
         string id, mGuid, M_Name, M_Account, OldAcc, M_Pwd, OldPW, M_Email, OldMail, M_Competence;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -108,6 +109,18 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     {
                         m_db.addMember();
                         Add_Log();
+
+                        #region 帳號開通發信
+                        string mailContent = @"親愛的用戶您好：<br><br>
+                        已為您開通 【經濟部智慧城鄉生活應用導航資料庫】 網站帳戶<br>
+                        網址 https://twsmartcitydata.org.tw <br>
+                        帳號：" + M_Account + @" <br>
+                        密碼：" + M_Pwd + @" <br>
+                        請使用此帳號密碼作登入使用<br><br>
+                        經濟部智慧城鄉生活應用導航資料庫 感謝您<br><br>
+                        << 此為系統寄發信件，請勿回信 >>";
+                        sMail.MailTo(M_Email, "經濟部智慧城鄉生活應用導航資料庫-『帳號開通』", mailContent);
+                        #endregion
                     }
                     else
                     {

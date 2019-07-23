@@ -122,6 +122,7 @@
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 </head>
 <body>
+    <script async src="https://cse.google.com/cse.js?cx=003866010673862308730:dre9xqnrcq0"></script>
      <div>
         <form id="from1" runat="server">
             <!-- Preloader -->
@@ -162,10 +163,10 @@
                             <div id="HeaderOtherLinkS" class="magpopup magSizeM mfp-hide">
                                 <div class="magpopupTitle textcenter">外部連結</div>
                                 <span id="HeaderOtherLinkCopy"></span>
-                            </div>
-                            <!--magpopup -->
+                            </div><!--magpopup -->
 
                             <!-- RWD 外部連結 end -->
+                            <a href="#searchbox" id="searchbtn" class="open-popup-link"><i class="fa fa-search" aria-hidden="true"></i></a>
                         </div><!-- loginfo -->
 
                         <div class="logo">
@@ -581,6 +582,74 @@
             <a href="#twmap" class="twbtn open-popup-link">開啟全台地圖</a>
         </form>
     </div>
+
+    <div id="searchbox" class="magpopup magSizeS mfp-hide">
+    <div class="magpopupTitle">條件查詢</div>
+        <div class="padding10ALL">
+            <div class="OchiTrasTable width100 TitleLength03">
+                <!-- 單欄示範:單一輸入 -->
+                <div class="OchiRow">
+                    <div class="OchiCell OchiTitle TitleSetWidth">縣市</div>
+                    <div class="OchiCell width100">
+                        <select  class="width100 inputex">
+                            <option>請選擇</option>
+                            <option>新北市</option>
+                            <option>臺北市</option>
+                            <option>桃園市</option>
+                            <option>臺中市</option>
+                            <option>臺南市</option>
+                            <option>高雄市</option>
+                            <option>宜蘭縣</option>
+                            <option>新竹縣</option>
+                            <option>苗栗縣</option>
+                            <option>彰化縣</option>
+                            <option>南投縣</option>
+                            <option>雲林縣</option>
+                            <option>嘉義縣</option>
+                            <option>屏東縣</option>
+                            <option>臺東縣</option>
+                            <option>花蓮縣</option>
+                            <option>澎湖縣</option>
+                            <option>基隆市</option>
+                            <option>新竹市</option>
+                            <option>嘉義市</option>
+                            <option>金門縣</option>
+                            <option>連江縣</option>
+                        </select>
+                    </div>
+                </div><!-- OchiRow -->
+                <div class="OchiRow">
+                    <div class="OchiCell OchiTitle TitleSetWidth">分類</div>
+                    <div class="OchiCell width100">
+                        <select  class="width100 inputex">
+                            <option>請選擇</option>
+                            <option>人口土地</option>
+                            <option>產業</option>
+                            <option>農業</option>
+                            <option>觀光</option>
+                            <option>健康</option>
+                            <option>零售</option>
+                            <option>教育</option>
+                            <option>交通</option>
+                            <option>能源</option>
+                            <option>智慧安全、治理</option>
+                        </select>
+                    </div>
+                </div><!-- OchiRow -->
+                <div class="OchiRow">
+                    <div class="OchiCell OchiTitle TitleSetWidth">關鍵字</div>
+                    <div class="OchiCell width100"><input type="text" class="width100 inputex" /></div>
+                </div><!-- OchiRow -->
+            </div><!-- OchiTrasTable -->
+            <div class="twocol margin10T">
+                <div class="right">
+                    <a href="#" class="genbtn closemagnificPopup">取消</a>
+                    <a href="#" class="genbtn">查詢</a>
+                </div>
+            </div><!-- twocol -->
+        </div><!-- padding10ALL -->
+    </div>
+
     <div id="twmap" class="magpopup magSizeS mfp-hide">
     <div class="magpopupTitle">台灣地圖</div>
     <div class="padding10ALL">
