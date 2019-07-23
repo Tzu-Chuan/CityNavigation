@@ -16,6 +16,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
         MemberLog_DB ml_db = new MemberLog_DB();
         MailUtil sMail = new MailUtil();
         string id, mGuid, M_Name, M_Account, OldAcc, M_Pwd, OldPW, M_Email, OldMail, M_Competence;
+        bool ModMailStatus = false; // 修改帳號、密碼、E-Mail 狀態
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------
@@ -64,6 +65,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     /// 檢查帳號是否重複
                     if (M_Account != OldAcc)
                     {
+                        ModMailStatus = true;
                         m_db._M_Account = M_Account;
                         int chkAcc = m_db.CheckAccount();
                         if (chkAcc > 0)
@@ -78,6 +80,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                     /// 檢查E-Mail 是否重複
                     if (M_Email != OldMail)
                     {
+                        ModMailStatus = true;
                         m_db._M_Email = M_Email;
                         int chkEmail = m_db.CheckEmail();
                         if (chkEmail > 0)
@@ -91,7 +94,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                     /// 檢查密碼是否修改
                     if (OldPW != M_Pwd)
+                    {
+                        ModMailStatus = true;
                         m_db._M_Pwd = Common.sha1en(M_Pwd);
+                    }
                     else
                         m_db._M_Pwd = M_Pwd;
 
@@ -127,6 +133,21 @@ namespace ISTI_CityNavigation.Manage.mHandler
                         DataTable OldDt = m_db.getMemberById();
                         m_db.modMember();
                         Modify_Log(OldDt);
+
+                        #region 帳戶資料異動發信(帳號、密碼、E-Mail)
+                        if (ModMailStatus)
+                        {
+                            string mailContent = @"親愛的用戶您好：<br><br>
+                            您的【經濟部智慧城鄉生活應用導航資料庫】 網站帳戶異動資訊如下<br>
+                            網址 https://twsmartcitydata.org.tw <br>
+                            帳號：" + M_Account + @" <br>
+                            密碼：" + M_Pwd + @" <br>
+                            E-Mail：" + M_Email + @" <br><br>
+                            經濟部智慧城鄉生活應用導航資料庫 感謝您<br><br>
+                            << 此為系統寄發信件，請勿回信 >>";
+                            sMail.MailTo(M_Email, "經濟部智慧城鄉生活應用導航資料庫-『帳戶資料異動』", mailContent);
+                        }
+                        #endregion
                     }
 
                     xmlstr = "<?xml version='1.0' encoding='utf-8'?><root><Response>儲存成功</Response></root>";
