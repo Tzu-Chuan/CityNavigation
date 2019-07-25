@@ -202,7 +202,7 @@ public class Traffic_DB
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
 
-        sb.Append(@"select * from Traffic where Tra_Status='A' order by convert(int," + sortName + @") " + sortMethod);
+        sb.Append(@"select * from Traffic where Tra_Status='A' order by convert(float," + sortName + @") " + sortMethod);
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;

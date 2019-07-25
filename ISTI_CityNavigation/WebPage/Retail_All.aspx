@@ -1,7 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Retail_All.aspx.cs" Inherits="ISTI_CityNavigation.WebPage.Retail_All" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-     <script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
+            $(".CityClass").hide();
             /// 表頭排序設定
             Page.Option.SortMethod = "+";
             Page.Option.SortName = "Re_CityNo";
@@ -12,8 +14,6 @@
                     thousandsSep: ','
                 }
             });
-
-            getData();
 
             /// 表頭排序
             $(document).on("click", "a[name='sortbtn']", function () {
@@ -30,16 +30,413 @@
                     Page.Option.SortMethod = "-";
                     $(this).addClass('desc');
                 }
-                getData();
+                switch ($("#selType").val()) {
+                    case "01":
+                        getData();
+                        break;
+                    case "02":
+                        getStreetStand();
+                        break;
+                    case "03":
+                        getStreetVendor();
+                        break;
+                    case "04":
+                        getStreetVendorIncome();
+                        break;
+                    case "05":
+                        getStreetVendorAvgIncome();
+                        break;
+                    case "06":
+                        getRetailBusinessSalesRate();
+                        break;
+                    case "07":
+                        getRetailBusinessAvgSales();
+                        break;
+                }
+            });
+            
+            defaultInfo();
+
+            $(document).on("change", "#selType", function () {
+                $(".CityClass").hide();
+                Retail_All_Array.length = 0;
+                Page.Option.SortMethod = "+";
+                Page.Option.SortName = "Re_CityNo";
+                switch ($("#selType").val()) {
+                    case "01":
+                        document.getElementById("RetailBusinessSales_tablist").style.display = "";
+                        getData();
+                        titlePie = "零售業營利事業銷售額";
+                        DrawChart(titlePie);
+                        break;
+                    case "02":
+                        document.getElementById("StreetStand_tablist").style.display = "";
+                        getStreetStand();
+                        titlePie = "攤販經營家數";
+                        DrawChart(titlePie);
+                        break;
+                    case "03":
+                        document.getElementById("StreetVendor_tablist").style.display = "";
+                        getStreetVendor();
+                        titlePie = "攤販從業人數";
+                        DrawChart(titlePie);
+                        break;
+                    case "04":
+                        document.getElementById("StreetVendorIncome_tablist").style.display = "";
+                        getStreetVendorIncome();
+                        titlePie = "攤販全年收入";
+                        DrawChart(titlePie);
+                        break;
+                    case "05":
+                        document.getElementById("StreetVendorAvgIncome_tablist").style.display = "";
+                        getStreetVendorAvgIncome();
+                        titlePie = "攤販全年平均收入";
+                        DrawChart(titlePie);
+                        break;
+                    case "06":
+                        document.getElementById("RetailBusinessSalesRate_tablist").style.display = "";
+                        getRetailBusinessSalesRate();
+                        titlePie = "零售業營利事業銷售額成長率";
+                        DrawChart(titlePie);
+                        break;
+                    case "07":
+                        document.getElementById("RetailBusinessAvgSales_tablist").style.display = "";
+                        getRetailBusinessAvgSales();
+                        titlePie = "零售業營利事業平均每家銷售額";
+                        DrawChart(titlePie);
+                        break;
+                }
             });
 
-            //圓餅圖
+        }); //js end
+
+
+        var Retail_All_Array = [];
+        function defaultInfo() {
+            document.getElementById("RetailBusinessSales_tablist").style.display = "";
+            getData();
+            titlePie = "零售業營利事業銷售額";
+            DrawChart(titlePie);
+        }
+        //零售業營利事業銷售額
+        function getData() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetRetailList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#RetailBusinessSales_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_RetailBusinessSalesYear").text().trim() + '年' + '</td>';
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Re_RetailBusinessSales").text().trim()).toFixed(0)) + '千元' + '</td>';
+                                Retail_All_Array.push($(this).children("Re_RetailBusinessSales").text().trim().toString());
+                                tabstr += '</td></tr>';
+
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#RetailBusinessSales_tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        //攤販經營家數
+        function getStreetStand() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetRetailList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#StreetStand_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_StreetStandYear").text().trim() + '年' + '</td>';
+                                var tmpVal = ($.isNumeric($(this).children("Re_StreetStand").text().trim())) ? Number($(this).children("Re_StreetStand").text().trim()).toFixed(0) : 0;
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpVal) + '家' + '</td>';
+                                Retail_All_Array.push(tmpVal);
+                                tabstr += '</td></tr>';
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#StreetStand_tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        //攤販從業人數
+        function getStreetVendor() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetRetailList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#StreetVendor_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_Re_StreetVendorYear").text().trim() + '年' + '</td>';
+                                var tmpVal = ($.isNumeric($(this).children("Re_StreetVendor").text().trim())) ? Number($(this).children("Re_StreetVendor").text().trim()).toFixed(0) : 0;
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpVal) + '人' + '</td>';
+                                Retail_All_Array.push(tmpVal);
+                                tabstr += '</td></tr>';
+
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#StreetVendor_tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        //攤販全年收入
+        function getStreetVendorIncome() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetRetailList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#StreetVendorIncome_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_StreetVendorIncomeYear").text().trim() + '年' + '</td>';
+                                var tmpVal = ($.isNumeric($(this).children("Re_StreetVendorIncome").text().trim())) ? Number($(this).children("Re_StreetVendorIncome").text().trim()).toFixed(0) : 0;
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpVal) + '千元' + '</td>';
+                                Retail_All_Array.push(tmpVal);
+                                tabstr += '</td></tr>';
+
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#StreetVendorIncome_tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        //攤販全年平均收入   
+        function getStreetVendorAvgIncome() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetRetailList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#StreetVendorAvgIncome_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_StreetVendorAvgIncomeYear").text().trim() + '年' + '</td>';
+                                var tmpVal = ($.isNumeric($(this).children("Re_StreetVendorAvgIncome").text().trim())) ? Number($(this).children("Re_StreetVendorAvgIncome").text().trim()).toFixed(0) : 0;
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpVal) + '千元' + '</td>';
+                                Retail_All_Array.push(tmpVal);
+                                tabstr += '</td></tr>';
+
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#StreetVendorAvgIncome_tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        //零售業營利事業銷售額成長率
+        function getRetailBusinessSalesRate() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetRetailList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#RetailBusinessSalesRate_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_RetailBusinessSalesRateYearDesc").text().trim() + '</td>';
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Re_RetailBusinessSalesRate").text().trim()).toFixed(2)) + '%' + '</td>';
+                                Retail_All_Array.push($(this).children("Re_RetailBusinessSalesRate").text().trim().toString());
+                                tabstr += '</td></tr>';
+
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#RetailBusinessSalesRate_tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        //零售業營利事業平均每家銷售額
+        function getRetailBusinessAvgSales() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetRetailList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#RetailBusinessAvgSales_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_RetailBusinessAvgSalesYear").text().trim() + '</td>';
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Re_RetailBusinessAvgSales").text().trim()).toFixed(2)) + '千元' + '</td>';
+                                Retail_All_Array.push($(this).children("Re_RetailBusinessAvgSales").text().trim().toString());
+                                tabstr += '</td></tr>';
+
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#RetailBusinessAvgSales_tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        //highcharts
+        function DrawChart(titlePei) {
             $('#stackedcolumn1').highcharts({
                 chart: {
                     type: 'pie'
                 },
                 title: {
-                    text: '零售業營利事業銷售額'
+                    text: titlePei
                 },
                 series: [{
                     name: '',
@@ -135,53 +532,9 @@
                         },
                     ]
                 }]
-            });
-        }); //js end
-
-
-        var Retail_All_Array = [];
-        //撈觀光列表
-        function getData() {
-            $.ajax({
-                type: "POST",
-                async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "../handler/GetRetailList.aspx",
-                data: {
-                    CityNo: "All",
-                    SortName: Page.Option.SortName,
-                    SortMethod: Page.Option.SortMethod,
-                    Token: $("#InfoToken").val()
-                },
-                error: function (xhr) {
-                    alert(xhr.responseText);
-                },
-                success: function (data) {
-                    if ($(data).find("Error").length > 0) {
-                        alert($(data).find("Error").attr("Message"));
-                    }
-                    else {
-                        $("#tablist tbody").empty();
-                        var tabstr = '';
-                        if ($(data).find("data_item").length > 0) {
-                            $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_CityName").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Re_RetailBusinessSalesYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Re_RetailBusinessSales").text().trim()).toFixed(0)) + '千元' + '</td>';
-                                Retail_All_Array.push($(this).children("Re_RetailBusinessSales").text().trim().toString());
-                                tabstr += '</td></tr>';
-                            });
-                        }
-                        else
-                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#tablist tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
-                    }
-                }
             })
         }
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -196,8 +549,8 @@
             </div>
             <!-- twocol -->
             <div style="margin-top: 10px;">
-               <%-- 類別：--%>
-        <%--<select id="selType" name="selClass" class="inputex">
+                類別：
+        <select id="selType" name="selClass" class="inputex">
             <option value="01">零售業營利事業銷售額</option>
             <option value="02">攤販經營家數</option>
             <option value="03">攤販從業人數</option>
@@ -205,17 +558,84 @@
             <option value="05">攤販全年平均收入</option>
             <option value="06">零售業營利事業銷售額成長率</option>
             <option value="07">零售業營利事業平均每家銷售額</option>
-        </select>--%>
+        </select>
             </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal">
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="tablist">
+                        <%--零售業營利事業銷售額--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="RetailBusinessSales_tablist" class="CityClass">
                             <thead>
                                 <tr>
                                     <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_CityNo">縣市</a></th>
                                     <th nowrap="nowrap" style="width: 150px;">資料時間</th>
                                     <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_RetailBusinessSales">零售業營利事業銷售額</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <%--攤販經營家數--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="StreetStand_tablist" class="CityClass">
+                            <thead>
+                                <tr>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_StreetStand">攤販經營家數</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <%--攤販從業人數--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="StreetVendor_tablist" class="CityClass">
+                            <thead>
+                                <tr>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_StreetVendor">攤販從業人數</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <%--攤販全年收入--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="StreetVendorIncome_tablist" class="CityClass">
+                            <thead>
+                                <tr>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_StreetVendorIncome">攤販全年收入</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <%--攤販全年平均收入--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="StreetVendorAvgIncome_tablist" class="CityClass">
+                            <thead>
+                                <tr>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_StreetVendorAvgIncome">攤販全年平均收入</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <%--零售業營利事業銷售額成長率--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="RetailBusinessSalesRate_tablist" class="CityClass">
+                            <thead>
+                                <tr>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_RetailBusinessSalesRate">零售業營利事業銷售額成長率</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <%--零售業營利事業平均每家銷售額--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="RetailBusinessAvgSales_tablist" class="CityClass">
+                            <thead>
+                                <tr>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Re_RetailBusinessAvgSales">零售業營利事業平均每家銷售額</a></th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

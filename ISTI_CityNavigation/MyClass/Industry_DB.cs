@@ -148,8 +148,10 @@ public class Industry_DB
         SqlCommand oCmd = new SqlCommand();
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
-
-        sb.Append(@"select * from Industry where Ind_Status='A' order by convert(int," + sortName + @") " + sortMethod);
+        if(sortName!= "Ind_Business")
+            sb.Append(@"select * from Industry where Ind_Status='A' order by convert(float," + sortName + @") " + sortMethod);
+        else
+            sb.Append(@"select * from Industry where Ind_Status='A' order by (" + sortName + @") " + sortMethod);
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;

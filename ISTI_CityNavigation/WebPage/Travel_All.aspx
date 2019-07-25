@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
+            $(".CityClass").hide();
             /// 表頭排序設定
             Page.Option.SortMethod = "+";
             Page.Option.SortName = "T_CityNo";
@@ -14,7 +15,6 @@
                 }
             });
 
-            getData();
 
             /// 表頭排序
             $(document).on("click", "a[name='sortbtn']", function () {
@@ -31,16 +31,303 @@
                     Page.Option.SortMethod = "-";
                     $(this).addClass('desc');
                 }
-                getData();
+                switch ($("#selType").val()) {
+                    case "01":
+                        getData();
+                        break;
+                    case "02":
+                        getHotelUseRate();
+                        break;
+                    case "03":
+                        getHotels();
+                        break;
+                    case "04":
+                        getHotelRooms();
+                        break;
+                    case "05":
+                        getHotelAvgPrice();
+                        break;
+                }
             });
 
-            //圓餅圖
+            defaultInfo();
+
+            $(document).on("change", "#selType", function () {
+                $(".CityClass").hide();
+                Page.Option.SortMethod = "+";
+                Page.Option.SortName = "T_CityNo";
+                Travel_All_Array.length = 0;
+                switch ($("#selType").val()) {
+                    case "01":
+                        document.getElementById("PointPeople_tablist").style.display = "";
+                        getData();
+                        titlePei = "觀光遊憩據點(縣市)人次統計";
+                        DrawChart(titlePei);
+                        break;
+                    case "02":
+                        document.getElementById("HotelUseRate_tablist").style.display = "";
+                        getHotelUseRate();
+                        titlePei = "觀光旅館住用率";
+                        DrawChart(titlePei);
+                        break;
+                    case "03":
+                        document.getElementById("Hotels_tablist").style.display = "";
+                        getHotels();
+                        titlePei = "觀光旅館家數";
+                        DrawChart(titlePei);
+                        break;
+                    case "04":
+                        document.getElementById("HotelRooms_tablist").style.display = "";
+                        getHotelRooms();
+                        titlePei = "觀光旅館房間數";
+                        DrawChart(titlePei);
+                        break;
+                    case "05":
+                        document.getElementById("HotelAvgPrice_tablist").style.display = "";
+                        getHotelAvgPrice();
+                        titlePei = "觀光旅館平均房價";
+                        DrawChart(titlePei);
+                        break;
+                }
+            });
+
+        }); //js end
+
+
+        var Travel_All_Array = [];
+        function defaultInfo() {
+            document.getElementById("PointPeople_tablist").style.display = "";
+            getData();
+            titlePei = "觀光遊憩據點(縣市)人次統計";
+            DrawChart(titlePei);
+        }
+
+        //撈觀光遊憩據點(縣市)人次統計
+        function getData() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetTravelList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#PointPeople_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_PointYear").text().trim() + '年' + '</td>';
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("T_PointPeople").text().trim()).toFixed(0)) + '人次' + '</td>';
+                                Travel_All_Array.push($(this).children("T_PointPeople").text().trim().toString());
+                                tabstr += '</td></tr>';
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#PointPeople_tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        //撈觀光旅館住用率   
+        function getHotelUseRate() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetTravelList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#HotelUseRate_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_HotelUseYear").text().trim() + '年' + '</td>';
+                                var tmpVal = ($.isNumeric($(this).children("T_HotelUseRate").text().trim())) ? Number($(this).children("T_HotelUseRate").text().trim()).toFixed(2) : 0;
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpVal) + '%' + '</td>';
+                                Travel_All_Array.push($(this).children("T_HotelUseRate").text().trim().toString());
+                                tabstr += '</td></tr>';
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#HotelUseRate_tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        //撈觀光旅館家數
+        function getHotels() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetTravelList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#Hotels_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_HotelsYear").text().trim() + '年' + '</td>';
+                                var tmpVal = ($.isNumeric($(this).children("T_Hotels").text().trim())) ? Number($(this).children("T_Hotels").text().trim()).toFixed(0) : 0;
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpVal) + '家' + '</td>';
+                                Travel_All_Array.push($(this).children("T_Hotels").text().trim().toString());
+                                tabstr += '</td></tr>';
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#Hotels_tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        //撈觀光旅館房間數
+        function getHotelRooms() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetTravelList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#HotelRooms_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_HotelRoomsYear").text().trim() + '年' + '</td>';
+                                var tmpVal = ($.isNumeric($(this).children("T_HotelRooms").text().trim())) ? Number($(this).children("T_HotelRooms").text().trim()).toFixed(0) : 0;
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpVal) + '間' + '</td>';
+                                Travel_All_Array.push($(this).children("T_HotelRooms").text().trim().toString());
+                                tabstr += '</td></tr>';
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#HotelRooms_tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        //撈觀光旅館平均房價
+        function getHotelAvgPrice() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetTravelList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#HotelAvgPrice_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_HotelAvgPriceYear").text().trim() + '年' + '</td>';
+                                var tmpVal = ($.isNumeric($(this).children("T_HotelAvgPrice").text().trim())) ? Number($(this).children("T_HotelAvgPrice").text().trim()).toFixed(0) : 0;
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpVal) + '元' + '</td>';
+                                Travel_All_Array.push($(this).children("T_HotelAvgPrice").text().trim().toString());
+                                tabstr += '</td></tr>';
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#HotelAvgPrice_tablist tbody").append(tabstr);
+                        // 固定表頭
+                        // left : 左側兩欄固定(需為th)
+                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        function DrawChart(titlePei) {
             $('#stackedcolumn1').highcharts({
                 chart: {
                     type: 'pie'
                 },
                 title: {
-                    text: '觀光遊憩據點(縣市)人次統計'
+                    text: titlePei
                 },
                 series: [{
                     name: '',
@@ -136,53 +423,9 @@
                         },
                     ]
                 }]
-            });
-        }); //js end
-
-
-        var Travel_All_Array = [];
-        //撈觀光列表
-        function getData() {
-            $.ajax({
-                type: "POST",
-                async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "../handler/GetTravelList.aspx",
-                data: {
-                    CityNo: "All",
-                    SortName: Page.Option.SortName,
-                    SortMethod: Page.Option.SortMethod,
-                    Token: $("#InfoToken").val()
-                },
-                error: function (xhr) {
-                    alert(xhr.responseText);
-                },
-                success: function (data) {
-                    if ($(data).find("Error").length > 0) {
-                        alert($(data).find("Error").attr("Message"));
-                    }
-                    else {
-                        $("#tablist tbody").empty();
-                        var tabstr = '';
-                        if ($(data).find("data_item").length > 0) {
-                            $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_CityName").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_PointYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("T_PointPeople").text().trim()).toFixed(0)) + '人次' + '</td>';
-                                Travel_All_Array.push($(this).children("T_PointPeople").text().trim().toString());
-                                tabstr += '</td></tr>';
-                            });
-                        }
-                        else
-                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#tablist tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
-                    }
-                }
             })
         }
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -197,24 +440,69 @@
             </div>
             <!-- twocol -->
             <div style="margin-top: 10px;">
-                <%--類別：--%>
-        <%--<select id="selType" name="selClass" class="inputex">
+                類別：
+        <select id="selType" name="selClass" class="inputex">
             <option value="01">觀光遊憩據點(縣市)人次統計</option>
             <option value="02">觀光旅館住用率</option>
             <option value="03">觀光旅館家數</option>
             <option value="04">觀光旅館房間數</option>
             <option value="05">觀光旅館平均房價</option>
-        </select>--%>
+        </select>
             </div>
             <div class="row margin10T ">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal">
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="tablist">
+                        <%--觀光遊憩據點(縣市)人次統計--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="PointPeople_tablist" class="CityClass">
                             <thead>
                                 <tr>
                                     <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="T_CityNo">縣市</a></th>
                                     <th nowrap="nowrap" style="width: 150px;">資料時間</th>
                                     <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="T_PointPeople">觀光遊憩據點(縣市)人次統計</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <%--觀光旅館住用率--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="HotelUseRate_tablist" class="CityClass">
+                            <thead>
+                                <tr>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="T_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="T_HotelUseRate">觀光旅館住用率</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <%--觀光旅館家數--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="Hotels_tablist" class="CityClass">
+                            <thead>
+                                <tr>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="T_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="T_Hotels">觀光旅館家數</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <%--觀光旅館房間數--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="HotelRooms_tablist" class="CityClass">
+                            <thead>
+                                <tr>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="T_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="T_HotelRooms">觀光旅館房間數</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <%--觀光旅館平均房價--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="HotelAvgPrice_tablist" class="CityClass">
+                            <thead>
+                                <tr>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="T_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="T_HotelAvgPrice">觀光旅館平均房價</a></th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -231,4 +519,5 @@
         </div>
     </div>
     <!-- WrapperBody -->
+    <input type="hidden" value="PointPeople_tablist" id="classhidden">
 </asp:Content>

@@ -207,7 +207,7 @@ public class Farming_DB
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
 
-        sb.Append(@"select * from Farming where Fa_Status='A' order by convert(int," + sortName + @") " + sortMethod);
+        sb.Append(@"select * from Farming where Fa_Status='A' order by convert(float,case " + sortName + @" when '─' then '0' else " + sortName + @" end) " + sortMethod);
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;
