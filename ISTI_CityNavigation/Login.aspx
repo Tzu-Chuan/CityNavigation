@@ -51,7 +51,7 @@
             position: absolute; /*絕對位置*/
             top: 50%; /*從上面開始算，下推 50% (一半) 的位置*/
             left: 50%; /*從左邊開始算，右推 50% (一半) 的位置*/
-            margin-top: -100px; /*高度的一半*/
+            margin-top: -50px; /*高度的一半*/
             margin-left: -200px; /*寬度的一半*/
             font-size: 16pt;
         }
@@ -96,7 +96,10 @@
                         <div style="text-align: center">
                             <div style="margin-bottom: 10px;">帳號：<asp:TextBox ID="uStr" runat="server" CssClass="inputex"></asp:TextBox></div>
                             <div style="margin-bottom: 10px;">密碼：<asp:TextBox ID="pStr" runat="server" TextMode="Password" CssClass="inputex"></asp:TextBox></div>
-                            <asp:Button ID="btn" runat="server" OnClick="btn_Click" Text="登入" CssClass="genbtn" />
+                            <div>
+                                <asp:Button ID="btn" runat="server" OnClick="btn_Click" Text="登入" CssClass="genbtn" />
+                                <asp:LinkButton ID="forgetBtn" runat="server" Text="忘記密碼" Font-Size="Small"></asp:LinkButton>
+                            </div>
                         </div>
                     </div>
                 </div><!-- ContentWrapper -->
