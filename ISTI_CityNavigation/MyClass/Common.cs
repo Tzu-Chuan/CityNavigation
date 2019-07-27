@@ -17,7 +17,6 @@ using System.Web.UI;
 /// </summary>
 public class Common
 {
-
     #region Get IPv4 Adress
     public static string GetIPv4Address()
     {
@@ -309,6 +308,7 @@ public class Common
     }
     #endregion
 
+    #region Token
     /// <summary>
     /// 驗證Token
     /// </summary>
@@ -349,6 +349,7 @@ public class Common
     {
         HttpContext.Current.Session["Token"] = pToken;
     }
+    #endregion
 }
 
 
@@ -472,7 +473,7 @@ public class JavaScript
 }
 #endregion
 
-#region 抓網頁圖片
+#region 爬網頁 Html (類似全文檢索)
 public class CaptureURL
 {
     public string Capture(string url)

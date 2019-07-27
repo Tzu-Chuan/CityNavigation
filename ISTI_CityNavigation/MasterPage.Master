@@ -58,67 +58,8 @@
     <script type="text/javascript" src="<%=ResolveUrl("~/js/tableHeadFixer.js") %>"></script><!-- 固定標頭表格 -->
     <script type="text/javascript" src="<%=ResolveUrl("~/js/PageList.js") %>"></script>
     <script type="text/javascript" src="<%=ResolveUrl("~/js/loading.js") %>"></script>
+    <script type="text/javascript" src="<%=ResolveUrl("~/js/MasterJS.js") %>"></script>
     <title>經濟部智慧城鄉生活應用導航資料庫</title>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            //寬版螢幕調整
-            $(".container").css("max-width", "1440px");
-            
-            if ($("#compstr").val() == "IDBsr")
-                $("#ManageBtn").hide();
-
-            $(document).on("click", "#ManageBtn", function () {
-                location.href = "../Manage/BackEndIndex.aspx";
-            });
-
-            $(document).on("click", "#signout_btn", function () {
-                location.href = "../Handler/SignOut.aspx";
-            });
-
-            $(document).on("click", "a[name='ItemBtn']", function () {
-                var city = $(this).parent().parent().attr("citycode");
-                switch ($(this).text()) {
-                    case "人口土地":
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Population";
-                        break;                                                                                  
-                    case "產業":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Industry";
-                        break;                                                                                  
-                    case "智慧城鄉計畫提案":                                                      
-                        location.href = "SmartCity.aspx?city=" + city;
-                        break;                                                                                  
-                    case "農業":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Farming";
-                        break;                                                                                  
-                    case "觀光":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Travel";
-                        break;                                                                                  
-                    case "健康":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Health";
-                        break;                                                                                  
-                    case "零售":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Retail";
-                        break;                                                                                  
-                    case "教育":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Education";
-                        break;                                                                                  
-                    case "交通":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Traffic";
-                        break;                                                                                  
-                    case "能源":                                                                             
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Energy";
-                        break;
-                    case "智慧安全、治理":
-                        location.href = "CityInfoTable.aspx?city=" + city + "&listname=Safety";
-                        break;
-                }
-            });
-
-            $(document).on("click", "a[name='linkbtn']", function () {
-                location.href = "CityInfo.aspx?city=" + $(this).attr("city");
-            });
-        }); // end js
-    </script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 </head>
 <body>
@@ -184,7 +125,7 @@
                             <div class="superfishmenu">
                                 <ul>
                                     <li><a href="<%=ResolveUrl("~/Webpage/CityInfo.aspx?city=02") %>">首頁</a></li>
-                                    <li><a href="javascript:void(0);">智慧城鄉計畫提案</a>
+                                    <li class="idbMode"><a href="javascript:void(0);">智慧城鄉計畫提案</a>
                                         <ul>
                                             <li><a href="<%=ResolveUrl("~/Webpage/BudgetExecution.aspx") %>">經費總表</a></li>
                                             <li><a href="<%=ResolveUrl("~/Webpage/CityPlanList.aspx") %>">計畫查詢</a></li>
@@ -584,67 +525,48 @@
     </div>
 
     <div id="searchbox" class="magpopup magSizeS mfp-hide">
-    <div class="magpopupTitle">條件查詢</div>
+    <div class="magpopupTitle">查詢</div>
         <div class="padding10ALL">
             <div class="OchiTrasTable width100 TitleLength03">
                 <!-- 單欄示範:單一輸入 -->
+                <div class="titleLineA margin5B"><span class="font-size3">全國資料</span></div>
                 <div class="OchiRow">
-                    <div class="OchiCell OchiTitle TitleSetWidth">縣市</div>
+                    <div class="OchiCell OchiTitle TitleSetWidth">類別</div>
                     <div class="OchiCell width100">
-                        <select  class="width100 inputex">
-                            <option>請選擇</option>
-                            <option>新北市</option>
-                            <option>臺北市</option>
-                            <option>桃園市</option>
-                            <option>臺中市</option>
-                            <option>臺南市</option>
-                            <option>高雄市</option>
-                            <option>宜蘭縣</option>
-                            <option>新竹縣</option>
-                            <option>苗栗縣</option>
-                            <option>彰化縣</option>
-                            <option>南投縣</option>
-                            <option>雲林縣</option>
-                            <option>嘉義縣</option>
-                            <option>屏東縣</option>
-                            <option>臺東縣</option>
-                            <option>花蓮縣</option>
-                            <option>澎湖縣</option>
-                            <option>基隆市</option>
-                            <option>新竹市</option>
-                            <option>嘉義市</option>
-                            <option>金門縣</option>
-                            <option>連江縣</option>
+                        <select id="webType" class="width100 inputex">
+                            <option value="">請選擇</option>
+                            <option value="Population">人口土地</option>
+                            <option value="Industry">產業</option>
+                            <option value="Farming">農業</option>
+                            <option value="Travel">觀光</option>
+                            <option value="Health">健康</option>
+                            <option value="Retail">零售</option>
+                            <option value="Education">教育</option>
+                            <option value="Traffic">交通</option>
+                            <option value="Energy">能源</option>
+                            <option value="Safety">智慧安全、治理</option>
                         </select>
                     </div>
                 </div><!-- OchiRow -->
+                <div class="titleLineA margin5B margin20T idbMode"><span class="font-size3">智慧城鄉計畫提案</span></div>
+                <div class="OchiRow idbMode">
+                    <div class="OchiCell OchiTitle TitleSetWidth">領域別</div>
+                    <div class="OchiCell width100"><select id="webServiceType" class="width99 inputex SarStr"></select></div>
+                </div><!-- OchiRow -->
+                <div class="titleLineA margin5B margin20T"><span class="font-size3">條件查詢</span></div>
                 <div class="OchiRow">
-                    <div class="OchiCell OchiTitle TitleSetWidth">分類</div>
-                    <div class="OchiCell width100">
-                        <select  class="width100 inputex">
-                            <option>請選擇</option>
-                            <option>人口土地</option>
-                            <option>產業</option>
-                            <option>農業</option>
-                            <option>觀光</option>
-                            <option>健康</option>
-                            <option>零售</option>
-                            <option>教育</option>
-                            <option>交通</option>
-                            <option>能源</option>
-                            <option>智慧安全、治理</option>
-                        </select>
-                    </div>
+                    <div class="OchiCell OchiTitle TitleSetWidth">縣市</div>
+                    <div class="OchiCell width100"><select id="webCity" class="width100 inputex"></select></div>
                 </div><!-- OchiRow -->
                 <div class="OchiRow">
                     <div class="OchiCell OchiTitle TitleSetWidth">關鍵字</div>
-                    <div class="OchiCell width100"><input type="text" class="width100 inputex" /></div>
+                    <div class="OchiCell width100"><input id="SearchStr" type="text" class="width100 inputex" /></div>
                 </div><!-- OchiRow -->
             </div><!-- OchiTrasTable -->
             <div class="twocol margin10T">
                 <div class="right">
-                    <a href="#" class="genbtn closemagnificPopup">取消</a>
-                    <a href="#" class="genbtn">查詢</a>
+                    <a href="javascript:void(0);" id="WebSearchbtn" class="genbtn">查詢</a>
+                    <%--<a href="javascript:void(0);" class="genbtn closemagnificPopup">取消</a>--%>
                 </div>
             </div><!-- twocol -->
         </div><!-- padding10ALL -->

@@ -6,7 +6,7 @@
             Page.Option.SortMethod = "+";
             Page.Option.SortName = "";
 
-            getddl("02", "#ddlCity")
+            getdll("02", "#ddlCity");
             ddl_ServiceType();
             
             /// 表頭排序
@@ -28,10 +28,15 @@
             });
 
             /// 查詢
-            $(document).on("click", "#SearchBtn", function () {
+            $(document).on("click", "#FindBtn", function () {
                 $("#LoadStatus").val("true");
                 Page.Option.SortName = "";
                 getData();
+            });
+
+            /// 查詢
+            $(document).on("click", "#ClearBtn", function () {
+                $(".SarStr").val("");
             });
 
             /// Tab 切換
@@ -61,6 +66,8 @@
                     Token: $("#InfoToken").val()
                 },
                 beforeSend: function () {
+                    $("#ByOne").hide();
+                    $("#Total").hide();
                     $("#tablist thead").hide();
                     $("#tablist tbody").hide();
                     $(".DataDiv").show();
@@ -90,11 +97,10 @@
                         if ($(data).find("data_item").length > 0) {
                             if ($("#ddlCity").val() == "") {
                                 $("#Total").show();
-                                $("#ByOne").hide();
                                 $(data).find("data_item").each(function (i) {
                                     tabstr += '<tr>';
                                     tabstr += '<td nowrap align="center">' + $(this).children("CS_PlanSchedule").text().trim() + '</td>';
-                                    tabstr += '<td nowrap align="center">' + $(this).children("CS_No").text().trim() + '</td>';
+                                    tabstr += '<td nowrap align="center">' + (i + 1) + '</td>';
                                     tabstr += '<td nowrap align="center">' + $(this).children("CS_PlanType").text().trim() + '</td>';
                                     tabstr += '<td nowrap align="center">' + $(this).children("CS_HostCompany").text().trim() + '</td>';
                                     tabstr += '<td align="center">' + $(this).children("CS_JointCompany").text().trim() + '</td>';
@@ -151,7 +157,6 @@
                                 });
                             }
                             else {
-                                $("#Total").hide();
                                 $("#ByOne").show();
                                 // 刪除動態的欄位
                                 if ($("#ByOne th").length > 10) {
@@ -183,8 +188,10 @@
                             // left : 左側兩欄固定(需為th)
                             $(".hugetable table").tableHeadFixer({ "left": 0 });
                         }
-                        else
-                            $("#TabDiv").html("<span style='font-size:14pt; color:red;'>查詢無資料</span>");
+                        else {
+                            $("#tablist tbody").empty();
+                            $("#tablist tbody").append("<tr><td style='font-size:14pt; color:red;'>查詢無資料</td></tr>");
+                        }
                     }
                 }
             });
@@ -214,38 +221,6 @@
                             });
                             $("#ddlServiceType").empty();
                             $("#ddlServiceType").append(ddlstr);
-                        }
-                    }
-                }
-            });
-        }
-
-        // ddl 縣市
-        function getddl(gno, tagName) {
-            $.ajax({
-                type: "POST",
-                async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "../handler/GetDDL.aspx",
-                data: {
-                    Group: gno,
-                    Token: $("#InfoToken").val()
-                },
-                error: function (xhr) {
-                    alert("Error " + xhr.status);
-                    console.log(xhr.responseText);
-                },
-                success: function (data) {
-                    if ($(data).find("Error").length > 0) {
-                        alert($(data).find("Error").attr("Message"));
-                    }
-                    else {
-                        var ddlstr = '<option value="">請選擇</option>';
-                        if ($(data).find("data_item").length > 0) {
-                            $(data).find("data_item").each(function (i) {
-                                ddlstr += '<option value="' + $(this).children("C_Item").text().trim() + '">' + $(this).children("C_Item_cn").text().trim() + '</option>';
-                            });
-                            $(tagName).empty();
-                            $(tagName).append(ddlstr);
                         }
                     }
                 }
@@ -282,28 +257,29 @@
             <div class="OchiRow">
                 <div class="OchiHalf">
                     <div class="OchiCell OchiTitle TitleSetWidth">所屬縣市</div>
-                    <div class="OchiCell width100"><select id="ddlCity" class="width99 inputex"></select></div>
+                    <div class="OchiCell width100"><select id="ddlCity" class="width99 inputex SarStr"></select></div>
                 </div><!-- OchiHalf -->
                 <div class="OchiHalf">
                     <div class="OchiCell OchiTitle TitleSetWidth">領域別</div>
-                    <div class="OchiCell width100"><select id="ddlServiceType" class="width99 inputex"></select></div>
+                    <div class="OchiCell width100"><select id="ddlServiceType" class="width99 inputex SarStr"></select></div>
                 </div><!-- OchiHalf -->
             </div><!-- OchiRow -->
 
             <div class="OchiRow">
                 <div class="OchiHalf">
                     <div class="OchiCell OchiTitle TitleSetWidth">計畫名稱</div>
-                    <div class="OchiCell width100"><input id="strPlan" type="text" class="width99 inputex"> </div>
+                    <div class="OchiCell width100"><input id="strPlan" type="text" class="width99 inputex SarStr"> </div>
                 </div><!-- OchiHalf -->
                 <div class="OchiHalf">
                     <div class="OchiCell OchiTitle TitleSetWidth">公司名稱</div>
-                    <div class="OchiCell width100"><input id="strCompany" type="text" class="width99 inputex"> </div>
+                    <div class="OchiCell width100"><input id="strCompany" type="text" class="width99 inputex SarStr"> </div>
                 </div><!-- OchiHalf -->
             </div><!-- OchiRow -->
         </div><!-- OchiFixTable -->
 
         <div class="textright margin10T">
-            <a id="SearchBtn" href="javascript:void(0);" class="genbtn">查詢</a>
+            <a id="FindBtn" href="javascript:void(0);" class="genbtn">查詢</a>
+            <a id="ClearBtn" href="javascript:void(0);" class="genbtn">清除條件</a>
         </div>
     </div><!-- Box -->
 
