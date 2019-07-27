@@ -211,7 +211,6 @@
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Ind_Sales").text().trim()).toFixed(0)) + '千元' + '</td>';
                                 Industry_All_Array.push($(this).children("Ind_Sales").text().trim().toString());
                                 tabstr += '</td></tr>';
-
                             });
                         }
                         else
@@ -249,10 +248,10 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_BusinessYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_Business").text().trim() + '</td>';
+                                tabstr += '<td align="center">' + $(this).children("Ind_Business").text().trim() + '</td>';
                                 tabstr += '</td></tr>';
                             });
                         }
