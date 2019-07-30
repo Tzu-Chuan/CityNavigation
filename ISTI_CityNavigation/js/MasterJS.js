@@ -67,23 +67,93 @@
     });
 
     $(document).on("click", "#WebSearchbtn", function () {
-        // ISTI 成員
-        if ($("#compstr").val() == "ISTI") {
-            // 無關鍵字直接導頁
-            if ($("#SearchStr").val().trim() == "") {
-                if ($("#webType").val() != "" && $("#webCity").val() != "")
-                    location.href = "CityInfoTable.aspx?city=" + $("#webCity").val() + "&listname=" + $("#webType").val();
-                else if ($("#webType").val() != "")
-                    location.href = $("#webType").val() + "_All.aspx";
-                else
-                    location.href = "CityInfo.aspx?city=" + $("#webCity").val();
-            }
+        var Searchstatus = false;
+        $(".webstr").each(function () {
+            if (this.value != "") Searchstatus = true;
+        });
+
+        if (!Searchstatus) {
+            alert("請輸入查詢條件");
         }
         else {
-           
+            // ISTI 成員
+            if ($("#compstr").val() == "ISTI") {
+                // 未輸入關鍵字
+                if ($("#webSearchStr").val().trim() == "") {
+                    if ($("#webCity").val() != "" && $("#webType").val() != "")
+                        location.href = "CityInfoTable.aspx?city=" + $("#webCity").val() + "&listname=" + $("#webType").val();
+                    else if ($("#webType").val() != "")
+                        location.href = $("#webType").val() + "_All.aspx";
+                    else
+                        location.href = "CityInfo.aspx?city=" + $("#webCity").val();
+                }
+                // 關鍵字查詢
+                else {
+                    RedirectToCSE("ISTI");
+                }
+            }
+            // IDB 成員
+            else {
+                // 未輸入關鍵字
+                if ($("#webSearchStr").val().trim() == "") {
+                    // 全國資料類別 & 領域別 皆為 Null
+                    if ($("#webType").val() == "" && $("#webServiceType").val() == "")
+                        RedirectToCSE("IDB");
+                    // 全國資料類別 Null
+                    else if ($("#webType").val() == "" && $("#webServiceType").val() != "") {
+                        var cseCity = $('<input type="hidden" name="cseCity" value="' + $("#webCity").val() + '" />');
+                        var cseServiceType = $('<input type="hidden" name="cseServiceType" value="' + $("#webServiceType").val() + '" />');
+                        var cseSearchTxt = $('<input type="hidden" name="cseSearchTxt" value="' + $("#webSearchStr").val() + '" />');
+                        var form = $("form")[0];
+
+                        form.appendChild(cseCity[0]);
+                        form.appendChild(cseServiceType[0]);
+                        form.appendChild(cseSearchTxt[0]);
+
+                        form.setAttribute("action", "CityPlanList.aspx");
+                        form.setAttribute("method", "post");
+                        form.setAttribute("enctype", "multipart/form-data");
+                        form.setAttribute("encoding", "multipart/form-data");
+                        form.submit();
+                    }
+                    // 領域別 Null
+                    else if ($("#webType").val() != "" && $("#webServiceType").val() == ""){
+                        if ($("#webCity").val() != "")
+                            location.href = "CityInfoTable.aspx?city=" + $("#webCity").val() + "&listname=" + $("#webType").val();
+                    }
+                    // 全國資料類別 & 領域別 皆有值
+                    else
+                        RedirectToCSE("IDB");
+                }
+                // 關鍵字查詢
+                else {
+                    RedirectToCSE("IDB");
+                }
+            }
         }
     });
 }); // end js
+
+function RedirectToCSE(user) {
+    var mode = $('<input type="hidden" name="mode" value="' + user + '" />');
+    var wCity = $('<input type="hidden" name="wCity" value="' + $("#webCity").val() + '" />');
+    var wType = $('<input type="hidden" name="wType" value="' + $("#webType").val() + '" />');
+    var wServiceType = $('<input type="hidden" name="wServiceType" value="' + $("#webServiceType").val() + '" />');
+    var searchTxt = $('<input type="hidden" name="searchTxt" value="' + $("#webSearchStr").val() + '" />');
+    var form = $("form")[0];
+
+    form.appendChild(mode[0]);
+    form.appendChild(wType[0]);
+    form.appendChild(wServiceType[0]);
+    form.appendChild(wCity[0]);
+    form.appendChild(searchTxt[0]);
+
+    form.setAttribute("action", "CityCSE.aspx");
+    form.setAttribute("method", "post");
+    form.setAttribute("enctype", "multipart/form-data");
+    form.setAttribute("encoding", "multipart/form-data");
+    form.submit();
+}
 
 // ddl 領域別
 function getMasterServiceType() {

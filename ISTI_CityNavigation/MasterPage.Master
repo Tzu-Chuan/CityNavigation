@@ -84,7 +84,6 @@
                 <!-- status -->
             </div>
             <!-- preloader -->
-
             <div class="WrapperBody" id="WrapperBody">
                 <div class="WrapperHeader">
                     <div class="container">
@@ -524,53 +523,55 @@
         </form>
     </div>
 
-    <div id="searchbox" class="magpopup magSizeS mfp-hide">
-    <div class="magpopupTitle">查詢</div>
-        <div class="padding10ALL">
-            <div class="OchiTrasTable width100 TitleLength03">
-                <!-- 單欄示範:單一輸入 -->
-                <div class="titleLineA margin5B"><span class="font-size3">全國資料</span></div>
-                <div class="OchiRow">
-                    <div class="OchiCell OchiTitle TitleSetWidth">類別</div>
-                    <div class="OchiCell width100">
-                        <select id="webType" class="width100 inputex">
-                            <option value="">請選擇</option>
-                            <option value="Population">人口土地</option>
-                            <option value="Industry">產業</option>
-                            <option value="Farming">農業</option>
-                            <option value="Travel">觀光</option>
-                            <option value="Health">健康</option>
-                            <option value="Retail">零售</option>
-                            <option value="Education">教育</option>
-                            <option value="Traffic">交通</option>
-                            <option value="Energy">能源</option>
-                            <option value="Safety">智慧安全、治理</option>
-                        </select>
+    <form>
+        <div id="searchbox" class="magpopup magSizeS mfp-hide">
+        <div class="magpopupTitle">查詢</div>
+            <div class="padding10ALL">
+                <div class="OchiTrasTable width100 TitleLength03">
+                    <div class="titleLineA margin5B"><span class="font-size3">條件查詢</span></div>
+                    <div class="OchiRow">
+                        <div class="OchiCell OchiTitle TitleSetWidth">縣市</div>
+                        <div class="OchiCell width100"><select id="webCity" class="width100 inputex webstr"></select></div>
+                    </div><!-- OchiRow -->
+                    <div class="OchiRow">
+                        <div class="OchiCell OchiTitle TitleSetWidth">關鍵字</div>
+                        <div class="OchiCell width100"><input id="webSearchStr" type="text" class="width100 inputex webstr" /></div>
+                    </div><!-- OchiRow -->
+                    <!-- 單欄示範:單一輸入 -->
+                    <div class="titleLineA margin5B margin20T"><span class="font-size3">全國資料</span></div>
+                    <div class="OchiRow">
+                        <div class="OchiCell OchiTitle TitleSetWidth">類別</div>
+                        <div class="OchiCell width100">
+                            <select id="webType" class="width100 inputex webstr">
+                                <option value="">請選擇</option>
+                                <option value="Population">人口土地</option>
+                                <option value="Industry">產業</option>
+                                <option value="Farming">農業</option>
+                                <option value="Travel">觀光</option>
+                                <option value="Health">健康</option>
+                                <option value="Retail">零售</option>
+                                <option value="Education">教育</option>
+                                <option value="Traffic">交通</option>
+                                <option value="Energy">能源</option>
+                                <option value="Safety">智慧安全、治理</option>
+                            </select>
+                        </div>
+                    </div><!-- OchiRow -->
+                    <div class="titleLineA margin5B margin20T idbMode"><span class="font-size3">智慧城鄉計畫提案</span></div>
+                    <div class="OchiRow idbMode">
+                        <div class="OchiCell OchiTitle TitleSetWidth">領域別</div>
+                        <div class="OchiCell width100"><select id="webServiceType" class="width99 inputex webstr"></select></div>
+                    </div><!-- OchiRow -->
+                </div><!-- OchiTrasTable -->
+                <div class="twocol margin10T">
+                    <div class="right">
+                        <a href="javascript:void(0);" id="WebSearchbtn" class="genbtn">查詢</a>
+                        <%--<a href="javascript:void(0);" class="genbtn closemagnificPopup">取消</a>--%>
                     </div>
-                </div><!-- OchiRow -->
-                <div class="titleLineA margin5B margin20T idbMode"><span class="font-size3">智慧城鄉計畫提案</span></div>
-                <div class="OchiRow idbMode">
-                    <div class="OchiCell OchiTitle TitleSetWidth">領域別</div>
-                    <div class="OchiCell width100"><select id="webServiceType" class="width99 inputex SarStr"></select></div>
-                </div><!-- OchiRow -->
-                <div class="titleLineA margin5B margin20T"><span class="font-size3">條件查詢</span></div>
-                <div class="OchiRow">
-                    <div class="OchiCell OchiTitle TitleSetWidth">縣市</div>
-                    <div class="OchiCell width100"><select id="webCity" class="width100 inputex"></select></div>
-                </div><!-- OchiRow -->
-                <div class="OchiRow">
-                    <div class="OchiCell OchiTitle TitleSetWidth">關鍵字</div>
-                    <div class="OchiCell width100"><input id="SearchStr" type="text" class="width100 inputex" /></div>
-                </div><!-- OchiRow -->
-            </div><!-- OchiTrasTable -->
-            <div class="twocol margin10T">
-                <div class="right">
-                    <a href="javascript:void(0);" id="WebSearchbtn" class="genbtn">查詢</a>
-                    <%--<a href="javascript:void(0);" class="genbtn closemagnificPopup">取消</a>--%>
-                </div>
-            </div><!-- twocol -->
-        </div><!-- padding10ALL -->
-    </div>
+                </div><!-- twocol -->
+            </div><!-- padding10ALL -->
+        </div>
+    </form>
 
     <div id="twmap" class="magpopup magSizeS mfp-hide">
     <div class="magpopupTitle">台灣地圖</div>

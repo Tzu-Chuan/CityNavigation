@@ -12,7 +12,6 @@ namespace ISTI_CityNavigation.handler
     public partial class GetServiceTypeDDL : System.Web.UI.Page
     {
         CitySummaryTable_DB cst_db = new CitySummaryTable_DB();
-        Common com = new Common();
         protected void Page_Load(object sender, EventArgs e)
         {
             ///-----------------------------------------------------

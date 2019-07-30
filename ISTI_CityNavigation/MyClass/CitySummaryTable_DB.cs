@@ -166,11 +166,16 @@ public class CitySummaryTable_DB
             if (City != "")
                 sb.Append(@"and CP_CityCode=@City ");
 
-            if (CS_HostCompany != "")
-                sb.Append(@"and CP_HostCompany LIKE '%' + @HostCompany + '%' ");
+            if (CS_HostCompany == CS_PlanName)
+                sb.Append(@"and ((upper(CP_HostCompany) LIKE '%' + upper(@HostCompany) + '%') or (upper(CP_PlanName) LIKE '%' + upper(@PlanName) + '%')) ");
+            else
+            {
+                if (CS_HostCompany != "")
+                    sb.Append(@"and CP_HostCompany LIKE '%' + @HostCompany + '%' ");
 
-            if (CS_PlanName != "")
-                sb.Append(@"and CP_PlanName LIKE '%' + @PlanName + '%' ");
+                if (CS_PlanName != "")
+                    sb.Append(@"and CP_PlanName LIKE '%' + @PlanName + '%' ");
+            }
 
             if (CS_ServiceType != "")
                 sb.Append(@"and CP_ServiceType=@ServiceType ");
@@ -182,11 +187,16 @@ public class CitySummaryTable_DB
             if (CS_AllArea != "")
                 sb.Append(@"and CS_AllArea=@AllArea ");
 
-            if (CS_HostCompany != "")
-                sb.Append(@"and CS_HostCompany LIKE '%' + @HostCompany + '%' ");
+            if (CS_HostCompany == CS_PlanName)
+                sb.Append(@"and ((upper(CS_HostCompany) LIKE '%' + upper(@HostCompany) + '%') or (upper(CS_PlanName) LIKE '%' + upper(@PlanName) + '%')) ");
+            else
+            {
+                if (CS_HostCompany != "")
+                    sb.Append(@"and CS_HostCompany LIKE '%' + @HostCompany + '%' ");
 
-            if (CS_PlanName != "")
-                sb.Append(@"and CS_PlanName LIKE '%' + @PlanName + '%' ");
+                if (CS_PlanName != "")
+                    sb.Append(@"and CS_PlanName LIKE '%' + @PlanName + '%' ");
+            }
 
             if (CS_ServiceType != "")
                 sb.Append(@"and CS_ServiceType=@ServiceType ");

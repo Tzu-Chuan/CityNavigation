@@ -5,10 +5,20 @@
             /// 表頭排序設定
             Page.Option.SortMethod = "+";
             Page.Option.SortName = "";
-
+            
             getdll("02", "#ddlCity");
             ddl_ServiceType();
+
             
+            if ($("#wCity").val() != "" || $("#wType").val() != "" || $("#wKeyword").val() != "") {
+                $("#ddlCity").val($("#wCity").val());
+                $("#ddlServiceType").val($("#wType").val());
+                $("#strPlan").val($("#wKeyword").val());
+                $("#strCompany").val($("#wKeyword").val());
+                $("#LoadStatus").val("true");
+                getData();
+            }
+
             /// 表頭排序
             $(document).on("click", "a[name='sortbtn']", function () {
                 $("a[name='sortbtn']").removeClass("asc desc")
@@ -240,6 +250,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <input type="hidden" id="AllArea" value="Y" />
     <input type="hidden" id="LoadStatus" value="" />
+    <input type="hidden" id="wType" value="<%= webServiceType %>" />
+    <input type="hidden" id="wCity" value="<%= webCity %>" />
+    <input type="hidden" id="wKeyword" value="<%= wSearchStr %>" />
     <div class="twocol titleLineA">
         <div class="left"><span class="font-size4">計畫查詢</span></div><!-- left -->
         <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / 智慧城鄉計畫提案 / 計畫查詢</div><!-- right -->
