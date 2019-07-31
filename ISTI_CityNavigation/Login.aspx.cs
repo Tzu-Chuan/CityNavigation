@@ -64,8 +64,8 @@ namespace ISTI_CityNavigation
         {
             if (Common.VeriftyToken(InfoToken.Value))
             {
-                
-                string M_Email = Request.Form["eStr"].ToString();
+
+                string M_Email = eStr.Text;
                 bool bln;
                 try
                 {
@@ -84,7 +84,7 @@ namespace ISTI_CityNavigation
                     if (chkEmail > 0)
                     {
                         DataTable dt = m_db.getInfoByEmailorGuid();
-                        string mGid = Common.sha1en(dt.Rows[0]["M_Guid"].ToString());
+                        string mGid = Common.Encrypt(dt.Rows[0]["M_Guid"].ToString());
                         #region 帳戶資料異動發信(帳號、密碼、E-Mail)
                         string mailContent = @"親愛的用戶您好：<br><br>
                             您的【經濟部智慧城鄉生活應用導航資料庫】 密碼修改網址如下<br>
@@ -104,9 +104,6 @@ namespace ISTI_CityNavigation
                 {
                     JavaScript.AlertMessage(this.Page, "E-mail格式錯誤請重新輸入");
                 }
-                
-
-                
             }
             else
             {

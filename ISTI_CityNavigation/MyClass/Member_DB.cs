@@ -423,10 +423,7 @@ if @tmpCount is not null
     {
         SqlCommand oCmd = new SqlCommand();
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
-        oCmd.CommandText = @"update Member set
-M_Pwd=@M_Pwd
-where M_Guid=@M_Guid
-";
+        oCmd.CommandText = @"update Member set M_Pwd=@M_Pwd,M_LoginFail=0 where M_Guid=@M_Guid";
         oCmd.CommandType = CommandType.Text;
         SqlDataAdapter oda = new SqlDataAdapter(oCmd);
         oCmd.Parameters.AddWithValue("@M_Pwd", M_Pwd);

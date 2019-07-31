@@ -131,6 +131,7 @@
                         }
                         else {
                             alert($("Response", data).text());
+                            location.href = "Login.aspx";
                         }
                     }
                 });
@@ -184,15 +185,15 @@
                                 <tr>
                                     <th>新密碼</th>
                                     <td>
-                                        <input id="nPwd" type="text" class="inputex width100 dialogInput" /></td>
+                                        <input id="nPwd" type="password" class="inputex width100 dialogInput" /></td>
                                 </tr>
                                 <tr>
                                     <th>確認新密碼</th>
                                     <td>
-                                        <input id="cPwd" type="text" class="inputex width100 dialogInput" /></td>
+                                        <input id="cPwd" type="password" class="inputex width100 dialogInput" /></td>
                                     </tr>
                             </table>
-                            <div style="text-align: right; margin-top: 5px;">
+                            <div style="text-align: center; margin-top: 5px;">
                                 <input type="button" class="genbtn" id="changebtn" value="送出" />
                             </div>
                         </div>

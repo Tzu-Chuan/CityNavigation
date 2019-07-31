@@ -87,8 +87,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(document).on("click", "#forgetBtn", function () {
-                t_str = "忘記密碼";
-                doShowDialog(t_str);
+                doShowDialog();
                 return false;
             })
 
@@ -99,10 +98,10 @@
         }); // js end
 
         /// open dialog
-        function doShowDialog(t_str) {
+        function doShowDialog() {
             /// dialog setting
             $("#NewBlock").dialog({
-                title: t_str,
+                title: "忘記密碼",
                 autoOpen: false,
                 width: 600,
                 height: 180,

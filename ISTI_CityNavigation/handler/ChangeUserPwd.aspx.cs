@@ -38,14 +38,14 @@ namespace ISTI_CityNavigation.handler
                         string mEmail = OldDt.Rows[0]["M_Email"].ToString();
                         #region 帳戶資料異動發信(帳號、密碼、E-Mail)
                         string mailContent = @"親愛的用戶您好：<br><br>
-                            您的【經濟部智慧城鄉生活應用導航資料庫】 網站帳戶密碼修改成功<br>
-                            若您沒有修改密碼，請通知管理人員<br>
-                            經濟部智慧城鄉生活應用導航資料庫 感謝您<br><br>
-                            << 此為系統寄發信件，請勿回信 >>";
+                        您的【經濟部智慧城鄉生活應用導航資料庫】 網站帳戶密碼修改成功<br>
+                        若您沒有修改密碼，請通知管理人員<br>
+                        經濟部智慧城鄉生活應用導航資料庫 感謝您<br><br>
+                        << 此為系統寄發信件，請勿回信 >>";
                         sMail.MailTo(mEmail, "經濟部智慧城鄉生活應用導航資料庫-『密碼修改成功通知』", mailContent);
                         #endregion
                     }
-                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root><Response>儲存成功</Response></root>";
+                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root><Response>修改成功</Response></root>";
                     xDoc.LoadXml(xmlstr);
 
                 }
@@ -62,9 +62,7 @@ namespace ISTI_CityNavigation.handler
             xDoc.Save(Response.Output);
 
         }
-        /// <summary>
-        /// 修改成員 Log
-        /// </summary>
+        
         /// <summary>
         /// 修改成員 Log
         /// </summary>
