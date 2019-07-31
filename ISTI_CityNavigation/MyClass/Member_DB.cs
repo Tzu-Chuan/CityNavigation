@@ -415,4 +415,53 @@ if @tmpCount is not null
         oCmd.ExecuteNonQuery();
         oCmd.Connection.Close();
     }
+
+    /// <summary>
+    /// 修改密碼
+    /// </summary>
+    public void changeMemberPwd()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        oCmd.CommandText = @"update Member set
+M_Pwd=@M_Pwd
+where M_Guid=@M_Guid
+";
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        oCmd.Parameters.AddWithValue("@M_Pwd", M_Pwd);
+        oCmd.Parameters.AddWithValue("@M_Guid", M_Guid);
+        oCmd.Connection.Open();
+        oCmd.ExecuteNonQuery();
+        oCmd.Connection.Close();
+    }
+
+    /// <summary>
+    /// 撈信箱與Guid
+    /// </summary>
+    public DataTable getInfoByEmailorGuid()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        if (M_Email != "")
+        {
+            sb.Append(@"select * from Member where M_Email=@M_Email");
+        }
+
+        if (M_Guid != "")
+        {
+            sb.Append(@"select * from Member where M_Guid=@M_Guid and M_Status='A'");
+        }
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable ds = new DataTable();
+        oCmd.Parameters.AddWithValue("@M_Email", M_Email);
+        oCmd.Parameters.AddWithValue("@M_Guid", M_Guid);
+        oda.Fill(ds);
+        return ds;
+    }
 }
