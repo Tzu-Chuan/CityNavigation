@@ -116,7 +116,7 @@
                 $.ajax({
                     type: "POST",
                     async: false, //在沒有返回值之前,不會執行下一步動作
-                    url: "handler/ChangePwd.aspx",
+                    url: "handler/ChangeUserPwd.aspx",
                     data: {
                         gid: gid,
                         M_Pwd: $("#nPwd").val(),
