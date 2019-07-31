@@ -31,16 +31,16 @@
                     else {
                         var tabstr = '';
                         $("#tablist").empty();
-                        if ($(data).find("data_item").length > 0) {
-                            // 計畫資料
-                            if ($("#UserMode").val() == "IDB") {
-                                tabstr += '<tr><td>';
-                                tabstr += '<a href="javascript:void(0);" name="PlanBtn">智慧城鄉計畫提案 / 計畫查詢</a>';
-                                tabstr += '<br>查詢計畫總表';
-                                tabstr += '</td></tr>';
-                            }
+                        // 計畫資料
+                        if ($("#UserMode").val() == "IDB") {
+                            tabstr += '<tr><td>';
+                            tabstr += '<a href="javascript:void(0);" name="PlanBtn">智慧城鄉計畫提案 / 計畫查詢</a>';
+                            tabstr += '<br>查詢計畫總表';
+                            tabstr += '</td></tr>';
+                        }
 
-                            // 全國資料
+                        // 全國資料
+                        if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
                                 // 含縣市與類別
                                 if ($("#tmpCity").val() != "" || $("#tmpType").val() != "") {
@@ -76,8 +76,10 @@
                         else {
                             if ($("#UserMode").val() == "ISTI")
                                 $("#tablist").append("<tr><td>查詢無資料</td></td>");
-                            else
+                            else if ($("#tmpType").val() == "")
                                 RedirectPlanList();
+                            else
+                                $("#tablist").append(tabstr);
                         }
                     }
                 }
