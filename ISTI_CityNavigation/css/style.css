@@ -325,6 +325,16 @@ a.searchbtn{ color:#1a9d4e;}
 #taiwanmap .areaboxactive{fill:#067432;}
 #taiwanmap .areaboxactive:hover{fill:#067432; cursor:default;}
 
+#taiwanmap .areaboxW{transition:all 0.5s ease;fill: #dadada;}
+#taiwanmap .areaboxW:hover{fill: #a2a2a2;  cursor:pointer;}
+#taiwanmap .areaboxWactive{fill:#666666;}
+#taiwanmap .areaboxWactive:hover{fill:#666666; cursor:default;}
+
+#taiwanmap .areaboxB{transition:all 0.5s ease;fill: #56c9d4;}
+#taiwanmap .areaboxB:hover{fill: #3e8e9d;  cursor:pointer;}
+#taiwanmap .areaboxBactive{fill: #284a74;}
+#taiwanmap .areaboxBactive:hover{fill:#284a74; cursor:default;}
+
 /* 開啟台灣地圖 */
 a.twbtn{
     position: fixed;
