@@ -566,7 +566,7 @@
                 <div class="twocol margin10T">
                     <div class="right">
                         <a href="javascript:void(0);" id="WebSearchbtn" class="genbtn">查詢</a>
-                        <%--<a href="javascript:void(0);" class="genbtn closemagnificPopup">取消</a>--%>
+                        <a href="javascript:void(0);" id="ClearBtn" class="genbtn">清除條件</a>
                     </div>
                 </div><!-- twocol -->
             </div><!-- padding10ALL -->

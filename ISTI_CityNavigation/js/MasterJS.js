@@ -66,6 +66,11 @@
         location.href = "CityInfo.aspx?city=" + $(this).attr("city");
     });
 
+    // 清除條件 Button
+    $(document).on("click", "#ClearBtn", function () {
+        $(".webstr").val("");
+    });
+
     $(document).on("click", "#WebSearchbtn", function () {
         var Searchstatus = false;
         $(".webstr").each(function () {

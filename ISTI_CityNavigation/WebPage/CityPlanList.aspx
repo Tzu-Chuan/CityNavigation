@@ -80,6 +80,7 @@
                     $("#Total").hide();
                     $("#tablist thead").hide();
                     $("#tablist tbody").hide();
+                    $(".remind_div").hide();
                     $(".DataDiv").show();
                     $("#TabDiv").loading({
                         message: "資料讀取中，請稍後"
@@ -88,6 +89,7 @@
                 complete: function () {
                     $("#tablist thead").show();
                     $("#tablist tbody").show();
+                    $(".remind_div").show();
                     $("#TabDiv").loading("stop");
                 },
                 error: function (xhr) {
@@ -372,4 +374,5 @@
             <tbody></tbody>
         </table>
     </div>
+    <div class="remind_div" style="display:none; font-size:14pt; color:red;">機密資料，不宜外流！</div>
 </asp:Content>

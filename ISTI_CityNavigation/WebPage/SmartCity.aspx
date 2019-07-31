@@ -152,6 +152,7 @@
                     <tbody></tbody>
                 </table>
             </div>
+            <div style="font-size:14pt; color:red;">機密資料，不宜外流！</div>
         </div><!-- col -->
         <div class="col-lg-6 col-md-6 col-sm-12">
             <div id="ServiceTypePei" class="maxWithA"></div>
