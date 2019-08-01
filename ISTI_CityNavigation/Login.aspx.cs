@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
@@ -90,7 +91,7 @@ namespace ISTI_CityNavigation
                         #region 帳戶資料異動發信(帳號、密碼、E-Mail)
                         string mailContent = @"親愛的用戶您好：<br><br>
                             您的【經濟部智慧城鄉生活應用導航資料庫】 密碼修改網址如下<br>
-                            網址 https://twsmartcitydata.ddns.net/ChangePwd.aspx?ChangePwd=" + mGid + "&ck=" + TmeNow + @"<br>
+                            網址 " + ConfigurationManager.AppSettings["MailDomain"] + @"/ChangePwd.aspx?ChangePwd=" + mGid + "&ck=" + TmeNow + @"<br>
                             經濟部智慧城鄉生活應用導航資料庫 感謝您<br><br>
                             << 此為系統寄發信件，請勿回信 >>";
                         sMail.MailTo(M_Email, "經濟部智慧城鄉生活應用導航資料庫-『帳戶密碼修改』", mailContent);

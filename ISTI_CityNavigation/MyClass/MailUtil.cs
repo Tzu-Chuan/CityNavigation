@@ -32,7 +32,7 @@ public class MailUtil
             client.Host = ConfigurationManager.AppSettings["SmtpServer"];
             client.Port = 25;
 
-            if (Environment.MachineName == "WEB01")
+            if (Environment.MachineName == "WEB01") // 公司白色主機
             {
                 NetworkCredential basicCredential = new NetworkCredential(ConfigurationManager.AppSettings["SmtpAcc"], ConfigurationManager.AppSettings["SmtpPw"]);
                 client.UseDefaultCredentials = false;
