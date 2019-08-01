@@ -91,7 +91,7 @@ public class DataTableToXml
                         if (string.IsNullOrEmpty(dt.Rows[i].ItemArray[j].ToString()))
                             xNode.SetAttribute(dt.Columns[j].ColumnName, dt.Rows[i].ItemArray[j].ToString());
                         else
-                            xNode.SetAttribute(dt.Columns[j].ColumnName, DateTime.Parse(dt.Rows[i].ItemArray[j].ToString()).ToString("yyyy/MM/dd"));
+                            xNode.SetAttribute(dt.Columns[j].ColumnName, DateTime.Parse(dt.Rows[i].ItemArray[j].ToString()).ToString("yyyy/MM/dd HH:mm:ss"));
                     }
                     else
                         xNode.SetAttribute(dt.Columns[j].ColumnName, dt.Rows[i].ItemArray[j].ToString());

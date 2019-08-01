@@ -429,4 +429,59 @@ order by CS_ServiceType ");
             sqlBC.WriteToServer(srcData);
         }
     }
+
+    public DataTable GetVersionDDL()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"
+select top 3 CS_CreateDate,CS_Version,
+CONVERT(nvarchar,CS_CreateDate,112)+'-'+CONVERT(nvarchar,CS_Version) ddlstr,
+(select top 1 CS_CreateDate from CitySummaryTable where CS_Status='A') NowDate,
+(select top 1 CS_Version from CitySummaryTable where CS_Status='A') NowVer
+from CitySummaryTable
+group by CS_CreateDate,CS_Version
+order by CS_CreateDate desc ");
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable ds = new DataTable();
+
+        //oCmd.Parameters.AddWithValue("@KeyWord", KeyWord);
+
+        oda.Fill(ds);
+        return ds;
+    }
+
+    public void ChangeIDB_Version(string version)
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        oCmd.CommandText = @"
+declare @ver nvarchar(10) = @version
+update CitySummaryTable set CS_Status='D' where CS_Status='A'
+update CitySummaryTable set CS_Status='A' where CS_Version=@ver
+update CityPlanTable set CP_Status='D' where CP_Status='A'
+update CityPlanTable set CP_Status='A' where CP_Version=@ver
+update BudgetExecution set B_Status='D' where B_Status='A'
+update BudgetExecution set B_Status='A' where B_Version=@ver
+update CategorySubMoney set C_Status='D' where C_Status='A'
+update CategorySubMoney set C_Status='A' where C_Version=@ver
+update ServiceSubMoney set S_Status='D' where S_Status='A'
+update ServiceSubMoney set S_Status='A' where S_Version=@ver
+update CitySubMoney set C_Status='D' where C_Status='A'
+update CitySubMoney set C_Status='A' where C_Version=@ver
+";
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+
+        oCmd.Parameters.AddWithValue("@version", version);
+
+        oCmd.Connection.Open();
+        oCmd.ExecuteNonQuery();
+        oCmd.Connection.Close();
+    }
 }
