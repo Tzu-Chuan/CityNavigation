@@ -32,9 +32,12 @@ public class MailUtil
             client.Host = ConfigurationManager.AppSettings["SmtpServer"];
             client.Port = 25;
 
-            //NetworkCredential basicCredential = new NetworkCredential(ConfigurationManager.AppSettings["SmtpAcc"], ConfigurationManager.AppSettings["SmtpPw"]);
-            //client.UseDefaultCredentials = false;
-            //client.Credentials = basicCredential;
+            if (Environment.MachineName == "WEB01")
+            {
+                NetworkCredential basicCredential = new NetworkCredential(ConfigurationManager.AppSettings["SmtpAcc"], ConfigurationManager.AppSettings["SmtpPw"]);
+                client.UseDefaultCredentials = false;
+                client.Credentials = basicCredential;
+            }
 
             MailMessage message = new MailMessage();
             message.From = new MailAddress("twsmartcitydata@org.tw", "經濟部智慧城鄉生活應用導航資料庫");

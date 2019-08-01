@@ -110,15 +110,14 @@
                     return;
                 }
 
-                var gid = $.getQueryString("ChangePwd");
-
                 //修改密碼
                 $.ajax({
                     type: "POST",
                     async: false, //在沒有返回值之前,不會執行下一步動作
                     url: "handler/ChangeUserPwd.aspx",
                     data: {
-                        gid: gid,
+                        gid: $.getQueryString("ChangePwd"),
+                        ck: $.getQueryString("ck"),
                         M_Pwd: $("#nPwd").val(),
                         Token: $("#InfoToken").val()
                     },
@@ -135,8 +134,7 @@
                         }
                     }
                 });
-            })
-
+            });
         }); // js end
 
     </script>
@@ -188,7 +186,7 @@
                                         <input id="nPwd" type="password" class="inputex width100 dialogInput" /></td>
                                 </tr>
                                 <tr>
-                                    <th>確認新密碼</th>
+                                    <th style="width:150px">確認新密碼</th>
                                     <td>
                                         <input id="cPwd" type="password" class="inputex width100 dialogInput" /></td>
                                     </tr>

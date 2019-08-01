@@ -14,23 +14,22 @@ namespace ISTI_CityNavigation.handler
         Member_DB m_db = new Member_DB();
         MemberLog_DB ml_db = new MemberLog_DB();
         MailUtil sMail = new MailUtil();
-        string M_Pwd, gid, mGuid;
+        string mGuid;
         protected void Page_Load(object sender, EventArgs e)
         {
             XmlDocument xDoc = new XmlDocument();
             try
             {
-                gid = (string.IsNullOrEmpty(Request["gid"])) ? "" : Request["gid"].ToString().Trim();
-                M_Pwd = (string.IsNullOrEmpty(Request["M_Pwd"])) ? "" : Request["M_Pwd"].ToString().Trim();
+                mGuid = (string.IsNullOrEmpty(Request["gid"])) ? "" : Request["gid"].ToString().Trim();
+                string M_Pwd = (string.IsNullOrEmpty(Request["M_Pwd"])) ? "" : Request["M_Pwd"].ToString().Trim();
 
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
                 if (Common.VeriftyToken(token))
                 {
                     string xmlstr = string.Empty;
-                    if (gid != "")
+                    if (mGuid != "")
                     {
-                        mGuid = Common.Decrypt(gid);
-                        m_db._M_Guid = mGuid;
+                        m_db._M_Guid = Common.Decrypt(mGuid);
                         DataTable OldDt = m_db.getInfoByEmailorGuid();
                         m_db._M_Pwd = Common.sha1en(M_Pwd);
                         m_db.changeMemberPwd();
@@ -45,9 +44,8 @@ namespace ISTI_CityNavigation.handler
                         sMail.MailTo(mEmail, "經濟部智慧城鄉生活應用導航資料庫-『密碼修改成功通知』", mailContent);
                         #endregion
                     }
-                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root><Response>修改成功</Response></root>";
+                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root><Response>密碼變更完成，請以新的密碼重新登入</Response></root>";
                     xDoc.LoadXml(xmlstr);
-
                 }
                 else
                 {

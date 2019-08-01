@@ -11,9 +11,19 @@ namespace ISTI_CityNavigation
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            InfoToken.Value = Common.GenToken();
+            string ckTime = (string.IsNullOrEmpty(Request["ck"])) ? "" : Request["ck"].ToString().Trim();
+            if (ckTime != "")
             {
-                InfoToken.Value = Common.GenToken();
+                DateTime setTime = DateTime.Parse(Common.Decrypt(ckTime));
+                setTime = setTime.AddHours(1);
+                DateTime NowTime = DateTime.Now;
+                if (NowTime > setTime)
+                    JavaScript.AlertMessageRedirect(this.Page, "該網址已失效", "Login.aspx");
+            }
+            else
+            {
+                Response.Redirect("~/Login.aspx");
             }
         }
     }

@@ -84,11 +84,13 @@ namespace ISTI_CityNavigation
                     if (chkEmail > 0)
                     {
                         DataTable dt = m_db.getInfoByEmailorGuid();
-                        string mGid = Common.Encrypt(dt.Rows[0]["M_Guid"].ToString());
+                        string mGid = Server.UrlEncode(Common.Encrypt(dt.Rows[0]["M_Guid"].ToString()));
+                        // 加入申請時間
+                        string TmeNow = Server.UrlEncode(Common.Encrypt(DateTime.Now.ToString("yyyy/MM/dd HH:mm")));
                         #region 帳戶資料異動發信(帳號、密碼、E-Mail)
                         string mailContent = @"親愛的用戶您好：<br><br>
                             您的【經濟部智慧城鄉生活應用導航資料庫】 密碼修改網址如下<br>
-                            網址 https://twsmartcitydata.org.tw/ChangePwd.aspx?ChangePwd=" + mGid + @"<br>
+                            網址 https://twsmartcitydata.ddns.net/ChangePwd.aspx?ChangePwd=" + mGid + "&ck=" + TmeNow + @"<br>
                             經濟部智慧城鄉生活應用導航資料庫 感謝您<br><br>
                             << 此為系統寄發信件，請勿回信 >>";
                         sMail.MailTo(M_Email, "經濟部智慧城鄉生活應用導航資料庫-『帳戶密碼修改』", mailContent);
@@ -110,6 +112,5 @@ namespace ISTI_CityNavigation
                 JavaScript.AlertMessage(this.Page, "網頁驗證失敗，請重新整理");
             }
         }
-
     }
 }

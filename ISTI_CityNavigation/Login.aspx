@@ -89,12 +89,21 @@
             $(document).on("click", "#forgetBtn", function () {
                 doShowDialog();
                 return false;
-            })
+            });
 
             $(document).on("click", "#cancelbtn", function () {
                 $("#NewBlock").dialog("close");
-            })
+            });
 
+            $("#<%= uStr.ClientID %>,#<%= pStr.ClientID %>").keypress(function (e) {
+                if (e.keyCode == 13)
+                    $("#<%= btn.ClientID %>").click();
+            });
+
+            $("#<%= eStr.ClientID %>").keypress(function (e) {
+                if (e.keyCode == 13)
+                    $("#<%= mailbtn.ClientID %>").click();
+            });
         }); // js end
 
         /// open dialog
@@ -156,7 +165,7 @@
                             <div style="margin-bottom: 10px;">帳號：<asp:TextBox ID="uStr" runat="server" CssClass="inputex"></asp:TextBox></div>
                             <div style="margin-bottom: 20px;">密碼：<asp:TextBox ID="pStr" runat="server" TextMode="Password" CssClass="inputex"></asp:TextBox></div>
                             <div>
-                                <asp:Button ID="btn" runat="server" OnClick="btn_Click" Text="登入" CssClass="genbtn" />
+                                <asp:Button ID="btn" runat="server" UseSubmitBehavior="false" OnClick="btn_Click" Text="登入" CssClass="genbtn" />
                                 <asp:LinkButton ID="forgetBtn" runat="server" Text="忘記密碼" Font-Size="Small"></asp:LinkButton>
                             </div>
                         </div>
@@ -186,7 +195,7 @@
                     </tr>
                 </table>
                 <div style="text-align: right; margin-top: 5px;">
-                    <asp:Button ID="Button1" runat="server" OnClick="sendbtn" Text="送出" CssClass="genbtn"/>
+                    <asp:Button ID="mailbtn" runat="server" UseSubmitBehavior="false" OnClick="sendbtn" Text="送出" CssClass="genbtn"/>
                     <input type="button" class="genbtn" id="cancelbtn" value="取消" />
                 </div>
             </div>
