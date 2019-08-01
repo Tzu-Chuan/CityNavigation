@@ -81,7 +81,7 @@ namespace ISTI_CityNavigation.handler
                 if (olddt.Rows[0]["M_Pwd"].ToString() != dt.Rows[0]["M_Pwd"].ToString())
                 {
                     if (changeStr != "") changeStr += "<br>";
-                    changeStr += "修改密碼";
+                    changeStr += "密碼變更";
                 }
                 if (olddt.Rows[0]["M_Name"].ToString() != dt.Rows[0]["M_Name"].ToString())
                 {
