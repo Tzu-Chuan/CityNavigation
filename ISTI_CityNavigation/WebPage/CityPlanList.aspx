@@ -117,8 +117,64 @@
                                     tabstr += '<td nowrap align="center">' + $(this).children("CS_HostCompany").text().trim() + '</td>';
                                     tabstr += '<td align="center">' + $(this).children("CS_JointCompany").text().trim() + '</td>';
                                     tabstr += '<td nowrap align="center">' + $(this).children("CS_PlanName").text().trim() + '</td>';
+                                    tabstr += '<td align="center">' + $(this).children("CS_PlanSummary").text().trim() + '</td>';
+                                    tabstr += '<td align="center">' + $(this).children("CS_PlanDefect").text().trim() + '</td>';
+                                    tabstr += '<td align="center">' + $(this).children("CS_NowResult").text().trim() + '</td>';
+                                    tabstr += '<td align="center">' + $(this).children("CS_DoneResult").text().trim() + '</td>';
                                     tabstr += '<td nowrap align="center">' + $(this).children("CS_ServiceType").text().trim() + '</td>';
                                     tabstr += '<td align="center">' + $(this).children("CS_CityArea").text().trim() + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_PlanTotalMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_PlanSubMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_NewTaipei_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Taipei_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Taoyuan_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Taichung_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Tainan_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Kaohsiung_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Yilan_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_HsinchuCounty_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Miaoli_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Changhua_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Nantou_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Yunlin_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_ChiayiCounty_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Pingtung_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Taitung_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Hualien_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Penghu_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Keelung_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_HsinchuCity_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_ChiayiCity_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Kinmen_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Lienchiang_Total").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_NewTaipei_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Taipei_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Taoyuan_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Taichung_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Tainan_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Kaohsiung_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Yilan_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_HsinchuCounty_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Miaoli_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Changhua_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Nantou_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Yunlin_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_ChiayiCounty_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Pingtung_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Taitung_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Hualien_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Penghu_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Keelung_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_HsinchuCity_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_ChiayiCity_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Kinmen_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_Lienchiang_Sub").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '</tr>';
+                                });
+
+                                $(data).find("sum_item").each(function (i) {
+                                    tabstr += '<tr>';
+                                    tabstr += '<td colspan="12">合計：共 '+$(this).children("Total").text().trim()+' 件</td>';
                                     tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_PlanTotalMoney").text().trim()).toFixed(0)) + '</td>';
                                     tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_PlanSubMoney").text().trim()).toFixed(0)) + '</td>';
                                     tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_NewTaipei_Total").text().trim()).toFixed(0)) + '</td>';
@@ -185,10 +241,24 @@
                                     tabstr += '<td nowrap align="center">' + $(this).children("CP_HostCompany").text().trim() + '</td>';
                                     tabstr += '<td align="center">' + $(this).children("CP_JointCompany").text().trim() + '</td>';
                                     tabstr += '<td nowrap align="center">' + $(this).children("CP_PlanName").text().trim() + '</td>';
+                                    tabstr += '<td align="center">' + $(this).children("CP_PlanSummary").text().trim() + '</td>';
+                                    tabstr += '<td align="center">' + $(this).children("CP_PlanDefect").text().trim() + '</td>';
+                                    tabstr += '<td align="center">' + $(this).children("CP_NowResult").text().trim() + '</td>';
+                                    tabstr += '<td align="center">' + $(this).children("CP_DoneResult").text().trim() + '</td>';
                                     tabstr += '<td nowrap align="center">' + $(this).children("CP_ServiceType").text().trim() + '</td>';
                                     tabstr += '<td align="center">' + $(this).children("CP_CityArea").text().trim() + '</td>';
                                     tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanTotalMoney").text().trim()).toFixed(0)) + '</td>';
                                     tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanSubMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CityTotalMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CitySubMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '</tr>';
+                                });
+
+                                $(data).find("sum_item").each(function (i) {
+                                    tabstr += '<tr>';
+                                    tabstr += '<td colspan="12">合計：共 '+$(this).children("Total").text().trim()+' 件</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanTotalMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CS_PlanSubMoney").text().trim()).toFixed(0)) + '</td>';
                                     tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CityTotalMoney").text().trim()).toFixed(0)) + '</td>';
                                     tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CitySubMoney").text().trim()).toFixed(0)) + '</td>';
                                     tabstr += '</tr>';
@@ -309,6 +379,10 @@
                     <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CS_HostCompany">主導廠商</a></th>
                     <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CS_JointCompany">聯合提案廠商</a></th>
                     <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CS_PlanName">計畫名稱</a></th>
+                    <th nowrap style="width:200px;">計畫摘要</th>
+                    <th nowrap style="width:200px;">計畫痛點</th>
+                    <th nowrap style="width:200px;">現階段成果</th>
+                    <th nowrap style="width:200px;">計畫完成成果</th>
                     <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CS_ServiceType">應用服務別</a></th>
                     <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CS_CityArea">服務實施場域</a></th>
                     <th nowrap>計畫總經費(千元)</th>
@@ -365,6 +439,10 @@
                     <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CP_HostCompany">主導廠商</a></th>
                     <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CP_JointCompany">聯合提案廠商</a></th>
                     <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CP_PlanName">計畫名稱</a></th>
+                    <th nowrap style="width:200px;">計畫摘要</th>
+                    <th nowrap style="width:200px;">計畫痛點</th>
+                    <th nowrap style="width:200px;">現階段成果</th>
+                    <th nowrap style="width:200px;">計畫完成成果</th>
                     <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CP_ServiceType">應用服務別</a></th>
                     <th nowrap><a href="javascript:void(0);" name="sortbtn" sortname="CP_CityArea">服務實施場域</a></th>
                     <th nowrap>計畫總經費(千元)</th>

@@ -27,6 +27,10 @@ public class CityPlanTable_DB
     string CP_HostCompany = string.Empty;
     string CP_JointCompany = string.Empty;
     string CP_PlanName = string.Empty;
+    string CP_PlanSummary = string.Empty;
+    string CP_PlanDefect = string.Empty;
+    string CP_NowResult = string.Empty;
+    string CP_DoneResult = string.Empty;
     string CP_ServiceArea = string.Empty;
     string CP_ServiceType = string.Empty;
     string CP_CityArea = string.Empty;
@@ -53,6 +57,10 @@ public class CityPlanTable_DB
     public string _CP_HostCompany { set { CP_HostCompany = value; } }
     public string _CP_JointCompany { set { CP_JointCompany = value; } }
     public string _CP_PlanName { set { CP_PlanName = value; } }
+    public string _CP_PlanSummary { set { CP_PlanSummary = value; } }
+    public string _CP_PlanDefect { set { CP_PlanDefect = value; } }
+    public string _CP_NowResult { set { CP_NowResult = value; } }
+    public string _CP_DoneResult { set { CP_DoneResult = value; } }
     public string _CP_ServiceArea { set { CP_ServiceArea = value; } }
     public string _CP_ServiceType { set { CP_ServiceType = value; } }
     public string _CP_CityArea { set { CP_CityArea = value; } }
@@ -150,6 +158,10 @@ public class CityPlanTable_DB
             sqlBC.ColumnMappings.Add("CP_HostCompany", "CP_HostCompany");
             sqlBC.ColumnMappings.Add("CP_JointCompany", "CP_JointCompany");
             sqlBC.ColumnMappings.Add("CP_PlanName", "CP_PlanName");
+            sqlBC.ColumnMappings.Add("CP_PlanSummary", "CP_PlanSummary");
+            sqlBC.ColumnMappings.Add("CP_PlanDefect", "CP_PlanDefect");
+            sqlBC.ColumnMappings.Add("CP_NowResult", "CP_NowResult");
+            sqlBC.ColumnMappings.Add("CP_DoneResult", "CP_DoneResult");
             sqlBC.ColumnMappings.Add("CP_ServiceArea", "CP_ServiceArea");
             sqlBC.ColumnMappings.Add("CP_ServiceType", "CP_ServiceType");
             sqlBC.ColumnMappings.Add("CP_AllArea", "CP_AllArea");

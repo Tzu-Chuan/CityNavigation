@@ -43,16 +43,18 @@ namespace ISTI_CityNavigation.handler
                 if (Common.VeriftyToken(token))
                 {
                     string xmlstr = string.Empty;
+                    string xmlstr2 = string.Empty;
 
                     if (Area == "N")
                         cst_db._CS_AllArea = Area;
                     cst_db._CS_HostCompany = CompanyName;
                     cst_db._CS_PlanName = PlanName;
                     cst_db._CS_ServiceType = ServiceType;
-                    DataTable dt = cst_db.GetList(City, SortCommand);
+                    DataSet ds = cst_db.GetList(City, SortCommand);
 
-                    xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
-                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
+                    xmlstr = DataTableToXml.ConvertDatatableToXML(ds.Tables[0], "dataList", "sum_item");
+                    xmlstr2 = DataTableToXml.ConvertDatatableToXML(ds.Tables[1], "dataList", "data_item");
+                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + xmlstr2 + "</root>";
                     xDoc.LoadXml(xmlstr);
                 }
                 else

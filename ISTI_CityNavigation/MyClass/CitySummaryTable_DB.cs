@@ -25,6 +25,10 @@ public class CitySummaryTable_DB
     string CS_HostCompany = string.Empty;
     string CS_JointCompany = string.Empty;
     string CS_PlanName = string.Empty;
+    string CS_PlanSummary = string.Empty;
+    string CS_PlanDefect = string.Empty;
+    string CS_NowResult = string.Empty;
+    string CS_DoneResult = string.Empty;
     string CS_ServiceArea = string.Empty;
     string CS_ServiceType = string.Empty;
     string CS_AllArea = string.Empty;
@@ -92,6 +96,10 @@ public class CitySummaryTable_DB
     public string _CS_HostCompany { set { CS_HostCompany = value; } }
     public string _CS_JointCompany { set { CS_JointCompany = value; } }
     public string _CS_PlanName { set { CS_PlanName = value; } }
+    public string _CS_PlanSummary { set { CS_PlanSummary = value; } }
+    public string _CS_PlanDefect { set { CS_PlanDefect = value; } }
+    public string _CS_NowResult { set { CS_NowResult = value; } }
+    public string _CS_DoneResult { set { CS_DoneResult = value; } }
     public string _CS_ServiceArea { set { CS_ServiceArea = value; } }
     public string _CS_ServiceType { set { CS_ServiceType = value; } }
     public string _CS_AllArea { set { CS_AllArea = value; } }
@@ -150,7 +158,7 @@ public class CitySummaryTable_DB
     public string _CS_Status { set { CS_Status = value; } }
     #endregion
 
-    public DataTable GetList(string City,string sortStr)
+    public DataSet GetList(string City, string sortStr)
     {
         SqlCommand oCmd = new SqlCommand();
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
@@ -158,7 +166,7 @@ public class CitySummaryTable_DB
 
         if (City != "")
         {
-            sb.Append(@"Select * from CityPlanTable where CP_Status='A' ");
+            sb.Append(@"Select * into #tmp from CityPlanTable where CP_Status='A' ");
 
             if (CS_AllArea != "")
                 sb.Append(@"and CP_AllArea=@AllArea ");
@@ -179,10 +187,21 @@ public class CitySummaryTable_DB
 
             if (CS_ServiceType != "")
                 sb.Append(@"and CP_ServiceType=@ServiceType ");
+
+            sb.Append(@"select count(*) as Total,
+sum(CONVERT(float,CP_PlanTotalMoney)) as CP_PlanTotalMoney,
+sum(CONVERT(float,CP_PlanSubMoney)) as CP_PlanSubMoney,
+sum(CONVERT(float,CP_CityTotalMoney)) as CP_CityTotalMoney,
+sum(CONVERT(float,CP_CitySubMoney)) as CP_CitySubMoney
+from #tmp
+
+select * from #tmp
+
+drop table #tmp ");
         }
         else
         {
-            sb.Append(@"Select * from CitySummaryTable where CS_Status='A' ");
+            sb.Append(@"Select * into #tmp from CitySummaryTable where CS_Status='A' ");
 
             if (CS_AllArea != "")
                 sb.Append(@"and CS_AllArea=@AllArea ");
@@ -200,6 +219,59 @@ public class CitySummaryTable_DB
 
             if (CS_ServiceType != "")
                 sb.Append(@"and CS_ServiceType=@ServiceType ");
+
+            sb.Append(@"select count(*) as Total,
+sum(CONVERT(float,CS_PlanTotalMoney)) as CS_PlanTotalMoney,
+sum(CONVERT(float,CS_PlanSubMoney)) as CS_PlanSubMoney,
+sum(CONVERT(float,CS_NewTaipei_Total)) as CS_NewTaipei_Total,
+sum(CONVERT(float,CS_Taipei_Total)) as CS_Taipei_Total,
+sum(CONVERT(float,CS_Taoyuan_Total)) as CS_Taoyuan_Total,
+sum(CONVERT(float,CS_Taichung_Total)) as CS_Taichung_Total,
+sum(CONVERT(float,CS_Tainan_Total)) as CS_Tainan_Total,
+sum(CONVERT(float,CS_Kaohsiung_Total)) as CS_Kaohsiung_Total,
+sum(CONVERT(float,CS_Yilan_Total)) as CS_Yilan_Total,
+sum(CONVERT(float,CS_HsinchuCounty_Total)) as CS_HsinchuCounty_Total,
+sum(CONVERT(float,CS_Miaoli_Total)) as CS_Miaoli_Total,
+sum(CONVERT(float,CS_Changhua_Total)) as CS_Changhua_Total,
+sum(CONVERT(float,CS_Nantou_Total)) as CS_Nantou_Total,
+sum(CONVERT(float,CS_Yunlin_Total)) as CS_Yunlin_Total,
+sum(CONVERT(float,CS_ChiayiCounty_Total)) as CS_ChiayiCounty_Total,
+sum(CONVERT(float,CS_Pingtung_Total)) as CS_Pingtung_Total,
+sum(CONVERT(float,CS_Taitung_Total)) as CS_Taitung_Total,
+sum(CONVERT(float,CS_Hualien_Total)) as CS_Hualien_Total,
+sum(CONVERT(float,CS_Penghu_Total)) as CS_Penghu_Total,
+sum(CONVERT(float,CS_Keelung_Total)) as CS_Keelung_Total,
+sum(CONVERT(float,CS_HsinchuCity_Total)) as CS_HsinchuCity_Total,
+sum(CONVERT(float,CS_ChiayiCity_Total)) as CS_ChiayiCity_Total,
+sum(CONVERT(float,CS_Kinmen_Total)) as CS_Kinmen_Total,
+sum(CONVERT(float,CS_Lienchiang_Total)) as CS_Lienchiang_Total,
+sum(CONVERT(float,CS_NewTaipei_Sub)) as CS_NewTaipei_Sub,
+sum(CONVERT(float,CS_Taipei_Sub)) as CS_Taipei_Sub,
+sum(CONVERT(float,CS_Taoyuan_Sub)) as CS_Taoyuan_Sub,
+sum(CONVERT(float,CS_Taichung_Sub)) as CS_Taichung_Sub,
+sum(CONVERT(float,CS_Tainan_Sub)) as CS_Tainan_Sub,
+sum(CONVERT(float,CS_Kaohsiung_Sub)) as CS_Kaohsiung_Sub,
+sum(CONVERT(float,CS_Yilan_Sub)) as CS_Yilan_Sub,
+sum(CONVERT(float,CS_HsinchuCounty_Sub)) as CS_HsinchuCounty_Sub,
+sum(CONVERT(float,CS_Miaoli_Sub)) as CS_Miaoli_Sub,
+sum(CONVERT(float,CS_Changhua_Sub)) as CS_Changhua_Sub,
+sum(CONVERT(float,CS_Nantou_Sub)) as CS_Nantou_Sub,
+sum(CONVERT(float,CS_Yunlin_Sub)) as CS_Yunlin_Sub,
+sum(CONVERT(float,CS_ChiayiCounty_Sub)) as CS_ChiayiCounty_Sub,
+sum(CONVERT(float,CS_Pingtung_Sub)) as CS_Pingtung_Sub,
+sum(CONVERT(float,CS_Taitung_Sub)) as CS_Taitung_Sub,
+sum(CONVERT(float,CS_Hualien_Sub)) as CS_Hualien_Sub,
+sum(CONVERT(float,CS_Penghu_Sub)) as CS_Penghu_Sub,
+sum(CONVERT(float,CS_Keelung_Sub)) as CS_Keelung_Sub,
+sum(CONVERT(float,CS_HsinchuCity_Sub)) as CS_HsinchuCity_Sub,
+sum(CONVERT(float,CS_ChiayiCity_Sub)) as CS_ChiayiCity_Sub,
+sum(CONVERT(float,CS_Kinmen_Sub)) as CS_Kinmen_Sub,
+sum(CONVERT(float,CS_Lienchiang_Sub)) as CS_Lienchiang_Sub
+from #tmp
+
+select * from #tmp
+
+drop table #tmp ");
         }
 
         if (sortStr != "")
@@ -208,8 +280,8 @@ public class CitySummaryTable_DB
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;
         SqlDataAdapter oda = new SqlDataAdapter(oCmd);
-        DataTable ds = new DataTable();
-        
+        DataSet ds = new DataSet();
+
         oCmd.Parameters.AddWithValue("@AllArea", CS_AllArea);
         oCmd.Parameters.AddWithValue("@City", City);
         oCmd.Parameters.AddWithValue("@HostCompany", CS_HostCompany);
@@ -293,6 +365,10 @@ order by CS_ServiceType ");
             sqlBC.ColumnMappings.Add("CS_HostCompany", "CS_HostCompany");
             sqlBC.ColumnMappings.Add("CS_JointCompany", "CS_JointCompany");
             sqlBC.ColumnMappings.Add("CS_PlanName", "CS_PlanName");
+            sqlBC.ColumnMappings.Add("CS_PlanSummary", "CS_PlanSummary");
+            sqlBC.ColumnMappings.Add("CS_PlanDefect", "CS_PlanDefect");
+            sqlBC.ColumnMappings.Add("CS_NowResult", "CS_NowResult");
+            sqlBC.ColumnMappings.Add("CS_DoneResult", "CS_DoneResult");
             sqlBC.ColumnMappings.Add("CS_ServiceArea", "CS_ServiceArea");
             sqlBC.ColumnMappings.Add("CS_ServiceType", "CS_ServiceType");
             sqlBC.ColumnMappings.Add("CS_AllArea", "CS_AllArea");
