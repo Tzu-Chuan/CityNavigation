@@ -22,16 +22,16 @@ public class AntiSQLinjection : IHttpModule
 
     public void Init(HttpApplication context)
     {
-        //context_AcquireRequestState为委托的方法
+        //context_AcquireRequestState為委託的方法
         context.BeginRequest += new EventHandler(context_AcquireRequestState);
     }
     
 
     private void context_AcquireRequestState(object sender, EventArgs e)
     {
-        //一定要将sender对象的Context转化为HttpContext的对象
+        //一定要將sender對象的Context轉化為HttpContext的對象
 
-        //其中包含请求的基本对象，如request,response等
+        //其中包含請求的基本對象，如request,response等
         HttpContext context = ((HttpApplication)sender).Context;
         
         string errorPage = "~/errorPage.aspx";
