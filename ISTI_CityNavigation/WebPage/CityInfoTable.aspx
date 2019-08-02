@@ -266,9 +266,15 @@
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">小汽車路邊及路外停車位</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_CarParkSpaceYear", data).text().trim() + '年' + '</td>';
-                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_CarParkSpace", data).text().trim()).toFixed(0)) + '個' + '</td>';
+                            tabstr += '<td align="left" nowrap="nowrap">小汽車路邊停車位</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_CarRoadsidParkSpaceYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_CarRoadsidParkSpace", data).text().trim()).toFixed(0)) + '個' + '</td>';
+                            tabstr += '</td></tr>';
+
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap">小汽車路外停車位</td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_CarRoadOutsideParkSpaceYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_CarRoadOutsideParkSpace", data).text().trim()).toFixed(0)) + '個' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';

@@ -36,36 +36,44 @@
                         getData();
                         break;
                     case "02":
-                        getPublicTransportRate();
+                        getarRoadOutsideParkSpace();
                         break;
                     case "03":
-                        getarParkTime();
+                        getPublicTransportRate();
                         break;
                     case "04":
-                        get10KHaveCarPark();
+                        getarParkTime();
                         break;
                     case "05":
-                        getCarCount();
+                        get10KHaveCarPark();
                         break;
                     case "06":
-                        get100HaveCar();
+                        getCarCount();
                         break;
                     case "07":
-                        get100HaveCarRate();
+                        get100HaveCar();
                         break;
                     case "08":
-                        get10KMotoIncidentsNum();
+                        get100HaveCarRate();
                         break;
                     case "09":
+                        get10KMotoIncidentsNum();
+                        break;
+                    case "10":
                         get100KNumberOfCasualties();
                         break;
                 }
             });
 
-            defaultInfo();
+            strTraffic();
 
             $(document).on("change", "#selType", function () {
-                $(".CityClass").hide();
+                strTraffic();
+            });
+        }); //js end
+
+        function strTraffic() {
+            $(".CityClass").hide();
                 Page.Option.SortMethod = "+";
                 Page.Option.SortName = "Tra_CityNo";
                 Traffic_All_Array.length = 0;
@@ -73,60 +81,65 @@
                     case "01":
                         document.getElementById("CarParkSpace_tablist").style.display = "";
                         getData();
-                        titlePei = "小汽車路邊及路外停車位";
+                        titlePei = "小汽車路邊停車位";
                         DrawChart(titlePei);
                         break;
                     case "02":
+                        document.getElementById("CarRoadOutsideParkSpace_tablist").style.display = "";
+                        getarRoadOutsideParkSpace();
+                        titlePei = "小汽車路外停車位";
+                        DrawChart(titlePei);
+                        break;
+                    case "03":
                         document.getElementById("PublicTransportRate_table").style.display = "";
                         getPublicTransportRate();
                         titlePei = "通勤學民眾運具次數之公共運具市佔率";
                         DrawChart(titlePei);
                         break;
-                    case "03":
+                    case "04":
                         document.getElementById("CarParkTime_table").style.display = "";
                         getarParkTime();
                         titlePei = "自小客車在居家附近每次尋找停車位時間";
                         DrawChart(titlePei);
                         break;
-                    case "04":
+                    case "05":
                         document.getElementById("10KHaveCarPark_table").style.display = "";
                         get10KHaveCarPark();
                         titlePei = "每萬輛小型車擁有路外及路邊停車位數";
                         DrawChart(titlePei);
                         break;
-                    case "05":
+                    case "06":
                         document.getElementById("CarCount_table").style.display = "";
                         getCarCount();
                         titlePei = "汽車登記數";
                         DrawChart(titlePei);
                         break;
-                    case "06":
+                    case "07":
                         document.getElementById("100HaveCar_table").style.display = "";
                         get100HaveCar();
                         titlePei = "每百人擁有汽車數";
                         DrawChart(titlePei);
                         break;
-                    case "07":
+                    case "08":
                         document.getElementById("100HaveCarRate_table").style.display = "";
                         get100HaveCarRate();
                         titlePei = "每百人擁有汽車數成長率";
                         DrawChart(titlePei);
                         break;
-                    case "08":
+                    case "09":
                         document.getElementById("10KMotoIncidentsNum_table").style.display = "";
                         get10KMotoIncidentsNum();
                         titlePei = "每萬輛機動車肇事數";
                         DrawChart(titlePei);
                         break;
-                    case "09":
+                    case "10":
                         document.getElementById("100KNumberOfCasualties_table").style.display = "";
                         get100KNumberOfCasualties();
                         titlePei = "每十萬人道路交通事故死傷人數";
                         DrawChart(titlePei);
                         break;
                 }
-            });
-        }); //js end
+        }
 
         var Traffic_All_Array = [];
         function defaultInfo() {
@@ -136,7 +149,7 @@
             DrawChart(titlePei);
         }
 
-        //撈小汽車路邊及路外停車位
+        //撈小汽車路邊停車位
         function getData() {
             $.ajax({
                 type: "POST",
@@ -160,20 +173,57 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CityName").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CarParkSpaceYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Tra_CarParkSpace").text().trim()).toFixed(0)) + '個' + '</td>';
-                                Traffic_All_Array.push($(this).children("Tra_CarParkSpace").text().trim().toString());
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CarRoadsidParkSpaceYear").text().trim() + '年' + '</td>';
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Tra_CarRoadsidParkSpace").text().trim()).toFixed(0)) + '個' + '</td>';
+                                Traffic_All_Array.push($(this).children("Tra_CarRoadsidParkSpace").text().trim().toString());
                                 tabstr += '</td></tr>';
                             });
                         }
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
                         $("#CarParkSpace_tablist tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                    }
+                }
+            })
+        }
+
+        //撈小汽車路外停車位
+        function getarRoadOutsideParkSpace() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetTrafficList.aspx",
+                data: {
+                    CityNo: "All",
+                    SortName: Page.Option.SortName,
+                    SortMethod: Page.Option.SortMethod,
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#CarRoadOutsideParkSpace_tablist tbody").empty();
+                        var tabstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                tabstr += '<tr>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CityName").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CarRoadOutsideParkSpaceYear").text().trim() + '年' + '</td>';
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Tra_CarRoadOutsideParkSpace").text().trim()).toFixed(0)) + '個' + '</td>';
+                                Traffic_All_Array.push($(this).children("Tra_CarRoadOutsideParkSpace").text().trim().toString());
+                                tabstr += '</td></tr>';
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                        $("#CarRoadOutsideParkSpace_tablist tbody").append(tabstr);
                     }
                 }
             })
@@ -246,7 +296,7 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CarParkTimeYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Tra_CarParkTime").text().trim()).toFixed(1)) + '分鐘' + '</td>';
@@ -257,9 +307,6 @@
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
                         $("#CarParkTime_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
                     }
                 }
             })
@@ -289,7 +336,7 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_10KHaveCarParkYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Tra_10KHaveCarPark").text().trim()).toFixed(2)) + '位／萬輛' + '</td>';
@@ -300,9 +347,6 @@
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
                         $("#10KHaveCarPark_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
                     }
                 }
             })
@@ -332,7 +376,7 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CarCountYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Tra_CarCount").text().trim()).toFixed(1)) + '輛' + '</td>';
@@ -343,9 +387,6 @@
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
                         $("#CarCount_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
                     }
                 }
             })
@@ -375,7 +416,7 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_100HaveCarYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Tra_100HaveCar").text().trim()).toFixed(1)) + '輛' + '</td>';
@@ -386,9 +427,6 @@
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
                         $("#100HaveCar_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
                     }
                 }
             })
@@ -418,7 +456,7 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_100HaveCarRateYearDec").text().trim() + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Tra_100HaveCarRate").text().trim()).toFixed(2)) + '%' + '</td>';
@@ -429,9 +467,6 @@
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
                         $("#100HaveCarRate_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
                     }
                 }
             })
@@ -461,7 +496,7 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_10KMotoIncidentsNumYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Tra_10KMotoIncidentsNum").text().trim()).toFixed(2)) + '次' + '</td>';
@@ -472,9 +507,6 @@
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
                         $("#10KMotoIncidentsNum_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
                     }
                 }
             })
@@ -504,7 +536,7 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Tra_100KNumberOfCasualtiesYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Tra_100KNumberOfCasualties").text().trim()).toFixed(2)) + '人' + '</td>';
@@ -515,9 +547,6 @@
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
                         $("#100KNumberOfCasualties_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
                     }
                 }
             })
@@ -643,15 +672,16 @@
             <div style="margin-top: 10px;">
                 類別：
                 <select id="selType" name="selClass" class="inputex">
-                    <option value="01">小汽車路邊及路外停車位</option>
-                    <option value="02">通勤學民眾運具次數之公共運具市佔率</option>
-                    <option value="03">自小客車在居家附近每次尋找停車位時間</option>
-                    <option value="04">每萬輛小型車擁有路外及路邊停車位數</option>
-                    <option value="05">汽車登記數</option>
-                    <option value="06">每百人擁有汽車數</option>
-                    <option value="07">每百人擁有汽車數成長率</option>
-                    <option value="08">每萬輛機動車肇事數</option>
-                    <option value="09">每十萬人道路交通事故死傷人數</option>
+                    <option value="01">小汽車路邊停車位</option>
+                    <option value="02">小汽車路外停車位</option>
+                    <option value="03">通勤學民眾運具次數之公共運具市佔率</option>
+                    <option value="04">自小客車在居家附近每次尋找停車位時間</option>
+                    <option value="05">每萬輛小型車擁有路邊停車位數</option>
+                    <option value="06">汽車登記數</option>
+                    <option value="07">每百人擁有汽車數</option>
+                    <option value="08">每百人擁有汽車數成長率</option>
+                    <option value="09">每萬輛機動車肇事數</option>
+                    <option value="10">每十萬人道路交通事故死傷人數</option>
                 </select>
             </div>
             <div class="row margin10T ">
@@ -663,7 +693,18 @@
                                 <tr>
                                     <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Tra_CityNo">縣市</a></th>
                                     <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Tra_CarParkSpace">小汽車路邊及路外停車位</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Tra_CarRoadsidParkSpace">小汽車路邊停車位</a></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <%--小汽車路外停車位--%>
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="CarRoadOutsideParkSpace_tablist" class="CityClass">
+                            <thead>
+                                <tr>
+                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Tra_CityNo">縣市</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Tra_CarRoadOutsideParkSpace">小汽車路外停車位</a></th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

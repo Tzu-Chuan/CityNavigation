@@ -17,8 +17,10 @@ public class Traffic_DB
     string Tra_PublicTransportRate = string.Empty;
     string Tra_CarParkTimeYear = string.Empty;
     string Tra_CarParkTime = string.Empty;
-    string Tra_CarParkSpaceYear = string.Empty;
-    string Tra_CarParkSpace = string.Empty;
+    string Tra_CarRoadsidParkSpaceYear = string.Empty;
+    string Tra_CarRoadsidParkSpace = string.Empty;
+    string Tra_CarRoadOutsideParkSpaceYear = string.Empty;
+    string Tra_CarRoadOutsideParkSpace = string.Empty;
     string Tra_10KHaveCarParkYear = string.Empty;
     string Tra_10KHaveCarPark = string.Empty;
     string Tra_CarCountYear = string.Empty;
@@ -68,13 +70,21 @@ public class Traffic_DB
     {
         set { Tra_CarParkTime = value; }
     }
-    public string _Tra_CarParkSpaceYear
+    public string _Tra_CarRoadsidParkSpaceYear
     {
-        set { Tra_CarParkSpaceYear = value; }
+        set { Tra_CarRoadsidParkSpaceYear = value; }
     }
-    public string _Tra_CarParkSpace
+    public string _Tra_CarRoadsidParkSpace
     {
-        set { Tra_CarParkSpace = value; }
+        set { Tra_CarRoadsidParkSpace = value; }
+    }
+    public string _Tra_CarRoadOutsideParkSpaceYear
+    {
+        set { Tra_CarRoadOutsideParkSpaceYear = value; }
+    }
+    public string _Tra_CarRoadOutsideParkSpace
+    {
+        set { Tra_CarRoadOutsideParkSpace = value; }
     }
     public string _Tra_10KHaveCarParkYear
     {
