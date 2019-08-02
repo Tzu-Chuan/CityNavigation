@@ -31,112 +31,146 @@
                     Page.Option.SortMethod = "-";
                     $(this).addClass('desc');
                 }
-
-                switch ($("#selType").val()) {
-                    case "01":
-                        getData();
-                        break;
-                    case "02":
-                        getPeopleTotalPercent();
-                        break;
-                    case "03":
-                        getArea();
-                        break;
-                    case "04":
-                        getChild();
-                        break;
-                    case "05":
-                        getChildPercent();
-                        break;
-                    case "06":
-                        getTeenager();
-                        break;
-                    case "07":
-                        getTeenagerPercent();
-                        break;
-                    case "08":
-                        getOldMen();
-                        break;
-                    case "09":
-                        getOldMenPercent();
-                        break;
-                }
+                PopulationClass();
             });
 
-            defaultInfo();
+            getheadTitle();
+            PopulationClass();
+            titlePei = "年底戶籍總人口數";
+            DrawChart(titlePei);
 
             $(document).on("change", "#selType", function () {
-                $(".CityClass").hide();
-                Page.Option.SortName = "P_CityNo";
-                Page.Option.SortMethod = "+";
                 Population_All_Array.length = 0;
+                getheadTitle();
+                PopulationClass();
                 switch ($("#selType").val()) {
-                case "01":
-                    document.getElementById("PeopleTotal_table").style.display = "";
-                    getData();
-                    titlePei = "年底戶籍總人口數";
-                    DrawChart(titlePei);
-                    break;
-                case "02":
-                    document.getElementById("PeopleTotalPercent_table").style.display = "";
-                    getPeopleTotalPercent();
-                    titlePei = "年底戶籍總人口數成長率";
-                    DrawChart(titlePei);
-                    break;
-                case "03":
-                    document.getElementById("Area_table").style.display = "";
-                    getArea();
-                    titlePei = "土地面積";
-                    DrawChart(titlePei);
-                    break;
-                case "04":
-                    document.getElementById("Child_table").style.display = "";
-                    getChild();
-                    titlePei = "0-14歲幼年人口數";
-                    DrawChart(titlePei);
-                    break;
-                case "05":
-                    document.getElementById("ChildPercent_table").style.display = "";
-                    getChildPercent();
-                    titlePei = "0-14歲幼年人口比例";
-                    DrawChart(titlePei);
-                    break;
-                case "06":
-                    document.getElementById("Teenager_table").style.display = "";
-                    getTeenager();
-                    titlePei = "15-64歲青壯年人口數";
-                    DrawChart(titlePei);
-                    break;
-                case "07":
-                    document.getElementById("TeenagerPercent_table").style.display = "";
-                    getTeenagerPercent();
-                    titlePei = "15-64歲青壯年人口比例";
-                    DrawChart(titlePei);
-                    break;
-                case "08":
-                    document.getElementById("OldMen_table").style.display = "";
-                    getOldMen();
-                    titlePei = "65歲以上老年人口數";
-                    DrawChart(titlePei);
-                    break;
-                case "09":
-                    document.getElementById("OldMenPercent_table").style.display = "";
-                    getOldMenPercent();
-                    titlePei = "65歲以上歲老年人口比例";
-                    DrawChart(titlePei);
-                    break;
-            }
+                    case "01":
+                        titlePei = "年底戶籍總人口數";
+                        DrawChart(titlePei);
+                        break;
+                    case "02":
+                        titlePei = "年底戶籍總人口數成長率";
+                        DrawChart(titlePei);
+                        break;
+                    case "03":
+                        titlePei = "土地面積";
+                        DrawChart(titlePei);
+                        break;
+                    case "04":
+                        titlePei = "0-14歲幼年人口數";
+                        DrawChart(titlePei);
+                        break;
+                    case "05":
+                        titlePei = "0-14歲幼年人口比例";
+                        DrawChart(titlePei);
+                        break;
+                    case "06":
+                        titlePei = "15-64歲青壯年人口數";
+                        DrawChart(titlePei);
+                        break;
+                    case "07":
+                        titlePei = "15-64歲青壯年人口比例";
+                        DrawChart(titlePei);
+                        break;
+                    case "08":
+                        titlePei = "65歲以上老年人口數";
+                        DrawChart(titlePei);
+                        break;
+                    case "09":
+                        titlePei = "65歲以上歲老年人口比例";
+                        DrawChart(titlePei);
+                        break;
+                }
+                    
             });
         }); //js end
 
 
         var Population_All_Array = [];
-        function defaultInfo() {
-            document.getElementById("PeopleTotal_table").style.display = "";
-                    getData();
-                    titlePei = "年底戶籍總人口數";
-                    DrawChart(titlePei);
+
+        function getheadTitle() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/AllCityKeyTable.aspx",
+                data: {
+                    K_Code: "Population",
+                    K_ItemNo: $("#selType").val(),
+                    Token: $("#InfoToken").val()
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        $("#test").empty();
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                $("#test").append('<a href="javascript:void(0);" name="sortbtn" sortname="">' + $("K_Word", data).text().trim() + '</a>');
+
+                                getData();
+                            });
+                        }
+                        else
+                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
+                    }
+                }
+            })
         }
+
+        function PopulationClass() {
+            switch ($("#selType").val()) {
+                case "01":
+                    sortnameStr = "P_PeopleTotal";
+                    $("a").attr("sortname", sortnameStr);
+                    getData();
+                    break;
+                case "02":
+                    sortnameStr = "P_PeopleTotalPercent";
+                    $("a").attr("sortname", sortnameStr);
+                    getPeopleTotalPercent();
+                    break;
+                case "03":
+                    sortnameStr = "P_Area";
+                    $("a").attr("sortname", sortnameStr);
+                    getArea();
+                    break;
+                case "04":
+                    sortnameStr = "P_Child";
+                    $("a").attr("sortname", sortnameStr);
+                    getChild();
+                    break;
+                case "05":
+                    sortnameStr = "P_ChildPercent";
+                    $("a").attr("sortname", sortnameStr);
+                    getChildPercent();
+                    break;
+                case "06":
+                    sortnameStr = "P_Teenager";
+                    $("a").attr("sortname", sortnameStr);
+                    getTeenager();
+                    break;
+                case "07":
+                    sortnameStr = "P_TeenagerPercent";
+                    $("a").attr("sortname", sortnameStr);
+                    getTeenagerPercent();
+                    break;
+                case "08":
+                    sortnameStr = "P_OldMen";
+                    $("a").attr("sortname", sortnameStr);
+                    getOldMen();
+                    break;
+                case "09":
+                    sortnameStr = "P_OldMenPercent";
+                    $("a").attr("sortname", sortnameStr);
+                    getOldMenPercent();
+                    break;
+            }
+        }
+
 
         //撈總人口列表
         function getData() {
@@ -162,7 +196,7 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_TotalYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_PeopleTotal").text().trim()).toFixed(0)) + '人' + '</td>';
@@ -173,9 +207,6 @@
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
                         $("#PeopleTotal_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
                     }
                 }
             })
@@ -201,11 +232,11 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#PeopleTotalPercent_table tbody").empty();
+                        $("#PeopleTotal_table tbody").empty();
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_PeopleTotalPercentYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_PeopleTotalPercent").text().trim()).toFixed(2)) + '%' + '</td>';
@@ -215,15 +246,12 @@
                         }
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#PeopleTotalPercent_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                        $("#PeopleTotal_table tbody").append(tabstr);
                     }
                 }
             })
         }
-        
+
         //撈土地面積
         function getArea() {
             $.ajax({
@@ -244,11 +272,11 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#Area_table tbody").empty();
+                        $("#PeopleTotal_table tbody").empty();
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_AreaYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_Area").text().trim()).toFixed(2)) + 'k㎡' + '</td>';
@@ -258,10 +286,7 @@
                         }
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#Area_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                        $("#PeopleTotal_table tbody").append(tabstr);
                     }
                 }
             })
@@ -287,11 +312,11 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#Child_table tbody").empty();
+                        $("#PeopleTotal_table tbody").empty();
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_ChildYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_Child").text().trim()).toFixed(0)) + '人' + '</td>';
@@ -301,10 +326,7 @@
                         }
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#Child_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                        $("#PeopleTotal_table tbody").append(tabstr);
                     }
                 }
             })
@@ -330,11 +352,11 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#ChildPercent_table tbody").empty();
+                        $("#PeopleTotal_table tbody").empty();
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_ChildPercentYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_ChildPercent").text().trim()).toFixed(2)) + '%' + '</td>';
@@ -344,10 +366,7 @@
                         }
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#ChildPercent_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                        $("#PeopleTotal_table tbody").append(tabstr);
                     }
                 }
             })
@@ -373,11 +392,11 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#Teenager_table tbody").empty();
+                        $("#PeopleTotal_table tbody").empty();
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_TeenagerYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_Teenager").text().trim()).toFixed(0)) + '人' + '</td>';
@@ -387,15 +406,12 @@
                         }
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#Teenager_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                        $("#PeopleTotal_table tbody").append(tabstr);
                     }
                 }
             })
         }
-
+        
         //撈15-64歲青壯年人口數比例
         function getTeenagerPercent() {
             $.ajax({
@@ -416,11 +432,11 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#TeenagerPercent_table tbody").empty();
+                        $("#PeopleTotal_table tbody").empty();
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_TeenagerPercentYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_TeenagerPercent").text().trim()).toFixed(2)) + '%' + '</td>';
@@ -430,10 +446,7 @@
                         }
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#TeenagerPercent_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                        $("#PeopleTotal_table tbody").append(tabstr);
                     }
                 }
             })
@@ -459,11 +472,11 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#OldMen_table tbody").empty();
+                        $("#PeopleTotal_table tbody").empty();
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_OldMenYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_OldMen").text().trim()).toFixed(0)) + '人' + '</td>';
@@ -473,15 +486,12 @@
                         }
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#OldMen_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                        $("#PeopleTotal_table tbody").append(tabstr);
                     }
                 }
             })
         }
-
+        
         //撈65歲以上老年人口數比例
         function getOldMenPercent() {
             $.ajax({
@@ -502,11 +512,11 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#OldMenPercent_table tbody").empty();
+                        $("#PeopleTotal_table tbody").empty();
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_OldMenPercentYear").text().trim() + '年' + '</td>';
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_OldMenPercent").text().trim()).toFixed(2)) + '%' + '</td>';
@@ -516,10 +526,7 @@
                         }
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#OldMenPercent_table tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
+                        $("#PeopleTotal_table tbody").append(tabstr);
                     }
                 }
             })
@@ -662,100 +669,13 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal">
                         <%--年底戶籍總人口數--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="PeopleTotal_table" class="CityClass">
+                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="PeopleTotal_table" <%--class="CityClass"--%>>
                             <thead>
                                 <tr>
                                     <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_CityNo">縣市</a></th>
                                     <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_PeopleTotal">人口數</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--年底戶籍總人口數成長率--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="PeopleTotalPercent_table" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_PeopleTotalPercent">年底戶籍總人口數成長率</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--土地面積--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="Area_table" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" id="P_Area" name="sortbtn" sortname="P_Area">土地面積</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--0-14歲幼年人口數--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="Child_table" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_Child">0-14歲幼年人口數</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--0-14歲幼年人口比例--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="ChildPercent_table" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_ChildPercent">年底戶籍總人口數成長率</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--15-64歲青壯年人口數--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="Teenager_table" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_Teenager">15-64歲青壯年人口數</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--15-64歲青壯年人口比例--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="TeenagerPercent_table" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_TeenagerPercent">15-64歲青壯年人口比例</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--65歲以上老年人口數--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="OldMen_table" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_OldMen">65歲以上老年人口數</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--65歲以上歲老年人口比例--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="OldMenPercent_table" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_OldMenPercent">65歲以上歲老年人口比例</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;" id="test"></th>
+
                                 </tr>
                             </thead>
                             <tbody></tbody>

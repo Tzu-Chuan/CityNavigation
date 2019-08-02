@@ -78,4 +78,24 @@ drop table #tmp
         oda.Fill(ds);
         return ds;
     }
+
+    public DataTable getKeyWord()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"select * from KeyTable where K_Code=@K_Code and K_ItemNo=@K_ItemNo");
+
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable dt = new DataTable();
+
+        oCmd.Parameters.AddWithValue("@K_Code", K_Code);
+        oCmd.Parameters.AddWithValue("@K_ItemNo", K_ItemNo);
+        oda.Fill(dt);
+        return dt; ;
+    }
 }
