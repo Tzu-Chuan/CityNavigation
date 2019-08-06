@@ -357,32 +357,40 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 /// 資料從第3筆開始
                 for (int i = 1; i < sheet.PhysicalNumberOfRows; i++)
                 {
+                    if (sheet.GetRow(i).GetCell(1) == null)
+                        continue;
+                    else
+                    {
+                        if (sheet.GetRow(i).GetCell(1).ToString() == "")
+                            continue;
+                    }
+
                     err = "Sheet Name：" + sheet.SheetName.Trim() + "<br>";
                     err += "行數：第 " + (i + 1).ToString() + " 筆";
                     DataRow row = dt.NewRow();
                     row["CP_City"] = sheet.SheetName.Trim();
                     row["CP_CityCode"] = CityCode;
-                    row["CP_PlanSchedule"] = sheet.GetRow(i).GetCell(0).ToString().Trim();
-                    row["CP_No"] = sheet.GetRow(i).GetCell(1).ToString().Trim();
-                    row["CP_PlanType"] = sheet.GetRow(i).GetCell(2).ToString().Trim();
-                    row["CP_PlanTypeDetail"] = sheet.GetRow(i).GetCell(3).ToString().Trim();
-                    row["CP_CaseNo"] = sheet.GetRow(i).GetCell(4).ToString().Trim();
-                    row["CP_HostCompany"] = sheet.GetRow(i).GetCell(5).ToString().Trim();
-                    row["CP_JointCompany"] = sheet.GetRow(i).GetCell(6).ToString().Trim();
-                    row["CP_PlanName"] = sheet.GetRow(i).GetCell(7).ToString().Trim();
-                    row["CP_PlanSummary"] = sheet.GetRow(i).GetCell(8).ToString().Trim();
-                    row["CP_PlanDefect"] = sheet.GetRow(i).GetCell(9).ToString().Trim();
-                    row["CP_NowResult"] = sheet.GetRow(i).GetCell(10).ToString().Trim();
-                    row["CP_DoneResult"] = sheet.GetRow(i).GetCell(11).ToString().Trim();
-                    row["CP_ServiceArea"] = sheet.GetRow(i).GetCell(12).ToString().Trim();
-                    row["CP_ServiceType"] = sheet.GetRow(i).GetCell(13).ToString().Trim();
-                    row["CP_AllArea"] = sheet.GetRow(i).GetCell(14).ToString().Trim();
-                    row["CP_CityArea"] = sheet.GetRow(i).GetCell(15).ToString().Trim();
-                    row["CP_CityAreaDetail"] = sheet.GetRow(i).GetCell(16).ToString().Trim();
-                    row["CP_PlanTotalMoney"] = sheet.GetRow(i).GetCell(17).ToString().Trim();
-                    row["CP_PlanSubMoney"] = sheet.GetRow(i).GetCell(18).ToString().Trim();
-                    row["CP_CityTotalMoney"] = sheet.GetRow(i).GetCell(19).ToString().Trim();
-                    row["CP_CitySubMoney"] = sheet.GetRow(i).GetCell(20).ToString().Trim();
+                    row["CP_PlanSchedule"] = (sheet.GetRow(i).GetCell(0) == null) ? "" : sheet.GetRow(i).GetCell(0).ToString().Trim();
+                    row["CP_No"] = (sheet.GetRow(i).GetCell(1) == null) ? "" : sheet.GetRow(i).GetCell(1).ToString().Trim();
+                    row["CP_PlanType"] = (sheet.GetRow(i).GetCell(2) == null) ? "" : sheet.GetRow(i).GetCell(2).ToString().Trim();
+                    row["CP_PlanTypeDetail"] = (sheet.GetRow(i).GetCell(3) == null) ? "" : sheet.GetRow(i).GetCell(3).ToString().Trim();
+                    row["CP_CaseNo"] = (sheet.GetRow(i).GetCell(4) == null) ? "" : sheet.GetRow(i).GetCell(4).ToString().Trim();
+                    row["CP_HostCompany"] = (sheet.GetRow(i).GetCell(5) == null) ? "" : sheet.GetRow(i).GetCell(5).ToString().Trim();
+                    row["CP_JointCompany"] = (sheet.GetRow(i).GetCell(6) == null) ? "" : sheet.GetRow(i).GetCell(6).ToString().Trim();
+                    row["CP_PlanName"] = (sheet.GetRow(i).GetCell(7) == null) ? "" : sheet.GetRow(i).GetCell(7).ToString().Trim();
+                    row["CP_PlanSummary"] = (sheet.GetRow(i).GetCell(8) == null) ? "" : sheet.GetRow(i).GetCell(8).ToString().Trim();
+                    row["CP_PlanDefect"] = (sheet.GetRow(i).GetCell(9) == null) ? "" : sheet.GetRow(i).GetCell(9).ToString().Trim();
+                    row["CP_NowResult"] = (sheet.GetRow(i).GetCell(10) == null) ? "" : sheet.GetRow(i).GetCell(10).ToString().Trim();
+                    row["CP_DoneResult"] = (sheet.GetRow(i).GetCell(11) == null) ? "" : sheet.GetRow(i).GetCell(11).ToString().Trim();
+                    row["CP_ServiceArea"] = (sheet.GetRow(i).GetCell(12) == null) ? "" : sheet.GetRow(i).GetCell(12).ToString().Trim();
+                    row["CP_ServiceType"] = (sheet.GetRow(i).GetCell(13) == null) ? "" : sheet.GetRow(i).GetCell(13).ToString().Trim();
+                    row["CP_AllArea"] = (sheet.GetRow(i).GetCell(14) == null) ? "" : sheet.GetRow(i).GetCell(14).ToString().Trim();
+                    row["CP_CityArea"] = (sheet.GetRow(i).GetCell(15) == null) ? "" : sheet.GetRow(i).GetCell(15).ToString().Trim();
+                    row["CP_CityAreaDetail"] = (sheet.GetRow(i).GetCell(16) == null) ? "" : sheet.GetRow(i).GetCell(16).ToString().Trim();
+                    row["CP_PlanTotalMoney"] = (sheet.GetRow(i).GetCell(17) == null) ? "" : sheet.GetRow(i).GetCell(17).ToString().Trim();
+                    row["CP_PlanSubMoney"] = (sheet.GetRow(i).GetCell(18) == null) ? "" : sheet.GetRow(i).GetCell(18).ToString().Trim();
+                    row["CP_CityTotalMoney"] = (sheet.GetRow(i).GetCell(19) == null) ? "" : sheet.GetRow(i).GetCell(19).ToString().Trim();
+                    row["CP_CitySubMoney"] = (sheet.GetRow(i).GetCell(20) == null) ? "" : sheet.GetRow(i).GetCell(20).ToString().Trim();
                     row["CP_CreateId"] = LogInfo.mGuid;
                     row["CP_CreateName"] = LogInfo.name;
                     row["CP_Version"] = maxV;

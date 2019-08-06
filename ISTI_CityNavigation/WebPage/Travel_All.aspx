@@ -174,7 +174,7 @@
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_HotelUseYear").text().trim() + '年' + '</td>';
                                 var tmpVal = ($.isNumeric($(this).children("T_HotelUseRate").text().trim())) ? Number($(this).children("T_HotelUseRate").text().trim()).toFixed(2) : 0;
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpVal) + '%' + '</td>';
-                                Travel_All_Array.push($(this).children("T_HotelUseRate").text().trim().toString());
+                                Travel_All_Array.push(tmpVal);
                                 tabstr += '</td></tr>';
                             });
                         }
@@ -218,7 +218,7 @@
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_HotelsYear").text().trim() + '年' + '</td>';
                                 var tmpVal = ($.isNumeric($(this).children("T_Hotels").text().trim())) ? Number($(this).children("T_Hotels").text().trim()).toFixed(0) : 0;
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpVal) + '家' + '</td>';
-                                Travel_All_Array.push($(this).children("T_Hotels").text().trim().toString());
+                                Travel_All_Array.push(tmpVal);
                                 tabstr += '</td></tr>';
                             });
                         }
@@ -262,7 +262,7 @@
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_HotelRoomsYear").text().trim() + '年' + '</td>';
                                 var tmpVal = ($.isNumeric($(this).children("T_HotelRooms").text().trim())) ? Number($(this).children("T_HotelRooms").text().trim()).toFixed(0) : 0;
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpVal) + '間' + '</td>';
-                                Travel_All_Array.push($(this).children("T_HotelRooms").text().trim().toString());
+                                Travel_All_Array.push(tmpVal);
                                 tabstr += '</td></tr>';
                             });
                         }
@@ -306,7 +306,7 @@
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("T_HotelAvgPriceYear").text().trim() + '年' + '</td>';
                                 var tmpVal = ($.isNumeric($(this).children("T_HotelAvgPrice").text().trim())) ? Number($(this).children("T_HotelAvgPrice").text().trim()).toFixed(0) : 0;
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpVal) + '元' + '</td>';
-                                Travel_All_Array.push($(this).children("T_HotelAvgPrice").text().trim().toString());
+                                Travel_All_Array.push(tmpVal);
                                 tabstr += '</td></tr>';
                             });
                         }
@@ -410,10 +410,6 @@
                             y: parseFloat(Travel_All_Array[14])
                         },
                         {
-                            name: '金門縣',
-                            y: parseFloat(Travel_All_Array[20])
-                        },
-                        {
                             name: '連江縣',
                             y: parseFloat(Travel_All_Array[21])
                         },
@@ -421,6 +417,10 @@
                             name: '澎湖縣',
                             y: parseFloat(Travel_All_Array[16])
                         },
+                        {
+                            name: '金門縣',
+                            y: parseFloat(Travel_All_Array[20])
+                        }
                     ]
                 }]
             })

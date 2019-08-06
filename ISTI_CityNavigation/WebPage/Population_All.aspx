@@ -711,7 +711,7 @@
                                 <tr>
                                     <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_CityNo">縣市</a></th>
                                     <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_ChildPercent">年底戶籍總人口數成長率</a></th>
+                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="P_ChildPercent">0-14歲幼年人口比例</a></th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

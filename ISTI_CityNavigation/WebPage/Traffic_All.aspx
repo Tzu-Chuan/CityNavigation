@@ -651,7 +651,7 @@
                         {
                             name: '澎湖縣',
                             y: parseFloat(Traffic_All_Array[16])
-                        },
+                        }
                     ]
                 }]
             });
