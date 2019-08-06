@@ -37,7 +37,11 @@ namespace ISTI_CityNavigation.handler
                 string SortName = (Request["SortName"] != null) ? Request["SortName"].ToString().Trim() : "";
                 string SortMethod = (Request["SortMethod"] != null) ? Request["SortMethod"].ToString().Trim() : "-";
                 SortMethod = (SortMethod == "+") ? "asc" : "desc";
-                string SortCommand = (SortName != "") ? SortName + " " + SortMethod : "";
+                string SortCommand = string.Empty;
+                if (City != "")
+                    SortCommand = (SortName != "") ? SortName + " " + SortMethod : "CP_No";
+                else
+                    SortCommand = (SortName != "") ? SortName + " " + SortMethod : "CS_No";
 
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
                 if (Common.VeriftyToken(token))

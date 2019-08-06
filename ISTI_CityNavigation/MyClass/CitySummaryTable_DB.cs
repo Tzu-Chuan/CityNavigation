@@ -195,9 +195,7 @@ sum(CONVERT(float,CP_CityTotalMoney)) as CP_CityTotalMoney,
 sum(CONVERT(float,CP_CitySubMoney)) as CP_CitySubMoney
 from #tmp
 
-select * from #tmp
-
-drop table #tmp ");
+select * from #tmp ");
         }
         else
         {
@@ -269,9 +267,7 @@ sum(CONVERT(float,CS_Kinmen_Sub)) as CS_Kinmen_Sub,
 sum(CONVERT(float,CS_Lienchiang_Sub)) as CS_Lienchiang_Sub
 from #tmp
 
-select * from #tmp
-
-drop table #tmp ");
+select * from #tmp ");
         }
 
         if (sortStr != "")
