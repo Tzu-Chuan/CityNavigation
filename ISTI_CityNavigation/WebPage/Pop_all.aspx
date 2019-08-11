@@ -48,17 +48,13 @@
         function getData() {
             $.ajax({
                 type: "POST",
-                async: true, //在沒有返回值之前,不會執行下一步動作
+                async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetPopulationList.aspx",
                 data: {
                     CityNo: "All",
                     SortName: Page.Option.SortName,
                     SortMethod: Page.Option.SortMethod,
                     Token: $("#InfoToken").val()
-                },
-                beforeSend: function () {
-                    $("#tablist tbody").empty();
-                    $("#tablist tbody").append('<tr><td colspan="3"><img src="../images/loading.gif" width="40"/>資料讀取中...</td></tr>');
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -71,70 +67,87 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             var objData = new Object();
-                            var JsonStr = "";
+                            var JsonStr = "", Unit = "", DataYear = "", DataVal = "", FloatNum = 0;
+                            switch ($("#dll_Category").val()) {
+                                case "01":
+                                    $("#UnitHead").attr("sortname", "P_PeopleTotal");
+                                    Unit = "人";
+                                    DataYear = "P_TotalYear";
+                                    DataVal = "P_PeopleTotal";
+                                    break;
+                                case "02":
+                                    $("#UnitHead").attr("sortname", "P_PeopleTotalPercent");
+                                    Unit = "%";
+                                    DataYear = "P_PeopleTotalPercentYear";
+                                    DataVal = "P_PeopleTotalPercent";
+                                    FloatNum = 2;
+                                    break;
+                                case "03":
+                                    $("#UnitHead").attr("sortname", "P_Area");
+                                    Unit = "k㎡";
+                                    DataYear = "P_AreaYear";
+                                    DataVal = "P_Area";
+                                    FloatNum = 2;
+                                    break;
+                                case "04":
+                                    $("#UnitHead").attr("sortname", "P_Child");
+                                    Unit = "人";
+                                    DataYear = "P_ChildYear";
+                                    DataVal = "P_Child";
+                                    break;
+                                case "05":
+                                    $("#UnitHead").attr("sortname", "P_ChildPercent");
+                                    Unit = "%";
+                                    DataYear = "P_ChildPercentYear";
+                                    DataVal = "P_ChildPercent";
+                                    FloatNum = 2;
+                                    break;
+                                case "06":
+                                    $("#UnitHead").attr("sortname", "P_Teenager");
+                                    Unit = "人";
+                                    DataYear = "P_TeenagerYear";
+                                    DataVal = "P_Teenager";
+                                    break;
+                                case "07":
+                                    $("#UnitHead").attr("sortname", "P_TeenagerPercent");
+                                    Unit = "%";
+                                    DataYear = "P_TeenagerPercentYear";
+                                    DataVal = "P_TeenagerPercent";
+                                    FloatNum = 2;
+                                    break;
+                                case "08":
+                                    $("#UnitHead").attr("sortname", "P_OldMen");
+                                    Unit = "人";
+                                    DataYear = "P_OldMenYear";
+                                    DataVal = "P_OldMen";
+                                    break;
+                                case "09":
+                                    $("#UnitHead").attr("sortname", "P_OldMenPercent");
+                                    Unit = "%";
+                                    DataYear = "P_OldMenPercentYear";
+                                    DataVal = "P_OldMenPercent";
+                                    FloatNum = 2;
+                                    break;
+                            }
                             $(data).find("data_item").each(function (i) {
-                                // Hightchart Json
-                                objData.name = $(this).children("P_CityName").text().trim();
                                 // Table
                                 tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
-                                switch ($("#dll_Category").val()) {
-                                    case "01":
-                                        // Hightchart Json
-                                        objData.y = ($.isNumeric($(this).children("P_PeopleTotal").text().trim())) ? Number($(this).children("P_PeopleTotal").text().trim()) : 0;
-                                        // Table Header Sort
-                                        $("#UnitHead").attr("sortname", "P_PeopleTotal");
-                                        tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_TotalYear").text().trim() + '年' + '</td>';
-                                        tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_PeopleTotal").text().trim()).toFixed(0)) + ' 人</td>';
-                                        break;
-                                    case "02":
-                                        $("#UnitHead").attr("sortname", "P_PeopleTotalPercent");
-                                        tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_PeopleTotalPercentYear").text().trim() + '年' + '</td>';
-                                        tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_PeopleTotalPercent").text().trim()).toFixed(2)) + ' %</td>';
-                                        break;
-                                    case "03":
-                                        $("#UnitHead").attr("sortname", "P_Area");
-                                        tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_AreaYear").text().trim() + '年' + '</td>';
-                                        tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_Area").text().trim()).toFixed(2)) + ' k㎡</td>';
-                                        break;
-                                    case "04":
-                                        $("#UnitHead").attr("sortname", "P_Child");
-                                        tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_ChildYear").text().trim() + '年' + '</td>';
-                                        tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_Child").text().trim()).toFixed(0)) + ' 人</td>';
-                                        break;
-                                    case "05":
-                                        $("#UnitHead").attr("sortname", "P_ChildPercent");
-                                        tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_ChildPercentYear").text().trim() + '年' + '</td>';
-                                        tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_ChildPercent").text().trim()).toFixed(2)) + ' %</td>';
-                                        break;
-                                    case "06":
-                                        $("#UnitHead").attr("sortname", "P_Teenager");
-                                        tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_TeenagerYear").text().trim() + '年' + '</td>';
-                                        tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_Teenager").text().trim()).toFixed(0)) + ' 人</td>';
-                                        break;
-                                    case "07":
-                                        $("#UnitHead").attr("sortname", "P_TeenagerPercent");
-                                        tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_TeenagerPercentYear").text().trim() + '年' + '</td>';
-                                        tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_TeenagerPercent").text().trim()).toFixed(2)) + ' %</td>';
-                                        break;
-                                    case "08":
-                                        $("#UnitHead").attr("sortname", "P_OldMen");
-                                        tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_OldMenYear").text().trim() + '年' + '</td>';
-                                        tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_OldMen").text().trim()).toFixed(0)) + ' 人</td>';
-                                        break;
-                                    case "09":
-                                        $("#UnitHead").attr("sortname", "P_OldMenPercent");
-                                        tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_OldMenPercentYear").text().trim() + '年' + '</td>';
-                                        tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("P_OldMenPercent").text().trim()).toFixed(2)) + ' %</td>';
-                                        break;
-                                }
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children(DataYear).text().trim() + '年' + '</td>';
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children(DataVal).text().trim()).toFixed(FloatNum)) + ' ' + Unit + '</td>';
                                 tabstr += '</td></tr>';
 
                                 // Hightchart Json
-                                if (JsonStr != '') JsonStr += ',';
-                                JsonStr += JSON.stringify(objData);
+                                objData.name = $(this).children("P_CityName").text().trim();
+                                var tmpV = ($.isNumeric($(this).children(DataVal).text().trim())) ? Number($(this).children(DataVal).text().trim()) : 0;
+                                // 0 & 負數 不進 highchart
+                                if (tmpV > 0) {
+                                    objData.y = tmpV;
+                                    if (JsonStr != '') JsonStr += ',';
+                                    JsonStr += JSON.stringify(objData);
+                                }
                             });
-                            
+
                             JsonStr = "[" + JsonStr + "]";
                             DrawChart(JsonStr);
                             $("#tablist tbody").empty();
