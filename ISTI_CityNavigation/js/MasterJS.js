@@ -62,7 +62,7 @@
         }
     });
 
-    $(document).on("click", "a[name='linkbtn']", function () {
+    $(document).on("click", "a[name='sMapLinkbtn']", function () {
         location.href = "CityInfo.aspx?city=" + $(this).attr("city");
     });
 
@@ -125,6 +125,8 @@
                     else if ($("#webType").val() != "" && $("#webServiceType").val() == ""){
                         if ($("#webCity").val() != "")
                             location.href = "CityInfoTable.aspx?city=" + $("#webCity").val() + "&listname=" + $("#webType").val();
+                        else
+                            location.href = $("#webType").val() + "_All.aspx";
                     }
                     // 全國資料類別 & 領域別 皆有值
                     else

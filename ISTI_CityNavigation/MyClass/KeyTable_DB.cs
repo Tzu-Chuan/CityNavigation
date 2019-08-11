@@ -78,4 +78,23 @@ drop table #tmp
         oda.Fill(ds);
         return ds;
     }
+
+    public DataTable GetGlobal_DDL()
+    {
+        SqlCommand oCmd = new SqlCommand();
+        oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"select * from KeyTable where K_Code=@K_Code order by K_ItemNo ");
+
+
+        oCmd.CommandText = sb.ToString();
+        oCmd.CommandType = CommandType.Text;
+        SqlDataAdapter oda = new SqlDataAdapter(oCmd);
+        DataTable dt = new DataTable();
+
+        oCmd.Parameters.AddWithValue("@K_Code", K_Code);
+        oda.Fill(dt);
+        return dt; ;
+    }
 }
