@@ -452,5 +452,5 @@
             <tbody></tbody>
         </table>
     </div>
-    <div class="remind_div" style="display:none; font-size:14pt; color:red;">機密資料，不宜外流！</div>
+    <div class="remind_div" style="display:none; font-size:14pt; color:red; text-align:center;">機密資料，不宜外流！</div>
 </asp:Content>

@@ -11,7 +11,8 @@
                     async: false, //在沒有返回值之前,不會執行下一步動作
                     url: "mHandler/ChangeIDBVersion.aspx",
                     data: {
-                        ver: $("#ddlVer").val()
+                        ver: $("#ddlVer").val(),
+                        orgVer: $("#nowVersion").html()
                     },
                     error: function (xhr) {
                         alert(xhr.responseText);
