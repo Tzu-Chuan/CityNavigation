@@ -39,6 +39,7 @@
             // 切換下拉選單
             $(document).on("change", "#dll_Category", function () {
                 $("a[name='sortbtn']").removeClass("asc desc");
+                Page.Option.SortMethod = "+";
                 Page.Option.SortName = "P_CityNo";
                 $("#UnitHead").html($(this).find("option:selected").text()); 
                 getData();
@@ -131,16 +132,16 @@
                                     break;
                             }
                             $(data).find("data_item").each(function (i) {
+                                var tmpV = ($.isNumeric($(this).children(DataVal).text().trim())) ? Number($(this).children(DataVal).text().trim()) : 0;
                                 // Table
                                 tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("P_CityName").text().trim() + '</td>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children(DataYear).text().trim() + '年' + '</td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children(DataVal).text().trim()).toFixed(FloatNum)) + ' ' + Unit + '</td>';
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpV.toFixed(FloatNum)) + ' ' + Unit + '</td>';
                                 tabstr += '</td></tr>';
 
                                 // Hightchart Json
                                 objData.name = $(this).children("P_CityName").text().trim();
-                                var tmpV = ($.isNumeric($(this).children(DataVal).text().trim())) ? Number($(this).children(DataVal).text().trim()) : 0;
                                 // 0 & 負數 不進 highchart
                                 if (tmpV > 0) {
                                     objData.y = tmpV;

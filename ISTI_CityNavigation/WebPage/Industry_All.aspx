@@ -3,11 +3,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".CityClass").hide();
-
-            /// 表頭排序設定
+            // 表頭排序設定
             Page.Option.SortMethod = "+";
             Page.Option.SortName = "Ind_CityNo";
+
+            getdll();
+            getData();
 
             ///Highcharts千分位
             Highcharts.setOptions({
@@ -31,70 +32,21 @@
                     Page.Option.SortMethod = "-";
                     $(this).addClass('desc');
                 }
-
-                switch ($("#selType").val()) {
-                    case "01":
-                        getData();
-                        break;
-                    case "02":
-                        getIncome();
-                        break;
-                    case "03":
-                        getSales();
-                        break;
-                    case "04":
-                        getBusiness();
-                        break;
-                }
+                
+                getData();
             });
 
-            defaultInfo();
-
-            $(document).on("change", "#selType", function () {
-                $(".CityClass").hide();
-                Page.Option.SortName = "Ind_CityNo";
+            // 切換下拉選單
+            $(document).on("change", "#dll_Category", function () {
+                $("a[name='sortbtn']").removeClass("asc desc");
                 Page.Option.SortMethod = "+";
-                Industry_All_Array.length = 0;
-                $('#stackedcolumn1').hide();
-                switch ($("#selType").val()) {
-                    case "01":
-                        document.getElementById("Factory_tablist").style.display = "";
-                        getData();
-                        titlePie = "營運中工廠家數";
-                        DrawChart(titlePie);
-                        $('#stackedcolumn1').show();
-                        break;
-                    case "02":
-                        document.getElementById("Income_tablist").style.display = "";
-                        getIncome();
-                        titlePie = "工廠營業收入";
-                        DrawChart(titlePie);
-                        $('#stackedcolumn1').show();
-                        break;
-                    case "03":
-                        document.getElementById("Sales_tablist").style.display = "";
-                        getSales();
-                        titlePie = "營利事業銷售額";
-                        DrawChart(titlePie);
-                        $('#stackedcolumn1').show();
-                        break;
-                    case "04":
-                        document.getElementById("Business_tablist").style.display = "";
-                        getBusiness();
-                        break;
-                }
+                Page.Option.SortName = "Ind_CityNo";
+                $("#UnitHead").html($(this).find("option:selected").text()); 
+                getData();
             });
-        }); //js end
+        });// end js
 
 
-        var Industry_All_Array = [];
-        function defaultInfo() {
-            document.getElementById("Factory_tablist").style.display = "";
-            getData();
-            titlePie = "營運中工廠家數";
-            DrawChart(titlePie);
-        }
-        //營運中工廠家數
         function getData() {
             $.ajax({
                 type: "POST",
@@ -106,48 +58,8 @@
                     SortMethod: Page.Option.SortMethod,
                     Token: $("#InfoToken").val()
                 },
-                error: function (xhr) {
-                    alert(xhr.responseText);
-                },
-                success: function (data) {
-                    if ($(data).find("Error").length > 0) {
-                        alert($(data).find("Error").attr("Message"));
-                    }
-                    else {
-                        $("#Factory_tablist tbody").empty();
-                        var tabstr = '';
-                        if ($(data).find("data_item").length > 0) {
-                            $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_CityName").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_FactoryYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Ind_Factory").text().trim()).toFixed(0)) + '家' + '</td>';
-                                Industry_All_Array.push($(this).children("Ind_Factory").text().trim().toString());
-                                tabstr += '</td></tr>';
-                            });
-                        }
-                        else
-                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#Factory_tablist tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
-                    }
-                }
-            })
-        }
-
-        //工廠營業收入
-        function getIncome() {
-            $.ajax({
-                type: "POST",
-                async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "../handler/GetIndustryList.aspx",
-                data: {
-                    CityNo: "All",
-                    SortName: Page.Option.SortName,
-                    SortMethod: Page.Option.SortMethod,
-                    Token: $("#InfoToken").val()
+                beforeSend: function () {
+                    $("#ChartDiv").hide();
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -157,300 +69,157 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#Income_tablist tbody").empty();
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
+                            var objData = new Object();
+                            var JsonStr = "", Unit = "", DataYear = "", DataVal = "", FloatNum = 0;
+                            switch ($("#dll_Category").val()) {
+                                case "01":
+                                    $("#UnitHead").attr("sortname", "Ind_Factory");
+                                    Unit = "家";
+                                    DataYear = "Ind_FactoryYear";
+                                    DataVal = "Ind_Factory";
+                                    break;
+                                case "02":
+                                    $("#UnitHead").attr("sortname", "Ind_Income");
+                                    Unit = "千元";
+                                    DataYear = "Ind_IncomeYear";
+                                    DataVal = "Ind_Income";
+                                    break;
+                                case "03":
+                                    $("#UnitHead").attr("sortname", "Ind_Sales");
+                                    Unit = "千元";
+                                    DataYear = "Ind_SalesYear";
+                                    DataVal = "Ind_Sales";
+                                    FloatNum = 2;
+                                    break;
+                                case "04":
+                                    $("#UnitHead").attr("sortname", "Ind_Business");
+                                    DataYear = "Ind_BusinessYear";
+                                    DataVal = "Ind_Business";
+                                    break;
+                            }
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_CityName").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_IncomeYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Ind_Income").text().trim()).toFixed(0)) + '千元' + '</td>';
-                                Industry_All_Array.push($(this).children("Ind_Income").text().trim().toString());
-                                tabstr += '</td></tr>';
-
-                            });
-                        }
-                        else
-                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#Income_tablist tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
-                    }
-                }
-            })
-        }
-
-        //營利事業銷售額
-        function getSales() {
-            $.ajax({
-                type: "POST",
-                async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "../handler/GetIndustryList.aspx",
-                data: {
-                    CityNo: "All",
-                    SortName: Page.Option.SortName,
-                    SortMethod: Page.Option.SortMethod,
-                    Token: $("#InfoToken").val()
-                },
-                error: function (xhr) {
-                    alert(xhr.responseText);
-                },
-                success: function (data) {
-                    if ($(data).find("Error").length > 0) {
-                        alert($(data).find("Error").attr("Message"));
-                    }
-                    else {
-                        $("#Sales_tablist tbody").empty();
-                        var tabstr = '';
-                        if ($(data).find("data_item").length > 0) {
-                            $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_CityName").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_SalesYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Ind_Sales").text().trim()).toFixed(0)) + '千元' + '</td>';
-                                Industry_All_Array.push($(this).children("Ind_Sales").text().trim().toString());
-                                tabstr += '</td></tr>';
-                            });
-                        }
-                        else
-                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#Sales_tablist tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
-                    }
-                }
-            })
-        }
-
-        //形成群聚之產業(依工研院產科國際所群聚資料)
-        function getBusiness() {
-            $.ajax({
-                type: "POST",
-                async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "../handler/GetIndustryList.aspx",
-                data: {
-                    CityNo: "All",
-                    SortName: Page.Option.SortName,
-                    SortMethod: Page.Option.SortMethod,
-                    Token: $("#InfoToken").val()
-                },
-                error: function (xhr) {
-                    alert(xhr.responseText);
-                },
-                success: function (data) {
-                    if ($(data).find("Error").length > 0) {
-                        alert($(data).find("Error").attr("Message"));
-                    }
-                    else {
-                        $("#Business_tablist tbody").empty();
-                        var tabstr = '';
-                        if ($(data).find("data_item").length > 0) {
-                            $(data).find("data_item").each(function (i) {
+                                var tmpV = ($.isNumeric($(this).children(DataVal).text().trim())) ? Number($(this).children(DataVal).text().trim()) : 0;
+                                // Table
                                 tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_CityName").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ind_BusinessYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="center">' + $(this).children("Ind_Business").text().trim() + '</td>';
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children(DataYear).text().trim() + '年' + '</td>';
+                                if ($("#dll_Category").val() != "04")
+                                    tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpV.toFixed(FloatNum)) + ' ' + Unit + '</td>';
+                                else
+                                    tabstr += '<td>' + $(this).children(DataVal).text().trim() + '</td>';
                                 tabstr += '</td></tr>';
+
+                                // Hightchart Json
+                                objData.name = $(this).children("Ind_CityName").text().trim();
+                                // 0 & 負數 不進 highchart
+                                if (tmpV > 0) {
+                                    objData.y = tmpV;
+                                    if (JsonStr != '') JsonStr += ',';
+                                    JsonStr += JSON.stringify(objData);
+                                }
                             });
+                            
+                            if ($("#dll_Category").val() != "04") {
+                                JsonStr = "[" + JsonStr + "]";
+                                DrawChart(JsonStr);
+                                $("#ChartDiv").show();
+                            }
+                            $("#tablist tbody").empty();
+                            $("#tablist tbody").append(tabstr);
+                            $(".hugetable table").tableHeadFixer({ "left": 0 });
                         }
-                        else
-                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#Business_tablist tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
                     }
                 }
-            })
+            });
         }
 
-        //highcharts
-        function DrawChart() {
-            $('#stackedcolumn1').highcharts({
+        
+        function getdll() {
+            $.ajax({
+                type: "POST",
+                async: false, //在沒有返回值之前,不會執行下一步動作
+                url: "../handler/GetGlobalDDL.aspx",
+                data: {
+                    group: "Industry"
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    if ($(data).find("Error").length > 0) {
+                        alert($(data).find("Error").attr("Message"));
+                    }
+                    else {
+                        var ddlstr = '';
+                        if ($(data).find("data_item").length > 0) {
+                            $(data).find("data_item").each(function (i) {
+                                ddlstr += '<option value="' + $(this).children("K_ItemNo").text().trim() + '">' + $(this).children("K_Word").text().trim() + '</option>';
+                            });
+                            $("#dll_Category").empty();
+                            $("#dll_Category").append(ddlstr);
+                        }
+                    }
+                }
+            });
+        }
+
+        //hightchart
+        function DrawChart(JStr) {
+            //圓餅圖
+            $('#ChartDiv').highcharts({
                 chart: {
                     type: 'pie'
                 },
                 title: {
-                    text: titlePie
+                    text: $("#dll_Category").find("option:selected").text()
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true
+                        },
+                        showInLegend: false
+                    }
                 },
                 series: [{
                     name: '',
                     colorByPoint: true,
-                    data: [
-                        {
-                            name: '臺北市',
-                            y: parseFloat(Industry_All_Array[1])
-                        },
-                        {
-                            name: '新北市',
-                            y: parseFloat(Industry_All_Array[0])
-                        },
-                        {
-                            name: '基隆市',
-                            y: parseFloat(Industry_All_Array[17])
-                        },
-                        {
-                            name: '桃園市',
-                            y: parseFloat(Industry_All_Array[2])
-                        },
-                        {
-                            name: '宜蘭縣',
-                            y: parseFloat(Industry_All_Array[6])
-                        },
-                        {
-                            name: '新竹縣',
-                            y: parseFloat(Industry_All_Array[7])
-                        },
-                        {
-                            name: '新竹市',
-                            y: parseFloat(Industry_All_Array[18])
-                        },
-                        {
-                            name: '苗栗縣',
-                            y: parseFloat(Industry_All_Array[8])
-                        },
-                        {
-                            name: '臺中市',
-                            y: parseFloat(Industry_All_Array[3])
-                        },
-                        {
-                            name: '彰化縣',
-                            y: parseFloat(Industry_All_Array[9])
-                        },
-                        {
-                            name: '南投縣',
-                            y: parseFloat(Industry_All_Array[10])
-                        },
-                        {
-                            name: '雲林縣',
-                            y: parseFloat(Industry_All_Array[11])
-                        },
-                        {
-                            name: '嘉義縣',
-                            y: parseFloat(Industry_All_Array[12])
-                        },
-                        {
-                            name: '嘉義市',
-                            y: parseFloat(Industry_All_Array[19])
-                        },
-                        {
-                            name: '臺南市',
-                            y: parseFloat(Industry_All_Array[4])
-                        },
-                        {
-                            name: '高雄市',
-                            y: parseFloat(Industry_All_Array[5])
-                        },
-                        {
-                            name: '屏東縣',
-                            y: parseFloat(Industry_All_Array[13])
-                        },
-                        {
-                            name: '花蓮縣',
-                            y: parseFloat(Industry_All_Array[15])
-                        },
-                        {
-                            name: '臺東縣',
-                            y: parseFloat(Industry_All_Array[14])
-                        },
-                        {
-                            name: '金門縣',
-                            y: parseFloat(Industry_All_Array[20])
-                        },
-                        {
-                            name: '連江縣',
-                            y: parseFloat(Industry_All_Array[21])
-                        },
-                        {
-                            name: '澎湖縣',
-                            y: parseFloat(Industry_All_Array[16])
-                        },
-                    ]
+                    data: $.parseJSON(JStr)
                 }]
             });
         }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <input type="hidden" id="tmpGuid" />
-    <div class="WrapperBody" id="WrapperBody">
-        <div class="container margin15T" id="ContentWrapper">
-            <div class="twocol titleLineA">
-                <div class="left"><span class="font-size4">全國資料</span></div>
-                <!-- left -->
-                <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / 全國資料 / 產業</div>
-                <!-- right -->
-            </div>
-            <!-- twocol -->
-            <div style="margin-top: 10px;">
-                類別：
-        <select id="selType" name="selClass" class="inputex">
-            <option value="01">營運中工廠家數</option>
-            <option value="02">工廠營業收入</option>
-            <option value="03">營利事業銷售額</option>
-            <option value="04">形成群聚之產業(依工研院產科國際所群聚資料)</option>
-        </select>
-            </div>
-            <div class="row margin10T ">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal">
-                        <%--營運中工廠家數--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="Factory_tablist" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ind_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ind_Factory">營運中工廠家數</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--工廠營業收入--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="Income_tablist" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ind_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ind_Income">工廠營業收入</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--營利事業銷售額--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="Sales_tablist" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ind_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ind_Sales">營利事業銷售額</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--形成群聚之產業(依工研院產科國際所群聚資料)--%>
-                        <%--營利事業銷售額--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="Business_tablist" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ind_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ind_Business">形成群聚之產業(依工研院產科國際所群聚資料)</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- col -->
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div id="stackedcolumn1" class="maxWithA"></div>
-                </div>
-                <!-- col -->
-            </div>
-            <!-- row -->
-        </div>
+    <div class="twocol titleLineA">
+        <div class="left"><span class="font-size4">全國資料</span></div>
+        <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / 全國資料 / 產業</div>
     </div>
-    <!-- WrapperBody -->
+
+    <div class="margin20T">
+        類別：<select id="dll_Category" class="inputex"></select>
+    </div>
+    <div class="row margin20T">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal">
+                <table border="0" cellspacing="0" cellpadding="0" width="100%" id="tablist">
+                    <thead>
+                        <tr>
+                            <th nowrap="nowrap" style="width: 50px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ind_CityNo">縣市</a></th>
+                            <th nowrap="nowrap" style="width: 50px;">資料時間</th>
+                            <th nowrap="nowrap" style="width: 150px;"><a id="UnitHead" href="javascript:void(0);" name="sortbtn">營運中工廠家數</a></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div><!-- col -->
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div id="ChartDiv" class="maxWithA"></div>
+        </div><!-- col -->
+    </div>
 </asp:Content>
