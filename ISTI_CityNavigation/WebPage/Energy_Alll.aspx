@@ -3,11 +3,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".CityClass").hide();
-
-            /// 表頭排序設定
+            // 表頭排序設定
             Page.Option.SortMethod = "+";
             Page.Option.SortName = "Ene_CityNo";
+
+            getdll();
+            getData();
 
             ///Highcharts千分位
             Highcharts.setOptions({
@@ -31,70 +32,20 @@
                     Page.Option.SortMethod = "-";
                     $(this).addClass('desc');
                 }
-                switch ($("#selType").val()) {
-                    case "01":
-                        getData();
-                        break;
-                    case "02":
-                        getTPCBuyElectricity();
-                        break;
-                    case "03":
-                        getElectricityUsed();
-                        break;
-                    case "04":
-                        getReEnergyOfElectricityRate();
-                        break;
-                }
+                
+                getData();
             });
 
-            defaultInfo();
-
-
-            $(document).on("change", "#selType", function () {
-                $(".CityClass").hide();
+            // 切換下拉選單
+            $(document).on("change", "#dll_Category", function () {
+                $("a[name='sortbtn']").removeClass("asc desc");
                 Page.Option.SortMethod = "+";
                 Page.Option.SortName = "Ene_CityNo";
-                Energy_All_Array.length = 0;
-                switch ($("#selType").val()) {
-                    case "01":
-                        document.getElementById("DeviceCapacityNum_tablist").style.display = "";
-                        getData();
-                        titlePie = "再生能源裝置容量數";
-                        DrawChart(titlePie);
-                        break;
-                    case "02":
-                        document.getElementById("TPCBuyElectricity_tablist").style.display = "";
-                        getTPCBuyElectricity();
-                        titlePie = "台電購入再生能源電量";
-                        DrawChart(titlePie);
-                        break;
-                    case "03":
-                        document.getElementById("ElectricityUsed_tablist").style.display = "";
-                        getElectricityUsed();
-                        titlePie = "用電量";
-                        DrawChart(titlePie);
-                        break;
-                    case "04":
-                        document.getElementById("ReEnergyOfElectricityRate_tablist").style.display = "";
-                        getReEnergyOfElectricityRate();
-                        titlePie = "再生能源電量佔用電量比例";
-                        DrawChart(titlePie);
-                        break;
-                }
+                $("#UnitHead").html($(this).find("option:selected").text()); 
+                getData();
             });
+        });// end js
 
-        }); //js end
-
-
-        var Energy_All_Array = [];
-        function defaultInfo() {
-            document.getElementById("DeviceCapacityNum_tablist").style.display = "";
-            getData();
-            titlePie = "再生能源裝置容量數";
-            DrawChart(titlePie);
-        }
-
-        //再生能源裝置容量數
         function getData() {
             $.ajax({
                 type: "POST",
@@ -114,27 +65,65 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#DeviceCapacityNum_tablist tbody").empty();
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
+                            var objData = new Object();
+                            var JsonStr = "", Unit = "", DataYear = "", DataVal = "", FloatNum = 0;
+                            switch ($("#dll_Category").val()) {
+                                case "01":
+                                    $("#UnitHead").attr("sortname", "Ene_DeviceCapacityNum");
+                                    Unit = "千瓦";
+                                    DataYear = "Ene_DeviceCapacityNumYear";
+                                    DataVal = "Ene_DeviceCapacityNum";
+                                    break;
+                                case "02":
+                                    $("#UnitHead").attr("sortname", "Ene_TPCBuyElectricity");
+                                    Unit = "度";
+                                    DataYear = "Ene_TPCBuyElectricityYear";
+                                    DataVal = "Ene_TPCBuyElectricity";
+                                    break;
+                                case "03":  
+                                    $("#UnitHead").attr("sortname", "Ene_ElectricityUsed");
+                                    Unit = "度";
+                                    DataYear = "Ene_ElectricityUsedYear";
+                                    DataVal = "Ene_ElectricityUsed";
+                                    break;
+                                case "04":
+                                    $("#UnitHead").attr("sortname", "Ene_ReEnergyOfElectricityRate");
+                                    Unit = "%";
+                                    DataYear = "Ene_ReEnergyOfElectricityRateYear";
+                                    DataVal = "Ene_ReEnergyOfElectricityRate";
+                                    FloatNum = 2;
+                                    break;
+                            }
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
+                                var tmpV = ($.isNumeric($(this).children(DataVal).text().trim())) ? Number($(this).children(DataVal).text().trim()) : 0;
+                                // Table
+                                tabstr += '<tr>';
                                 tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ene_CityName").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ene_DeviceCapacityNumYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Ene_DeviceCapacityNum").text().trim()).toFixed(0)) + '千瓦' + '</td>';
-                                Energy_All_Array.push($(this).children("Ene_DeviceCapacityNum").text().trim().toString());
+                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children(DataYear).text().trim() + '年' + '</td>';
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(tmpV.toFixed(FloatNum)) + ' ' + Unit + '</td>';
                                 tabstr += '</td></tr>';
+
+                                // Hightchart Json
+                                objData.name = $(this).children("Ene_CityName").text().trim();
+                                // 0 & 負數 不進 highchart
+                                if (tmpV > 0) {
+                                    objData.y = tmpV;
+                                    if (JsonStr != '') JsonStr += ',';
+                                    JsonStr += JSON.stringify(objData);
+                                }
                             });
+
+                            JsonStr = "[" + JsonStr + "]";
+                            DrawChart(JsonStr);
+                            $("#tablist tbody").empty();
+                            $("#tablist tbody").append(tabstr);
+                            $(".hugetable table").tableHeadFixer({ "left": 0 });
                         }
-                        else
-                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#DeviceCapacityNum_tablist tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
                     }
                 }
-            })
+            });
         }
 
         //台電購入再生能源電量
@@ -180,17 +169,13 @@
             })
         }
 
-        //用電量
-        function getElectricityUsed() {
+        function getdll() {
             $.ajax({
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "../handler/GetEnergyList.aspx",
+                url: "../handler/GetGlobalDDL.aspx",
                 data: {
-                    CityNo: "All",
-                    SortName: Page.Option.SortName,
-                    SortMethod: Page.Option.SortMethod,
-                    Token: $("#InfoToken").val()
+                    group: "Energy"
                 },
                 error: function (xhr) {
                     alert(xhr.responseText);
@@ -200,257 +185,75 @@
                         alert($(data).find("Error").attr("Message"));
                     }
                     else {
-                        $("#ElectricityUsed_tablist tbody").empty();
-                        var tabstr = '';
+                        var ddlstr = '';
                         if ($(data).find("data_item").length > 0) {
                             $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ene_CityName").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ene_ElectricityUsedYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Ene_ElectricityUsed").text().trim()).toFixed(0)) + '度' + '</td>';
-                                Energy_All_Array.push($(this).children("Ene_ElectricityUsed").text().trim().toString());
-                                tabstr += '</td></tr>';
+                                ddlstr += '<option value="' + $(this).children("K_ItemNo").text().trim() + '">' + $(this).children("K_Word").text().trim() + '</option>';
                             });
+                            $("#dll_Category").empty();
+                            $("#dll_Category").append(ddlstr);
                         }
-                        else
-                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#ElectricityUsed_tablist tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
                     }
                 }
-            })
+            });
         }
 
-        //再生能源電量佔用電量比例
-        function getReEnergyOfElectricityRate() {
-            $.ajax({
-                type: "POST",
-                async: false, //在沒有返回值之前,不會執行下一步動作
-                url: "../handler/GetEnergyList.aspx",
-                data: {
-                    CityNo: "All",
-                    SortName: Page.Option.SortName,
-                    SortMethod: Page.Option.SortMethod,
-                    Token: $("#InfoToken").val()
-                },
-                error: function (xhr) {
-                    alert(xhr.responseText);
-                },
-                success: function (data) {
-                    if ($(data).find("Error").length > 0) {
-                        alert($(data).find("Error").attr("Message"));
-                    }
-                    else {
-                        $("#ReEnergyOfElectricityRate_tablist tbody").empty();
-                        var tabstr = '';
-                        if ($(data).find("data_item").length > 0) {
-                            $(data).find("data_item").each(function (i) {
-                                tabstr += (i % 2 == 1) ? '<tr>' : '<tr class="alt">';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ene_CityName").text().trim() + '</td>';
-                                tabstr += '<td align="center" nowrap="nowrap">' + $(this).children("Ene_ReEnergyOfElectricityRateYear").text().trim() + '年' + '</td>';
-                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($(this).children("Ene_ReEnergyOfElectricityRate").text().trim()).toFixed(2)) + '%' + '</td>';
-                                Energy_All_Array.push($(this).children("Ene_ReEnergyOfElectricityRate").text().trim().toString());
-                                tabstr += '</td></tr>';
-                            });
-                        }
-                        else
-                            tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';
-                        $("#ReEnergyOfElectricityRate_tablist tbody").append(tabstr);
-                        // 固定表頭
-                        // left : 左側兩欄固定(需為th)
-                        $(".hugetable table").tableHeadFixer({ "left": 0 });
-                    }
-                }
-            })
-        }
-
-
-        //highcharts
-        function DrawChart(titlePie) {
-            $('#stackedcolumn1').highcharts({
+        //hightchart
+        function DrawChart(JStr) {
+            //圓餅圖
+            $('#ChartDiv').highcharts({
                 chart: {
                     type: 'pie'
                 },
                 title: {
-                    text: titlePie
+                    text: $("#dll_Category").find("option:selected").text()
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true
+                        },
+                        showInLegend: false
+                    }
                 },
                 series: [{
                     name: '',
                     colorByPoint: true,
-                    data: [
-                        {
-                            name: '臺北市',
-                            y: parseFloat(Energy_All_Array[1])
-                        },
-                        {
-                            name: '新北市',
-                            y: parseFloat(Energy_All_Array[0])
-                        },
-                        {
-                            name: '基隆市',
-                            y: parseFloat(Energy_All_Array[17])
-                        },
-                        {
-                            name: '桃園市',
-                            y: parseFloat(Energy_All_Array[2])
-                        },
-                        {
-                            name: '宜蘭縣',
-                            y: parseFloat(Energy_All_Array[6])
-                        },
-                        {
-                            name: '新竹縣',
-                            y: parseFloat(Energy_All_Array[7])
-                        },
-                        {
-                            name: '新竹市',
-                            y: parseFloat(Energy_All_Array[18])
-                        },
-                        {
-                            name: '苗栗縣',
-                            y: parseFloat(Energy_All_Array[8])
-                        },
-                        {
-                            name: '臺中市',
-                            y: parseFloat(Energy_All_Array[3])
-                        },
-                        {
-                            name: '彰化縣',
-                            y: parseFloat(Energy_All_Array[9])
-                        },
-                        {
-                            name: '南投縣',
-                            y: parseFloat(Energy_All_Array[10])
-                        },
-                        {
-                            name: '雲林縣',
-                            y: parseFloat(Energy_All_Array[11])
-                        },
-                        {
-                            name: '嘉義縣',
-                            y: parseFloat(Energy_All_Array[12])
-                        },
-                        {
-                            name: '嘉義市',
-                            y: parseFloat(Energy_All_Array[19])
-                        },
-                        {
-                            name: '臺南市',
-                            y: parseFloat(Energy_All_Array[4])
-                        },
-                        {
-                            name: '高雄市',
-                            y: parseFloat(Energy_All_Array[5])
-                        },
-                        {
-                            name: '屏東縣',
-                            y: parseFloat(Energy_All_Array[13])
-                        },
-                        {
-                            name: '花蓮縣',
-                            y: parseFloat(Energy_All_Array[15])
-                        },
-                        {
-                            name: '臺東縣',
-                            y: parseFloat(Energy_All_Array[14])
-                        },
-                        {
-                            name: '金門縣',
-                            y: parseFloat(Energy_All_Array[20])
-                        },
-                        {
-                            name: '連江縣',
-                            y: parseFloat(Energy_All_Array[21])
-                        },
-                        {
-                            name: '澎湖縣',
-                            y: parseFloat(Energy_All_Array[16])
-                        },
-                    ]
+                    data: $.parseJSON(JStr)
                 }]
             });
         }
+    
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <input type="hidden" id="tmpGuid" />
-    <div class="WrapperBody" id="WrapperBody">
-        <div class="container margin15T" id="ContentWrapper">
-            <div class="twocol titleLineA">
-                <div class="left"><span class="font-size4">全國資料</span></div>
-                <!-- left -->
-                <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / 全國資料 / 能源</div>
-                <!-- right -->
-            </div>
-            <!-- twocol -->
-            <div style="margin-top: 10px;">
-                類別：
-        <select id="selType" name="selClass" class="inputex">
-            <option value="01">再生能源裝置容量數</option>
-            <option value="02">台電購入再生能源電量</option>
-            <option value="03">用電量</option>
-            <option value="04">再生能源電量佔用電量比例</option>
-        </select>
-            </div>
-            <div class="row margin10T ">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal">
-                        <%--再生能源裝置容量數--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="DeviceCapacityNum_tablist" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ene_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ene_DeviceCapacityNum">再生能源裝置容量數</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--台電購入再生能源電量--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="TPCBuyElectricity_tablist" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ene_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ene_TPCBuyElectricity">台電購入再生能源電量</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--用電量--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="ElectricityUsed_tablist" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ene_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ene_ElectricityUsed">用電量</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <%--再生能源電量佔用電量比例--%>
-                        <table border="0" cellspacing="0" cellpadding="0" width="100%" id="ReEnergyOfElectricityRate_tablist" class="CityClass">
-                            <thead>
-                                <tr>
-                                    <th nowrap="nowrap" style="width: 40px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ene_CityNo">縣市</a></th>
-                                    <th nowrap="nowrap" style="width: 150px;">資料時間</th>
-                                    <th nowrap="nowrap" style="width: 150px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ene_ReEnergyOfElectricityRate">再生能源電量佔用電量比例</a></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- col -->
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div id="stackedcolumn1" class="maxWithA"></div>
-                </div>
-                <!-- col -->
-            </div>
-            <!-- row -->
-        </div>
+     <div class="twocol titleLineA">
+        <div class="left"><span class="font-size4">全國資料</span></div>
+        <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / 全國資料 / 能源</div>
     </div>
-    <!-- WrapperBody -->
+
+    <div class="margin20T">
+        類別：<select id="dll_Category" class="inputex"></select>
+    </div>
+    <div class="row margin20T">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal">
+                <table border="0" cellspacing="0" cellpadding="0" width="100%" id="tablist">
+                    <thead>
+                        <tr>
+                            <th nowrap="nowrap" style="width: 50px;"><a href="javascript:void(0);" name="sortbtn" sortname="Ene_CityNo">縣市</a></th>
+                            <th nowrap="nowrap" style="width: 50px;">資料時間</th>
+                            <th nowrap="nowrap" style="width: 150px;"><a id="UnitHead" href="javascript:void(0);" name="sortbtn">再生能源裝置容量數</a></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div><!-- col -->
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div id="ChartDiv" class="maxWithA"></div>
+        </div><!-- col -->
+    </div>
 </asp:Content>
