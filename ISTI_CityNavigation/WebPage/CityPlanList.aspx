@@ -236,7 +236,7 @@
                                 $(data).find("data_item").each(function (i) {
                                     tabstr += '<tr>';
                                     tabstr += '<td nowrap align="center">' + $(this).children("CP_PlanSchedule").text().trim() + '</td>';
-                                    tabstr += '<td nowrap align="center">' + $(this).children("CP_No").text().trim() + '</td>';
+                                    tabstr += '<td nowrap align="center">' + (i + 1) + '</td>';
                                     tabstr += '<td nowrap align="center">' + $(this).children("CP_PlanType").text().trim() + '</td>';
                                     tabstr += '<td nowrap align="center">' + $(this).children("CP_HostCompany").text().trim() + '</td>';
                                     tabstr += '<td align="center">' + $(this).children("CP_JointCompany").text().trim() + '</td>';

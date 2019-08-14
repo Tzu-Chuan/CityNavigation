@@ -153,7 +153,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
             int maxV = csm_db.getMaxVersion() + 1;
             DataTable dt = CreateCitySubMoney();
             /// 資料從第3筆開始
-            for (int i = 2; i < sheet.PhysicalNumberOfRows - 1; i++)
+            for (int i = 2; i < 25; i++)
             {
                 err = "Sheet Name：" + sheet.SheetName.Trim() + "<br>";
                 err += "行數：第 " + (i + 1).ToString() + " 筆";

@@ -91,5 +91,5 @@
     <div id="TabDiv" class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal margin20T margin10B">
         <table id="tablist" border="0" cellspacing="0" cellpadding="0" width="100%"></table>
     </div>
-    <div style="font-size:14pt; color:red;">機密資料，不宜外流！</div>
+    <div style="font-size:14pt; color:red; text-align:right;">機密資料，不宜外流！</div>
 </asp:Content>

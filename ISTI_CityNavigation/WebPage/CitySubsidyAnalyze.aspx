@@ -58,6 +58,8 @@
                                     tabstr += '<td nowrap align="center">' + (parseFloat($(this).children("C_CitySubMoneyRatio").text().trim()) * 100).toFixed(0) + '%</td>';
                                     tabstr += '<td nowrap align="center">' + (parseFloat($(this).children("C_CityTotalMoneyRatio").text().trim()) * 100).toFixed(0) + '%</td>';
                                     tabstr += '</tr>';
+
+                                    $("#plancount_txt").html($(this).children("C_PlanCount").text().trim());
                                 }
                             });
                             $("#tablist tbody").empty();
@@ -86,7 +88,9 @@
         </div><!-- tabmenublock -->
     </div><!-- tabmenublockV2wrapper -->
 
-    <div id="TabDiv" class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal margin20T margin10B">
+    <div class="margin20T" style="font-size:12pt;">註1：各縣市補助經費係依該縣市人口數占比進行分攤計算</div>
+    <div style="font-size:12pt;">註2：計畫總件數 <span id="plancount_txt"></span> 件，場域為全區 17 件</div>
+    <div id="TabDiv" class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal margin5T margin10B">
         <table id="tablist" border="0" cellspacing="0" cellpadding="0" width="100%">
             <thead>
                 <tr>
@@ -108,5 +112,5 @@
             <tbody></tbody>
         </table>
     </div>
-    <div style="font-size:14pt; color:red;">機密資料，不宜外流！</div>
+    <div style="font-size:14pt; color:red; text-align:right">機密資料，不宜外流！</div>
 </asp:Content>
