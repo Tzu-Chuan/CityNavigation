@@ -1,5 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Energy_Alll.aspx.cs" Inherits="ISTI_CityNavigation.WebPage.Energy_Alll" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Energy_All.aspx.cs" Inherits="ISTI_CityNavigation.WebPage.Energy_All" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
@@ -8,6 +7,10 @@
             Page.Option.SortName = "Ene_CityNo";
 
             getdll();
+
+            if ($.getQueryString("tp") != "")
+                $("#dll_Category").val($.getQueryString("tp"));
+
             getData();
 
             ///Highcharts千分位
@@ -41,7 +44,6 @@
                 $("a[name='sortbtn']").removeClass("asc desc");
                 Page.Option.SortMethod = "+";
                 Page.Option.SortName = "Ene_CityNo";
-                $("#UnitHead").html($(this).find("option:selected").text()); 
                 getData();
             });
         });// end js
@@ -69,6 +71,7 @@
                         if ($(data).find("data_item").length > 0) {
                             var objData = new Object();
                             var JsonStr = "", Unit = "", DataYear = "", DataVal = "", FloatNum = 0;
+                            $("#UnitHead").html($("#dll_Category").find("option:selected").text());
                             switch ($("#dll_Category").val()) {
                                 case "01":
                                     $("#UnitHead").attr("sortname", "Ene_DeviceCapacityNum");
@@ -229,7 +232,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <div class="twocol titleLineA">
+    <div class="twocol titleLineA">
         <div class="left"><span class="font-size4">全國資料</span></div>
         <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / 全國資料 / 能源</div>
     </div>

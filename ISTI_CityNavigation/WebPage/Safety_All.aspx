@@ -8,6 +8,10 @@
             Page.Option.SortName = "Sf_CityNo";
 
             getdll();
+
+            if ($.getQueryString("tp") != "")
+                $("#dll_Category").val($.getQueryString("tp"));
+
             getData();
 
             ///Highcharts千分位
@@ -41,7 +45,6 @@
                 $("a[name='sortbtn']").removeClass("asc desc");
                 Page.Option.SortMethod = "+";
                 Page.Option.SortName = "Sf_CityNo";
-                $("#UnitHead").html($(this).find("option:selected").text()); 
                 getData();
             });
         });// end js
@@ -70,6 +73,7 @@
                         if ($(data).find("data_item").length > 0) {
                             var objData = new Object();
                             var JsonStr = "", Unit = "", DataYear = "", DataVal = "", FloatNum = 0;
+                            $("#UnitHead").html($("#dll_Category").find("option:selected").text());
                             switch ($("#dll_Category").val()) {
                                 case "01":
                                     $("#UnitHead").attr("sortname", "Sf_SoilArea");

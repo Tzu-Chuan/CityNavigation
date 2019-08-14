@@ -10,6 +10,6 @@
 namespace ISTI_CityNavigation.WebPage {
     
     
-    public partial class Energy_Alll {
+    public partial class Energy_All {
     }
 }

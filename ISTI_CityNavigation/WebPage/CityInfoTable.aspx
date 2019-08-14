@@ -84,58 +84,58 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx">年底戶籍總人口數</a></td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx?tp=01">年底戶籍總人口數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("P_TotalYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right">' + $.FormatThousandGroup(Number($("P_PeopleTotal", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
                             tabstr += '<tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">年底戶籍總人口數成長率</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx?tp=02">年底戶籍總人口數成長率</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("P_PeopleTotalPercentYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_PeopleTotalPercent", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
+                          
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx?tp=03">土地面積</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_AreaYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_Area", data).text().trim()).toFixed(2)) + 'km<sup>2</sup>' + '</td>';
+                            tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">0-14歲幼年人口數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx?tp=04">0-14歲幼年人口數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("P_ChildYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_Child", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">0-14歲幼年人口比例</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx?tp=05">0-14歲幼年人口比例</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("P_ChildPercentYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_ChildPercent", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">15-64歲青壯年人口數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx?tp=06">15-64歲青壯年人口數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("P_TeenagerYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_Teenager", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">15-64歲青壯年人口比例</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx?tp=07">15-64歲青壯年人口比例</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("P_TeenagerPercentYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_TeenagerPercent", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">65歲以上老年人口數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx?tp=08">65歲以上老年人口數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("P_OldMenYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_OldMen", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">65歲以上歲老年人口比例</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Population_All.aspx?tp=09">65歲以上歲老年人口比例</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("P_OldMenPercentYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_OldMenPercent", data).text().trim()).toFixed(2)) + '%' + '</td>';
-                            tabstr += '</td></tr>';
-                          
-                            tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">土地面積</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("P_AreaYear", data).text().trim() + '年' + '</td>';
-                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("P_Area", data).text().trim()).toFixed(2)) + 'km<sup>2</sup>' + '</td>';
                             tabstr += '</td></tr>';
                         }
                         else
@@ -168,9 +168,15 @@
                     else {
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Travel_All.aspx?tp=01">觀光遊憩據點(縣市)人次統計</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("T_PointYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_PointPeople", data).text().trim()).toFixed(0)) + '人次' + '</td>';
+                            tabstr += '</td></tr>';
+
                             var T_HotelUseRate = $("T_HotelUseRate", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">觀光旅館住用率</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Travel_All.aspx?tp=02">觀光旅館住用率</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("T_HotelUseYear", data).text().trim() + '年' + '</td>';
                             if (T_HotelUseRate != "─") {
                                 tabstr += '<td align="right">' + $.FormatThousandGroup(Number($("T_HotelUseRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
@@ -180,15 +186,9 @@
                             }
                             tabstr += '</td></tr>';
                             
-                            tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">觀光遊憩據點(縣市)人次統計</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("T_PointYear", data).text().trim() + '年' + '</td>';
-                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_PointPeople", data).text().trim()).toFixed(0)) + '人次' + '</td>';
-                            tabstr += '</td></tr>';
-                            
                             var T_Hotels = $("T_Hotels", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">觀光旅館家數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Travel_All.aspx?tp=03">觀光旅館家數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("T_HotelsYear", data).text().trim() + '年' + '</td>';
                             if (T_Hotels != "─") {
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_Hotels", data).text().trim()).toFixed(0)) + '家' + '</td>';
@@ -200,7 +200,7 @@
                             
                             var T_HotelRooms = $("T_HotelRooms", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">觀光旅館房間數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Travel_All.aspx?tp=04">觀光旅館房間數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("T_HotelRoomsYear", data).text().trim() + '年' + '</td>';
                             if (T_HotelRooms != "─") {
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_HotelRooms", data).text().trim()).toFixed(0)) + '間' + '</td>';
@@ -213,7 +213,7 @@
 
                             var T_HotelAvgPrice = $("T_HotelAvgPrice", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">觀光旅館平均房價</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Travel_All.aspx?tp=05">觀光旅館平均房價</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("T_HotelAvgPriceYear", data).text().trim() + '年' + '</td>';
                             if (T_HotelAvgPrice != "─") {
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_HotelAvgPrice", data).text().trim()).toFixed(0)) + '元' + '</td>';
@@ -254,61 +254,61 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">通勤學民眾運具次數之公共運具市佔率</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=01">通勤學民眾運具次數之公共運具市佔率</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_PublicTransportRateYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right">' + $.FormatThousandGroup(Number($("Tra_PublicTransportRate", data).text().trim()).toFixed(1)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">自小客車在居家附近每次尋找停車位時間</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=02">自小客車在居家附近每次尋找停車位時間</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_CarParkTimeYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_CarParkTime", data).text().trim()).toFixed(1)) + '分鐘' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">小汽車路邊停車位</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=31">小汽車路邊停車位</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_CarRoadsidParkSpaceYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_CarRoadsidParkSpace", data).text().trim()).toFixed(0)) + '個' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">小汽車路外停車位</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=04">小汽車路外停車位</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_CarRoadOutsideParkSpaceYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_CarRoadOutsideParkSpace", data).text().trim()).toFixed(0)) + '個' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">每萬輛小型車擁有路外及路邊停車位數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=05">每萬輛小型車擁有路外及路邊停車位數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_10KHaveCarParkYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_10KHaveCarPark", data).text().trim()).toFixed(2)) + '位／萬輛' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">汽車登記數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=06">汽車登記數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_CarCountYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_CarCount", data).text().trim()).toFixed(0)) + '輛' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">每百人擁有汽車數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=07">每百人擁有汽車數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_100HaveCarYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_100HaveCar", data).text().trim()).toFixed(1)) + '輛' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">每百人擁有汽車數成長率</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=08">每百人擁有汽車數成長率</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_100HaveCarRateYearDec", data).text().trim() + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_100HaveCarRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">每萬輛機動車肇事數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=09">每萬輛機動車肇事數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_10KMotoIncidentsNumYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_10KMotoIncidentsNum", data).text().trim()).toFixed(2)) + '次' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">每十萬人道路交通事故死傷人數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=10">每十萬人道路交通事故死傷人數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_100KNumberOfCasualtiesYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_100KNumberOfCasualties", data).text().trim()).toFixed(2)) + '人' + '</td>';
                             tabstr += '</td></tr>';
@@ -346,44 +346,44 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">臺閩地區農業天然災害產物損失</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Farming_All.aspx?tp=01">臺閩地區農業天然災害產物損失</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Fa_FarmingLossYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right">' + $.FormatThousandGroup(Number($("Fa_FarmingLoss", data).text().trim()).toFixed(0)) + '千元' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">天然災害畜牧業產物損失</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Farming_All.aspx?tp=02">天然災害畜牧業產物損失</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Fa_AnimalLossYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Fa_AnimalLoss", data).text().trim()).toFixed(0)) + '千元' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">天然災害漁業產物損失</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Farming_All.aspx?tp=03">天然災害漁業產物損失</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Fa_FishLossYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Fa_FishLoss", data).text().trim()).toFixed(0)) + '千元' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">臺閩地區林業天然災害產物損失</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Farming_All.aspx?tp=04">臺閩地區林業天然災害產物損失</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Fa_ForestLossYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Fa_ForestLoss", data).text().trim()).toFixed(0)) + '千元' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">農林漁牧天然災害產物損失</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Farming_All.aspx?tp=05">農林漁牧天然災害產物損失</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Fa_AllLossYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Fa_AllLoss", data).text().trim()).toFixed(0)) + '千元' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">農林漁牧天然災害設施(備)損失</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Farming_All.aspx?tp=06">農林漁牧天然災害設施(備)損失</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Fa_FacilityLossYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Fa_FacilityLoss", data).text().trim()).toFixed(0)) + '千元' + '</td>';
                             tabstr += '</td></tr>';
                            
                             var Fa_FarmingOutputValueYear_Str = $("Fa_FarmingOutputValue", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">農業產值</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Farming_All.aspx?tp=07">農業產值</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Fa_FarmingOutputValueYear", data).text().trim() + '年' + '</td>';
                             if (Fa_FarmingOutputValueYear_Str != "─") {
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Fa_FarmingOutputValue", data).text().trim()).toFixed(0)) + '千元' + '</td>';
@@ -395,7 +395,7 @@
                             
                             var Fa_FarmingOutputRate_Str = $("Fa_FarmingOutputRate", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">農業產值成長率</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Farming_All.aspx?tp=08">農業產值成長率</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Fa_FarmingOutputRateYearDesc", data).text().trim() + '年' + '</td>';
                             if (Fa_FarmingOutputRate_Str != "─") {
                                     tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Fa_FarmingOutputRate", data).text().trim()).toFixed(2)) + '%'+'</td>';
@@ -406,7 +406,7 @@
 
                             var Fa_Farmer_Str = $("Fa_Farmer", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">農戶人口數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Farming_All.aspx?tp=09">農戶人口數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Fa_FarmerYear", data).text().trim() + '年' + '</td>';
                             if (Fa_Farmer_Str != "─") {
                                     tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Fa_Farmer", data).text().trim()).toFixed(0)) + '人'+'</td>';
@@ -417,7 +417,7 @@
 
                             var Fa_FarmEmploymentOutputValue_Str = $("Fa_FarmEmploymentOutputValue", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">平均農業從業人口產值</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Farming_All.aspx?tp=10">平均農業從業人口產值</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Fa_FarmEmploymentOutputValueYear", data).text().trim() + '年' + '</td>';
                             if (Fa_FarmEmploymentOutputValue_Str != "─") {
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Fa_FarmEmploymentOutputValue", data).text().trim()).toFixed(0)) + '千元' + '</td>';
@@ -458,27 +458,27 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">形成群聚之產業(依工研院產科國際所群聚資料)</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("Ind_BusinessYear", data).text().trim() + '年' + '</td>';
-                            tabstr += '<td align="center">' + $("Ind_Business", data).text().trim() + '</td>';
-                            tabstr += '</td></tr>';
-
-                            tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">營運中工廠家數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Industry_All.aspx?tp=01">營運中工廠家數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Ind_FactoryYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Ind_Factory", data).text().trim()).toFixed(0)) + '家' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">工廠營業收入</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Industry_All.aspx?tp=02">工廠營業收入</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Ind_IncomeYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Ind_Income", data).text().trim()).toFixed(0)) + '千元' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">營利事業銷售額</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Industry_All.aspx?tp=03">營利事業銷售額</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Ind_SalesYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Ind_Sales", data).text().trim()).toFixed(0)) + '千元' + '</td>';
+                            tabstr += '</td></tr>';
+
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Industry_All.aspx?tp=04">形成群聚之產業(依工研院產科國際所群聚資料)</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Ind_BusinessYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="center">' + $("Ind_Business", data).text().trim() + '</td>';
                             tabstr += '</td></tr>';
                         }
                         else
@@ -513,7 +513,7 @@
                         if ($(data).find("data_item").length > 0) {
                             var Re_StreetStand = $("Re_StreetStand", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">攤販經營家數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Retail_All.aspx?tp=01">攤販經營家數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Re_StreetStandYear", data).text().trim() + '年' + '</td>';
                             if (Re_StreetStand != "─") {
                                 tabstr += '<td align="right">' + $.FormatThousandGroup(Number($("Re_StreetStand", data).text().trim()).toFixed(0)) + '家' + '</td>';
@@ -525,7 +525,7 @@
                            
                             var Re_StreetVendor = $("Re_StreetVendor", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">攤販從業人數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Retail_All.aspx?tp=02">攤販從業人數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Re_Re_StreetVendorYear", data).text().trim() + '年' + '</td>';
                             if (Re_StreetVendor != "─") {
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Re_StreetVendor", data).text().trim()).toFixed(0)) + '人' + '</td>';
@@ -537,7 +537,7 @@
 
                             var Re_StreetVendorIncome = $("Re_StreetVendorIncome", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">攤販全年收入</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Retail_All.aspx?tp=03">攤販全年收入</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Re_StreetVendorIncomeYear", data).text().trim() + '年' + '</td>';
                             if (Re_StreetVendorIncome != "─") {
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Re_StreetVendorIncome", data).text().trim()).toFixed(0)) + '千元' + '</td>';
@@ -550,7 +550,7 @@
 
                             var Re_StreetVendorAvgIncome = $("Re_StreetVendorAvgIncome", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">攤販全年平均收入</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Retail_All.aspx?tp=04">攤販全年平均收入</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Re_StreetVendorAvgIncomeYear", data).text().trim() + '年' + '</td>';
                             if (Re_StreetVendorAvgIncome != "─") {
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Re_StreetVendorAvgIncome", data).text().trim()).toFixed(0)) + '千元' + '</td>';
@@ -561,19 +561,19 @@
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">零售業營利事業銷售額</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Retail_All.aspx?tp=05">零售業營利事業銷售額</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Re_RetailBusinessSalesYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Re_RetailBusinessSales", data).text().trim()).toFixed(0)) + '千元' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">零售業營利事業銷售額成長率</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Retail_All.aspx?tp=06">零售業營利事業銷售額成長率</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Re_RetailBusinessSalesRateYearDesc", data).text().trim() + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Re_RetailBusinessSalesRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">零售業營利事業平均每家銷售額</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Retail_All.aspx?tp=07">零售業營利事業平均每家銷售額</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Re_RetailBusinessAvgSalesYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Re_RetailBusinessAvgSales", data).text().trim()).toFixed(2)) + '千元' + '</td>';
                             tabstr += '</td></tr>';
@@ -610,56 +610,56 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">土壤污染控制場址面積</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Safety_All.aspx?tp=01">土壤污染控制場址面積</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Sf_SoilAreaYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right">' + $.FormatThousandGroup(Number($("Sf_SoilArea", data).text().trim()).toFixed(0)) + 'm<sup>2</sup>' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">地下水受污染使用限制面積</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Safety_All.aspx?tp=02">地下水受污染使用限制面積</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Sf_UnderWaterAreaYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Sf_UnderWaterArea", data).text().trim()).toFixed(0)) + 'm<sup>2</sup>' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">總懸浮微粒排放量</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Safety_All.aspx?tp=03">總懸浮微粒排放量</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Sf_PM25QuantityYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Sf_PM25Quantity", data).text().trim()).toFixed(2)) + '公噸' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">每萬人火災發生次數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Safety_All.aspx?tp=04">每萬人火災發生次數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Sf_10KPeopleFireTimesYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Sf_10KPeopleFireTimes", data).text().trim()).toFixed(2)) + '次' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">每十萬人竊盜案發生數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Safety_All.aspx?tp=05">每十萬人竊盜案發生數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Sf_100KPeopleBurglaryTimesYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Sf_100KPeopleBurglaryTimes", data).text().trim()).toFixed(2)) + '件' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">竊盜案破獲率</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Safety_All.aspx?tp=06">竊盜案破獲率</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Sf_BurglaryClearanceRateYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Sf_BurglaryClearanceRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">每十萬人刑案發生數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Safety_All.aspx?tp=07">每十萬人刑案發生數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Sf_100KPeopleCriminalCaseTimesYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Sf_100KPeopleCriminalCaseTimes", data).text().trim()).toFixed(2)) + '件' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">刑案破獲率</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Safety_All.aspx?tp=08">刑案破獲率</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Sf_CriminalCaseClearanceRateYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Sf_CriminalCaseClearanceRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
 
                             var Sf_100KPeopleViolentCrimesTimes = $("Sf_100KPeopleViolentCrimesTimes", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">每十萬人暴力犯罪發生數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Safety_All.aspx?tp=09">每十萬人暴力犯罪發生數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Sf_100KPeopleViolentCrimesTimesYear", data).text().trim() + '年' + '</td>';
                             if (Sf_100KPeopleViolentCrimesTimes != "─") {
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Sf_100KPeopleViolentCrimesTimes", data).text().trim()).toFixed(2)) + '件' + '</td>';
@@ -671,7 +671,7 @@
 
                             var Sf_ViolentCrimesClearanceRate = $("Sf_ViolentCrimesClearanceRate", data).text().trim();
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">暴力犯罪破獲率</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Safety_All.aspx?tp=10">暴力犯罪破獲率</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Sf_ViolentCrimesClearanceRateYear", data).text().trim() + '年' + '</td>';
                             if (Sf_ViolentCrimesClearanceRate != "─") {
                                 tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Sf_ViolentCrimesClearanceRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
@@ -713,25 +713,25 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">再生能源裝置容量數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Energy_All.aspx?tp=01">再生能源裝置容量數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Ene_DeviceCapacityNumYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right">' + $.FormatThousandGroup(Number($("Ene_DeviceCapacityNum", data).text().trim()).toFixed(0)) + '千瓦' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">台電購入再生能源電量</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Energy_All.aspx?tp=02">台電購入再生能源電量</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Ene_TPCBuyElectricityYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Ene_TPCBuyElectricity", data).text().trim()).toFixed(0)) + '度' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">用電量</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Energy_All.aspx?tp=03">用電量</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Ene_ElectricityUsedYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Ene_ElectricityUsed", data).text().trim()).toFixed(0)) + '度' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">再生能源電量佔用電量比例</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Energy_All.aspx?tp=04">再生能源電量佔用電量比例</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Ene_ReEnergyOfElectricityRateYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Ene_ReEnergyOfElectricityRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
@@ -746,7 +746,6 @@
                 }
             });
         }
-        
         
         //撈健康列表
         function getHealthList() {
@@ -769,55 +768,55 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">每萬人口病床數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Health_All.aspx?tp=01">每萬人口病床數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Hea_10KPeopleBedYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right">' + $.FormatThousandGroup(Number($("Hea_10KPeopleBed", data).text().trim()).toFixed(2)) + '床' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">每萬人口急性一般病床數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Health_All.aspx?tp=02">每萬人口急性一般病床數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Hea_10KPeopleAcuteGeneralBedYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Hea_10KPeopleAcuteGeneralBed", data).text().trim()).toFixed(0)) + '床' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">每萬人執業醫事人員數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Health_All.aspx?tp=03">每萬人執業醫事人員數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Hea_10KpeoplePractitionerYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Hea_10KpeoplePractitioner", data).text().trim()).toFixed(2)) + '人' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">身心障礙人口占全縣(市)總人口比率</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Health_All.aspx?tp=04">身心障礙人口占全縣(市)總人口比率</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Hea_DisabledPersonOfCityRateYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Hea_DisabledPersonOfCityRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">長期照顧機構可供進駐人數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Health_All.aspx?tp=05">長期照顧機構可供進駐人數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Hea_LongTermPersonYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Hea_LongTermPerson", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">長期照顧機構可供進駐人數佔預估失能老人需求比例</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Health_All.aspx?tp=06">長期照顧機構可供進駐人數佔預估失能老人需求比例</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Hea_LongTermPersonOfOldMenRateYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Hea_LongTermPersonOfOldMenRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">醫療機構數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Health_All.aspx?tp=07">醫療機構數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Hea_MedicalInstitutionsYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Hea_MedicalInstitutions", data).text().trim()).toFixed(0)) + '所' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">平均每一醫療機構服務人數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Health_All.aspx?tp=08">平均每一醫療機構服務人數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Hea_MedicalInstitutionsAvgPersonYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Hea_MedicalInstitutionsAvgPerson", data).text().trim()).toFixed(0)) + '人/所' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">政府部門醫療保健支出</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Health_All.aspx?tp=09">政府部門醫療保健支出</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Hea_GOVPayOfNHIYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Hea_GOVPayOfNHI", data).text().trim()).toFixed(0)) + '千元' + '</td>';
                             tabstr += '</td></tr>';
@@ -853,115 +852,115 @@
                         var tabstr = '';
                         if ($(data).find("data_item").length > 0) {
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">15歲以上民間人口之教育程度結構-國中及以下</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=01">15歲以上民間人口之教育程度結構-國中及以下</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_15upJSDownRateYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right">' + $.FormatThousandGroup(Number($("Edu_15upJSDownRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">15歲以上民間人口之教育程度結構-高中(職)</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=02">15歲以上民間人口之教育程度結構-高中(職)</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_15upHSRateYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_15upHSRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">15歲以上民間人口之教育程度結構-大專及以上</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=03">15歲以上民間人口之教育程度結構-大專及以上</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_15upUSUpRateYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_15upUSUpRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
-                            
-                            tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國小學生輟學率</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESStudentDropOutRateYear", data).text().trim() + '年' + '</td>';
-                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESStudentDropOutRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
-                            tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國中學生輟學率</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_JSStudentDropOutRateYear", data).text().trim() + '年' + '</td>';
-                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_JSStudentDropOutRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
-                            tabstr += '</td></tr>';
-                           
-                            tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國小總學生數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=04">國小總學生數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESStudentsYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESStudents", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國中總學生數</td>';
-                            tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_JSStudentsYear", data).text().trim() + '年' + '</td>';
-                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_JSStudents", data).text().trim()).toFixed(0)) + '人' + '</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=05">國小學生輟學率</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESStudentDropOutRateYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESStudentDropOutRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">高中(職)總學生數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=06">國中總學生數</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_JSStudentsYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_JSStudents", data).text().trim()).toFixed(0)) + '人' + '</td>';
+                            tabstr += '</td></tr>';
+                           
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=07">國中學生輟學率</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_JSStudentDropOutRateYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_JSStudentDropOutRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
+                            tabstr += '</td></tr>';
+                            
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=08">高中(職)總學生數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_HSStudentsYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_HSStudents", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國小-高中(職)原住民學生數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=09">國小-高中(職)原住民學生數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESToHSIndigenousYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESToHSIdigenous", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國小-高中(職)原住民學生數比例</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=10">國小-高中(職)原住民學生數比例</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESToHSIndigenousRateYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESToHSIndigenousRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國中小新住民人數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=11">國中小新住民人數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESJSNewInhabitantsYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESJSNewInhabitants", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國中小新住民學生比例</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=12">國中小新住民學生比例</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESJSNewInhabitantsRateYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESToJSNewInhabitantsRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國中小教師數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=13">國中小教師數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESJSTeachersYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESJSTeachers", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國中小生師比(平均每位教師教導學生數)</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=14">國中小生師比(平均每位教師教導學生數)</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESJSTeachersOfStudentRateYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESJSTeachersOfStudentRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">教育預算</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=15">教育預算</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_BudgetYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_Budget", data).text().trim()).toFixed(0)) + '千元' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">教育預算成長率</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=16">教育預算成長率</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_BudgetUpRateYearDesc", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_BudgetUpRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
                             tabstr += '</td></tr>';
                            
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國小-高中(職)平均每人教育預算</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=17">國小-高中(職)平均每人教育預算</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESToHSAvgBudgetYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESToHSAvgBudget", data).text().trim()).toFixed(0)) + '千元' + '</td>';
                             tabstr += '</td></tr>';
                             
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國中小教學電腦數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=18">國中小教學電腦數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESJSPCNumYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESJSPCNum", data).text().trim()).toFixed(0)) + '台' + '</td>';
                             tabstr += '</td></tr>';
 
                             tabstr += '<tr>';
-                            tabstr += '<td align="left" nowrap="nowrap">國中小平均每人教學電腦數</td>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=19">國中小平均每人教學電腦數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESJSAvgPCNumYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESJSAvgPCNum", data).text().trim()).toFixed(2)) + '台' + '</td>';
                             tabstr += '</td></tr>';
@@ -977,8 +976,6 @@
                 }
             });
         }
-        
-
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

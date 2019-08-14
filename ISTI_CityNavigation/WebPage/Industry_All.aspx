@@ -8,6 +8,10 @@
             Page.Option.SortName = "Ind_CityNo";
 
             getdll();
+
+            if ($.getQueryString("tp") != "")
+                $("#dll_Category").val($.getQueryString("tp"));
+
             getData();
 
             ///Highcharts千分位

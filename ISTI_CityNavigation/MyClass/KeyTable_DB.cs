@@ -85,7 +85,7 @@ drop table #tmp
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
 
-        sb.Append(@"select * from KeyTable where K_Code=@K_Code order by K_ItemNo ");
+        sb.Append(@"select * from KeyTable where K_Code=@K_Code order by CONVERT(int,K_ItemNo) ");
 
 
         oCmd.CommandText = sb.ToString();
