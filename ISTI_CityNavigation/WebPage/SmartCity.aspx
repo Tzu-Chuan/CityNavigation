@@ -39,11 +39,15 @@
                             $(data).find("data_item").each(function (i) {
                                 tabstr += '<tr>';
                                 tabstr += '<td nowrap align="center">' + $(this).children("CP_PlanSchedule").text().trim() + '</td>';
-                                tabstr += '<td nowrap align="center">' + $(this).children("CP_No").text().trim() + '</td>';
+                                tabstr += '<td nowrap align="center">' + (i + 1) + '</td>';
                                 tabstr += '<td nowrap align="center">' + $(this).children("CP_PlanType").text().trim() + '</td>';
                                 tabstr += '<td nowrap align="center">' + $(this).children("CP_HostCompany").text().trim() + '</td>';
                                 tabstr += '<td align="center">' + $(this).children("CP_JointCompany").text().trim() + '</td>';
                                 tabstr += '<td nowrap align="center">' + $(this).children("CP_PlanName").text().trim() + '</td>';
+                                tabstr += '<td>' + $(this).children("CP_PlanSummary").text().trim() + '</td>';
+                                tabstr += '<td>' + $(this).children("CP_PlanDefect").text().trim() + '</td>';
+                                tabstr += '<td>' + $(this).children("CP_NowResult").text().trim() + '</td>';
+                                tabstr += '<td>' + $(this).children("CP_DoneResult").text().trim() + '</td>';
                                 tabstr += '<td nowrap align="center">' + $(this).children("CP_ServiceType").text().trim() + '</td>';
                                 tabstr += '<td align="center">' + $(this).children("CP_CityArea").text().trim() + '</td>';
                                 tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanTotalMoney").text().trim()).toFixed(0)) + '</td>';
@@ -52,6 +56,17 @@
                                 tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CitySubMoney").text().trim()).toFixed(0)) + '</td>';
                                 tabstr += '</tr>';
                             });
+
+                            $(data).find("sum_item").each(function (i) {
+                                tabstr += '<tr>';
+                                tabstr += '<td colspan="12">合計：共 ' + $(this).children("Total").text().trim() + ' 件</td>';
+                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanTotalMoney").text().trim()).toFixed(0)) + '</td>';
+                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanSubMoney").text().trim()).toFixed(0)) + '</td>';
+                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CityTotalMoney").text().trim()).toFixed(0)) + '</td>';
+                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CitySubMoney").text().trim()).toFixed(0)) + '</td>';
+                                tabstr += '</tr>';
+                            });
+
                             $("#tablist tbody").empty();
                             $("#tablist tbody").append(tabstr);
                             // 固定表頭
@@ -143,6 +158,10 @@
                             <th nowrap>主導廠商</th>
                             <th nowrap>聯合提案廠商</th>
                             <th nowrap>計畫名稱</th>
+                            <th nowrap style="min-width:600px;">計畫摘要</th>
+                            <th nowrap style="min-width:600px;">計畫痛點</th>
+                            <th nowrap style="min-width:600px;">現階段成果</th>
+                            <th nowrap style="min-width:600px;">計畫完成成果</th>
                             <th nowrap>應用服務別</th>
                             <th nowrap>服務實施場域</th>
                             <th nowrap>計畫總經費(千元)</th>
@@ -152,7 +171,7 @@
                     <tbody></tbody>
                 </table>
             </div>
-            <div style="font-size:14pt; color:red;">機密資料，不宜外流！</div>
+            <div style="font-size:14pt; color:red; text-align:center;">機密資料，不宜外流！</div>
         </div><!-- col -->
         <div class="col-lg-6 col-md-6 col-sm-12">
             <div id="ServiceTypePei" class="maxWithA"></div>

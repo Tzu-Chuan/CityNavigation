@@ -22,14 +22,15 @@ namespace ISTI_CityNavigation.handler
             try
             {
                 string xmlstr = string.Empty;
+                string xmlstr2 = string.Empty;
                 string token = (string.IsNullOrEmpty(Request["Token"])) ? "" : Request["Token"].ToString().Trim();
                 if (Common.VeriftyToken(token))
                 {
-                    DataTable dt = be_db.getBudgetExecution();
-                    if (dt.Rows.Count > 0)
-                        xmlstr = GenXml(dt);
-                    //xmlstr = DataTableToXml.ConvertDatatableToXML(dt, "dataList", "data_item");
-                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + "</root>";
+                    DataSet ds = be_db.getBudgetExecution();
+                    if (ds.Tables[0].Rows.Count > 0)
+                        xmlstr = GenXml(ds.Tables[0]);
+                    xmlstr2 = "<total>" + ds.Tables[1].Rows[0]["total"].ToString() + "</total>";
+                    xmlstr = "<?xml version='1.0' encoding='utf-8'?><root>" + xmlstr + xmlstr2 + "</root>";
                     xDoc.LoadXml(xmlstr);
                 }
                 else

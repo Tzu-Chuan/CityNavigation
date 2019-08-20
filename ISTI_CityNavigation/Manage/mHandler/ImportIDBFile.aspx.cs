@@ -261,6 +261,14 @@ namespace ISTI_CityNavigation.Manage.mHandler
             /// 資料從第3筆開始
             for (int i = 2; i < sheet.PhysicalNumberOfRows-1; i++)
             {
+                if (sheet.GetRow(i).GetCell(1) == null)
+                    continue;
+                else
+                {
+                    if (sheet.GetRow(i).GetCell(1).ToString() == "")
+                        continue;
+                }
+
                 err = "Sheet Name：" + sheet.SheetName.Trim() + "<br>";
                 err += "行數：第 " + (i + 1).ToString() + " 筆";
                 DataRow row = dt.NewRow();

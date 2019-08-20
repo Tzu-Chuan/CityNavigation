@@ -86,18 +86,19 @@ public class BudgetExecution_DB
     }
     #endregion
 
-    public DataTable getBudgetExecution()
+    public DataSet getBudgetExecution()
     {
         SqlCommand oCmd = new SqlCommand();
         oCmd.Connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
         StringBuilder sb = new StringBuilder();
        
-        sb.Append(@"SELECT B_Year,B_Commission,B_Subsidy,B_Sub01,B_Sub02,B_Sub03,B_RemainBudget,B_Rate FROM BudgetExecution where B_Status='A' ");
+        sb.Append(@"SELECT B_Year,B_Commission,B_Subsidy,B_Sub01,B_Sub02,B_Sub03,B_RemainBudget,B_Rate FROM BudgetExecution where B_Status='A' 
+select count(*) as total from CitySummaryTable where CS_Status='A' ");
 
         oCmd.CommandText = sb.ToString();
         oCmd.CommandType = CommandType.Text;
         SqlDataAdapter oda = new SqlDataAdapter(oCmd);
-        DataTable ds = new DataTable();
+        DataSet ds = new DataSet();
         
         //oCmd.Parameters.AddWithValue("@KeyWord", KeyWord);
 

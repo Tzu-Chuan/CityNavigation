@@ -43,7 +43,7 @@
                                     else if (i == 4)
                                         strbody += '<th align="left">(2) AI競賽獎助金/創業歸故里</th>';
                                     else if (i == 5)
-                                        strbody += '<th align="left">(3) 148案補助支用(權責數)</th>';
+                                        strbody += '<th align="left">(3) ' + $("total", data).text() + '案補助支用(權責數)</th>';
                                     else if (i == 6)
                                         strbody += '<th colspan="2">預算剩餘</th>';
                                     else if (i == 7)
