@@ -140,7 +140,7 @@
                                             <li><a href="<%=ResolveUrl("~/Webpage/Retail_All.aspx") %>">零售</a></li>
                                             <li><a href="<%=ResolveUrl("~/Webpage/Education_All.aspx") %>">教育</a></li>
                                             <li><a href="<%=ResolveUrl("~/Webpage/Traffic_All.aspx") %>">交通</a></li>
-                                            <li><a href="<%=ResolveUrl("~/Webpage/Energy_Alll.aspx") %>">能源</a></li>
+                                            <li><a href="<%=ResolveUrl("~/Webpage/Energy_All.aspx") %>">能源</a></li>
                                             <li><a href="<%=ResolveUrl("~/Webpage/Safety_All.aspx") %>">智慧安全、治理</a></li>
                                         </ul>
                                     </li>
