@@ -175,11 +175,11 @@ public class CitySummaryTable_DB
                 sb.Append(@"and CP_CityCode=@City ");
 
             if (CS_HostCompany == CS_PlanName)
-                sb.Append(@"and ((upper(CP_HostCompany) LIKE '%' + upper(@HostCompany) + '%') or (upper(CP_PlanName) LIKE '%' + upper(@PlanName) + '%')) ");
+                sb.Append(@"and ((upper(CP_HostCompany) LIKE '%' + upper(@HostCompany) + '%') or (upper(CP_JointCompany) LIKE '%' + upper(@JointCompany) + '%') or (upper(CP_PlanName) LIKE '%' + upper(@PlanName) + '%')) ");
             else
             {
                 if (CS_HostCompany != "")
-                    sb.Append(@"and CP_HostCompany LIKE '%' + @HostCompany + '%' ");
+                    sb.Append(@"and ((upper(CP_HostCompany) LIKE '%' + upper(@HostCompany) + '%') or (upper(CP_JointCompany) LIKE '%' + upper(@JointCompany) + '%')) ");
 
                 if (CS_PlanName != "")
                     sb.Append(@"and CP_PlanName LIKE '%' + @PlanName + '%' ");
@@ -205,11 +205,11 @@ select * from #tmp ");
                 sb.Append(@"and CS_AllArea=@AllArea ");
 
             if (CS_HostCompany == CS_PlanName)
-                sb.Append(@"and ((upper(CS_HostCompany) LIKE '%' + upper(@HostCompany) + '%') or (upper(CS_PlanName) LIKE '%' + upper(@PlanName) + '%')) ");
+                sb.Append(@"and ((upper(CS_HostCompany) LIKE '%' + upper(@HostCompany) + '%') or (upper(CS_JointCompany) LIKE '%' + upper(@JointCompany) + '%') or (upper(CS_PlanName) LIKE '%' + upper(@PlanName) + '%')) ");
             else
             {
                 if (CS_HostCompany != "")
-                    sb.Append(@"and CS_HostCompany LIKE '%' + @HostCompany + '%' ");
+                    sb.Append(@"and ((upper(CS_HostCompany) LIKE '%' + upper(@HostCompany) + '%') or (upper(CS_JointCompany) LIKE '%' + upper(@JointCompany) + '%')) ");
 
                 if (CS_PlanName != "")
                     sb.Append(@"and CS_PlanName LIKE '%' + @PlanName + '%' ");
@@ -281,6 +281,7 @@ select * from #tmp ");
         oCmd.Parameters.AddWithValue("@AllArea", CS_AllArea);
         oCmd.Parameters.AddWithValue("@City", City);
         oCmd.Parameters.AddWithValue("@HostCompany", CS_HostCompany);
+        oCmd.Parameters.AddWithValue("@JointCompany", CS_JointCompany);
         oCmd.Parameters.AddWithValue("@PlanName", CS_PlanName);
         oCmd.Parameters.AddWithValue("@ServiceType", CS_ServiceType);
 

@@ -23,6 +23,7 @@ namespace ISTI_CityNavigation.handler
             /// * Request["ServiceType"]: 領域別
             /// * Request["PlanName"]: 計畫名稱
             /// * Request["CompanyName"]: 公司名稱
+            /// * Request["JoinCompanyName"]: 聯合公司名稱
             /// * Request["SortName"]: 排序欄位名稱
             /// * Request["SortMethod"]: 排序方式
             ///-----------------------------------------------------
@@ -52,6 +53,7 @@ namespace ISTI_CityNavigation.handler
                     if (Area == "N")
                         cst_db._CS_AllArea = Area;
                     cst_db._CS_HostCompany = CompanyName;
+                    cst_db._CS_JointCompany = CompanyName;
                     cst_db._CS_PlanName = PlanName;
                     cst_db._CS_ServiceType = ServiceType;
                     DataSet ds = cst_db.GetList(City, SortCommand);
