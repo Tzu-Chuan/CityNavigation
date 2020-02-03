@@ -13,6 +13,10 @@
         case "IDBsr":
             $("#ManageBtn").hide();
             break;
+        case "Team":
+            $("#ManageBtn").hide();
+            $(".idbBudget").hide();
+            break;
     }
 
     $(document).on("click", "#ManageBtn", function () {

@@ -126,7 +126,7 @@
                                     <li><a href="<%=ResolveUrl("~/Webpage/CityInfo.aspx?city=02") %>">首頁</a></li>
                                     <li class="idbMode"><a href="javascript:void(0);">智慧城鄉計畫提案</a>
                                         <ul>
-                                            <li><a href="<%=ResolveUrl("~/Webpage/BudgetExecution.aspx") %>">經費總表</a></li>
+                                            <li class="idbBudget"><a href="<%=ResolveUrl("~/Webpage/BudgetExecution.aspx") %>">經費總表</a></li>
                                             <li><a href="<%=ResolveUrl("~/Webpage/CityPlanList.aspx") %>">計畫查詢</a></li>
                                         </ul>
                                     </li>

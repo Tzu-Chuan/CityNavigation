@@ -9,12 +9,13 @@ namespace ISTI_CityNavigation.WebPage
 {
     public partial class CityPlanList : System.Web.UI.Page
     {
-        public string webServiceType, webCity, wSearchStr;
+        public string webServiceType, webCity, wSearchStr, compstr;
         protected void Page_Load(object sender, EventArgs e)
         {
             webServiceType = (string.IsNullOrEmpty(Request["cseServiceType"])) ? "" : Request["cseServiceType"].ToString().Trim();
             webCity = (string.IsNullOrEmpty(Request["cseCity"])) ? "" : Request["cseCity"].ToString().Trim();
             wSearchStr = (string.IsNullOrEmpty(Request["cseSearchTxt"])) ? "" : Request["cseSearchTxt"].ToString().Trim();
+            compstr = LogInfo.competence;
         }
     }
 }

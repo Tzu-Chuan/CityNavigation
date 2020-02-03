@@ -35,6 +35,16 @@ namespace ISTI_CityNavigation
                             break;
                     }
                 }
+
+                if (LogInfo.competence == "Team")
+                {
+                    switch (pathName)
+                    {
+                        case "BudgetExecution.aspx":
+                            Response.Write("<script>alert('很抱歉，您沒有權限進入此頁面！'); history.go(-1);</script>");
+                            break;
+                    }
+                }
             }
             else
                 Response.Write("<script>alert('請先登入'); location.href='../Default.aspx';</script>");
