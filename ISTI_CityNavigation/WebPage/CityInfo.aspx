@@ -66,11 +66,6 @@
                     alert(xhr.responseText);
                 },
                 success: function (data) {
-                    if ($(data).find("Token").length > 0) {
-                        alert("連線錯誤請重新登入");
-                        location.href = "../Handler/SignOut.aspx";
-                    }
-
                     if ($(data).find("Error").length > 0) {
                         alert($(data).find("Error").attr("Message"));
                     }

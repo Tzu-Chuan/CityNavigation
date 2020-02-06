@@ -11,9 +11,10 @@ namespace ISTI_CityNavigation.WebPage
     public partial class SmartCity : System.Web.UI.Page
     {
         CodeTable_DB ct_db = new CodeTable_DB();
-        public string CityName;
+        public string CityName, compstr;
         protected void Page_Load(object sender, EventArgs e)
         {
+            compstr = LogInfo.competence;
             if (!string.IsNullOrEmpty(Request.QueryString["city"]))
             {
                 /// 查詢縣市代碼

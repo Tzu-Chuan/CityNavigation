@@ -35,7 +35,9 @@
                         if ($(data).find("data_item").length > 0) {
                             // 動態增加各縣市的表頭欄位
                             var CityStr = data.querySelector("CP_City").textContent;
-                            $("#tablist thead tr").append('<th nowrap name="newth">投入' + CityStr + '總經費(千元)</th><th nowrap name="newth">投入' + CityStr + '補助款(千元)</th>');
+                            if ($("#compstr").val() != "Team") {
+                                $("#tablist thead tr").append('<th nowrap name="newth">投入' + CityStr + '總經費(千元)</th><th nowrap name="newth">投入' + CityStr + '補助款(千元)</th>');
+                            }
                             $(data).find("data_item").each(function (i) {
                                 tabstr += '<tr>';
                                 tabstr += '<td nowrap align="center">' + $(this).children("CP_PlanSchedule").text().trim() + '</td>';
@@ -48,24 +50,35 @@
                                 tabstr += '<td>' + $(this).children("CP_PlanDefect").text().trim() + '</td>';
                                 tabstr += '<td>' + $(this).children("CP_NowResult").text().trim() + '</td>';
                                 tabstr += '<td>' + $(this).children("CP_DoneResult").text().trim() + '</td>';
+                                
                                 tabstr += '<td nowrap align="center">' + $(this).children("CP_ServiceType").text().trim() + '</td>';
                                 tabstr += '<td align="center">' + $(this).children("CP_CityArea").text().trim() + '</td>';
-                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanTotalMoney").text().trim()).toFixed(0)) + '</td>';
-                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanSubMoney").text().trim()).toFixed(0)) + '</td>';
-                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CityTotalMoney").text().trim()).toFixed(0)) + '</td>';
-                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CitySubMoney").text().trim()).toFixed(0)) + '</td>';
+                                if ($("#compstr").val() != "Team") {
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanTotalMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanSubMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CityTotalMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CitySubMoney").text().trim()).toFixed(0)) + '</td>';
+                                }
+                                else {
+                                    $("#TableTitle th[name='Money']").remove();
+                                }
                                 tabstr += '</tr>';
                             });
 
-                            $(data).find("sum_item").each(function (i) {
-                                tabstr += '<tr>';
-                                tabstr += '<td colspan="12">合計：共 ' + $(this).children("Total").text().trim() + ' 件</td>';
-                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanTotalMoney").text().trim()).toFixed(0)) + '</td>';
-                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanSubMoney").text().trim()).toFixed(0)) + '</td>';
-                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CityTotalMoney").text().trim()).toFixed(0)) + '</td>';
-                                tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CitySubMoney").text().trim()).toFixed(0)) + '</td>';
-                                tabstr += '</tr>';
-                            });
+                            if ($("#compstr").val() != "Team") {
+                                $(data).find("sum_item").each(function (i) {
+                                    tabstr += '<tr>';
+                                    tabstr += '<td colspan="12">合計：共 ' + $(this).children("Total").text().trim() + ' 件</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanTotalMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_PlanSubMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CityTotalMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '<td nowrap align="right">' + FormatNumber(Number($(this).children("CP_CitySubMoney").text().trim()).toFixed(0)) + '</td>';
+                                    tabstr += '</tr>';
+                                });
+                            }
+                            else {
+                                $("#TableTitle th[name='Money']").remove();
+                            }
 
                             $("#tablist tbody").empty();
                             $("#tablist tbody").append(tabstr);
@@ -141,6 +154,7 @@
 </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <input type="hidden" id="compstr" value="<%= compstr %>" />
     <div class="twocol titleLineA">
         <div class="left"><span class="font-size4"><%= CityName %>智慧城鄉計畫提案</span></div><!-- left -->
         <div class="right"><a href="CityInfo.aspx?city=02">首頁</a> / <%= CityName %> / <%= CityName %>智慧城鄉計畫提案</div><!-- right -->
@@ -151,7 +165,7 @@
             <div id="TabDiv" class="stripeMeCS hugetable maxHeightD scrollbar-outer font-normal">
                 <table id="tablist" border="0" cellspacing="0" cellpadding="0" width="100%">
                     <thead>
-                        <tr>
+                        <tr id="TableTitle">
                             <th nowrap>計畫進度</th>
                             <th nowrap>序號</th>
                             <th nowrap>計畫類別</th>
@@ -164,8 +178,8 @@
                             <th nowrap style="min-width:600px;">計畫完成成果</th>
                             <th nowrap>應用服務別</th>
                             <th nowrap>服務實施場域</th>
-                            <th nowrap>計畫總經費(千元)</th>
-                            <th nowrap>計畫補助款(千元)</th>
+                            <th nowrap name="Money">計畫總經費(千元)</th>
+                            <th nowrap name="Money">計畫補助款(千元)</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
