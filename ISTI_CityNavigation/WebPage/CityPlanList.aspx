@@ -9,6 +9,13 @@
             getdll("02", "#ddlCity");
             ddl_ServiceType();
 
+            // 登入如為團隊成員名稱把經費拿掉
+            if ($("#compstr").val() == "Team") {
+                $("#AreaAllBtn").html("補助區域分析(含全區)");
+                $("#AreaNotAllBtn").html("補助區域分析(不含全區)");
+            }
+            
+
             
             if ($("#wCity").val() != "" || $("#wType").val() != "" || $("#wKeyword").val() != "") {
                 $("#ddlCity").val($("#wCity").val());
@@ -349,8 +356,8 @@
 
     <div class="tabmenublockV2wrapper margin10T">
         <div class="tabmenublockV2 font-size3">
-            <span class="SlimTabBtnV2 SlimTabBtnV2Current"><a href="javascript:void(0);" area="Y" name="AreaBtn">補助經費區域分析(含全區)</a></span>
-            <span class="SlimTabBtnV2"><a href="javascript:void(0);" area="N" name="AreaBtn">補助經費區域分析(不含全區)</a></span>
+            <span class="SlimTabBtnV2 SlimTabBtnV2Current"><a href="javascript:void(0);" area="Y" name="AreaBtn" id="AreaAllBtn">補助經費區域分析(含全區)</a></span>
+            <span class="SlimTabBtnV2"><a href="javascript:void(0);" area="N" name="AreaBtn" id="AreaNotAllBtn">補助經費區域分析(不含全區)</a></span>
         </div><!-- tabmenublock -->
     </div><!-- tabmenublockV2wrapper -->
 
