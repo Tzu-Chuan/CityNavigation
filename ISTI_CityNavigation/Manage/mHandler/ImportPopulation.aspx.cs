@@ -20,7 +20,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
         //建立共用參數
         string strErrorMsg = "";
         int strMaxVersion = 0;
-        string chkYear = "";
         DateTime dtNow = DateTime.Now;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -45,19 +44,19 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 dt.Columns.Add("P_TotalYear", typeof(string)).MaxLength = 3;
                 dt.Columns.Add("P_PeopleTotal", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("P_PeopleTotalPercentYear", typeof(string)).MaxLength = 10;
-                dt.Columns.Add("P_PeopleTotalPercent", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("P_PeopleTotalPercent", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("P_ChildYear", typeof(string)).MaxLength = 3;
                 dt.Columns.Add("P_Child", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("P_ChildPercentYear", typeof(string)).MaxLength = 3;
-                dt.Columns.Add("P_ChildPercent", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("P_ChildPercent", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("P_TeenagerYear", typeof(string)).MaxLength = 3;
                 dt.Columns.Add("P_Teenager", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("P_TeenagerPercentYear", typeof(string)).MaxLength = 3;
-                dt.Columns.Add("P_TeenagerPercent", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("P_TeenagerPercent", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("P_OldMenYear", typeof(string)).MaxLength = 3;
                 dt.Columns.Add("P_OldMen", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("P_OldMenPercentYear", typeof(string)).MaxLength = 3;
-                dt.Columns.Add("P_OldMenPercent", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("P_OldMenPercent", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("P_CreateDate", typeof(DateTime));
                 dt.Columns.Add("P_CreateID", typeof(string));
                 dt.Columns.Add("P_CreateName", typeof(string));
@@ -148,9 +147,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 row["P_Status"] = "A";
                                 row["P_Version"] = strMaxVersion;
 
-                                if (chkYear == "")
-                                    chkYear = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");
-
                                 dt.Rows.Add(row);
                             }
 
@@ -159,7 +155,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                         if (dt.Rows.Count > 0)
                         {
                             strErrorMsg = "";
-                            BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
+                            BeforeBulkCopy(oConn, myTrans);//檢查資料表裡面是不是有該年的資料
                             DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
                                                                  //最後再commit
                             myTrans.Commit();
@@ -213,22 +209,20 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
 
         //insert 前判斷是不是同年份有資料了
-        private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran, string chkYear)
+        private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(@"
                 declare @chkRowCount int = 0;
-                select @chkRowCount = count(*) from Population where P_TotalYear=@chkYear and P_Status='A'
+                select @chkRowCount = count(*) from Population where P_Status='A'
 
                 if @chkRowCount>0
                     begin
-                        update Population set P_Status='D' where P_TotalYear=@chkYear and P_Status='A'
+                        update Population set P_Status='D' where P_Status='A'
                     end
             ");
             SqlCommand oCmd = oConn.CreateCommand();
             oCmd.CommandText = sb.ToString();
-
-            oCmd.Parameters.AddWithValue("@chkYear", chkYear);
 
             oCmd.Transaction = oTran;
             oCmd.ExecuteNonQuery();

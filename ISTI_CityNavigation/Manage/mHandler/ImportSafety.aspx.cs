@@ -20,7 +20,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
         //建立共用參數
         string strErrorMsg = "";
         int strMaxVersion = 0;
-        string chkYear = "";
         DateTime dtNow = DateTime.Now;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -51,15 +50,15 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 dt.Columns.Add("Sf_100KPeopleBurglaryTimesYear", typeof(string)).MaxLength = 3;
                 dt.Columns.Add("Sf_100KPeopleBurglaryTimes", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("Sf_BurglaryClearanceRateYear", typeof(string)).MaxLength = 3;
-                dt.Columns.Add("Sf_BurglaryClearanceRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Sf_BurglaryClearanceRate", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("Sf_100KPeopleCriminalCaseTimesYear", typeof(string)).MaxLength = 3;
                 dt.Columns.Add("Sf_100KPeopleCriminalCaseTimes", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("Sf_CriminalCaseClearanceRateYear", typeof(string)).MaxLength = 3;
-                dt.Columns.Add("Sf_CriminalCaseClearanceRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Sf_CriminalCaseClearanceRate", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("Sf_100KPeopleViolentCrimesTimesYear", typeof(string)).MaxLength = 3;
                 dt.Columns.Add("Sf_100KPeopleViolentCrimesTimes", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("Sf_ViolentCrimesClearanceRateYear", typeof(string)).MaxLength = 3;
-                dt.Columns.Add("Sf_ViolentCrimesClearanceRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Sf_ViolentCrimesClearanceRate", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("Sf_CreateDate", typeof(DateTime));
                 dt.Columns.Add("Sf_CreateID", typeof(string));
                 dt.Columns.Add("Sf_CreateName", typeof(string));
@@ -153,9 +152,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 row["Sf_Status"] = "A";
                                 row["Sf_Version"] = strMaxVersion;
 
-                                if (chkYear == "")
-                                    chkYear = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");
-
                                 dt.Rows.Add(row);
                             }
 
@@ -164,7 +160,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                         if (dt.Rows.Count > 0)
                         {
                             strErrorMsg = "";
-                            BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
+                            BeforeBulkCopy(oConn, myTrans);//檢查資料表裡面是不是有該年的資料
                             DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
                             myTrans.Commit();                   //最後再commit
                         }
@@ -214,22 +210,20 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
 
         //insert 前判斷是不是同年份有資料了
-        private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran, string chkYear)
+        private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(@"
                 declare @chkRowCount int = 0;
-                select @chkRowCount = count(*) from Safety where Sf_SoilAreaYear=@chkYear and Sf_Status='A'
+                select @chkRowCount = count(*) from Safety where Sf_Status='A'
 
                 if @chkRowCount>0
                     begin
-                        update Safety set Sf_Status='D' where Sf_SoilAreaYear=@chkYear and Sf_Status='A'
+                        update Safety set Sf_Status='D' where Sf_Status='A'
                     end
             ");
             SqlCommand oCmd = oConn.CreateCommand();
             oCmd.CommandText = sb.ToString();
-
-            oCmd.Parameters.AddWithValue("@chkYear", chkYear);
 
             oCmd.Transaction = oTran;
             oCmd.ExecuteNonQuery();

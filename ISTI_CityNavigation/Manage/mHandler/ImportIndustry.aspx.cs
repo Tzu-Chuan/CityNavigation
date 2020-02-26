@@ -20,7 +20,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
         //建立共用參數
         string strErrorMsg = "";
         int strMaxVersion = 0;
-        string chkYear = "";
         DateTime dtNow = DateTime.Now;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -129,9 +128,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 row["Ind_Status"] = "A";
                                 row["Ind_Version"] = strMaxVersion;
 
-                                if (chkYear == "")
-                                    chkYear = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");
-
                                 dt.Rows.Add(row);
                             }
 
@@ -140,7 +136,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                         if (dt.Rows.Count > 0)
                         {
                             strErrorMsg = "";
-                            BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
+                            BeforeBulkCopy(oConn, myTrans);//檢查資料表裡面是不是有該年的資料
                             DoBulkCopy(myTrans, dt, strErrorMsg);//匯入
                             myTrans.Commit();//最後再commit
                         }
@@ -190,22 +186,20 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
 
         //insert 前判斷是不是同年份有資料了
-        private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran, string chkYear)
+        private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(@"
                 declare @chkRowCount int = 0;
-                select @chkRowCount = count(*) from Industry where Ind_BusinessYear=@chkYear and Ind_Status='A'
+                select @chkRowCount = count(*) from Industry where Ind_Status='A'
 
                 if @chkRowCount>0
                     begin
-                        update Industry set Ind_Status='D' where Ind_BusinessYear=@chkYear and Ind_Status='A'
+                        update Industry set Ind_Status='D' where Ind_Status='A'
                     end
             ");
             SqlCommand oCmd = oConn.CreateCommand();
             oCmd.CommandText = sb.ToString();
-
-            oCmd.Parameters.AddWithValue("@chkYear", chkYear);
 
             oCmd.Transaction = oTran;
             oCmd.ExecuteNonQuery();

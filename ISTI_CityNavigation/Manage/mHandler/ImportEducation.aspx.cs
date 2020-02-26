@@ -20,7 +20,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
         //建立共用參數
         string strErrorMsg = "";
         int strMaxVersion = 0;
-        string chkYear = "";
         DateTime dtNow = DateTime.Now;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -189,9 +188,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 row["Edu_Status"] = "A";
                                 row["Edu_Version"] = strMaxVersion;
 
-                                if (chkYear == "")
-                                    chkYear = sheet.GetRow(1).GetCell(6).ToString().Trim().Replace("年", "");
-
                                 dt.Rows.Add(row);
                             }
 
@@ -201,7 +197,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                         {
 
                             strErrorMsg = "";
-                            BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
+                            BeforeBulkCopy(oConn, myTrans);//檢查資料表裡面是不是有該年的資料
                             DoBulkCopy(myTrans, dt);//匯入
                             myTrans.Commit();     //最後再commit
                         }
@@ -246,22 +242,20 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
 
         //insert 前判斷是不是同年份有資料了
-        private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran, string chkYear)
+        private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(@"
                 declare @chkRowCount int = 0;
-                select @chkRowCount = count(*) from Education where Edu_ESStudentsYear=@chkYear and Edu_Status='A'
+                select @chkRowCount = count(*) from Education where Edu_Status='A'
 
                 if @chkRowCount>0
                     begin
-                        update Education set Edu_Status='D' where Edu_ESStudentsYear=@chkYear and Edu_Status='A'
+                        update Education set Edu_Status='D' where Edu_Status='A'
                     end
             ");
             SqlCommand oCmd = oConn.CreateCommand();
             oCmd.CommandText = sb.ToString();
-
-            oCmd.Parameters.AddWithValue("@chkYear", chkYear);
 
             oCmd.Transaction = oTran;
             oCmd.ExecuteNonQuery();

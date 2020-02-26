@@ -20,7 +20,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
         //建立共用參數
         string strErrorMsg = "";
         int strMaxVersion = 0;
-        string chkYear = "";
         DateTime dtNow = DateTime.Now;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -43,7 +42,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 dt.Columns.Add("Tra_PublicTransportRateYear", typeof(string)).MaxLength = 3;
 
-                dt.Columns.Add("Tra_PublicTransportRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Tra_PublicTransportRate", typeof(string)).MaxLength = 50;
 
                 dt.Columns.Add("Tra_CarParkTimeYear", typeof(string)).MaxLength = 3;
 
@@ -71,7 +70,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
 
                 dt.Columns.Add("Tra_100HaveCarRateYearDec", typeof(string)).MaxLength = 20;
 
-                dt.Columns.Add("Tra_100HaveCarRate", typeof(string)).MaxLength = 7;
+                dt.Columns.Add("Tra_100HaveCarRate", typeof(string)).MaxLength = 50;
 
                 dt.Columns.Add("Tra_10KMotoIncidentsNumYear", typeof(string));
 
@@ -174,9 +173,6 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 row["Tra_Status"] = "A";//資料狀態
                                 row["Tra_Version"] = strMaxVersion;//版次
 
-                                if (chkYear == "")
-                                    chkYear = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");
-
                                 dt.Rows.Add(row);
                             }
 
@@ -185,7 +181,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                         if (dt.Rows.Count > 0)
                         {
                             strErrorMsg = "";
-                            BeforeBulkCopy(oConn, myTrans, chkYear);//檢查資料表裡面是不是有該年的資料
+                            BeforeBulkCopy(oConn, myTrans);//檢查資料表裡面是不是有該年的資料
                             DoBulkCopy(myTrans, dt);//匯入
                                                                  //最後再commit
                             myTrans.Commit();
@@ -237,22 +233,20 @@ namespace ISTI_CityNavigation.Manage.mHandler
         }
 
         //insert 前判斷是不是同年份有資料了
-        private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran, string chkYear)
+        private void BeforeBulkCopy(SqlConnection oConn, SqlTransaction oTran)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(@"
                 declare @chkRowCount int = 0;
-                select @chkRowCount = count(*) from Traffic where Tra_CarRoadsidParkSpaceYear=@chkYear and Tra_Status='A'
+                select @chkRowCount = count(*) from Traffic where Tra_Status='A'
 
                 if @chkRowCount>0
                     begin
-                        update Traffic set Tra_Status='D' where Tra_CarRoadsidParkSpaceYear=@chkYear and Tra_Status='A'
+                        update Traffic set Tra_Status='D' where Tra_Status='A'
                     end
             ");
             SqlCommand oCmd = oConn.CreateCommand();
             oCmd.CommandText = sb.ToString();
-
-            oCmd.Parameters.AddWithValue("@chkYear", chkYear);
 
             oCmd.Transaction = oTran;
             oCmd.ExecuteNonQuery();
