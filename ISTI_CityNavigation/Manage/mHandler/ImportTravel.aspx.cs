@@ -119,7 +119,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 row["T_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["T_HotelUseYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//觀光旅館住用率-資料年度(民國年)
                                 row["T_HotelUseRate"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//觀光旅館住用率
-                                row["T_PointYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年(統計至107年11月)", "");//觀光遊憩據點(縣市)人次統計-資料年度(民國年)  ex: 107年(統計至107年11月)  存 107
+                                row["T_PointYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");//觀光遊憩據點(縣市)人次統計-資料年度(民國年)  ex: 107年(統計至107年11月)  存 107
                                 row["T_PointYearDesc"] = sheet.GetRow(1).GetCell(2).ToString().Trim();//觀光遊憩據點(縣市)人次統計-資料年度(民國年)  ex: 107年(統計至107年11月)  存 107年(統計至107年11月)
                                 row["T_PointPeople"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//觀光遊憩據點(縣市)人次統計-人次
                                 row["T_HotelsYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//觀光旅館家數-資料年度(民國年)
