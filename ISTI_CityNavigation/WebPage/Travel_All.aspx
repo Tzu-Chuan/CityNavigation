@@ -105,6 +105,30 @@
                                     DataYear = "T_HotelAvgPriceYear";
                                     DataVal = "T_HotelAvgPrice";
                                     break;
+                                case "06":
+                                    $("#UnitHead").attr("sortname", "T_HomestayNumber");
+                                    Unit = "家";
+                                    DataYear = "T_HomestayNumberYear";
+                                    DataVal = "T_HomestayNumber";
+                                    break;
+                                case "07":
+                                    $("#UnitHead").attr("sortname", "T_HomestayRoomNumber");
+                                    Unit = "間";
+                                    DataYear = "T_HomestayRoomNumberYear";
+                                    DataVal = "T_HomestayRoomNumber";
+                                    break;
+                                case "08":
+                                    $("#UnitHead").attr("sortname", "T_GeneralHotelNumber");
+                                    Unit = "家";
+                                    DataYear = "T_GeneralHotelNumberYear";
+                                    DataVal = "T_GeneralHotelNumber";
+                                    break;
+                                case "09":
+                                    $("#UnitHead").attr("sortname", "T_GeneralHotelRoomNumber");
+                                    Unit = "間";
+                                    DataYear = "T_GeneralHotelRoomNumberYear";
+                                    DataVal = "T_GeneralHotelRoomNumber";
+                                    break;
                             }
                             $(data).find("data_item").each(function (i) {
                                 var tmpV = ($.isNumeric($(this).children(DataVal).text().trim())) ? Number($(this).children(DataVal).text().trim()) : 0;

@@ -39,47 +39,30 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 DataTable dt = new DataTable();
                 dt.Columns.Add("Tra_CityNo", typeof(string)).MaxLength = 2;
                 dt.Columns.Add("Tra_CityName", typeof(string)).MaxLength = 10;
-
                 dt.Columns.Add("Tra_PublicTransportRateYear", typeof(string)).MaxLength = 3;
-
                 dt.Columns.Add("Tra_PublicTransportRate", typeof(string)).MaxLength = 50;
-
                 dt.Columns.Add("Tra_CarParkTimeYear", typeof(string)).MaxLength = 3;
-
                 dt.Columns.Add("Tra_CarParkTime", typeof(string)).MaxLength = 20;
-
                 dt.Columns.Add("Tra_CarRoadsidParkSpaceYear", typeof(string)).MaxLength = 3;
-
                 dt.Columns.Add("Tra_CarRoadsidParkSpace", typeof(string)).MaxLength = 20;
-
                 dt.Columns.Add("Tra_CarRoadOutsideParkSpaceYear", typeof(string)).MaxLength = 3;
-
                 dt.Columns.Add("Tra_CarRoadOutsideParkSpace", typeof(string)).MaxLength = 20;
-
                 dt.Columns.Add("Tra_10KHaveCarParkYear", typeof(string)).MaxLength = 3;
-
                 dt.Columns.Add("Tra_10KHaveCarPark", typeof(string)).MaxLength = 20;
-
                 dt.Columns.Add("Tra_CarCountYear", typeof(string)).MaxLength = 3;
-
                 dt.Columns.Add("Tra_CarCount", typeof(string)).MaxLength = 20;
-
                 dt.Columns.Add("Tra_100HaveCarYear", typeof(string)).MaxLength = 3;
-
                 dt.Columns.Add("Tra_100HaveCar", typeof(string)).MaxLength = 20;
-
                 dt.Columns.Add("Tra_100HaveCarRateYearDec", typeof(string)).MaxLength = 20;
-
                 dt.Columns.Add("Tra_100HaveCarRate", typeof(string)).MaxLength = 50;
-
                 dt.Columns.Add("Tra_10KMotoIncidentsNumYear", typeof(string));
-
                 dt.Columns.Add("Tra_10KMotoIncidentsNum", typeof(string)).MaxLength = 20;
-
                 dt.Columns.Add("Tra_100KNumberOfCasualtiesYear", typeof(string)).MaxLength = 3;
-
                 dt.Columns.Add("Tra_100KNumberOfCasualties", typeof(string)).MaxLength = 20;
-
+                dt.Columns.Add("Tra_PlaceCarParkTimeYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Tra_PlaceCarParkTime", typeof(string)).MaxLength = 50;
+                dt.Columns.Add("Tra_RoadTrafficAccidentYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Tra_RoadTrafficAccident", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("Tra_CreateDate", typeof(DateTime));
                 dt.Columns.Add("Tra_CreateID", typeof(string));
                 dt.Columns.Add("Tra_CreateName", typeof(string));
@@ -113,7 +96,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                         //簡易判斷這份Excel是不是交通的Excel
                         int cellsCount = sheet.GetRow(0).Cells.Count;
                         //1.判斷表頭欄位數
-                        if (cellsCount != 11)
+                        if (cellsCount != 13)
                         {
                             throw new Exception("請檢查是否為交通的匯入檔案");
                         }
@@ -167,6 +150,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 row["Tra_10KMotoIncidentsNum"] = sheet.GetRow(j).GetCell(9).ToString().Trim();//每萬輛機動車肇事數-次
                                 row["Tra_100KNumberOfCasualtiesYear"] = sheet.GetRow(1).GetCell(10).ToString().Trim().Replace("年", ""); ;//每十萬人道路交通事故死傷人數-資料年度(民國年)
                                 row["Tra_100KNumberOfCasualties"] = sheet.GetRow(j).GetCell(10).ToString().Trim();//每十萬人道路交通事故死傷人數-人
+                                row["Tra_PlaceCarParkTimeYear"] = sheet.GetRow(1).GetCell(11).ToString().Trim().Replace("年", ""); ;//自小客車工作(上學)場所附近平均每次尋找停車位時間-資料年度(民國年)
+                                row["Tra_PlaceCarParkTime"] = sheet.GetRow(j).GetCell(11).ToString().Trim();//自小客車工作(上學)場所附近平均每次尋找停車位時間-分鐘
+                                row["Tra_RoadTrafficAccidentYear"] = sheet.GetRow(1).GetCell(12).ToString().Trim().Replace("年", ""); ;//道路交通事故-資料年度(民國年)
+                                row["Tra_RoadTrafficAccident"] = sheet.GetRow(j).GetCell(12).ToString().Trim();//道路交通事故-分鐘
                                 row["Tra_CreateDate"] = dtNow;//建立時間
                                 row["Tra_CreateID"] = LogInfo.mGuid;//上傳者GUID
                                 row["Tra_CreateName"] = LogInfo.name;//上傳者姓名
@@ -288,12 +275,16 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 sqlBC.ColumnMappings.Add("Tra_10KMotoIncidentsNum", "Tra_10KMotoIncidentsNum");
                 sqlBC.ColumnMappings.Add("Tra_100KNumberOfCasualtiesYear", "Tra_100KNumberOfCasualtiesYear");
                 sqlBC.ColumnMappings.Add("Tra_100KNumberOfCasualties", "Tra_100KNumberOfCasualties");
+                sqlBC.ColumnMappings.Add("Tra_PlaceCarParkTimeYear", "Tra_PlaceCarParkTimeYear");
+                sqlBC.ColumnMappings.Add("Tra_PlaceCarParkTime", "Tra_PlaceCarParkTime");
+                sqlBC.ColumnMappings.Add("Tra_RoadTrafficAccidentYear", "Tra_RoadTrafficAccidentYear");
+                sqlBC.ColumnMappings.Add("Tra_RoadTrafficAccident", "Tra_RoadTrafficAccident");
                 sqlBC.ColumnMappings.Add("Tra_CreateDate", "Tra_CreateDate");
                 sqlBC.ColumnMappings.Add("Tra_CreateID", "Tra_CreateID");
                 sqlBC.ColumnMappings.Add("Tra_CreateName", "Tra_CreateName");
                 sqlBC.ColumnMappings.Add("Tra_Status", "Tra_Status");
                 sqlBC.ColumnMappings.Add("Tra_Version", "Tra_Version");
-
+                
                 /// 開始寫入資料
                 sqlBC.WriteToServer(srcData);
             }

@@ -142,6 +142,22 @@
                                     DataVal = "Tra_100KNumberOfCasualties";
                                     FloatNum = 2;
                                     break;
+
+                                case "11":
+                                    $("#UnitHead").attr("sortname", "Tra_PlaceCarParkTime");
+                                    Unit = "分鐘";
+                                    DataYear = "Tra_PlaceCarParkTimeYear";
+                                    DataVal = "Tra_PlaceCarParkTime";
+                                    FloatNum = 2;
+                                    break;
+
+                                case "12":
+                                    $("#UnitHead").attr("sortname", "Tra_RoadTrafficAccident");
+                                    Unit = "件";
+                                    DataYear = "Tra_RoadTrafficAccidentYear";
+                                    DataVal = "Tra_RoadTrafficAccident";
+                                    FloatNum = 2;
+                                    break;
                             }
                             $(data).find("data_item").each(function (i) {
                                 var tmpV = ($.isNumeric($(this).children(DataVal).text().trim())) ? Number($(this).children(DataVal).text().trim()) : 0;

@@ -221,6 +221,51 @@
                             else {
                                 tabstr += '<td align="right">' + $("T_HotelAvgPrice", data).text().trim() + '</td>';
                             }
+
+                            var T_HomestayNumber = $("T_HomestayNumber", data).text().trim();
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Travel_All.aspx?tp=06">民宿家數</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("T_HomestayNumberYear", data).text().trim() + '年' + '</td>';
+                            if (T_HomestayNumber != "─") {
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_HomestayNumber", data).text().trim()).toFixed(0)) + '家' + '</td>';
+                            }
+                            else {
+                                tabstr += '<td align="right">' + $("T_HomestayNumber", data).text().trim() + '</td>';
+                            }
+
+                            var T_HomestayRoomNumber = $("T_HomestayRoomNumber", data).text().trim();
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Travel_All.aspx?tp=07">民宿房間數</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("T_HomestayRoomNumberYear", data).text().trim() + '年' + '</td>';
+                            if (T_HomestayRoomNumber != "─") {
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_HomestayRoomNumber", data).text().trim()).toFixed(0)) + '間' + '</td>';
+                            }
+                            else {
+                                tabstr += '<td align="right">' + $("T_HomestayRoomNumber", data).text().trim() + '</td>';
+                            }
+
+                            var T_GeneralHotelNumber = $("T_GeneralHotelNumber", data).text().trim();
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Travel_All.aspx?tp=08">一般旅館家數</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("T_GeneralHotelNumberYear", data).text().trim() + '年' + '</td>';
+                            if (T_GeneralHotelNumber != "─") {
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_GeneralHotelNumber", data).text().trim()).toFixed(0)) + '家' + '</td>';
+                            }
+                            else {
+                                tabstr += '<td align="right">' + $("T_GeneralHotelNumber", data).text().trim() + '</td>';
+                            }
+
+                            var T_GeneralHotelRoomNumber = $("T_GeneralHotelRoomNumber", data).text().trim();
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Travel_All.aspx?tp=09">一般旅館房間數</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("T_GeneralHotelRoomNumberYear", data).text().trim() + '年' + '</td>';
+                            if (T_GeneralHotelRoomNumber != "─") {
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("T_GeneralHotelRoomNumber", data).text().trim()).toFixed(0)) + '間' + '</td>';
+                            }
+                            else {
+                                tabstr += '<td align="right">' + $("T_GeneralHotelRoomNumber", data).text().trim() + '</td>';
+                            }
+
                             tabstr += '</td></tr>';
                         }
                         else
@@ -311,6 +356,18 @@
                             tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=10">每十萬人道路交通事故死傷人數</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_100KNumberOfCasualtiesYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_100KNumberOfCasualties", data).text().trim()).toFixed(2)) + '人' + '</td>';
+                            tabstr += '</td></tr>';
+
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=11">自小客車工作(上學)場所附近平均每次尋找停車位時間</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_PlaceCarParkTimeYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_PlaceCarParkTime", data).text().trim()).toFixed(2)) + '分鐘' + '</td>';
+                            tabstr += '</td></tr>';
+
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Traffic_All.aspx?tp=12">道路交通事故</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Tra_RoadTrafficAccidentYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Tra_RoadTrafficAccident", data).text().trim()).toFixed(2)) + '件' + '</td>';
                             tabstr += '</td></tr>';
                            
                             
@@ -680,6 +737,30 @@
                                  tabstr += '<td align="right" nowrap="nowrap">' + $("Sf_ViolentCrimesClearanceRate", data).text().trim(); + '</td>';
                             }
                             tabstr += '</td></tr>';
+
+                            var Sf_AQI100DayRate = $("Sf_AQI100DayRate", data).text().trim();
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Safety_All.aspx?tp=11">AQI>100日數比例(>100表示對健康已有影響)</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Sf_AQI100DayRateYear", data).text().trim() + '年' + '</td>';
+                            if (Sf_AQI100DayRate != "─") {
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Sf_AQI100DayRate", data).text().trim()).toFixed(2)) + '%' + '</td>';
+                            }
+                            else {
+                                 tabstr += '<td align="right" nowrap="nowrap">' + $("Sf_AQI100DayRate", data).text().trim(); + '</td>';
+                            }
+                            tabstr += '</td></tr>';
+
+                            var Sf_AirQualityAQIAverageValue = $("Sf_AirQualityAQIAverageValue", data).text().trim();
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Safety_All.aspx?tp=12">空氣品質AQI平均值</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Sf_AirQualityAQIAverageValueYear", data).text().trim() + '年' + '</td>';
+                            if (Sf_AirQualityAQIAverageValue != "─") {
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Sf_AirQualityAQIAverageValue", data).text().trim()).toFixed(0)) + '</td>';
+                            }
+                            else {
+                                 tabstr += '<td align="right" nowrap="nowrap">' + $("Sf_AirQualityAQIAverageValue", data).text().trim(); + '</td>';
+                            }
+                            tabstr += '</td></tr>';
                             
                         }
                         else
@@ -819,6 +900,18 @@
                             tabstr += '<td align="left" nowrap="nowrap"><a href="Health_All.aspx?tp=09">政府部門醫療保健支出</a></td>';
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Hea_GOVPayOfNHIYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Hea_GOVPayOfNHI", data).text().trim()).toFixed(0)) + '千元' + '</td>';
+                            tabstr += '</td></tr>';
+
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Health_All.aspx?tp=10">失智人口</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Hea_DementedPopulationYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Hea_DementedPopulation", data).text().trim()).toFixed(0)) + '人' + '</td>';
+                            tabstr += '</td></tr>';
+
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Health_All.aspx?tp=11">糖尿病死亡人數</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Hea_DiabetesDeathsYear", data).text().trim() + '年' + '</td>';
+                            tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Hea_DiabetesDeaths", data).text().trim()).toFixed(0)) + '人' + '</td>';
                             tabstr += '</td></tr>';
                         }
                         else
@@ -964,8 +1057,18 @@
                             tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_ESJSAvgPCNumYear", data).text().trim() + '年' + '</td>';
                             tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_ESJSAvgPCNum", data).text().trim()).toFixed(2)) + '台' + '</td>';
                             tabstr += '</td></tr>';
+
+                            var Edu_HighschoolDownRemoteAreas = $("Edu_HighschoolDownRemoteAreas", data).text().trim();
+                            tabstr += '<tr>';
+                            tabstr += '<td align="left" nowrap="nowrap"><a href="Education_All.aspx?tp=20">高級中等以下偏遠地區學校</a></td>';
+                            tabstr += '<td align="center" nowrap="nowrap">' + $("Edu_HighschoolDownRemoteAreasYear", data).text().trim() + '年' + '</td>';
+                            if (Edu_HighschoolDownRemoteAreas != "─") {
+                                tabstr += '<td align="right" nowrap="nowrap">' + $.FormatThousandGroup(Number($("Edu_HighschoolDownRemoteAreas", data).text().trim()).toFixed(0)) + '所' + '</td>';
+                            }
+                            else {
+                                tabstr += '<td align="right">' + $("Edu_HighschoolDownRemoteAreas", data).text().trim() + '</td></tr>';
+                            }
                            
-                            
                         }
                         else
                             tabstr += '<tr><td colspan="3">查詢無資料</td></tr>';

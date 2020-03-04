@@ -57,6 +57,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 dt.Columns.Add("Hea_MedicalInstitutionsAvgPerson", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("Hea_GOVPayOfNHIYear", typeof(string)).MaxLength = 3;
                 dt.Columns.Add("Hea_GOVPayOfNHI", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Hea_DementedPopulationYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Hea_DementedPopulation", typeof(string)).MaxLength = 50;
+                dt.Columns.Add("Hea_DiabetesDeathsYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Hea_DiabetesDeaths", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("Hea_CreateDate", typeof(DateTime));
                 dt.Columns.Add("Hea_CreateID", typeof(string));
                 dt.Columns.Add("Hea_CreateName", typeof(string));
@@ -90,7 +94,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                         //簡易判斷這份Excel是不是健康的Excel
                         int cellsCount = sheet.GetRow(0).Cells.Count;
                         //1.判斷表頭欄位數
-                        if (cellsCount != 10)
+                        if (cellsCount != 12)
                         {
                             throw new Exception("請檢查是否為健康的匯入檔案");
                         }
@@ -142,6 +146,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 row["Hea_MedicalInstitutionsAvgPerson"] = sheet.GetRow(j).GetCell(8).ToString().Trim();//平均每一醫療機構服務人數-人/所
                                 row["Hea_GOVPayOfNHIYear"] = sheet.GetRow(1).GetCell(9).ToString().Trim().Replace("年", "");//政府部門醫療保健支出-資料年度(民國年)
                                 row["Hea_GOVPayOfNHI"] = sheet.GetRow(j).GetCell(9).ToString().Trim();//政府部門醫療保健支出-千元
+                                row["Hea_DementedPopulationYear"] = sheet.GetRow(1).GetCell(10).ToString().Trim().Replace("年", "");//失智人口-資料年度(民國年)
+                                row["Hea_DementedPopulation"] = sheet.GetRow(j).GetCell(10).ToString().Trim();//失智人口-人
+                                row["Hea_DiabetesDeathsYear"] = sheet.GetRow(1).GetCell(11).ToString().Trim().Replace("年", "");//糖尿病死亡人數-資料年度(民國年)
+                                row["Hea_DiabetesDeaths"] = sheet.GetRow(j).GetCell(11).ToString().Trim();//糖尿病死亡人數-人
                                 row["Hea_CreateDate"] = dtNow;
                                 row["Hea_CreateID"] = LogInfo.mGuid;//上傳者GUID
                                 row["Hea_CreateName"] = LogInfo.name;//上傳者姓名
@@ -259,6 +267,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 sqlBC.ColumnMappings.Add("Hea_MedicalInstitutionsAvgPerson", "Hea_MedicalInstitutionsAvgPerson");
                 sqlBC.ColumnMappings.Add("Hea_GOVPayOfNHIYear", "Hea_GOVPayOfNHIYear");
                 sqlBC.ColumnMappings.Add("Hea_GOVPayOfNHI", "Hea_GOVPayOfNHI");
+                sqlBC.ColumnMappings.Add("Hea_DementedPopulationYear", "Hea_DementedPopulationYear");
+                sqlBC.ColumnMappings.Add("Hea_DementedPopulation", "Hea_DementedPopulation");
+                sqlBC.ColumnMappings.Add("Hea_DiabetesDeathsYear", "Hea_DiabetesDeathsYear");
+                sqlBC.ColumnMappings.Add("Hea_DiabetesDeaths", "Hea_DiabetesDeaths");
                 sqlBC.ColumnMappings.Add("Hea_CreateDate", "Hea_CreateDate");
                 sqlBC.ColumnMappings.Add("Hea_CreateID", "Hea_CreateID");
                 sqlBC.ColumnMappings.Add("Hea_CreateName", "Hea_CreateName");

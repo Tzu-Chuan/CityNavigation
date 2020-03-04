@@ -50,6 +50,14 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 dt.Columns.Add("T_HotelRooms", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("T_HotelAvgPriceYear", typeof(string)).MaxLength=3;
                 dt.Columns.Add("T_HotelAvgPrice", typeof(string)).MaxLength=20;
+                dt.Columns.Add("T_HomestayNumberYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("T_HomestayNumber", typeof(string)).MaxLength = 50;
+                dt.Columns.Add("T_HomestayRoomNumberYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("T_HomestayRoomNumber", typeof(string)).MaxLength = 50;
+                dt.Columns.Add("T_GeneralHotelNumberYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("T_GeneralHotelNumber", typeof(string)).MaxLength = 50;
+                dt.Columns.Add("T_GeneralHotelRoomNumberYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("T_GeneralHotelRoomNumber", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("T_CreateDate", typeof(DateTime));
                 dt.Columns.Add("T_CreateID", typeof(string));
                 dt.Columns.Add("T_CreateName", typeof(string));
@@ -83,7 +91,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                         //簡易判斷這份Excel是不是觀光的Excel
                         int cellsCount = sheet.GetRow(0).Cells.Count;
                         //1.判斷表頭欄位數
-                        if (cellsCount != 6)
+                        if (cellsCount != 10)
                         {
                             throw new Exception("請檢查是否為觀光的匯入檔案");
                         }
@@ -119,7 +127,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 row["T_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
                                 row["T_HotelUseYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//觀光旅館住用率-資料年度(民國年)
                                 row["T_HotelUseRate"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//觀光旅館住用率
-                                row["T_PointYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");//觀光遊憩據點(縣市)人次統計-資料年度(民國年)  ex: 107年(統計至107年11月)  存 107
+                                row["T_PointYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");//觀光遊憩據點(縣市)人次統計-資料年度(民國年)  ex: 107年
                                 row["T_PointYearDesc"] = sheet.GetRow(1).GetCell(2).ToString().Trim();//觀光遊憩據點(縣市)人次統計-資料年度(民國年)  ex: 107年(統計至107年11月)  存 107年(統計至107年11月)
                                 row["T_PointPeople"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//觀光遊憩據點(縣市)人次統計-人次
                                 row["T_HotelsYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//觀光旅館家數-資料年度(民國年)
@@ -128,6 +136,14 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 row["T_HotelRooms"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//觀光旅館房間數-間
                                 row["T_HotelAvgPriceYear"] = sheet.GetRow(1).GetCell(5).ToString().Trim().Replace("年", "");//觀光旅館平均房價-資料年度(民國年)
                                 row["T_HotelAvgPrice"] = sheet.GetRow(j).GetCell(5).ToString().Trim();//觀光旅館平均房價-元
+                                row["T_HomestayNumberYear"] = sheet.GetRow(1).GetCell(6).ToString().Trim().Replace("年", "");//民宿家數-資料年度(民國年)
+                                row["T_HomestayNumber"] = sheet.GetRow(j).GetCell(6).ToString().Trim();//民宿家數-家
+                                row["T_HomestayRoomNumberYear"] = sheet.GetRow(1).GetCell(7).ToString().Trim().Replace("年", "");//民宿房間數-資料年度(民國年)
+                                row["T_HomestayRoomNumber"] = sheet.GetRow(j).GetCell(7).ToString().Trim();//民宿房間數-間
+                                row["T_GeneralHotelNumberYear"] = sheet.GetRow(1).GetCell(8).ToString().Trim().Replace("年", "");//一般旅館家數-資料年度(民國年)
+                                row["T_GeneralHotelNumber"] = sheet.GetRow(j).GetCell(8).ToString().Trim();//一般旅館家數-家
+                                row["T_GeneralHotelRoomNumberYear"] = sheet.GetRow(1).GetCell(9).ToString().Trim().Replace("年", "");//一般旅館房間數-資料年度(民國年)
+                                row["T_GeneralHotelRoomNumber"] = sheet.GetRow(j).GetCell(9).ToString().Trim();//一般旅館房間數-間
                                 row["T_CreateDate"] = dtNow;
                                 row["T_CreateID"] = LogInfo.mGuid;//上傳者GUID
                                 row["T_CreateName"] = LogInfo.name;//上傳者姓名
@@ -219,38 +235,46 @@ namespace ISTI_CityNavigation.Manage.mHandler
             //try
             //{
                 SqlBulkCopyOptions setting = SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.TableLock;
-                using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
-                {
-                    sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
-                    //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
-                    ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
-                    //sqlBC.NotifyAfter = 10000;
-                    ///設定要寫入的資料庫
-                    sqlBC.DestinationTableName = "Travel";
+            using (SqlBulkCopy sqlBC = new SqlBulkCopy(oTran.Connection, setting, oTran))
+            {
+                sqlBC.BulkCopyTimeout = 600; ///設定逾時的秒數
+                //sqlBC.BatchSize = 1000; ///設定一個批次量寫入多少筆資料, 設定值太小會影響效能 
+                ////設定 NotifyAfter 屬性，以便在每複製 10000 個資料列至資料表後，呼叫事件處理常式。
+                //sqlBC.NotifyAfter = 10000;
+                ///設定要寫入的資料庫
+                sqlBC.DestinationTableName = "Travel";
 
-                    /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
-                    sqlBC.ColumnMappings.Add("T_CityNo", "T_CityNo");
-                    sqlBC.ColumnMappings.Add("T_CityName", "T_CityName");
-                    sqlBC.ColumnMappings.Add("T_HotelUseYear", "T_HotelUseYear");
-                    sqlBC.ColumnMappings.Add("T_HotelUseRate", "T_HotelUseRate");
-                    sqlBC.ColumnMappings.Add("T_PointYear", "T_PointYear");
-                    sqlBC.ColumnMappings.Add("T_PointYearDesc", "T_PointYearDesc");
-                    sqlBC.ColumnMappings.Add("T_PointPeople", "T_PointPeople");
-                    sqlBC.ColumnMappings.Add("T_HotelsYear", "T_HotelsYear");
-                    sqlBC.ColumnMappings.Add("T_Hotels", "T_Hotels");
-                    sqlBC.ColumnMappings.Add("T_HotelRoomsYear", "T_HotelRoomsYear");
-                    sqlBC.ColumnMappings.Add("T_HotelRooms", "T_HotelRooms");
-                    sqlBC.ColumnMappings.Add("T_HotelAvgPriceYear", "T_HotelAvgPriceYear");
-                    sqlBC.ColumnMappings.Add("T_HotelAvgPrice", "T_HotelAvgPrice");
-                    sqlBC.ColumnMappings.Add("T_CreateDate", "T_CreateDate");
-                    sqlBC.ColumnMappings.Add("T_CreateID", "T_CreateID");
-                    sqlBC.ColumnMappings.Add("T_CreateName", "T_CreateName");
-                    sqlBC.ColumnMappings.Add("T_Status", "T_Status");
-                    sqlBC.ColumnMappings.Add("T_Version", "T_Version");
+                /// 對應來源與目標資料欄位 左邊：C# DataTable欄位  右邊：資料庫Table欄位
+                sqlBC.ColumnMappings.Add("T_CityNo", "T_CityNo");
+                sqlBC.ColumnMappings.Add("T_CityName", "T_CityName");
+                sqlBC.ColumnMappings.Add("T_HotelUseYear", "T_HotelUseYear");
+                sqlBC.ColumnMappings.Add("T_HotelUseRate", "T_HotelUseRate");
+                sqlBC.ColumnMappings.Add("T_PointYear", "T_PointYear");
+                sqlBC.ColumnMappings.Add("T_PointYearDesc", "T_PointYearDesc");
+                sqlBC.ColumnMappings.Add("T_PointPeople", "T_PointPeople");
+                sqlBC.ColumnMappings.Add("T_HotelsYear", "T_HotelsYear");
+                sqlBC.ColumnMappings.Add("T_Hotels", "T_Hotels");
+                sqlBC.ColumnMappings.Add("T_HotelRoomsYear", "T_HotelRoomsYear");
+                sqlBC.ColumnMappings.Add("T_HotelRooms", "T_HotelRooms");
+                sqlBC.ColumnMappings.Add("T_HotelAvgPriceYear", "T_HotelAvgPriceYear");
+                sqlBC.ColumnMappings.Add("T_HotelAvgPrice", "T_HotelAvgPrice");
+                sqlBC.ColumnMappings.Add("T_HomestayNumberYear", "T_HomestayNumberYear");
+                sqlBC.ColumnMappings.Add("T_HomestayNumber", "T_HomestayNumber");
+                sqlBC.ColumnMappings.Add("T_HomestayRoomNumberYear", "T_HomestayRoomNumberYear");
+                sqlBC.ColumnMappings.Add("T_HomestayRoomNumber", "T_HomestayRoomNumber");
+                sqlBC.ColumnMappings.Add("T_GeneralHotelNumberYear", "T_GeneralHotelNumberYear");
+                sqlBC.ColumnMappings.Add("T_GeneralHotelNumber", "T_GeneralHotelNumber");
+                sqlBC.ColumnMappings.Add("T_GeneralHotelRoomNumberYear", "T_GeneralHotelRoomNumberYear");
+                sqlBC.ColumnMappings.Add("T_GeneralHotelRoomNumber", "T_GeneralHotelRoomNumber");
+                sqlBC.ColumnMappings.Add("T_CreateDate", "T_CreateDate");
+                sqlBC.ColumnMappings.Add("T_CreateID", "T_CreateID");
+                sqlBC.ColumnMappings.Add("T_CreateName", "T_CreateName");
+                sqlBC.ColumnMappings.Add("T_Status", "T_Status");
+                sqlBC.ColumnMappings.Add("T_Version", "T_Version");
 
-                    /// 開始寫入資料
-                    sqlBC.WriteToServer(srcData);
-                }
+                /// 開始寫入資料
+                sqlBC.WriteToServer(srcData);
+            }
             //}
             //catch (Exception ex)
             //{

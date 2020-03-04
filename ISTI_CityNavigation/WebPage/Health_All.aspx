@@ -132,6 +132,18 @@
                                     DataYear = "Hea_GOVPayOfNHIYear";
                                     DataVal = "Hea_GOVPayOfNHI";
                                     break;
+                                case "10":  
+                                    $("#UnitHead").attr("sortname", "Hea_DementedPopulation");
+                                    Unit = "人";
+                                    DataYear = "Hea_DementedPopulationYear";
+                                    DataVal = "Hea_DementedPopulation";
+                                    break;
+                                case "11":  
+                                    $("#UnitHead").attr("sortname", "Hea_DiabetesDeaths");
+                                    Unit = "人";
+                                    DataYear = "Hea_DiabetesDeathsYear";
+                                    DataVal = "Hea_DiabetesDeaths";
+                                    break;
                             }
                             $(data).find("data_item").each(function (i) {
                                 var tmpV = ($.isNumeric($(this).children(DataVal).text().trim())) ? Number($(this).children(DataVal).text().trim()) : 0;

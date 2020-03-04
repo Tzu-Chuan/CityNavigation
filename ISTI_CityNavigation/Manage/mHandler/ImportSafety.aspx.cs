@@ -59,6 +59,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 dt.Columns.Add("Sf_100KPeopleViolentCrimesTimes", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("Sf_ViolentCrimesClearanceRateYear", typeof(string)).MaxLength = 3;
                 dt.Columns.Add("Sf_ViolentCrimesClearanceRate", typeof(string)).MaxLength = 50;
+                dt.Columns.Add("Sf_AQI100DayRateYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Sf_AQI100DayRate", typeof(string)).MaxLength = 50;
+                dt.Columns.Add("Sf_AirQualityAQIAverageValueYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Sf_AirQualityAQIAverageValue", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("Sf_CreateDate", typeof(DateTime));
                 dt.Columns.Add("Sf_CreateID", typeof(string));
                 dt.Columns.Add("Sf_CreateName", typeof(string));
@@ -92,7 +96,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                         //簡易判斷這份Excel是不是安全的Excel
                         int cellsCount = sheet.GetRow(0).Cells.Count;
                         //1.判斷表頭欄位數
-                        if (cellsCount != 11)
+                        if (cellsCount != 13)
                         {
                             throw new Exception("請檢查是否為安全的匯入檔案");
                         }
@@ -146,6 +150,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 row["Sf_100KPeopleViolentCrimesTimes"] = sheet.GetRow(j).GetCell(9).ToString().Trim();//每十萬人暴力犯罪發生數-件
                                 row["Sf_ViolentCrimesClearanceRateYear"] = sheet.GetRow(1).GetCell(10).ToString().Trim().Replace("年", "");//暴力犯罪破獲率-資料年度(民國年)
                                 row["Sf_ViolentCrimesClearanceRate"] = sheet.GetRow(j).GetCell(10).ToString().Trim();//暴力犯罪破獲率-%
+                                row["Sf_AQI100DayRateYear"] = sheet.GetRow(1).GetCell(11).ToString().Trim().Replace("年", "");//AQI>100日數比例(>100表示對健康已有影響)-資料年度(民國年)
+                                row["Sf_AQI100DayRate"] = sheet.GetRow(j).GetCell(11).ToString().Trim();//AQI>100日數比例(>100表示對健康已有影響)-%
+                                row["Sf_AirQualityAQIAverageValueYear"] = sheet.GetRow(1).GetCell(12).ToString().Trim().Replace("年", "");//空氣品質AQI平均值-資料年度(民國年)
+                                row["Sf_AirQualityAQIAverageValue"] = sheet.GetRow(j).GetCell(12).ToString().Trim();//空氣品質AQI平均值
                                 row["Sf_CreateDate"] = dtNow;
                                 row["Sf_CreateID"] = LogInfo.mGuid;//上傳者GUID
                                 row["Sf_CreateName"] = LogInfo.name;//上傳者姓名
@@ -265,6 +273,10 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 sqlBC.ColumnMappings.Add("Sf_100KPeopleViolentCrimesTimes", "Sf_100KPeopleViolentCrimesTimes");
                 sqlBC.ColumnMappings.Add("Sf_ViolentCrimesClearanceRateYear", "Sf_ViolentCrimesClearanceRateYear");
                 sqlBC.ColumnMappings.Add("Sf_ViolentCrimesClearanceRate", "Sf_ViolentCrimesClearanceRate");
+                sqlBC.ColumnMappings.Add("Sf_AQI100DayRateYear", "Sf_AQI100DayRateYear");
+                sqlBC.ColumnMappings.Add("Sf_AQI100DayRate", "Sf_AQI100DayRate");
+                sqlBC.ColumnMappings.Add("Sf_AirQualityAQIAverageValueYear", "Sf_AirQualityAQIAverageValueYear");
+                sqlBC.ColumnMappings.Add("Sf_AirQualityAQIAverageValue", "Sf_AirQualityAQIAverageValue");
                 sqlBC.ColumnMappings.Add("Sf_CreateDate", "Sf_CreateDate");
                 sqlBC.ColumnMappings.Add("Sf_CreateID", "Sf_CreateID");
                 sqlBC.ColumnMappings.Add("Sf_CreateName", "Sf_CreateName");

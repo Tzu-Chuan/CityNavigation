@@ -77,6 +77,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 dt.Columns.Add("Edu_ESJSPCNum", typeof(string)).MaxLength = 20;
                 dt.Columns.Add("Edu_ESJSAvgPCNumYear", typeof(string)).MaxLength = 3;
                 dt.Columns.Add("Edu_ESJSAvgPCNum", typeof(string)).MaxLength = 20;
+                dt.Columns.Add("Edu_HighschoolDownRemoteAreasYear", typeof(string)).MaxLength = 3;
+                dt.Columns.Add("Edu_HighschoolDownRemoteAreas", typeof(string)).MaxLength = 50;
                 dt.Columns.Add("Edu_CreateDate", typeof(DateTime));
                 dt.Columns.Add("Edu_CreateID", typeof(string));
                 dt.Columns.Add("Edu_CreateName", typeof(string));
@@ -110,7 +112,7 @@ namespace ISTI_CityNavigation.Manage.mHandler
                         //簡易判斷這份Excel是不是教育的Excel
                         int cellsCount = sheet.GetRow(0).Cells.Count;
                         //1.判斷表頭欄位數
-                        if (cellsCount != 20)
+                        if (cellsCount != 21)
                         {
                             throw new Exception("請檢查是否為教育的匯入檔案");
                         }
@@ -144,44 +146,46 @@ namespace ISTI_CityNavigation.Manage.mHandler
                                 strErrorMsg = "行數:第" + (j + 1).ToString() + " 筆<br>";
                                 row["Edu_CityNo"] = cityNo;//縣市代碼
                                 row["Edu_CityName"] = sheet.GetRow(j).GetCell(0).ToString().Trim();//縣市名稱
-                                row["Edu_15upJSDownRateYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//
-                                row["Edu_15upJSDownRate"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//
-                                row["Edu_15upHSRateYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");//
-                                row["Edu_15upHSRate"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//
-                                row["Edu_15upUSUpRateYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//
-                                row["Edu_15upUSUpRate"] = sheet.GetRow(j).GetCell(3).ToString().Trim();//
-                                row["Edu_ESStudentDropOutRateYear"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//
-                                row["Edu_ESStudentDropOutRate"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//
-                                row["Edu_JSStudentDropOutRateYear"] = sheet.GetRow(1).GetCell(5).ToString().Trim().Replace("年", "");//
-                                row["Edu_JSStudentDropOutRate"] = sheet.GetRow(j).GetCell(5).ToString().Trim();//
-                                row["Edu_ESStudentsYear"] = sheet.GetRow(1).GetCell(6).ToString().Trim().Replace("年", "");//
-                                row["Edu_ESStudents"] = sheet.GetRow(j).GetCell(6).ToString().Trim();//
-                                row["Edu_JSStudentsYear"] = sheet.GetRow(1).GetCell(7).ToString().Trim().Replace("年", "");//
-                                row["Edu_JSStudents"] = sheet.GetRow(j).GetCell(7).ToString().Trim();//
-                                row["Edu_HSStudentsYear"] = sheet.GetRow(1).GetCell(8).ToString().Trim().Replace("年", "");//
-                                row["Edu_HSStudents"] = sheet.GetRow(j).GetCell(8).ToString().Trim();//
-                                row["Edu_ESToHSIndigenousYear"] = sheet.GetRow(1).GetCell(9).ToString().Trim().Replace("年", "");//
-                                row["Edu_ESToHSIdigenous"] = sheet.GetRow(j).GetCell(9).ToString().Trim();//
-                                row["Edu_ESToHSIndigenousRateYear"] = sheet.GetRow(1).GetCell(10).ToString().Trim().Replace("年", "");//
-                                row["Edu_ESToHSIndigenousRate"] = sheet.GetRow(j).GetCell(10).ToString().Trim();//
-                                row["Edu_ESJSNewInhabitantsYear"] = sheet.GetRow(1).GetCell(11).ToString().Trim().Replace("年", "");//
-                                row["Edu_ESJSNewInhabitants"] = sheet.GetRow(j).GetCell(11).ToString().Trim();//
-                                row["Edu_ESJSNewInhabitantsRateYear"] = sheet.GetRow(1).GetCell(12).ToString().Trim().Replace("年", "");//
-                                row["Edu_ESToJSNewInhabitantsRate"] = sheet.GetRow(j).GetCell(12).ToString().Trim();//
-                                row["Edu_ESJSTeachersYear"] = sheet.GetRow(1).GetCell(13).ToString().Trim().Replace("年", "");//
-                                row["Edu_ESJSTeachers"] = sheet.GetRow(j).GetCell(13).ToString().Trim();//
-                                row["Edu_ESJSTeachersOfStudentRateYear"] = sheet.GetRow(1).GetCell(14).ToString().Trim().Replace("年", "");//
-                                row["Edu_ESJSTeachersOfStudentRate"] = sheet.GetRow(j).GetCell(14).ToString().Trim();//
-                                row["Edu_BudgetYear"] = sheet.GetRow(1).GetCell(15).ToString().Trim().Replace("年", "");//
-                                row["Edu_Budget"] = sheet.GetRow(j).GetCell(15).ToString().Trim();//
-                                row["Edu_BudgetUpRateYearDesc"] = sheet.GetRow(1).GetCell(16).ToString().Trim().Replace("年", "");//
-                                row["Edu_BudgetUpRate"] = sheet.GetRow(j).GetCell(16).ToString().Trim();//
-                                row["Edu_ESToHSAvgBudgetYear"] = sheet.GetRow(1).GetCell(17).ToString().Trim().Replace("年", "");//
-                                row["Edu_ESToHSAvgBudget"] = sheet.GetRow(j).GetCell(17).ToString().Trim();//
-                                row["Edu_ESJSPCNumYear"] = sheet.GetRow(1).GetCell(18).ToString().Trim().Replace("年", "");//
-                                row["Edu_ESJSPCNum"] = sheet.GetRow(j).GetCell(18).ToString().Trim();//
-                                row["Edu_ESJSAvgPCNumYear"] = sheet.GetRow(1).GetCell(19).ToString().Trim().Replace("年", "");//
-                                row["Edu_ESJSAvgPCNum"] = sheet.GetRow(j).GetCell(19).ToString().Trim();//
+                                row["Edu_15upJSDownRateYear"] = sheet.GetRow(1).GetCell(1).ToString().Trim().Replace("年", "");//15歲以上民間人口之教育程度結構-國中及以下-資料年度
+                                row["Edu_15upJSDownRate"] = sheet.GetRow(j).GetCell(1).ToString().Trim();//15歲以上民間人口之教育程度結構-國中及以下
+                                row["Edu_15upHSRateYear"] = sheet.GetRow(1).GetCell(2).ToString().Trim().Replace("年", "");//15歲以上民間人口之教育程度結構-高中(職)-資料年度
+                                row["Edu_15upHSRate"] = sheet.GetRow(j).GetCell(2).ToString().Trim();//15歲以上民間人口之教育程度結構-高中(職)
+                                row["Edu_15upUSUpRateYear"] = sheet.GetRow(1).GetCell(3).ToString().Trim().Replace("年", "");//15歲以上民間人口之教育程度結構-大專及以上-資料年度
+                                row["Edu_15upUSUpRate"] = sheet.GetRow(j).GetCell(3).ToString().Trim();//15歲以上民間人口之教育程度結構-大專及以上
+                                row["Edu_ESStudentDropOutRateYear"] = sheet.GetRow(1).GetCell(4).ToString().Trim().Replace("年", "");//國小學生輟學率-資料年度
+                                row["Edu_ESStudentDropOutRate"] = sheet.GetRow(j).GetCell(4).ToString().Trim();//國小學生輟學率
+                                row["Edu_JSStudentDropOutRateYear"] = sheet.GetRow(1).GetCell(5).ToString().Trim().Replace("年", "");//國中學生輟學率-資料年度
+                                row["Edu_JSStudentDropOutRate"] = sheet.GetRow(j).GetCell(5).ToString().Trim();//國中學生輟學率
+                                row["Edu_ESStudentsYear"] = sheet.GetRow(1).GetCell(6).ToString().Trim().Replace("年", "");//國小總學生數-資料年度
+                                row["Edu_ESStudents"] = sheet.GetRow(j).GetCell(6).ToString().Trim();//國小總學生數
+                                row["Edu_JSStudentsYear"] = sheet.GetRow(1).GetCell(7).ToString().Trim().Replace("年", "");//國中總學生數-資料年度
+                                row["Edu_JSStudents"] = sheet.GetRow(j).GetCell(7).ToString().Trim();//國中總學生數
+                                row["Edu_HSStudentsYear"] = sheet.GetRow(1).GetCell(8).ToString().Trim().Replace("年", "");//高中(職)總學生數-資料年度
+                                row["Edu_HSStudents"] = sheet.GetRow(j).GetCell(8).ToString().Trim();//高中(職)總學生數
+                                row["Edu_ESToHSIndigenousYear"] = sheet.GetRow(1).GetCell(9).ToString().Trim().Replace("年", "");//國小-高中(職)原住民學生數-資料年度
+                                row["Edu_ESToHSIdigenous"] = sheet.GetRow(j).GetCell(9).ToString().Trim();//國小-高中(職)原住民學生數
+                                row["Edu_ESToHSIndigenousRateYear"] = sheet.GetRow(1).GetCell(10).ToString().Trim().Replace("年", "");//國小-高中(職)原住民學生數比例-資料年度
+                                row["Edu_ESToHSIndigenousRate"] = sheet.GetRow(j).GetCell(10).ToString().Trim();//國小-高中(職)原住民學生數比例
+                                row["Edu_ESJSNewInhabitantsYear"] = sheet.GetRow(1).GetCell(11).ToString().Trim().Replace("年", "");//國中小新住民人數-資料年度
+                                row["Edu_ESJSNewInhabitants"] = sheet.GetRow(j).GetCell(11).ToString().Trim();//國中小新住民人數
+                                row["Edu_ESJSNewInhabitantsRateYear"] = sheet.GetRow(1).GetCell(12).ToString().Trim().Replace("年", "");//國中小新住民學生比例-資料年度
+                                row["Edu_ESToJSNewInhabitantsRate"] = sheet.GetRow(j).GetCell(12).ToString().Trim();//國中小新住民學生比例
+                                row["Edu_ESJSTeachersYear"] = sheet.GetRow(1).GetCell(13).ToString().Trim().Replace("年", "");//國中小教師數-資料年度
+                                row["Edu_ESJSTeachers"] = sheet.GetRow(j).GetCell(13).ToString().Trim();//國中小教師數
+                                row["Edu_ESJSTeachersOfStudentRateYear"] = sheet.GetRow(1).GetCell(14).ToString().Trim().Replace("年", "");//國中小生師比(平均每位教師教導學生數)-資料年度
+                                row["Edu_ESJSTeachersOfStudentRate"] = sheet.GetRow(j).GetCell(14).ToString().Trim();//國中小生師比(平均每位教師教導學生數)
+                                row["Edu_BudgetYear"] = sheet.GetRow(1).GetCell(15).ToString().Trim().Replace("年", "");//教育預算-資料年度
+                                row["Edu_Budget"] = sheet.GetRow(j).GetCell(15).ToString().Trim();//教育預算
+                                row["Edu_BudgetUpRateYearDesc"] = sheet.GetRow(1).GetCell(16).ToString().Trim().Replace("年", "");//教育預算成長率-資料年度敘述
+                                row["Edu_BudgetUpRate"] = sheet.GetRow(j).GetCell(16).ToString().Trim();//教育預算成長率
+                                row["Edu_ESToHSAvgBudgetYear"] = sheet.GetRow(1).GetCell(17).ToString().Trim().Replace("年", "");//國小-高中(職)平均每人教育預算-資料年度
+                                row["Edu_ESToHSAvgBudget"] = sheet.GetRow(j).GetCell(17).ToString().Trim();//國小-高中(職)平均每人教育預算
+                                row["Edu_ESJSPCNumYear"] = sheet.GetRow(1).GetCell(18).ToString().Trim().Replace("年", "");//國中小教學電腦數-資料年度
+                                row["Edu_ESJSPCNum"] = sheet.GetRow(j).GetCell(18).ToString().Trim();//國中小教學電腦數
+                                row["Edu_ESJSAvgPCNumYear"] = sheet.GetRow(1).GetCell(19).ToString().Trim().Replace("年", "");//國中小平均每人教學電腦數-資料年度
+                                row["Edu_ESJSAvgPCNum"] = sheet.GetRow(j).GetCell(19).ToString().Trim();//國中小平均每人教學電腦數
+                                row["Edu_HighschoolDownRemoteAreasYear"] = sheet.GetRow(1).GetCell(20).ToString().Trim().Replace("年", "");//高級中等以下偏遠地區學校-資料年度
+                                row["Edu_HighschoolDownRemoteAreas"] = sheet.GetRow(j).GetCell(20).ToString().Trim();//高級中等以下偏遠地區學校
                                 row["Edu_CreateDate"] = dtNow;
                                 row["Edu_CreateID"] = LogInfo.mGuid;//上傳者GUID
                                 row["Edu_CreateName"] = LogInfo.name;//上傳者姓名
@@ -315,6 +319,8 @@ namespace ISTI_CityNavigation.Manage.mHandler
                 sqlBC.ColumnMappings.Add("Edu_ESJSPCNum", "Edu_ESJSPCNum");
                 sqlBC.ColumnMappings.Add("Edu_ESJSAvgPCNumYear", "Edu_ESJSAvgPCNumYear");
                 sqlBC.ColumnMappings.Add("Edu_ESJSAvgPCNum", "Edu_ESJSAvgPCNum");
+                sqlBC.ColumnMappings.Add("Edu_HighschoolDownRemoteAreasYear", "Edu_HighschoolDownRemoteAreasYear");
+                sqlBC.ColumnMappings.Add("Edu_HighschoolDownRemoteAreas", "Edu_HighschoolDownRemoteAreas");
                 sqlBC.ColumnMappings.Add("Edu_CreateDate", "Edu_CreateDate");
                 sqlBC.ColumnMappings.Add("Edu_CreateID", "Edu_CreateID");
                 sqlBC.ColumnMappings.Add("Edu_CreateName", "Edu_CreateName");

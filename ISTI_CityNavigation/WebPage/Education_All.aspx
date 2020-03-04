@@ -199,6 +199,13 @@
                                     DataVal = "Edu_ESJSAvgPCNum";
                                     FloatNum = 2;
                                     break;
+                                case "20":
+                                    $("#UnitHead").attr("sortname", "Edu_HighschoolDownRemoteAreas");
+                                    Unit = "台";
+                                    DataYear = "Edu_HighschoolDownRemoteAreasYear";
+                                    DataVal = "Edu_HighschoolDownRemoteAreas";
+                                    FloatNum = 2;
+                                    break;
                             }
                             $(data).find("data_item").each(function (i) {
                                 var tmpV = ($.isNumeric($(this).children(DataVal).text().trim())) ? Number($(this).children(DataVal).text().trim()) : 0;

@@ -143,6 +143,20 @@
                                     DataVal = "Sf_100KPeopleViolentCrimesTimes";
                                     FloatNum = 2;
                                     break;
+                                case "11":
+                                    $("#UnitHead").attr("sortname", "Sf_AQI100DayRate");
+                                    Unit = "%";
+                                    DataYear = "Sf_AQI100DayRateYear";
+                                    DataVal = "Sf_AQI100DayRate";
+                                    FloatNum = 2;
+                                    break;
+                                case "12":
+                                    $("#UnitHead").attr("sortname", "Sf_AirQualityAQIAverageValue");
+                                    Unit = "";
+                                    DataYear = "Sf_AirQualityAQIAverageValueYear";
+                                    DataVal = "Sf_AirQualityAQIAverageValue";
+                                    FloatNum = 2;
+                                    break;
                             }
                             $(data).find("data_item").each(function (i) {
                                 var tmpV = ($.isNumeric($(this).children(DataVal).text().trim())) ? Number($(this).children(DataVal).text().trim()) : 0;
