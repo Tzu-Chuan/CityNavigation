@@ -201,7 +201,7 @@
                                     break;
                                 case "20":
                                     $("#UnitHead").attr("sortname", "Edu_HighschoolDownRemoteAreas");
-                                    Unit = "台";
+                                    Unit = "所";
                                     DataYear = "Edu_HighschoolDownRemoteAreasYear";
                                     DataVal = "Edu_HighschoolDownRemoteAreas";
                                     FloatNum = 2;
