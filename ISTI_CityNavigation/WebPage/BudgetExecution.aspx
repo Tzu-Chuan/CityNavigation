@@ -10,9 +10,6 @@
                 type: "POST",
                 async: false, //在沒有返回值之前,不會執行下一步動作
                 url: "../handler/GetBudgetExecution.aspx",
-                data: {
-                    Token: $("#InfoToken").val()
-                },
                 error: function (xhr) {
                     alert(xhr.responseText);
                 },
@@ -56,8 +53,8 @@
                                     }
                                     else {
                                         strbody += '<td nowrap="nowrap" align="right">' + (parseFloat($(this).children("Str1").text().trim()) * 100).toFixed(2) + '%</td>';
-                                        strbody += '<td nowrap="nowrap" align="right"></td>';
-                                        strbody += '<td nowrap="nowrap" align="right"></td>';
+                                        strbody += '<td nowrap="nowrap" align="right">' + (parseFloat($(this).children("Str2").text().trim()) * 100).toFixed(2) + '%</td>';
+                                        strbody += '<td nowrap="nowrap" align="right">' + (parseFloat($(this).children("Str3").text().trim()) * 100).toFixed(2) + '%</td>';
                                     }
                                     strbody += '</tr>';
                                 }
